@@ -19,7 +19,7 @@ pub trait Trait: system::Trait {
 	type Event: From<Event<Self>> + Into<<Self as system::Trait>::Event>;
 }
 
-/// This module's storage items.
+// This module's storage items.
 decl_storage! {
 	trait Store for Module<T: Trait> as TemplateModule {
 		// Just a dummy storage item. 
@@ -29,6 +29,7 @@ decl_storage! {
 	}
 }
 
+// The module's dispatchable functions.
 decl_module! {
 	/// The module declaration.
 	pub struct Module<T: Trait> for enum Call where origin: T::Origin {

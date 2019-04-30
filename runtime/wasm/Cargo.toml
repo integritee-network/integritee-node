@@ -1,18 +1,3 @@
-[profile.release]
-lto = true
-panic = 'abort'
-
-[workspace]
-members = []
-
-[lib]
-crate-type = ['cdylib']
-
-[package]
-authors = ['Parity Technologies <admin@parity.io>']
-edition = '2018'
-name = 'substratee-node-runtime-wasm'
-version = '1.0.0'
 [dependencies.substratee-node-runtime]
 default-features = false
 path = '..'
@@ -20,3 +5,18 @@ path = '..'
 [features]
 default = []
 std = ['substratee-node-runtime/std']
+
+[package]
+authors = ['Supercomputing Systems']
+edition = '2018'
+name = 'substratee-node-runtime-wasm'
+version = '1.0.0'
+
+[lib]
+crate-type = ['cdylib']
+[profile.release]
+lto = true
+panic = 'abort'
+
+[workspace]
+members = []

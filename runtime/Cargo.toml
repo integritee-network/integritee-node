@@ -22,6 +22,9 @@ std = [
     'offchain-primitives/std',
     'consensus_authorities/std',
 ]
+no_global_allocator = [
+	"rstd/no_global_allocator",
+]
 
 [package]
 authors = ['Supercomputing Systems']

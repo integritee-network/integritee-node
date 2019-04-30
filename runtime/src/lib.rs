@@ -58,6 +58,9 @@ pub type Nonce = u64;
 /// Used for the module template in `./template.rs`
 mod template;
 
+/// SubstraTEE-proxy module
+mod substratee_proxy;
+
 /// Opaque types. These are used by the CLI to instantiate machinery that don't need to know
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
 /// of data like extrinsics, allowing for them to continue syncing the network through upgrades
@@ -192,6 +195,10 @@ impl template::Trait for Runtime {
 	type Event = Event;
 }
 
+impl substratee_proxy::Trait for Runtime {
+	type Event = Event;
+}
+
 construct_runtime!(
 	pub enum Runtime with Log(InternalLog: DigestItem<Hash, AuthorityId, AuthoritySignature>) where
 		Block = Block,
@@ -205,6 +212,7 @@ construct_runtime!(
 		Indices: indices,
 		Balances: balances,
 		Sudo: sudo,
+        SubstraTEEProxy: substratee_proxy::{Module, Call, Storage, Event<T>},
 		// Used for the module template in `./template.rs`
 		TemplateModule: template::{Module, Call, Storage, Event<T>},
 	}

@@ -25,6 +25,12 @@ std = [
 no_global_allocator = [
 	"rstd/no_global_allocator",
 ]
+no_panic_handler = [
+    "runtime-io/no_panic_handler"
+]
+no_oom = [
+    "runtime-io/no_oom"
+]
 
 [package]
 authors = ['Supercomputing Systems']
@@ -33,57 +39,57 @@ name = 'substratee-node-runtime'
 version = '1.0.0'
 [dependencies.aura]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'srml-aura'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.balances]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'srml-balances'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.client]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'substrate-client'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.consensus]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'srml-consensus'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.consensus-aura]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'substrate-consensus-aura-primitives'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.consensus_authorities]
 default-features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'substrate-consensus-authorities'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.executive]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'srml-executive'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.indices]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'srml-indices'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.offchain-primitives]
 default-features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'substrate-offchain-primitives'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.parity-codec]
 default-features = false
@@ -92,27 +98,27 @@ version = '3.3'
 
 [dependencies.primitives]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'substrate-primitives'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.rstd]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'sr-std'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.runtime-io]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'sr-io'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.runtime-primitives]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'sr-primitives'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.safe-mix]
 default-features = false
@@ -125,30 +131,31 @@ version = '1.0'
 
 [dependencies.sudo]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'srml-sudo'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.support]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'srml-support'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.system]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'srml-system'
 rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.timestamp]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'srml-timestamp'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.version]
 default_features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = "https://github.com/brenzi/substrate.git" 
+branch="global-allocator-feature"
 package = 'sr-version'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'

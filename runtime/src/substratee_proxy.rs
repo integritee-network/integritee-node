@@ -15,6 +15,7 @@ use system::ensure_signed;
 	{
 		CounterUpdated(AccountId),
 		Forwarded(AccountId, Vec<u8>),
+		CallConfirmed(AccountId, Vec<u8>),
 	}
 );
 
@@ -31,6 +32,7 @@ use system::ensure_signed;
 
  		fn deposit_event<T>() = default;
 
+		//FIXME: I guess this function can be deleted now?
  		fn update_counter(origin) -> Result {
 			let sender = ensure_signed(origin)?;
 
@@ -44,12 +46,24 @@ use system::ensure_signed;
  			Ok(())
 		}
 
- 		fn forward(origin, payload: Vec<u8>) -> Result {
+		// FIXME: rename this to call_worker()?
+ 		pub fn forward(origin, payload: Vec<u8>) -> Result {
 			let sender = ensure_signed(origin)?;
 
  			Self::deposit_event(RawEvent::Forwarded(sender, payload));
 
  			Ok(())
 		}
+
+		// the substraTEE-worker calls this function for every processed call to confirm a state update
+ 		pub fn confirm_call(origin, payload: Vec<u8>) -> Result {
+			let sender = ensure_signed(origin)?;
+			//FIXME: only enclave is allowed to call this. But we'll need an enclave registry first. right now, people have to manually check AccountID
+ 			Self::deposit_event(RawEvent::CallConfirmed(sender, payload));
+
+ 			Ok(())
+		}
+
+
 	}
 }

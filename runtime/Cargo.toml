@@ -146,7 +146,6 @@ default_features = false
 git = "https://github.com/brenzi/substrate.git" 
 branch="global-allocator-feature"
 package = 'srml-system'
-rev = '563e7876d72266ef62b18184f06264a6a89e8c0c'
 
 [dependencies.timestamp]
 default_features = false

@@ -30,6 +30,7 @@ pub use runtime_primitives::BuildStorage;
 pub use consensus::Call as ConsensusCall;
 pub use timestamp::Call as TimestampCall;
 pub use balances::Call as BalancesCall;
+pub use substratee_proxy::Call as SubstraTEEProxyCall;
 pub use runtime_primitives::{Permill, Perbill};
 pub use timestamp::BlockPeriod;
 pub use support::{StorageValue, construct_runtime};

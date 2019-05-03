@@ -1,6 +1,6 @@
 use rstd::prelude::*;
 
-use support::{decl_storage, decl_module, StorageValue,
+use support::{decl_storage, decl_module,
 	dispatch::Result, decl_event};
 use system::ensure_signed;
 
@@ -13,7 +13,6 @@ use system::ensure_signed;
 	where
 		<T as system::Trait>::AccountId,
 	{
-		CounterUpdated(AccountId),
 		Forwarded(AccountId, Vec<u8>),
 		CallConfirmed(AccountId, Vec<u8>),
 	}
@@ -21,9 +20,6 @@ use system::ensure_signed;
 
  decl_storage! {
 	trait Store for Module<T: Trait> as substraTEEProxyStorage {
-
- 		/// Get the counter of all transfers
-		AllCount get(all_count): u64;
 	}
 }
 
@@ -32,22 +28,8 @@ use system::ensure_signed;
 
  		fn deposit_event<T>() = default;
 
-		//FIXME: I guess this function can be deleted now?
- 		fn update_counter(origin) -> Result {
-			let sender = ensure_signed(origin)?;
-
- 			let all_count = Self::all_count();
-			let new_all_count = all_count.checked_add(1).ok_or("Overflow by adding 1")?;
-
- 			<AllCount<T>>::put(new_all_count);
-
- 			Self::deposit_event(RawEvent::CounterUpdated(sender));
-
- 			Ok(())
-		}
-
-		// FIXME: rename this to call_worker()?
- 		pub fn forward(origin, payload: Vec<u8>) -> Result {
+		// the substraTEE-client calls this function to pass the payload into the TEE
+ 		pub fn call_worker(origin, payload: Vec<u8>) -> Result {
 			let sender = ensure_signed(origin)?;
 
  			Self::deposit_event(RawEvent::Forwarded(sender, payload));

@@ -57,7 +57,7 @@ pub type BlockNumber = u64;
 pub type Nonce = u64;
 
 /// Used for the module template in `./template.rs`
-mod template;
+// mod template;
 
 /// SubstraTEE-proxy module
 pub mod substratee_proxy;
@@ -192,9 +192,9 @@ impl sudo::Trait for Runtime {
 }
 
 /// Used for the module template in `./template.rs`
-impl template::Trait for Runtime {
-	type Event = Event;
-}
+// impl template::Trait for Runtime {
+// 	type Event = Event;
+// }
 
 impl substratee_proxy::Trait for Runtime {
 	type Event = Event;
@@ -215,7 +215,7 @@ construct_runtime!(
 		Sudo: sudo,
         SubstraTEEProxy: substratee_proxy::{Module, Call, Storage, Event<T>},
 		// Used for the module template in `./template.rs`
-		TemplateModule: template::{Module, Call, Storage, Event<T>},
+		// TemplateModule: template::{Module, Call, Storage, Event<T>},
 	}
 );
 

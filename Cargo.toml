@@ -1,12 +1,19 @@
+[profile.release]
+panic = 'unwind'
+
+[[bin]]
+name = 'substratee-node'
+path = 'src/main.rs'
+
+[build-dependencies]
+vergen = '3'
+
 [package]
 authors = ['Supercomputing Systems']
 build = 'build.rs'
 edition = '2018'
 name = 'substratee-node'
-version = '1.0.0'
-
-[build-dependencies]
-vergen = '3'
+version = '2.0.0'
 
 [dependencies]
 error-chain = '0.12'
@@ -19,65 +26,58 @@ tokio = '0.1'
 trie-root = '0.12.2'
 
 [dependencies.basic-authorship]
-git = "https://github.com/brenzi/substrate.git" 
-branch="global-allocator-feature"
+git = 'https://github.com/paritytech/substrate.git'
 package = 'substrate-basic-authorship'
+rev = '6e67eff0653677d3d01980ca822c4b8a227914a3'
 
 [dependencies.consensus]
-git = "https://github.com/brenzi/substrate.git" 
-branch="global-allocator-feature"
+git = 'https://github.com/paritytech/substrate.git'
 package = 'substrate-consensus-aura'
+rev = '6e67eff0653677d3d01980ca822c4b8a227914a3'
 
 [dependencies.ctrlc]
 features = ['termination']
 version = '3.0'
 
 [dependencies.inherents]
-git = "https://github.com/brenzi/substrate.git" 
-branch="global-allocator-feature"
+git = 'https://github.com/paritytech/substrate.git'
 package = 'substrate-inherents'
+rev = '6e67eff0653677d3d01980ca822c4b8a227914a3'
 
 [dependencies.network]
-git = "https://github.com/brenzi/substrate.git" 
-branch="global-allocator-feature"
+git = 'https://github.com/paritytech/substrate.git'
 package = 'substrate-network'
+rev = '6e67eff0653677d3d01980ca822c4b8a227914a3'
 
 [dependencies.substratee-node-runtime]
 path = 'runtime'
 
 [dependencies.primitives]
-git = "https://github.com/brenzi/substrate.git" 
-branch="global-allocator-feature"
+git = 'https://github.com/paritytech/substrate.git'
 package = 'substrate-primitives'
+rev = '6e67eff0653677d3d01980ca822c4b8a227914a3'
 
 [dependencies.sr-io]
-git = "https://github.com/brenzi/substrate.git" 
-branch="global-allocator-feature"
+git = 'https://github.com/paritytech/substrate.git'
+rev = '6e67eff0653677d3d01980ca822c4b8a227914a3'
 
 [dependencies.substrate-cli]
-git = "https://github.com/brenzi/substrate.git" 
-branch="global-allocator-feature"
+git = 'https://github.com/paritytech/substrate.git'
+rev = '6e67eff0653677d3d01980ca822c4b8a227914a3'
 
 [dependencies.substrate-client]
-git = "https://github.com/brenzi/substrate.git" 
-branch="global-allocator-feature"
+git = 'https://github.com/paritytech/substrate.git'
+rev = '6e67eff0653677d3d01980ca822c4b8a227914a3'
 
 [dependencies.substrate-executor]
-git = "https://github.com/brenzi/substrate.git" 
-branch="global-allocator-feature"
+git = 'https://github.com/paritytech/substrate.git'
+rev = '6e67eff0653677d3d01980ca822c4b8a227914a3'
 
 [dependencies.substrate-service]
-git = "https://github.com/brenzi/substrate.git" 
-branch="global-allocator-feature"
+git = 'https://github.com/paritytech/substrate.git'
+rev = '6e67eff0653677d3d01980ca822c4b8a227914a3'
 
 [dependencies.transaction-pool]
-git = "https://github.com/brenzi/substrate.git" 
-branch="global-allocator-feature"
+git = 'https://github.com/paritytech/substrate.git'
 package = 'substrate-transaction-pool'
-
-[profile.release]
-panic = 'unwind'
-
-[[bin]]
-name = 'substratee-node'
-path = 'src/main.rs'
+rev = '6e67eff0653677d3d01980ca822c4b8a227914a3'

@@ -15,7 +15,7 @@ fn run() -> cli::error::Result<()> {
 		commit: env!("VERGEN_SHA_SHORT"),
 		version: env!("CARGO_PKG_VERSION"),
 		executable_name: "substratee-node",
-		author: "Supercomputing Systems",
+		author: "Supercomputing Systems AG",
 		description: "substratee-node",
 		support_url: "support.anonymous.an",
 	};

@@ -9,7 +9,7 @@ path = 'src/main.rs'
 vergen = '3'
 
 [package]
-authors = ['Supercomputing Systems']
+authors = ["Supercomputing Systems AG <info@scs.ch>"]
 build = 'build.rs'
 edition = '2018'
 name = 'substratee-node'

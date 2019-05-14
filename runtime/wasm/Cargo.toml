@@ -3,7 +3,7 @@ default-features = false
 path = '..'
 
 [package]
-authors = ['Supercomputing Systems']
+authors = ["Supercomputing Systems AG <info@scs.ch>"]
 edition = '2018'
 name = 'substratee-node-runtime-wasm'
 version = '2.0.0'

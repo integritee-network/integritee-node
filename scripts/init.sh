@@ -9,8 +9,8 @@ if [ -z $CI_PROJECT_NAME ] ; then
    rustup update stable
 fi
 
-rustup target add wasm32-unknown-unknown --toolchain nightly
+rustup target add wasm32-unknown-unknown --toolchain nightly-2019-05-21
 
 # Install wasm-gc. It's useful for stripping slimming down wasm binaries.
 command -v wasm-gc || \
-	cargo +nightly install --git https://github.com/alexcrichton/wasm-gc --force
+	cargo +nightly-2019-05-21 install --git https://github.com/alexcrichton/wasm-gc --force

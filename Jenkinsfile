@@ -8,6 +8,7 @@ pipeline {
     stage('Environment') {
       steps {
         sh './ci/install_rust.sh'
+        sh './scripts/init.sh'
       }
     }
     stage('Build') {

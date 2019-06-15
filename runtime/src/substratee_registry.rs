@@ -37,15 +37,9 @@ decl_module! {
 
 			// Fixme: Check enclave report
 
-			let enclaves_count = Self::num_enclaves();
-			let new_enclaves_count = enclaves_count.checked_add(1).
-			ok_or("Overflow adding new enclave to registry")?;
-
-
-			<EnclaveRegistry<T>>::insert(enclaves_count, &sender);
-			<EnclaveCount<T>>::put(new_enclaves_count);
-			<EnclaveIndex<T>>::insert(&sender, enclaves_count);
-
+            if let Err(x) = Self::add_enclave(&sender) {
+                return Err(x);
+            }
             Self::deposit_event(RawEvent::AddedEnclave(sender));
 
  			Ok(())
@@ -53,7 +47,20 @@ decl_module! {
 	}
 }
 
-impl<T: Trait> Module<T> {}
+impl<T: Trait> Module<T> {
+    fn add_enclave(sender: &T::AccountId) -> Result {
+        let enclaves_count = Self::num_enclaves();
+        let new_enclaves_count = enclaves_count.checked_add(1).
+            ok_or("[SubstraTEERegistry]: Overflow adding new enclave to registry")?;
+
+
+        <EnclaveRegistry<T>>::insert(enclaves_count, sender);
+        <EnclaveCount<T>>::put(new_enclaves_count);
+        <EnclaveIndex<T>>::insert(sender, enclaves_count);
+
+        Ok(())
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -114,9 +121,10 @@ mod tests {
     }
 
     #[test]
-    fn it_works() {
+    fn should_add_enclave() {
         with_externalities(&mut build_ext(), || {
-            assert!(true);
+            assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
+            assert_eq!(Registry::num_enclaves(), 1);
         })
     }
 }

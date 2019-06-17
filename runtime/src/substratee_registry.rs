@@ -94,7 +94,7 @@ impl<T: Trait> Module<T> {
         Ok(())
     }
 
-    fn list_enclaves() -> Vec<(u64, T::AccountId)> {
+    pub fn list_enclaves() -> Vec<(u64, T::AccountId)> {
         <EnclaveRegistry<T>>::enumerate().collect::<Vec<(u64, T::AccountId)>>()
     }
 
@@ -188,6 +188,7 @@ mod tests {
             assert_eq!(Registry::num_enclaves(), 1);
             assert_ok!(Registry::unregister_enclave(Origin::signed(10)));
             assert_eq!(Registry::num_enclaves(), 0);
+            assert_eq!(Registry::list_enclaves(), vec![])
         })
     }
 

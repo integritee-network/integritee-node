@@ -1,6 +1,6 @@
 use rstd::prelude::*;
 use support::{decl_event, decl_module,
-              decl_storage, dispatch::Result, StorageMap, StorageValue};
+              decl_storage, dispatch::Result, ensure, StorageMap, StorageValue, EnumerableStorageMap};
 use system::ensure_signed;
 
 pub trait Trait: balances::Trait {
@@ -14,13 +14,17 @@ decl_event!(
 		<T as system::Trait>::AccountId,
 	{
 		AddedEnclave(AccountId),
+		RemovedEnclave(AccountId),
 	}
 );
 
 
 decl_storage! {
 	trait Store for Module<T: Trait> as substraTEERegistry {
-	    EnclaveRegistry get(enclave): map u64 => T::AccountId;
+	    // Simple lists are not supported in runtime modules as theoretically O(n)
+	    // operations can be executed while only being charged O(1), see substrate
+	    // Kitties tutorial Chapter 2, Tracking all Kitties.
+	    EnclaveRegistry get(enclave): linked_map u64 => T::AccountId;
 	    EnclaveCount get(num_enclaves): u64;
 	    EnclaveIndex: map T::AccountId => u64
 	}
@@ -44,6 +48,18 @@ decl_module! {
 
  			Ok(())
 		}
+
+		pub fn unregister_enclave(origin) -> Result {
+		    let sender = ensure_signed(origin)?;
+
+            if let Err(x) = Self::remove_enclave(&sender) {
+                return Err(x);
+            }
+
+            Self::deposit_event(RawEvent::RemovedEnclave(sender));
+
+            Ok(())
+		}
 	}
 }
 
@@ -57,6 +73,43 @@ impl<T: Trait> Module<T> {
         <EnclaveRegistry<T>>::insert(enclaves_count, sender);
         <EnclaveCount<T>>::put(new_enclaves_count);
         <EnclaveIndex<T>>::insert(sender, enclaves_count);
+
+        Ok(())
+    }
+
+    fn remove_enclave(sender: &T::AccountId) -> Result {
+        ensure!(<EnclaveIndex<T>>::exists(sender), "[SubstraTEERegistry]: Trying to remove an enclave that doesn't exist.");
+        let index_to_remove = <EnclaveIndex<T>>::take(sender);
+
+        let enclaves_count = Self::num_enclaves();
+        let new_enclaves_count = enclaves_count.checked_sub(1).
+            ok_or("[SubstraTEERegistry]: Underflow removing an enclave from the registry")?;
+
+        if let Err(x) = Self::swap_and_pop(index_to_remove, new_enclaves_count) {
+            return Err(x);
+        }
+
+        <EnclaveCount<T>>::put(new_enclaves_count);
+
+        Ok(())
+    }
+
+    fn list_enclaves() -> Vec<(u64, T::AccountId)> {
+        <EnclaveRegistry<T>>::enumerate().collect::<Vec<(u64, T::AccountId)>>()
+    }
+
+
+    /// Our list implementation would introduce holes in out list if if we try to remove elements from the middle.
+    /// As the order of the enclave entries is not important, we use the swap an pop method to remove elements from
+    /// the registry.
+    fn swap_and_pop(index_to_remove: u64, new_enclaves_count: u64) -> Result {
+        if index_to_remove != new_enclaves_count {
+            let last_enclave = <EnclaveRegistry<T>>::get(&new_enclaves_count);
+            <EnclaveRegistry<T>>::insert(index_to_remove, &last_enclave);
+            <EnclaveIndex<T>>::insert(&last_enclave, index_to_remove);
+        }
+
+        <EnclaveRegistry<T>>::remove(new_enclaves_count);
 
         Ok(())
     }
@@ -125,6 +178,50 @@ mod tests {
         with_externalities(&mut build_ext(), || {
             assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
             assert_eq!(Registry::num_enclaves(), 1);
+        })
+    }
+
+    #[test]
+    fn should_add_and_remove_enclave() {
+        with_externalities(&mut build_ext(), || {
+            assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
+            assert_eq!(Registry::num_enclaves(), 1);
+            assert_ok!(Registry::unregister_enclave(Origin::signed(10)));
+            assert_eq!(Registry::num_enclaves(), 0);
+        })
+    }
+
+    #[test]
+    fn should_list_enclaves() {
+        with_externalities(&mut build_ext(), || {
+            assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
+            assert_eq!(Registry::num_enclaves(), 1);
+            assert_eq!(Registry::list_enclaves(), vec![(0, 10)])
+        })
+    }
+
+    #[test]
+    fn remove_middle_enclave() {
+        with_externalities(&mut build_ext(), || {
+            // add enclave 1
+            assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
+            assert_eq!(Registry::num_enclaves(), 1);
+            assert_eq!(Registry::list_enclaves(), vec![(0, 10)]);
+
+            // add enclave 2
+            assert_ok!(Registry::register_enclave(Origin::signed(20), Vec::new()));
+            assert_eq!(Registry::num_enclaves(), 2);
+            assert_eq!(Registry::list_enclaves(), vec![(1, 20), (0, 10)]);
+
+            // add enclave 3
+            assert_ok!(Registry::register_enclave(Origin::signed(30), Vec::new()));
+            assert_eq!(Registry::num_enclaves(), 3);
+            assert_eq!(Registry::list_enclaves(), vec![(2, 30), (1, 20), (0, 10)]);
+
+            // remove enclave 2
+            assert_ok!(Registry::unregister_enclave(Origin::signed(20)));
+            assert_eq!(Registry::num_enclaves(), 2);
+            assert_eq!(Registry::list_enclaves(), vec![(1, 30), (0, 10)]);
         })
     }
 }

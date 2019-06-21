@@ -57,9 +57,12 @@ git = 'https://github.com/paritytech/substrate'
 package = 'substrate-primitives'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
+#[dependencies.sr-io]
+#git = 'https://github.com/paritytech/substrate'
+#rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+
 [dependencies.sr-io]
-git = 'https://github.com/paritytech/substrate'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+sr-io = { path = "../sr-tee-io", package = 'sr-tee-io'}
 
 [dependencies.substrate-cli]
 git = 'https://github.com/paritytech/substrate'
@@ -81,3 +84,4 @@ rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 git = 'https://github.com/paritytech/substrate'
 package = 'substrate-transaction-pool'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+

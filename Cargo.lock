@@ -2815,28 +2815,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sr-tee-executor"
-version = "2.0.0"
-dependencies = [
- "byteorder 1.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "derive_more 0.14.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "lazy_static 1.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "libsecp256k1 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "parity-codec 3.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "parking_lot 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "sr-tee-io 2.0.0",
- "sr-version 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
- "substrate-panic-handler 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
- "substrate-primitives 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
- "substrate-serializer 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
- "substrate-state-machine 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
- "substrate-trie 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
- "tiny-keccak 1.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "wasmi 0.4.5 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "sr-tee-io"
 version = "2.0.0"
 dependencies = [
@@ -3722,6 +3700,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "substratee-executor"
+version = "2.0.0"
+dependencies = [
+ "byteorder 1.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "derive_more 0.14.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lazy_static 1.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libsecp256k1 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "parity-codec 3.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "parking_lot 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sr-tee-io 2.0.0",
+ "sr-version 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-panic-handler 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-primitives 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-serializer 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-state-machine 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-trie 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "tiny-keccak 1.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "wasmi 0.4.5 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "substratee-node"
 version = "2.0.0"
 dependencies = [
@@ -3732,7 +3732,6 @@ dependencies = [
  "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "parity-codec 3.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "parking_lot 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "sr-tee-executor 2.0.0",
  "sr-tee-io 2.0.0",
  "substrate-basic-authorship 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
  "substrate-cli 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
@@ -3743,6 +3742,7 @@ dependencies = [
  "substrate-primitives 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
  "substrate-service 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
  "substrate-transaction-pool 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substratee-executor 2.0.0",
  "substratee-node-runtime 2.0.0",
  "tokio 0.1.21 (registry+https://github.com/rust-lang/crates.io-index)",
  "trie-root 0.12.3 (registry+https://github.com/rust-lang/crates.io-index)",

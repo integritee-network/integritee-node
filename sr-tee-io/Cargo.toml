@@ -43,9 +43,8 @@ rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
 
 [dev-dependencies.substrate-offchain]
-git = 'https://github.com/paritytech/substrate'
-package = 'substrate-offchain'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+path = 'substratee-offchain'
+package = 'substratee-offchain'
 
 [features]
 default = ["std"]

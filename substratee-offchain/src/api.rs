@@ -156,6 +156,13 @@ impl OffchainExt for AsyncApi {
 		unavailable_yet::<()>("http_response_read_body");
 		Err(HttpError::IoError)
 	}
+
+	fn parse_ra_report(
+		&mut self,
+		_print_buffer: &mut [u8]
+	) -> Result<bool, ()>{
+		unavailable_yet("parse_ra_report")
+	}
 }
 
 /// Offchain extensions implementation API

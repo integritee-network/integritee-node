@@ -70,8 +70,8 @@ git = 'https://github.com/paritytech/substrate'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
 [dependencies.substrate-executor]
-path = "sr-tee-executor"
-package = 'sr-tee-executor'
+path = "substratee-executor"
+package = 'substratee-executor'
 
 [dependencies.substrate-service]
 git = 'https://github.com/paritytech/substrate'

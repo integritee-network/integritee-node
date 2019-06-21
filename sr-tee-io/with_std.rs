@@ -388,6 +388,15 @@ impl OffchainApi for () {
 			ext.http_response_read_body(request_id, buffer, deadline)
 		}, "http_response_read_body can be called only in the offchain worker context")
 	}
+
+	fn verify_ra_report(
+		print_buffer: &mut [u8],
+		print_buffer_len: u32,
+	) -> Result<bool, ()> {
+		with_offchain(|ext| {
+			ext.verify_ra_report(print_buffer, print_buffer_len)
+		}, "verify_ra_report can be called only in the offchain worker context")
+	}
 }
 
 impl Api for () {}

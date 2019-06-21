@@ -530,6 +530,13 @@ pub mod ext {
 			buffer_len: u32,
 			deadline: u64
 		) -> u32;
+
+		/// Parse and verify Intel's remote attestation report.
+		fn ext_verify_ra_report(
+		print_buffer: &mut [u8],
+		print_buffer_len: u32,
+		)
+		-> bool;
 	}
 }
 
@@ -1060,6 +1067,18 @@ impl OffchainApi for () {
 			Ok(res as usize)
 		}
 	}
+
+	fn verify_ra_report(print_buffer: &mut [u8]) -> Result<bool, ()> {
+		let res = unsafe {
+			ext_verify_ra_report.get()(
+				print_buffer.as_mut_prt(),
+				print_buffer.len() as u32,
+			)
+		};
+
+		Ok(res as bool)
+	}
+
 }
 
 unsafe fn from_raw_parts(ptr: *mut u8, len: u32) -> Option<Vec<u8>> {

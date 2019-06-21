@@ -57,12 +57,9 @@ git = 'https://github.com/paritytech/substrate'
 package = 'substrate-primitives'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
-#[dependencies.sr-io]
-#git = 'https://github.com/paritytech/substrate'
-#rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
-
 [dependencies.sr-io]
-sr-io = { path = "../sr-tee-io", package = 'sr-tee-io'}
+path = "sr-tee-io"
+package = 'sr-tee-io'
 
 [dependencies.substrate-cli]
 git = 'https://github.com/paritytech/substrate'
@@ -73,8 +70,8 @@ git = 'https://github.com/paritytech/substrate'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
 [dependencies.substrate-executor]
-git = 'https://github.com/paritytech/substrate'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+path = "sr-tee-executor"
+package = 'sr-tee-executor'
 
 [dependencies.substrate-service]
 git = 'https://github.com/paritytech/substrate'

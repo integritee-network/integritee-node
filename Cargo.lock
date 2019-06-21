@@ -2815,6 +2815,44 @@ dependencies = [
 ]
 
 [[package]]
+name = "sr-tee-executor"
+version = "2.0.0"
+dependencies = [
+ "byteorder 1.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "derive_more 0.14.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lazy_static 1.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libsecp256k1 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "parity-codec 3.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "parking_lot 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sr-tee-io 2.0.0",
+ "sr-version 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-panic-handler 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-primitives 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-serializer 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-state-machine 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-trie 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "tiny-keccak 1.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "wasmi 0.4.5 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "sr-tee-io"
+version = "2.0.0"
+dependencies = [
+ "environmental 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hash-db 0.12.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libsecp256k1 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "parity-codec 3.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc_version 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sr-std 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-primitives 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-state-machine 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "substrate-trie 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "tiny-keccak 1.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "sr-version"
 version = "2.0.0"
 source = "git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684#56b0273fd48b4e742e9da7317bc8e132a740b684"
@@ -3694,12 +3732,12 @@ dependencies = [
  "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "parity-codec 3.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "parking_lot 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "sr-io 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
+ "sr-tee-executor 2.0.0",
+ "sr-tee-io 2.0.0",
  "substrate-basic-authorship 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
  "substrate-cli 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
  "substrate-client 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
  "substrate-consensus-aura 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
- "substrate-executor 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
  "substrate-inherents 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
  "substrate-network 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",
  "substrate-primitives 2.0.0 (git+https://github.com/paritytech/substrate?rev=56b0273fd48b4e742e9da7317bc8e132a740b684)",

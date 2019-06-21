@@ -365,7 +365,7 @@ export_api! {
 		) -> Result<usize, HttpError>;
 
 		/// Parse and verify Intel's ra report
-		fn verify_ra_report(print_buffer: &mut [u8], print_buffer_len: u32) -> Result<bool, ()>
+		fn verify_ra_report(print_buffer: &mut [u8], print_buffer_len: u32) -> Result<bool, ()>;
 	}
 }
 

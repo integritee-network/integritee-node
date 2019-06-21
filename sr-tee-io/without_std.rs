@@ -533,8 +533,8 @@ pub mod ext {
 
 		/// Parse and verify Intel's remote attestation report.
 		fn ext_verify_ra_report(
-		print_buffer: &mut [u8],
-		print_buffer_len: u32,
+			print_buffer: &mut [u8],
+			print_buffer_len: u32,
 		)
 		-> bool;
 	}

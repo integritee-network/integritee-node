@@ -950,6 +950,16 @@ impl_function_executor!(this: FunctionExecutor<'e, E>,
 			}
 		})
 	},
+
+	ext_verify_ra_report(utf8_data: *const u8, utf8_len: u32) => {
+		if let Ok(utf8) = this.memory.get(utf8_data, utf8_len as usize) {
+			if let Ok(message) = String::from_utf8(utf8) {
+				println!("{}", message);
+			}
+		} 
+		Ok(())
+	},
+
 	ext_sandbox_instantiate(
 		dispatch_thunk_idx: usize,
 		wasm_ptr: *const u8,

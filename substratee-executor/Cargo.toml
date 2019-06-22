@@ -61,9 +61,3 @@ hex-literal = "0.2.0"
 [features]
 default = []
 wasm-extern-trace = []
-
-[patch.'https://github.com/paritytech/substrate#sr-io']
-sr-io = { path = 'sr-tee-io' }
-
-[patch.'https://github.com/paritytech/substrate#substrate-executor']
-substrate-executor = { path = 'substratee-executor' }

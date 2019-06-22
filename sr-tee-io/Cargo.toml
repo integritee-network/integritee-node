@@ -64,9 +64,3 @@ strict = []
 wasm-nice-panic-message = []
 no_panic_handler = []
 no_oom = []
-
-[patch.'https://github.com/paritytech/substrate#sr-io']
-sr-io = { path = 'sr-tee-io' }
-
-[patch.'https://github.com/paritytech/substrate#substrate-executor']
-substrate-executor = { path = 'substratee-executor' }

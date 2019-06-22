@@ -1,6 +1,6 @@
 use rstd::prelude::*;
 use support::{decl_event, decl_module,
-              decl_storage, dispatch::Result, ensure, StorageMap, StorageValue, EnumerableStorageMap};
+              decl_storage, dispatch::Result, ensure, EnumerableStorageMap, StorageMap, StorageValue};
 use system::ensure_signed;
 
 pub trait Trait: balances::Trait {
@@ -36,10 +36,11 @@ decl_module! {
  		fn deposit_event<T>() = default;
 
 		// the substraTEE-worker wants to register his enclave
- 		pub fn register_enclave(origin, _ra_report: Vec<u8>) -> Result {
+ 		pub fn register_enclave(origin, ra_report: Vec<u8>) -> Result {
 			let sender = ensure_signed(origin)?;
 
-			// Fixme: Check enclave report
+            // Fixme: Check enclave report
+            Self::verify_ra_report(ra_report);
 
             if let Err(x) = Self::add_enclave(&sender) {
                 return Err(x);
@@ -96,6 +97,11 @@ impl<T: Trait> Module<T> {
 
     pub fn list_enclaves() -> Vec<(u64, T::AccountId)> {
         <EnclaveRegistry<T>>::enumerate().collect::<Vec<(u64, T::AccountId)>>()
+    }
+
+    fn verify_ra_report(report: Vec<u8>) -> Result {
+        // Todo: Fill body
+        Ok(())
     }
 
 

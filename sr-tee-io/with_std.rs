@@ -205,7 +205,7 @@ impl OtherApi for () {
 		value.print()
 	}
 
-	fn verify_ra_report(print_buffer: &mut [u8], print_buffer_len: u32) {
+	fn verify_ra_report(print_buffer: &mut [u8]) {
 		println!("To String : {:?}", print_buffer)
 	}
 }

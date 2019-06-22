@@ -200,10 +200,7 @@ pub mod ext {
 		fn ext_print_num(value: u64);
 
 		/// Parse and verify Intel's remote attestation report.
-		fn ext_verify_ra_report(
-			print_buffer: &mut [u8],
-			print_buffer_len: u32,
-		);
+		fn ext_verify_ra_report(print_buffer: *mut u8, print_buffer_len: u32);
 
 		/// Set value for key in storage.
 		fn ext_set_storage(key_data: *const u8, key_len: u32, value_data: *const u8, value_len: u32);
@@ -733,8 +730,8 @@ impl OtherApi for () {
 	fn verify_ra_report(print_buffer: &mut [u8]) {
 		let res = unsafe {
 			ext_verify_ra_report.get()(
-				print_buffer.as_mut_prt(),
-				print_buffer.len() as u32,
+				print_buffer.as_mut_ptr(),
+				print_buffer.len() as u32
 			)
 		};
 	}

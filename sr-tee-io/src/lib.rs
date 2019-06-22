@@ -189,7 +189,7 @@ export_api! {
 		;
 
 		/// Parse and verify Intel's ra report
-		fn verify_ra_report(print_buffer: &mut [u8], print_buffer_len: u32);
+		fn verify_ra_report(print_buffer: &mut [u8]);
 	}
 }
 

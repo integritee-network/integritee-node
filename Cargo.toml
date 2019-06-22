@@ -1,13 +1,6 @@
 [profile.release]
 panic = 'unwind'
 
-[workspace]
-
-members = [
-    'runtime',
-    'sr-tee-io',
-    'substratee-executor']
-
 [[bin]]
 name = 'substratee-node'
 path = 'src/main.rs'
@@ -66,7 +59,7 @@ rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
 [dependencies.sr-io]
 path = 'sr-tee-io'
-package = 'sr-tee-io'
+package = 'sr-io'
 
 [dependencies.substrate-cli]
 git = 'https://github.com/paritytech/substrate'
@@ -78,7 +71,7 @@ rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
 [dependencies.substrate-executor]
 path = "substratee-executor"
-package = 'substratee-executor'
+package = 'substrate-executor'
 
 [dependencies.substrate-service]
 git = 'https://github.com/paritytech/substrate'
@@ -89,5 +82,8 @@ git = 'https://github.com/paritytech/substrate'
 package = 'substrate-transaction-pool'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
-[patch.'https://github.com/paritytech/substrate/core/sr-io']
-sr-io = { path = 'sr-tee-io', package = 'sr-tee-io' }
+[patch.'https://github.com/paritytech/substrate#sr-io']
+sr-io = { path = 'sr-tee-io' }
+
+[patch.'https://github.com/paritytech/substrate#substrate-executor']
+substrate-executor = { path = 'substratee-executor' }

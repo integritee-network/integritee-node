@@ -2,7 +2,7 @@
 authors = ["Supercomputing Systems AG <info@scs.ch>"]
 build = 'build.rs'
 edition = '2018'
-name = 'sr-tee-io'
+name = 'sr-io'
 version = '2.0.0'
 
 [build-dependencies]
@@ -41,7 +41,6 @@ git = 'https://github.com/paritytech/substrate'
 package = 'substrate-trie'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
-
 [dev-dependencies.substrate-offchain]
 git = 'https://github.com/paritytech/substrate'
 package = 'substrate-offchain'
@@ -65,3 +64,9 @@ strict = []
 wasm-nice-panic-message = []
 no_panic_handler = []
 no_oom = []
+
+[patch.'https://github.com/paritytech/substrate#sr-io']
+sr-io = { path = 'sr-tee-io' }
+
+[patch.'https://github.com/paritytech/substrate#substrate-executor']
+substrate-executor = { path = 'substratee-executor' }

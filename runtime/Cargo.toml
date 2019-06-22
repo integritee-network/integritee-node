@@ -72,7 +72,7 @@ rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 [dependencies.runtime-io]
 default_features = false
 path = '../sr-tee-io'
-package = 'sr-tee-io'
+package = 'sr-io'
 
 [dependencies.runtime-primitives]
 default_features = false
@@ -158,3 +158,9 @@ authors = ["Supercomputing Systems AG <info@scs.ch>"]
 edition = '2018'
 name = 'substratee-node-runtime'
 version = '2.0.0'
+
+[patch.'https://github.com/paritytech/substrate#sr-io']
+sr-io = { path = 'sr-tee-io' }
+
+[patch.'https://github.com/paritytech/substrate#substrate-executor']
+substrate-executor = { path = 'substratee-executor' }

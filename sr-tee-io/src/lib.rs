@@ -187,6 +187,9 @@ export_api! {
 			T: Printable,
 			T: Sized
 		;
+
+		/// Parse and verify Intel's ra report
+		fn verify_ra_report(print_buffer: &mut [u8], print_buffer_len: u32);
 	}
 }
 
@@ -363,9 +366,6 @@ export_api! {
 			buffer: &mut [u8],
 			deadline: Option<Timestamp>
 		) -> Result<usize, HttpError>;
-
-		/// Parse and verify Intel's ra report
-		fn verify_ra_report(print_buffer: &mut [u8], print_buffer_len: u32) -> Result<bool, ()>;
 	}
 }
 

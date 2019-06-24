@@ -20,3 +20,6 @@ panic = 'abort'
 
 [workspace]
 members = []
+
+[patch.'https://github.com/paritytech/substrate']
+sr-io = { path = '../../sr-tee-io' }

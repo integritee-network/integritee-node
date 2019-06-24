@@ -17,14 +17,14 @@ environmental = { version = "1.0.1", optional = true }
 
 #rstd = { package = "sr-std", path = "../sr-std", default-features = false }
 [dependencies.rstd]
-default_features = false
+default-features = false
 git = 'https://github.com/paritytech/substrate'
 package = 'sr-std'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
 #primitives = { package = "substrate-primitives", path = "../primitives", default-features = false }
 [dependencies.primitives]
-default_features = false
+default-features = false
 git = 'https://github.com/paritytech/substrate'
 package = 'substrate-primitives'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'

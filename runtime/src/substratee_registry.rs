@@ -1,4 +1,5 @@
 use rstd::prelude::*;
+use runtime_io::verify_ra_report;
 use support::{decl_event, decl_module,
               decl_storage, dispatch::Result, ensure, EnumerableStorageMap, StorageMap, StorageValue};
 use system::ensure_signed;
@@ -40,7 +41,8 @@ decl_module! {
 			let sender = ensure_signed(origin)?;
 
             // Fixme: Check enclave report
-            Self::verify_ra_report(ra_report);
+			let mut message = "Hello, Print".as_bytes().to_vec();
+            verify_ra_report(&mut message); // Test method only prints a bytevector to String
 
             if let Err(x) = Self::add_enclave(&sender) {
                 return Err(x);

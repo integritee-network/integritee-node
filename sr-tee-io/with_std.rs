@@ -206,7 +206,7 @@ impl OtherApi for () {
 	}
 
 	fn verify_ra_report(print_buffer: &mut [u8]) {
-		println!("To String : {:?}", print_buffer)
+		println!("Native To String : {:?}", print_buffer)
 	}
 }
 

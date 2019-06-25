@@ -1,8 +1,9 @@
 use rstd::prelude::*;
-use runtime_io::verify_ra_report;
 use support::{decl_event, decl_module,
               decl_storage, dispatch::Result, ensure, EnumerableStorageMap, StorageMap, StorageValue};
 use system::ensure_signed;
+
+use runtime_io::verify_ra_report;
 
 pub trait Trait: balances::Trait {
     type Event: From<Event<Self>> + Into<<Self as system::Trait>::Event>;
@@ -101,11 +102,6 @@ impl<T: Trait> Module<T> {
         <EnclaveRegistry<T>>::enumerate().collect::<Vec<(u64, T::AccountId)>>()
     }
 
-    fn verify_ra_report(report: Vec<u8>) -> Result {
-        // Todo: Fill body
-        Ok(())
-    }
-
 
     /// Our list implementation would introduce holes in out list if if we try to remove elements from the middle.
     /// As the order of the enclave entries is not important, we use the swap an pop method to remove elements from
@@ -126,14 +122,17 @@ impl<T: Trait> Module<T> {
 #[cfg(test)]
 mod tests {
     use primitives::{Blake2Hasher, H256};
-    use runtime_io::{TestExternalities, with_externalities};
     use runtime_primitives::{
         BuildStorage, testing::{Digest, DigestItem, Header},
         traits::{BlakeTwo256, IdentityLookup}
     };
     use support::{assert_ok, impl_outer_origin};
+    use runtime_io::{TestExternalities, verify_ra_report, with_externalities};
+    use substrate_executor::{Externalities, WasmExecutor};
 
     use super::*;
+
+    const WASM_CODE: &'static [u8] = include_bytes!("../wasm/target/wasm32-unknown-unknown/release/substratee_node_runtime_wasm.compact.wasm");
 
     #[derive(Clone, Eq, PartialEq)]
     pub struct RegistryTest;
@@ -232,6 +231,15 @@ mod tests {
             assert_eq!(Registry::num_enclaves(), 2);
             assert_eq!(Registry::list_enclaves(), vec![(1, 30), (0, 10)]);
         })
+    }
+
+//    #[test]
+//    fn register_enclave_works_wasm() {
+//        let mut msg = "Helloworld".as_bytes().to_vec();
+//        WasmExecutor::new().call(&mut build_ext(), 8, &WASM_CODE,
+//                                 "runtime_io::verify_ra_report", &msg).unwrap();
+////            assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
+//        assert_eq!(Registry::num_enclaves(), 1);
     }
 }
 

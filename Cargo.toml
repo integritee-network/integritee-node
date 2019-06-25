@@ -15,6 +15,11 @@ edition = '2018'
 name = 'substratee-node'
 version = '2.0.0'
 
+# to run cargo test with dev-dependencies it must be part of a workspace
+[workspace]
+members = [ 'runtime',
+            'host_calls']
+
 [dependencies]
 derive_more = "0.14.0"
 exit-future = '0.1'
@@ -83,4 +88,4 @@ rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
 [patch.'https://github.com/paritytech/substrate']
 sr-io = { path = 'sr-tee-io' }
-substrate-executor = { path = 'substratee-executor' }
+substrate-executor = { path = 'substratee-executor'}

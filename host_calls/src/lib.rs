@@ -39,18 +39,13 @@ static SUPPORTED_SIG_ALGS: SignatureAlgorithms = &[
 pub const IAS_REPORT_CA: &[u8] = include_bytes!("../AttestationReportSigningCACert.pem");
 
 
-pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), ()> {
+pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), &'static str> {
     // Before we reach here, the runtime already verifed the cert is properly signed
-    if cert_der.len() == 0 {
-        println!("Certificate to check is empty");
-        return Err(());
-    }
-
     // Search for Public Key prime256v1 OID
     let prime256v1_oid = &[0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x03, 0x01, 0x07];
     let mut offset = match cert_der.windows(prime256v1_oid.len()).position(|window| window == prime256v1_oid) {
         Some(o) => o,
-        _ => return Err(()),
+        _ => return Err("Certificate to check is empty"),
     };
     offset += 11; // 10 + TAG (0x03)
 
@@ -70,7 +65,7 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), ()> {
     let ns_cmt_oid = &[0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x86, 0xF8, 0x42, 0x01, 0x0D];
     let mut offset = match cert_der.windows(ns_cmt_oid.len()).position(|window| window == ns_cmt_oid) {
         Some(o) => o,
-        _ => return Err(()),
+        _ => return Err("Certificate to check is empty"),
     };
     offset += 12; // 11 + TAG (0x04)
 
@@ -91,20 +86,19 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), ()> {
     let sig_raw = iter.next().unwrap();
     let sig = match base64::decode(&sig_raw) {
         Ok(m) => m,
-        Err(_) => return Err(()),
+        Err(_) => return Err("Decoding Error"),
     };
 
     let sig_cert_raw = iter.next().unwrap();
     let sig_cert_dec = match base64::decode_config(&sig_cert_raw, base64::STANDARD) {
         Ok(c) => c,
-        Err(_) => return Err(()),
+        Err(_) => return Err("Decoding Error"),
     };
     let sig_cert_input = untrusted::Input::from(&sig_cert_dec);
     let sig_cert = match webpki::EndEntityCert::from(sig_cert_input) {
         Ok(c) => c,
         Err(_) => {
-            println!("Bad DER");
-            return Err(())
+            return Err("Bad DER")
         },
     };
 
@@ -117,7 +111,7 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), ()> {
     let ias_ca_core: &[u8] = &ias_ca_stripped[head_len..full_len - tail_len];
     let ias_cert_dec = match base64::decode_config(ias_ca_core, base64::STANDARD) {
         Ok(c) => c,
-        Err(_) => return Err(()),
+        Err(_) => return Err("Decoding Error"),
     };
     let ias_cert_input = untrusted::Input::from(&ias_cert_dec);
 
@@ -125,8 +119,7 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), ()> {
 
     let mut root_store = rustls::RootCertStore::empty();
     if let Err(_) = root_store.add_pem_file(&mut ca_reader) {
-        println!("Failed to add CA");
-        return Err(());
+        return Err("Failed to add CA");
     };
 
     let trust_anchors: Vec<webpki::TrustAnchor> = root_store
@@ -157,7 +150,7 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), ()> {
         Ok(_) => println!("Signature good"),
         Err(e) => {
             println!("Signature verification error {:?}", e);
-            return Err(());
+            return Err("Signature verification error");
         },
     }
 
@@ -165,22 +158,21 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), ()> {
     // 1. Check timestamp is within 24H (90day is recommended by Intel)
     let attn_report: Value = match serde_json::from_slice(attn_report_raw) {
         Ok(report) => report,
-        Err(_) => return Err(()),
+        Err(_) => return Err("RA report parsing error"),
     };
     if let Value::String(time) = &attn_report["timestamp"] {
         let time_fixed = time.clone() + "+0000";
         let ts = match DateTime::parse_from_str(&time_fixed, "%Y-%m-%dT%H:%M:%S%.f%z") {
             Ok(d) => d.timestamp(),
-            Err(_) => return Err(()),
+            Err(_) => return Err("RA report timestamp parsing error"),
         };
         let now = match SystemTime::now().duration_since(UNIX_EPOCH) {
             Ok(n) => n.as_secs() as i64,
-            Err(_) => return Err(()),
+            Err(_) => return Err("RA timestamp is before UNIX_EPOCH"),
         };
         println!("Time diff = {}", now - ts);
     } else {
-        println!("Failed to fetch timestamp from attestation report");
-        return Err(());
+        return Err("Failed to fetch timestamp from attestation report");
     }
 
     // 2. Verify quote status (mandatory field)
@@ -223,22 +215,20 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), ()> {
 //                        return Err(rt);
 //                    }
                 } else {
-                    println!("Failed to fetch platformInfoBlob from attestation report");
-                    return Err(());
+                    return Err("Failed to fetch platformInfoBlob from attestation report");
                 }
             }
-            _ => return Err(()),
+            _ => return Err("Unexpected Enclave Quote Status"),
         }
     } else {
-        println!("Failed to fetch isvEnclaveQuoteStatus from attestation report");
-        return Err(());
+        return Err("Failed to fetch isvEnclaveQuoteStatus from attestation report");
     }
 
     // 3. Verify quote body
     if let Value::String(quote_raw) = &attn_report["isvEnclaveQuoteBody"] {
         let quote = match base64::decode(&quote_raw) {
             Ok(q) => q,
-            Err(_) => return Err(()),
+            Err(_) => return Err("Quote Decoding Error"),
         };
         println!("Quote = {:?}", quote);
         // TODO: lack security check here
@@ -261,8 +251,7 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), ()> {
             println!("Mutual RA done!");
         }
     } else {
-        println!("Failed to fetch isvEnclaveQuoteBody from attestation report");
-        return Err(());
+        return Err("Failed to fetch isvEnclaveQuoteBody from attestation report");
     }
 
     Ok(())

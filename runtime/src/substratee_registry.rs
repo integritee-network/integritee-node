@@ -238,7 +238,7 @@ mod tests {
 //        let mut msg = "Helloworld".as_bytes().to_vec();
 //        WasmExecutor::new().call(&mut build_ext(), 8, &WASM_CODE,
 //                                 "runtime_io::verify_ra_report", &msg).unwrap();
-////            assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
+//            assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
 //        assert_eq!(Registry::num_enclaves(), 1);
     }
 }

@@ -41,27 +41,17 @@ decl_module! {
  		pub fn register_enclave(origin, ra_report: Vec<u8>) -> Result {
 			let sender = ensure_signed(origin)?;
 
-            // Fixme: Check enclave report
-			let mut message = "Hello, Print".as_bytes().to_vec();
-            verify_ra_report(&mut message); // Test method only prints a bytevector to String
-
-            if let Err(x) = Self::add_enclave(&sender) {
-                return Err(x);
-            }
+            verify_ra_report(&ra_report)?;
+            Self::add_enclave(&sender)?;
             Self::deposit_event(RawEvent::AddedEnclave(sender));
-
  			Ok(())
 		}
 
 		pub fn unregister_enclave(origin) -> Result {
 		    let sender = ensure_signed(origin)?;
 
-            if let Err(x) = Self::remove_enclave(&sender) {
-                return Err(x);
-            }
-
+            Self::remove_enclave(&sender)?;
             Self::deposit_event(RawEvent::RemovedEnclave(sender));
-
             Ok(())
 		}
 	}
@@ -89,10 +79,7 @@ impl<T: Trait> Module<T> {
         let new_enclaves_count = enclaves_count.checked_sub(1).
             ok_or("[SubstraTEERegistry]: Underflow removing an enclave from the registry")?;
 
-        if let Err(x) = Self::swap_and_pop(index_to_remove, new_enclaves_count) {
-            return Err(x);
-        }
-
+        Self::swap_and_pop(index_to_remove, new_enclaves_count)?;
         <EnclaveCount<T>>::put(new_enclaves_count);
 
         Ok(())
@@ -133,6 +120,7 @@ mod tests {
     use super::*;
 
     const WASM_CODE: &'static [u8] = include_bytes!("../wasm/target/wasm32-unknown-unknown/release/substratee_node_runtime_wasm.compact.wasm");
+    const CERT: &[u8] = b"0\x82\x0c\x8c0\x82\x0c2\xa0\x03\x02\x01\x02\x02\x01\x010\n\x06\x08*\x86H\xce=\x04\x03\x020\x121\x100\x0e\x06\x03U\x04\x03\x0c\x07MesaTEE0\x1e\x17\r190617124609Z\x17\r190915124609Z0\x121\x100\x0e\x06\x03U\x04\x03\x0c\x07MesaTEE0Y0\x13\x06\x07*\x86H\xce=\x02\x01\x06\x08*\x86H\xce=\x03\x01\x07\x03B\0\x04RT\x16\x16 \xef_\xd8\xe7\xc3\xb7\x03\x1d\xd6:\x1fF\xe3\xf2b!\xa9/\x8b\xd4\x82\x8f\xd1\xff[\x9c\x97\xbc\xf27\xb8,L\x8a\x01\xb0r;;\xa9\x83\xdc\x86\x9f\x1d%y\xf4;I\xe4Y\xc80'$K[\xd6\xa3\x82\x0bw0\x82\x0bs0\x82\x0bo\x06\t`\x86H\x01\x86\xf8B\x01\r\x04\x82\x0b`{\"id\":\"117077750682263877593646412006783680848\",\"timestamp\":\"2019-06-17T12:46:04.002066\",\"version\":3,\"isvEnclaveQuoteStatus\":\"GROUP_OUT_OF_DATE\",\"platformInfoBlob\":\"1502006504000900000909020401800000000000000000000008000009000000020000000000000B401A355B313FC939B4F48A54349C914A32A3AE2C4871BFABF22E960C55635869FC66293A3D9B2D58ED96CA620B65D669A444C80291314EF691E896F664317CF80C\",\"isvEnclaveQuoteBody\":\"AgAAAEALAAAIAAcAAAAAAOE6wgoHKsZsnVWSrsWX9kky0kWt9K4xcan0fQ996Ct+CAj//wGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAHAAAAAAAAAFJJYIbPVot9NzRCjW2z9+k+9K8BsHQKzVMEHOR14hNbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACD1xnnferKFHD2uvYqTXdDA8iZ22kCD5xw7h38CMfOngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSVBYWIO9f2OfDtwMd1jofRuPyYiGpL4vUgo/R/1ucl7zyN7gsTIoBsHI7O6mD3IafHSV59DtJ5FnIMCckS1vW\"}|EbPFH/ThUaS/dMZoDKC5EgmdUXUORFtQzF49Umi1P55oeESreJaUvmA0sg/ATSTn5t2e+e6ZoBQIUbLHjcWLMLzK4pJJUeHhok7EfVgoQ378i+eGR9v7ICNDGX7a1rroOe0s1OKxwo/0hid2KWvtAUBvf1BDkqlHy025IOiXWhXFLkb/qQwUZDWzrV4dooMfX5hfqJPi1q9s18SsdLPmhrGBheh9keazeCR9hiLhRO9TbnVgR9zJk43SPXW+pHkbNigW+2STpVAi5ugWaSwBOdK11ZjaEU1paVIpxQnlW1D6dj1Zc3LibMH+ly9ZGrbYtuJks4eRnjPhroPXxlJWpQ==|MIIEoTCCAwmgAwIBAgIJANEHdl0yo7CWMA0GCSqGSIb3DQEBCwUAMH4xCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJDQTEUMBIGA1UEBwwLU2FudGEgQ2xhcmExGjAYBgNVBAoMEUludGVsIENvcnBvcmF0aW9uMTAwLgYDVQQDDCdJbnRlbCBTR1ggQXR0ZXN0YXRpb24gUmVwb3J0IFNpZ25pbmcgQ0EwHhcNMTYxMTIyMDkzNjU4WhcNMjYxMTIwMDkzNjU4WjB7MQswCQYDVQQGEwJVUzELMAkGA1UECAwCQ0ExFDASBgNVBAcMC1NhbnRhIENsYXJhMRowGAYDVQQKDBFJbnRlbCBDb3Jwb3JhdGlvbjEtMCsGA1UEAwwkSW50ZWwgU0dYIEF0dGVzdGF0aW9uIFJlcG9ydCBTaWduaW5nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqXot4OZuphR8nudFrAFiaGxxkgma/Es/BA+tbeCTUR106AL1ENcWA4FX3K+E9BBL0/7X5rj5nIgX/R/1ubhkKWw9gfqPG3KeAtIdcv/uTO1yXv50vqaPvE1CRChvzdS/ZEBqQ5oVvLTPZ3VEicQjlytKgN9cLnxbwtuvLUK7eyRPfJW/ksddOzP8VBBniolYnRCD2jrMRZ8nBM2ZWYwnXnwYeOAHV+W9tOhAImwRwKF/95yAsVwd21ryHMJBcGH70qLagZ7Ttyt++qO/6+KAXJuKwZqjRlEtSEz8gZQeFfVYgcwSfo96oSMAzVr7V0L6HSDLRnpb6xxmbPdqNol4tQIDAQABo4GkMIGhMB8GA1UdIwQYMBaAFHhDe3amfrzQr35CN+s1fDuHAVE8MA4GA1UdDwEB/wQEAwIGwDAMBgNVHRMBAf8EAjAAMGAGA1UdHwRZMFcwVaBToFGGT2h0dHA6Ly90cnVzdGVkc2VydmljZXMuaW50ZWwuY29tL2NvbnRlbnQvQ1JML1NHWC9BdHRlc3RhdGlvblJlcG9ydFNpZ25pbmdDQS5jcmwwDQYJKoZIhvcNAQELBQADggGBAGcIthtcK9IVRz4rRq+ZKE+7k50/OxUsmW8aavOzKb0iCx07YQ9rzi5nU73tME2yGRLzhSViFs/LpFa9lpQL6JL1aQwmDR74TxYGBAIi5f4I5TJoCCEqRHz91kpG6Uvyn2tLmnIdJbPE4vYvWLrtXXfFBSSPD4Afn7+3/XUggAlc7oCTizOfbbtOFlYA4g5KcYgS1J2ZAeMQqbUdZseZCcaZZZn65tdqee8UXZlDvx0+NdO0LR+5pFy+juM0wWbu59MvzcmTXbjsi7HY6zd53Yq5K244fwFHRQ8eOB0IWB+4PfM7FeAApZvlfqlKOlLcZL2uyVmzRkyR5yW72uo9mehX44CiPJ2fse9Y6eQtcfEhMPkmHXI01sN+KwPbpA39+xOsStjhP9N1Y1a2tQAVo+yVgLgV2Hws73Fc0o3wC78qPEA+v2aRs/Be3ZFDgDyghc/1fgU+7C+P6kbqd4poyb6IW8KCJbxfMJvkordNOgOUUxndPHEi/tb/U7uLjLOgPA==0\n\x06\x08*\x86H\xce=\x04\x03\x02\x03H\00E\x02!\0\xae6\x06\t@Sy\x8f\x8ec\x9d\xdci^Ex*\x92}\xdcG\x15A\x97\xd7\xd7\xd1\xccx\xe0\x1e\x08\x02 \x15Q\xa0BT\xde'~\xec\xbd\x027\xd3\xd8\x83\xf7\xe6Z\xc5H\xb4D\xf7\xe2\r\xa7\xe4^f\x10\x85p";
 
     #[derive(Clone, Eq, PartialEq)]
     pub struct RegistryTest;
@@ -183,7 +171,7 @@ mod tests {
     #[test]
     fn should_add_enclave() {
         with_externalities(&mut build_ext(), || {
-            assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
+            assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec()));
             assert_eq!(Registry::num_enclaves(), 1);
         })
     }
@@ -191,7 +179,7 @@ mod tests {
     #[test]
     fn should_add_and_remove_enclave() {
         with_externalities(&mut build_ext(), || {
-            assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
+            assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec()));
             assert_eq!(Registry::num_enclaves(), 1);
             assert_ok!(Registry::unregister_enclave(Origin::signed(10)));
             assert_eq!(Registry::num_enclaves(), 0);
@@ -202,7 +190,7 @@ mod tests {
     #[test]
     fn should_list_enclaves() {
         with_externalities(&mut build_ext(), || {
-            assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
+            assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec()));
             assert_eq!(Registry::num_enclaves(), 1);
             assert_eq!(Registry::list_enclaves(), vec![(0, 10)])
         })
@@ -212,17 +200,17 @@ mod tests {
     fn remove_middle_enclave() {
         with_externalities(&mut build_ext(), || {
             // add enclave 1
-            assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
+            assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec()));
             assert_eq!(Registry::num_enclaves(), 1);
             assert_eq!(Registry::list_enclaves(), vec![(0, 10)]);
 
             // add enclave 2
-            assert_ok!(Registry::register_enclave(Origin::signed(20), Vec::new()));
+            assert_ok!(Registry::register_enclave(Origin::signed(20), CERT.to_vec()));
             assert_eq!(Registry::num_enclaves(), 2);
             assert_eq!(Registry::list_enclaves(), vec![(1, 20), (0, 10)]);
 
             // add enclave 3
-            assert_ok!(Registry::register_enclave(Origin::signed(30), Vec::new()));
+            assert_ok!(Registry::register_enclave(Origin::signed(30), CERT.to_vec()));
             assert_eq!(Registry::num_enclaves(), 3);
             assert_eq!(Registry::list_enclaves(), vec![(2, 30), (1, 20), (0, 10)]);
 
@@ -231,6 +219,11 @@ mod tests {
             assert_eq!(Registry::num_enclaves(), 2);
             assert_eq!(Registry::list_enclaves(), vec![(1, 30), (0, 10)]);
         })
+    }
+
+    #[test]
+    fn register_invalid_enclave_should_fail() {
+        assert!(Registry::register_enclave(Origin::signed(10), Vec::new()).is_err());
     }
 
 //    #[test]

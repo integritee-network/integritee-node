@@ -200,7 +200,9 @@ pub mod ext {
 		fn ext_print_num(value: u64);
 
 		/// Parse and verify Intel's remote attestation report.
-		fn ext_verify_ra_report(print_buffer: *mut u8, print_buffer_len: u32);
+		/// - `1` if the report is valid
+		/// - `0` if the report is invalid.
+		fn ext_verify_ra_report(cert: *const u8, cert_len: u32) -> u32;
 
 		/// Set value for key in storage.
 		fn ext_set_storage(key_data: *const u8, key_len: u32, value_data: *const u8, value_len: u32);
@@ -727,13 +729,15 @@ impl OtherApi for () {
 		value.print()
 	}
 
-	fn verify_ra_report(print_buffer: &mut [u8]) {
+	fn verify_ra_report(cert: &[u8]) -> Result<(), &'static str> {
 		let res = unsafe {
-			ext_verify_ra_report.get()(
-				print_buffer.as_mut_ptr(),
-				print_buffer.len() as u32
-			)
+			ext_verify_ra_report.get()(cert.as_ptr(), cert.len() as u32)
 		};
+		if result != 0 {
+			Ok(())
+		} else {
+			Err("Verify RA report failed")
+		}
 	}
 }
 

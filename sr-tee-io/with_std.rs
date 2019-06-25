@@ -18,6 +18,9 @@ use primitives::{
 	blake2_128, blake2_256, twox_128, twox_256, twox_64, ed25519, Blake2Hasher,
 	sr25519, Pair
 };
+
+extern crate host_calls;
+
 // Switch to this after PoC-3
 // pub use primitives::BlakeHasher;
 pub use substrate_state_machine::{
@@ -205,8 +208,8 @@ impl OtherApi for () {
 		value.print()
 	}
 
-	fn verify_ra_report(print_buffer: &mut [u8]) {
-		println!("Native To String : {:?}", print_buffer)
+	fn verify_ra_report(cert: &[u8]) -> Result<(), &'static str>{
+		host_calls::verify_mra_cert(cert)
 	}
 }
 

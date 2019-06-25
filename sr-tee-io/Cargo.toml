@@ -43,6 +43,9 @@ git = 'https://github.com/paritytech/substrate'
 package = 'substrate-trie'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
+[dependencies.host_calls]
+path = '../host_calls/'
+
 #substrate-offchain = { path = "../offchain" }
 [dev-dependencies.substrate-offchain]
 git = 'https://github.com/paritytech/substrate'

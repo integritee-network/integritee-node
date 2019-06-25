@@ -951,13 +951,13 @@ impl_function_executor!(this: FunctionExecutor<'e, E>,
 		})
 	},
 
-	ext_verify_ra_report(utf8_data: *const u8, utf8_len: u32) => {
+	ext_verify_ra_report(utf8_data: *const u8, utf8_len: u32) -> u32 => {
 		if let Ok(utf8) = this.memory.get(utf8_data, utf8_len as usize) {
 			if let Ok(message) = String::from_utf8(utf8) {
 				println!("Wasm Executor Print: {}", message);
 			}
 		} 
-		Ok(())
+		Ok(1 as u32)
 	},
 
 	ext_sandbox_instantiate(

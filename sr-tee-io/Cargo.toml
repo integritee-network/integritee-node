@@ -64,7 +64,8 @@ std = [
 	"environmental",
 	"substrate-state-machine",
 	"libsecp256k1",
-	"tiny-keccak"
+	"tiny-keccak",
+	"host_calls",
 ]
 nightly = []
 strict = []

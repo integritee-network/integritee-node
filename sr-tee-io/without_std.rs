@@ -730,13 +730,13 @@ impl OtherApi for () {
 	}
 
 	fn verify_ra_report(cert: &[u8]) -> Result<(), &'static str> {
-		let res = unsafe {
+		match unsafe {
 			ext_verify_ra_report.get()(cert.as_ptr(), cert.len() as u32)
-		};
-		if result != 0 {
-			Ok(())
-		} else {
-			Err("Verify RA report failed")
+		} {
+			0 => Ok(()),
+			1 => Err("Verify RA report failed"),
+			2 => Err("Reading Memory in Wasm Executor failed"),
+			_ => unreachable!("`ext_verify_ra_report` only returns 0, 1, or 2; qed"),
 		}
 	}
 }

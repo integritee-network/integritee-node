@@ -53,6 +53,9 @@ git = 'https://github.com/paritytech/substrate'
 package = 'substrate-panic-handler'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
+[dependencies.host_calls]
+path = '../host_calls'
+
 [dev-dependencies]
 assert_matches = "1.1"
 wabt = "~0.7.4"

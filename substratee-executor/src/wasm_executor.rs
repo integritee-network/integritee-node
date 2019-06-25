@@ -16,6 +16,7 @@
 
 //! Rust implementation of Substrate contracts.
 
+extern crate host_calls;
 use std::collections::HashMap;
 use std::convert::TryFrom;
 use std::str;
@@ -951,13 +952,14 @@ impl_function_executor!(this: FunctionExecutor<'e, E>,
 		})
 	},
 
-	ext_verify_ra_report(utf8_data: *const u8, utf8_len: u32) -> u32 => {
-		if let Ok(utf8) = this.memory.get(utf8_data, utf8_len as usize) {
-			if let Ok(message) = String::from_utf8(utf8) {
-				println!("Wasm Executor Print: {}", message);
+	ext_verify_ra_report(cert_data: *const u8, cert_len: u32) -> u32 => {
+		if let Ok(cert) = this.memory.get(cert_data, cert_len as usize) {
+			match host_calls::verify_mra_cert(&cert) {
+				Ok(_) => return Ok(0 as u32),
+				Err(_) => return Ok(1 as u32),
 			}
-		} 
-		Ok(1 as u32)
+		}
+		Ok(2 as u32)
 	},
 
 	ext_sandbox_instantiate(

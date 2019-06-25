@@ -240,6 +240,6 @@ mod tests {
 //                                 "runtime_io::verify_ra_report", &msg).unwrap();
 //            assert_ok!(Registry::register_enclave(Origin::signed(10), Vec::new()));
 //        assert_eq!(Registry::num_enclaves(), 1);
-    }
+//    }
 }
 

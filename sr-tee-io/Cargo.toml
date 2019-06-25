@@ -44,6 +44,7 @@ package = 'substrate-trie'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
 [dependencies.host_calls]
+optional = true
 path = '../host_calls/'
 
 #substrate-offchain = { path = "../offchain" }

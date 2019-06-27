@@ -1,0 +1,74 @@
+[package]
+authors = ["Supercomputing Systems AG <info@scs.ch>"]
+build = 'build.rs'
+edition = '2018'
+name = 'sr-io'
+version = '2.0.0'
+
+[build-dependencies]
+rustc_version = "0.2"
+
+[dependencies]
+hash-db = { version = "0.12", default-features = false }
+codec = { package = "parity-codec", version = "3.5.1", default-features = false }
+libsecp256k1 = { version = "0.2.1", optional = true }
+tiny-keccak = { version = "1.4.2", optional = true }
+environmental = { version = "1.0.1", optional = true }
+
+#rstd = { package = "sr-std", path = "../sr-std", default-features = false }
+[dependencies.rstd]
+default-features = false
+git = 'https://github.com/paritytech/substrate'
+package = 'sr-std'
+rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+
+#primitives = { package = "substrate-primitives", path = "../primitives", default-features = false }
+[dependencies.primitives]
+default-features = false
+git = 'https://github.com/paritytech/substrate'
+package = 'substrate-primitives'
+rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+
+#substrate-state-machine = { path = "../state-machine", optional = true }
+[dependencies.substrate-state-machine]
+optional = true
+git = 'https://github.com/paritytech/substrate'
+package = 'substrate-state-machine'
+rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+
+#trie = { package = "substrate-trie", path = "../trie", optional = true }
+[dependencies.trie]
+optional = true
+git = 'https://github.com/paritytech/substrate'
+package = 'substrate-trie'
+rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+
+[dependencies.host_calls]
+optional = true
+path = '../host_calls/'
+
+#substrate-offchain = { path = "../offchain" }
+[dev-dependencies.substrate-offchain]
+git = 'https://github.com/paritytech/substrate'
+package = 'substrate-offchain'
+rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+
+[features]
+default = ["std"]
+std = [
+	"primitives/std",
+	"codec/std",
+	"rstd/std",
+	"hash-db/std",
+	"trie",
+	"environmental",
+	"substrate-state-machine",
+	"libsecp256k1",
+	"tiny-keccak",
+	"host_calls",
+]
+nightly = []
+strict = []
+wasm-nice-panic-message = []
+no_panic_handler = []
+no_oom = []

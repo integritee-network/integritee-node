@@ -1,9 +1,8 @@
 [package]
 name = "host_calls"
-version = "0.1.0"
-authors = ["clangenbacher <christian.langenbacher@scs.ch>"]
+version = "2.0.0"
+authors = ["Supercomputing Systems AG <info@scs.ch>"]
 edition = "2018"
-
 
 [dependencies]
 sgx_tcrypto     = { rev = "v1.0.8", git = "https://github.com/baidu/rust-sgx-sdk.git" }

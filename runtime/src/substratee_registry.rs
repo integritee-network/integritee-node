@@ -55,9 +55,10 @@ decl_module! {
  		fn deposit_event<T>() = default;
 
 		// the substraTEE-worker wants to register his enclave
- 		pub fn register_enclave(origin, ra_report: Vec<u8>) -> Result {
+ 		pub fn register_enclave(origin, ra_report: Vec<u8>, worker_url: Vec<u8>) -> Result {
 			let sender = ensure_signed(origin)?;
 
+            runtime_io::print(&worker_url[..]);
             verify_ra_report(&ra_report)?;
             Self::add_enclave(&sender)?;
             Self::deposit_event(RawEvent::AddedEnclave(sender));

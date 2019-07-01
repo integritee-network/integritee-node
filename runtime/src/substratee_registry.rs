@@ -42,7 +42,7 @@ decl_event!(
 	where
 		<T as system::Trait>::AccountId,
 	{
-		AddedEnclave(AccountId),
+		AddedEnclave(AccountId, Vec<u8>),
 		RemovedEnclave(AccountId),
 	}
 );
@@ -69,7 +69,7 @@ decl_module! {
 
             verify_ra_report(&ra_report)?;
             Self::add_enclave(&sender, &worker_url)?;
-            Self::deposit_event(RawEvent::AddedEnclave(sender));
+            Self::deposit_event(RawEvent::AddedEnclave(sender, worker_url));
  			Ok(())
 		}
 

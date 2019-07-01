@@ -35,6 +35,10 @@ pub use runtime_primitives::{Permill, Perbill};
 pub use timestamp::BlockPeriod;
 pub use support::{StorageValue, construct_runtime};
 
+//#[cfg(test)]
+//#[macro_use]
+//extern crate lazy_static;
+
 /// The type that is used for identifying authorities.
 pub type AuthorityId = <AuthoritySignature as Verify>::Signer;
 

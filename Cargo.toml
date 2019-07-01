@@ -16,9 +16,9 @@ name = 'substratee-node'
 version = '2.0.0'
 
 # to run cargo test with dev-dependencies it must be part of a workspace
-#[workspace]
-#members = [ 'runtime',
-#            'host_calls']
+[workspace]
+members = [ 'runtime',
+            'host_calls']
 
 [dependencies]
 derive_more = "0.14.0"

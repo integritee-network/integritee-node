@@ -119,10 +119,8 @@ git = 'https://github.com/paritytech/substrate'
 package = 'sr-version'
 rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
 
-[dev-dependencies.substrate-executor]
-default-features = false
-path = '../substratee-executor'
-package = 'substrate-executor'
+#[dev-dependencies.lazy_static]
+#version = "1.3.0"
 
 [features]
 default = ['std']

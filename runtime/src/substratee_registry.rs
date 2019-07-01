@@ -15,9 +15,9 @@
 
 */
 
+use parity_codec::{Decode, Encode};
 use rstd::prelude::*;
 use rstd::str;
-use runtime_io::verify_ra_report;
 use support::{decl_event, decl_module,
               decl_storage, dispatch::Result, ensure, EnumerableStorageMap, StorageMap, StorageValue};
 use system::ensure_signed;
@@ -89,7 +89,7 @@ impl<T: Trait> Module<T> {
             ok_or("[SubstraTEERegistry]: Overflow adding new enclave to registry")?;
 
         let new_enclave = Enclave {
-            pubkey: sender,
+            pubkey: sender.clone(),
             url:url.to_vec(),
         };
 
@@ -125,7 +125,7 @@ impl<T: Trait> Module<T> {
     fn swap_and_pop(index_to_remove: u64, new_enclaves_count: u64) -> Result {
         if index_to_remove != new_enclaves_count {
             let last_enclave = <EnclaveRegistry<T>>::get(&new_enclaves_count);
-            <EnclaveRegistry<T>>::insert(index_to_remove, last_enclave);
+            <EnclaveRegistry<T>>::insert(index_to_remove, &last_enclave);
             <EnclaveIndex<T>>::insert(last_enclave.pubkey, index_to_remove);
         }
 

@@ -1,0 +1,10 @@
+// In the PolkadotUI go to Settings -> Developper to add a
+//custom Struct in order to be able to see a json of the
+//storage values
+
+{
+  "Enclave": {
+    "pubkey": "H256",
+    "url": "Vec<u8>"
+  }
+}

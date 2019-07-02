@@ -52,9 +52,9 @@ decl_storage! {
 	    // Simple lists are not supported in runtime modules as theoretically O(n)
 	    // operations can be executed while only being charged O(1), see substrate
 	    // Kitties tutorial Chapter 2, Tracking all Kitties.
-        EnclaveRegistry get(enclave): linked_map u64 => Enclave<T::AccountId, Vec<u8>>;
-	    EnclaveCount get(num_enclaves): u64;
-	    EnclaveIndex: map T::AccountId => u64;
+        pub EnclaveRegistry get(enclave): linked_map u64 => Enclave<T::AccountId, Vec<u8>>;
+	    pub EnclaveCount get(num_enclaves): u64;
+	    pub EnclaveIndex: map T::AccountId => u64;
 	}
 }
 

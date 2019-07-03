@@ -85,6 +85,9 @@ decl_module! {
 
 impl<T: Trait> Module<T> {
     fn add_enclave(sender: &T::AccountId, url: &[u8]) -> Result {
+        if <EnclaveIndex<T>>::exists(sender) {
+            return Ok(())
+        }
         let enclaves_count = Self::num_enclaves();
         let new_enclaves_count = enclaves_count.checked_add(1).
             ok_or("[SubstraTEERegistry]: Overflow adding new enclave to registry")?;

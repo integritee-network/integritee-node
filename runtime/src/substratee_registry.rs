@@ -44,6 +44,7 @@ decl_event!(
 	{
 		AddedEnclave(AccountId, Vec<u8>),
 		RemovedEnclave(AccountId),
+		UpdatedIPFSHash(Vec<u8>),
 	}
 );
 
@@ -55,6 +56,7 @@ decl_storage! {
         pub EnclaveRegistry get(enclave): linked_map u64 => Enclave<T::AccountId, Vec<u8>>;
 	    pub EnclaveCount get(num_enclaves): u64;
 	    pub EnclaveIndex: map T::AccountId => u64;
+	    pub LatestIPFSHash get(ipfs_hash) : Vec<u8>;
 	}
 }
 
@@ -78,6 +80,16 @@ decl_module! {
 
             Self::remove_enclave(&sender)?;
             Self::deposit_event(RawEvent::RemovedEnclave(sender));
+            Ok(())
+		}
+
+		pub fn update_ipfs_hash(origin, hash: Vec<u8>) -> Result {
+		    let sender = ensure_signed(origin)?;
+		    ensure!(<EnclaveIndex<T>>::exists(sender),
+		    "[SubstraTEERegistry]: IPFS state update requested by enclave that is not registered");
+
+		    <LatestIPFSHash<T>>::put(hash.clone());
+            Self::deposit_event(RawEvent::UpdatedIPFSHash(hash));
             Ok(())
 		}
 	}
@@ -214,7 +226,7 @@ mod tests {
     }
 
     #[test]
-    fn should_add_enclave() {
+    fn add_enclave_works() {
         with_externalities(&mut build_ext(), || {
             assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec(), URL.to_vec()));
             assert_eq!(Registry::num_enclaves(), 1);
@@ -222,7 +234,7 @@ mod tests {
     }
 
     #[test]
-    fn should_add_and_remove_enclave() {
+    fn add_and_remove_enclave_works() {
         with_externalities(&mut build_ext(), || {
             assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec(), URL.to_vec()));
             assert_eq!(Registry::num_enclaves(), 1);
@@ -233,7 +245,7 @@ mod tests {
     }
 
     #[test]
-    fn should_list_enclaves() {
+    fn list_enclaves_works() {
         with_externalities(&mut build_ext(), || {
             let e_1: Enclave<u64, Vec<u8>> = Enclave { pubkey: 10, url: URL.to_vec() };
             assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec(), URL.to_vec()));
@@ -243,7 +255,7 @@ mod tests {
     }
 
     #[test]
-    fn remove_middle_enclave() {
+    fn remove_middle_enclave_works() {
         with_externalities(&mut build_ext(), || {
             // add enclave 1
             let e_1: Enclave<u64, Vec<u8>> = Enclave { pubkey: 10, url: URL.to_vec() };
@@ -272,8 +284,26 @@ mod tests {
     }
 
     #[test]
-    fn register_invalid_enclave_should_fail() {
+    fn register_invalid_enclave_fails() {
         assert!(Registry::register_enclave(Origin::signed(10), Vec::new(), URL.to_vec()).is_err(), URL.to_vec());
+    }
+
+    #[test]
+    fn update_ipfs_hash_works() {
+        with_externalities(&mut build_ext(), || {
+            let ipfs_hash = "QmYY9U7sQzBYe79tVfiMyJ4prEJoJRWCD8t85j9qjssS9y";
+            assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec(), URL.to_vec()));
+            assert_ok!(Registry::update_ipfs_hash(Origin::signed(10), ipfs_hash.as_bytes().to_vec()));
+            assert_eq!(str::from_utf8(&Registry::ipfs_hash()).unwrap(), ipfs_hash);
+        })
+    }
+
+    #[test]
+    fn ipfs_update_from_unregistered_enclave_fails() {
+        with_externalities(&mut build_ext(), || {
+            let ipfs_hash = "QmYY9U7sQzBYe79tVfiMyJ4prEJoJRWCD8t85j9qjssS9y";
+            assert!(Registry::update_ipfs_hash(Origin::signed(10), ipfs_hash.as_bytes().to_vec()).is_err());
+        })
     }
 }
 

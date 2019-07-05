@@ -45,6 +45,8 @@ decl_event!(
 		AddedEnclave(AccountId, Vec<u8>),
 		RemovedEnclave(AccountId),
 		UpdatedIPFSHash(Vec<u8>),
+		Forwarded(AccountId, Vec<u8>),
+		CallConfirmed(AccountId, Vec<u8>),
 	}
 );
 
@@ -91,6 +93,23 @@ decl_module! {
 		    <LatestIPFSHash<T>>::put(hash.clone());
             Self::deposit_event(RawEvent::UpdatedIPFSHash(hash));
             Ok(())
+		}
+
+		pub fn call_worker(origin, payload: Vec<u8>) -> Result {
+			let sender = ensure_signed(origin)?;
+
+ 			Self::deposit_event(RawEvent::Forwarded(sender, payload));
+
+ 			Ok(())
+		}
+
+		// the substraTEE-worker calls this function for every processed call to confirm a state update
+ 		pub fn confirm_call(origin, payload: Vec<u8>) -> Result {
+			let sender = ensure_signed(origin)?;
+			//FIXME: only enclave is allowed to call this. But we'll need an enclave registry first. right now, people have to manually check AccountID
+ 			Self::deposit_event(RawEvent::CallConfirmed(sender, payload));
+
+ 			Ok(())
 		}
 	}
 }

@@ -22,7 +22,7 @@ use support::{decl_event, decl_module,
               decl_storage, dispatch::Result, ensure, EnumerableStorageMap, StorageMap, StorageValue};
 use system::ensure_signed;
 
-use runtime_io::verify_ra_report;
+use runtime_io::{verify_ra_report, print};
 
 pub trait Trait: balances::Trait {
     type Event: From<Event<Self>> + Into<<Self as system::Trait>::Event>;
@@ -98,7 +98,8 @@ decl_module! {
 impl<T: Trait> Module<T> {
     fn add_enclave(sender: &T::AccountId, url: &[u8]) -> Result {
         if <EnclaveIndex<T>>::exists(sender) {
-            return Ok(())
+            print("Updating already registered enclave");
+            return Self::update_enclave(sender, url)
         }
         let enclaves_count = Self::num_enclaves();
         let new_enclaves_count = enclaves_count.checked_add(1).
@@ -126,6 +127,15 @@ impl<T: Trait> Module<T> {
 
         Self::swap_and_pop(index_to_remove, new_enclaves_count)?;
         <EnclaveCount<T>>::put(new_enclaves_count);
+
+        Ok(())
+    }
+
+    fn update_enclave(sender: &T::AccountId, url: &[u8]) -> Result {
+        let key = <EnclaveIndex<T>>::get(sender);
+        let mut enc = <EnclaveRegistry<T>>::get(key);
+        enc.url = url.to_vec();
+        <EnclaveRegistry<T>>::insert(key, enc);
 
         Ok(())
     }
@@ -286,6 +296,20 @@ mod tests {
     #[test]
     fn register_invalid_enclave_fails() {
         assert!(Registry::register_enclave(Origin::signed(10), Vec::new(), URL.to_vec()).is_err(), URL.to_vec());
+    }
+
+    #[test]
+    fn update_enclave_url_works() {
+        with_externalities(&mut build_ext(), || {
+            let url2 = "my fancy url".as_bytes();
+            let e_1: Enclave<u64, Vec<u8>> = Enclave { pubkey: 10, url: url2.to_vec() };
+
+            assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec(), URL.to_vec()));
+            assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec(), url2.to_vec()));
+            assert_eq!(Registry::enclave(0).url, url2.to_vec());
+            assert_eq!(Registry::list_enclaves(), vec![(0, e_1)]);
+
+        })
     }
 
     #[test]

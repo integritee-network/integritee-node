@@ -45,6 +45,8 @@ decl_event!(
 		AddedEnclave(AccountId, Vec<u8>),
 		RemovedEnclave(AccountId),
 		UpdatedIPFSHash(Vec<u8>),
+		Forwarded(AccountId, Vec<u8>),
+		CallConfirmed(AccountId, Vec<u8>),
 	}
 );
 
@@ -83,14 +85,25 @@ decl_module! {
             Ok(())
 		}
 
-		pub fn update_ipfs_hash(origin, hash: Vec<u8>) -> Result {
-		    let sender = ensure_signed(origin)?;
-		    ensure!(<EnclaveIndex<T>>::exists(sender),
+		pub fn call_worker(origin, payload: Vec<u8>) -> Result {
+			let sender = ensure_signed(origin)?;
+
+ 			Self::deposit_event(RawEvent::Forwarded(sender, payload));
+
+ 			Ok(())
+		}
+
+		// the substraTEE-worker calls this function for every processed call to confirm a state update
+ 		pub fn confirm_call(origin, call_hash: Vec<u8>, ipfs_hash: Vec<u8>) -> Result {
+			let sender = ensure_signed(origin)?;
+			ensure!(<EnclaveIndex<T>>::exists(&sender),
 		    "[SubstraTEERegistry]: IPFS state update requested by enclave that is not registered");
 
-		    <LatestIPFSHash<T>>::put(hash.clone());
-            Self::deposit_event(RawEvent::UpdatedIPFSHash(hash));
-            Ok(())
+            <LatestIPFSHash<T>>::put(ipfs_hash.clone());
+
+ 			Self::deposit_event(RawEvent::CallConfirmed(sender, call_hash));
+            Self::deposit_event(RawEvent::UpdatedIPFSHash(ipfs_hash));
+ 			Ok(())
 		}
 	}
 }
@@ -317,7 +330,7 @@ mod tests {
         with_externalities(&mut build_ext(), || {
             let ipfs_hash = "QmYY9U7sQzBYe79tVfiMyJ4prEJoJRWCD8t85j9qjssS9y";
             assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec(), URL.to_vec()));
-            assert_ok!(Registry::update_ipfs_hash(Origin::signed(10), ipfs_hash.as_bytes().to_vec()));
+            assert_ok!(Registry::confirm_call(Origin::signed(10), vec![], ipfs_hash.as_bytes().to_vec()));
             assert_eq!(str::from_utf8(&Registry::ipfs_hash()).unwrap(), ipfs_hash);
         })
     }
@@ -326,7 +339,7 @@ mod tests {
     fn ipfs_update_from_unregistered_enclave_fails() {
         with_externalities(&mut build_ext(), || {
             let ipfs_hash = "QmYY9U7sQzBYe79tVfiMyJ4prEJoJRWCD8t85j9qjssS9y";
-            assert!(Registry::update_ipfs_hash(Origin::signed(10), ipfs_hash.as_bytes().to_vec()).is_err());
+            assert!(Registry::confirm_call(Origin::signed(10), vec![],ipfs_hash.as_bytes().to_vec()).is_err());
         })
     }
 }

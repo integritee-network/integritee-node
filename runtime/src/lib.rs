@@ -29,7 +29,6 @@ pub use runtime_primitives::BuildStorage;
 pub use consensus::Call as ConsensusCall;
 pub use timestamp::Call as TimestampCall;
 pub use balances::Call as BalancesCall;
-pub use substratee_proxy::Call as SubstraTEEProxyCall;
 pub use substratee_registry::Call as SubstraTEERegistryCall;
 pub use runtime_primitives::{Permill, Perbill};
 pub use timestamp::BlockPeriod;
@@ -63,8 +62,6 @@ pub type Nonce = u64;
 /// Used for the module template in `./template.rs`
 // mod template;
 
-/// SubstraTEE-proxy module
-pub mod substratee_proxy;
 pub mod substratee_registry;
 
 /// Opaque types. These are used by the CLI to instantiate machinery that don't need to know
@@ -201,10 +198,6 @@ impl sudo::Trait for Runtime {
 // 	type Event = Event;
 // }
 
-impl substratee_proxy::Trait for Runtime {
-	type Event = Event;
-}
-
 impl substratee_registry::Trait for Runtime {
 	type Event = Event;
 }
@@ -222,7 +215,6 @@ construct_runtime!(
 		Indices: indices,
 		Balances: balances,
 		Sudo: sudo,
-        SubstraTEEProxy: substratee_proxy::{Module, Call, Storage, Event<T>},
         SubstraTEERegistry: substratee_registry::{Module, Call, Storage, Event<T>},
 		// Used for the module template in `./template.rs`
 		// TemplateModule: template::{Module, Call, Storage, Event<T>},

@@ -3,7 +3,7 @@ authors = ["Supercomputing Systems AG <info@scs.ch>"]
 build = 'build.rs'
 edition = '2018'
 name = 'sr-io'
-version = '2.0.0'
+version = '4.0.0'
 
 [build-dependencies]
 rustc_version = "0.2"

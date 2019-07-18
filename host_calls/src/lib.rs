@@ -18,6 +18,7 @@
 #![feature(rustc_private)]
 extern crate base64;
 extern crate chrono;
+extern crate log;
 extern crate serde_json;
 extern crate sgx_tcrypto;
 extern crate sgx_types;
@@ -33,6 +34,7 @@ use std::vec::Vec;
 
 use chrono::prelude::*;
 use itertools::Itertools;
+use log::*;
 use serde_json::Value;
 use sgx_types::*;
 
@@ -155,8 +157,8 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), &'static str> {
         &webpki::TLSServerTrustAnchors(&trust_anchors),
         &chain,
         now_func.unwrap()) {
-        Ok(_) => println!("Cert is good"),
-        Err(e) => println!("Cert verification error {:?}", e),
+        Ok(_) => info!("Cert is good"),
+        Err(e) => error!("Cert verification error {:?}", e),
     }
 
     // Verify the signature against the signing cert
@@ -164,9 +166,9 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), &'static str> {
         &webpki::RSA_PKCS1_2048_8192_SHA256,
         untrusted::Input::from(&attn_report_raw),
         untrusted::Input::from(&sig)) {
-        Ok(_) => println!("Signature good"),
+        Ok(_) => info!("Signature good"),
         Err(e) => {
-            println!("Signature verification error {:?}", e);
+            error!("Signature verification error {:?}", e);
             return Err("Signature verification error");
         },
     }
@@ -187,14 +189,14 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), &'static str> {
             Ok(n) => n.as_secs() as i64,
             Err(_) => return Err("RA timestamp is before UNIX_EPOCH"),
         };
-        println!("Time diff = {}", now - ts);
+        info!("Time diff = {}", now - ts);
     } else {
         return Err("Failed to fetch timestamp from attestation report");
     }
 
     // 2. Verify quote status (mandatory field)
     if let Value::String(quote_status) = &attn_report["isvEnclaveQuoteStatus"] {
-        println!("isvEnclaveQuoteStatus = {}", quote_status);
+        info!("isvEnclaveQuoteStatus = {}", quote_status);
         match quote_status.as_ref() {
             "OK" => (),
             "GROUP_OUT_OF_DATE" | "GROUP_REVOKED" | "CONFIGURATION_NEEDED" => {
@@ -257,15 +259,15 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), &'static str> {
         // DO SECURITY CHECK ON DEMAND
         // DO SECURITY CHECK ON DEMAND
         unsafe {
-            println!("sgx quote version = {}", sgx_quote.version);
-            println!("sgx quote signature type = {}", sgx_quote.sign_type);
-            println!("sgx quote report_data = {:02x}", sgx_quote.report_body.report_data.d.iter().format(""));
-            println!("sgx quote mr_enclave = {:02x}", sgx_quote.report_body.mr_enclave.m.iter().format(""));
-            println!("sgx quote mr_signer = {:02x}", sgx_quote.report_body.mr_signer.m.iter().format(""));
+            info!("sgx quote version = {}", sgx_quote.version);
+            info!("sgx quote signature type = {}", sgx_quote.sign_type);
+            info!("sgx quote report_data = {:02x}", sgx_quote.report_body.report_data.d.iter().format(""));
+            info!("sgx quote mr_enclave = {:02x}", sgx_quote.report_body.mr_enclave.m.iter().format(""));
+            info!("sgx quote mr_signer = {:02x}", sgx_quote.report_body.mr_signer.m.iter().format(""));
         }
-        println!("Anticipated public key = {:02x}", pub_k.iter().format(""));
+        info!("Anticipated public key = {:02x}", pub_k.iter().format(""));
         if sgx_quote.report_body.report_data.d.to_vec() == pub_k.to_vec() {
-            println!("Mutual RA done!");
+            println!("Remote attestation of enclave successful!");
         }
     } else {
         return Err("Failed to fetch isvEnclaveQuoteBody from attestation report");

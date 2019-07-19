@@ -6,7 +6,7 @@ path = '..'
 authors = ["Supercomputing Systems AG <info@scs.ch>"]
 edition = '2018'
 name = 'substratee-node-runtime-wasm'
-version = '2.0.0'
+version = '4.0.0'
 
 [lib]
 crate-type = ['cdylib']

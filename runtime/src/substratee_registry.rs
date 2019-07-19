@@ -18,11 +18,10 @@
 use parity_codec::{Decode, Encode};
 use rstd::prelude::*;
 use rstd::str;
+use runtime_io::{print, verify_ra_report};
 use support::{decl_event, decl_module,
               decl_storage, dispatch::Result, ensure, EnumerableStorageMap, StorageMap, StorageValue};
 use system::ensure_signed;
-
-use runtime_io::{verify_ra_report, print};
 
 pub trait Trait: balances::Trait {
     type Event: From<Event<Self>> + Into<<Self as system::Trait>::Event>;
@@ -177,13 +176,12 @@ impl<T: Trait> Module<T> {
 #[cfg(test)]
 mod tests {
     use primitives::{Blake2Hasher, H256};
+    use runtime_io::{TestExternalities, with_externalities};
     use runtime_primitives::{
         BuildStorage, testing::{Digest, DigestItem, Header},
         traits::{BlakeTwo256, IdentityLookup}
     };
     use support::{assert_ok, impl_outer_origin};
-
-    use runtime_io::{TestExternalities, with_externalities};
 
     use super::*;
 
@@ -321,7 +319,6 @@ mod tests {
             assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec(), url2.to_vec()));
             assert_eq!(Registry::enclave(0).url, url2.to_vec());
             assert_eq!(Registry::list_enclaves(), vec![(0, e_1)]);
-
         })
     }
 
@@ -339,7 +336,7 @@ mod tests {
     fn ipfs_update_from_unregistered_enclave_fails() {
         with_externalities(&mut build_ext(), || {
             let ipfs_hash = "QmYY9U7sQzBYe79tVfiMyJ4prEJoJRWCD8t85j9qjssS9y";
-            assert!(Registry::confirm_call(Origin::signed(10), vec![],ipfs_hash.as_bytes().to_vec()).is_err());
+            assert!(Registry::confirm_call(Origin::signed(10), vec![], ipfs_hash.as_bytes().to_vec()).is_err());
         })
     }
 }

@@ -64,7 +64,7 @@ decl_storage! {
 decl_module! {
 	pub struct Module<T: Trait> for enum Call where origin: T::Origin {
 
- 		fn deposit_event<T>() = default;
+ 		fn deposit_event() = default;
 
 		// the substraTEE-worker wants to register his enclave
  		pub fn register_enclave(origin, ra_report: Vec<u8>, worker_url: Vec<u8>) -> Result {

@@ -6,52 +6,47 @@ edition = "2018"
 
 [dependencies]
 derive_more = "0.14.0"
-parity-codec = "3.3"
-wasmi = { version = "0.4.3" }
-byteorder = "1.1"
-lazy_static = "1.0"
-parking_lot = "0.8.0"
+codec = { package = "parity-scale-codec", version = "1.0.0" }
+runtime_io = { package = "sr-tee-io", path = "../sr-tee-io" }
+wasmi = { version = "0.5.0" }
+parity-wasm = "0.31"
+byteorder = "1.3"
+lazy_static = "1.3"
+parking_lot = "0.9.0"
 log = "0.4"
 libsecp256k1 = "0.2.1"
 tiny-keccak = "1.4.2"
 
-runtime_io = { package = "sr-io", path = "../sr-tee-io" }
 
-#primitives = { package = "substrate-primitives", path = "../primitives" }
 [dependencies.primitives]
 git = 'https://github.com/paritytech/substrate'
 package = 'substrate-primitives'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+rev = '9b08e7ff938a45dbec7fcdb854063202e2b0cb48'
 
-#trie = { package = "substrate-trie", path = "../trie" }
 [dependencies.trie]
 git = 'https://github.com/paritytech/substrate'
 package = 'substrate-trie'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+rev = '9b08e7ff938a45dbec7fcdb854063202e2b0cb48'
 
-#serializer = { package = "substrate-serializer", path = "../serializer" }
 [dependencies.serializer]
 git = 'https://github.com/paritytech/substrate'
 package = 'substrate-serializer'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+rev = '9b08e7ff938a45dbec7fcdb854063202e2b0cb48'
 
-#state_machine = { package = "substrate-state-machine", path = "../state-machine"  }
 [dependencies.state_machine]
 git = 'https://github.com/paritytech/substrate'
 package = 'substrate-state-machine'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+rev = '9b08e7ff938a45dbec7fcdb854063202e2b0cb48'
 
-#runtime_version = { package = "sr-version", path = "../sr-version" }
 [dependencies.runtime_version]
 git = 'https://github.com/paritytech/substrate'
 package = 'sr-version'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+rev = '9b08e7ff938a45dbec7fcdb854063202e2b0cb48'
 
-#panic-handler = { package = "substrate-panic-handler", path = "../panic-handler" }
 [dependencies.panic-handler]
 git = 'https://github.com/paritytech/substrate'
 package = 'substrate-panic-handler'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+rev = '9b08e7ff938a45dbec7fcdb854063202e2b0cb48'
 
 [dependencies.host_calls]
 path = '../host_calls'

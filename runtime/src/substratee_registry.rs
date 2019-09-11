@@ -15,12 +15,12 @@
 
 */
 
-use parity_codec::{Decode, Encode};
+use codec::{Decode, Encode};
 use rstd::prelude::*;
 use rstd::str;
-use runtime_io::{print, verify_ra_report};
+use sr_io::{print, verify_ra_report};
 use support::{decl_event, decl_module,
-              decl_storage, dispatch::Result, ensure, EnumerableStorageMap, StorageMap, StorageValue};
+              decl_storage, dispatch::Result, ensure, StorageMap, StorageValue};
 use system::ensure_signed;
 
 pub trait Trait: balances::Trait {

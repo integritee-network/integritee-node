@@ -2,41 +2,37 @@
 authors = ["Supercomputing Systems AG <info@scs.ch>"]
 build = 'build.rs'
 edition = '2018'
-name = 'sr-io'
+name = 'sr-tee-io'
 version = '2.0.0'
 
 [build-dependencies]
 rustc_version = "0.2"
 
 [dependencies]
-hash-db = { version = "0.12", default-features = false }
-codec = { package = "parity-codec", version = "3.5.1", default-features = false }
+codec = { package = "parity-scale-codec", version = "1.0.0", default-features = false }
+hash-db = { version = "0.15.2", default-features = false }
 libsecp256k1 = { version = "0.2.1", optional = true }
 tiny-keccak = { version = "1.4.2", optional = true }
 environmental = { version = "1.0.1", optional = true }
 
-#rstd = { package = "sr-std", path = "../sr-std", default-features = false }
 [dependencies.rstd]
 default-features = false
 git = 'https://github.com/paritytech/substrate'
 package = 'sr-std'
 rev = '9b08e7ff938a45dbec7fcdb854063202e2b0cb48'
 
-#primitives = { package = "substrate-primitives", path = "../primitives", default-features = false }
 [dependencies.primitives]
 default-features = false
 git = 'https://github.com/paritytech/substrate'
 package = 'substrate-primitives'
 rev = '9b08e7ff938a45dbec7fcdb854063202e2b0cb48'
 
-#substrate-state-machine = { path = "../state-machine", optional = true }
 [dependencies.substrate-state-machine]
 optional = true
 git = 'https://github.com/paritytech/substrate'
 package = 'substrate-state-machine'
 rev = '9b08e7ff938a45dbec7fcdb854063202e2b0cb48'
 
-#trie = { package = "substrate-trie", path = "../trie", optional = true }
 [dependencies.trie]
 optional = true
 git = 'https://github.com/paritytech/substrate'
@@ -47,7 +43,6 @@ rev = '9b08e7ff938a45dbec7fcdb854063202e2b0cb48'
 optional = true
 path = '../host_calls/'
 
-#substrate-offchain = { path = "../offchain" }
 [dev-dependencies.substrate-offchain]
 git = 'https://github.com/paritytech/substrate'
 package = 'substrate-offchain'

@@ -26,17 +26,18 @@ use client::{
 use version::RuntimeVersion;
 #[cfg(feature = "std")]
 use version::NativeVersion;
+use crate::substratee_registry::sr_api_hidden_includes_decl_storage::hidden_include::StorageLinkedMap;
 
 // A few exports that help ease life for downstream crates.
 #[cfg(any(feature = "std", test))]
 pub use sr_primitives::BuildStorage;
 pub use timestamp::Call as TimestampCall;
-pub use timestamp::BlockPeriod;
 pub use balances::Call as BalancesCall;
 pub use sr_primitives::{Permill, Perbill};
 pub use support::{StorageValue, construct_runtime, parameter_types};
 
 pub use substratee_registry::Call as SubstraTEERegistryCall;
+
 /// An index to a block.
 pub type BlockNumber = u32;
 
@@ -233,7 +234,7 @@ impl balances::Trait for Runtime {
 	/// The type for recording an account's balance.
 	type Balance = Balance;
 	/// What to do if an account's free balance gets zeroed.
-	type OnFreeBalanceZero = (Contract);
+	type OnFreeBalanceZero = ();
 	/// What to do if a new account is created.
 	type OnNewAccount = Indices;
 	/// The ubiquitous event type.

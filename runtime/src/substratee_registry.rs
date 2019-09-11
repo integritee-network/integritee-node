@@ -54,7 +54,7 @@ decl_storage! {
 	    // Simple lists are not supported in runtime modules as theoretically O(n)
 	    // operations can be executed while only being charged O(1), see substrate
 	    // Kitties tutorial Chapter 2, Tracking all Kitties.
-        pub EnclaveRegistry get(enclave): linked_map u64 => Enclave<T::AccountId, Vec<u8>>;
+        pub EnclaveRegistry get(enclave): map u64 => Enclave<T::AccountId, Vec<u8>>;
 	    pub EnclaveCount get(num_enclaves): u64;
 	    pub EnclaveIndex: map T::AccountId => u64;
 	    pub LatestIPFSHash get(ipfs_hash) : Vec<u8>;
@@ -98,7 +98,7 @@ decl_module! {
 			ensure!(<EnclaveIndex<T>>::exists(&sender),
 		    "[SubstraTEERegistry]: IPFS state update requested by enclave that is not registered");
 
-            <LatestIPFSHash<T>>::put(ipfs_hash.clone());
+            <LatestIPFSHash>::put(ipfs_hash.clone());
 
  			Self::deposit_event(RawEvent::CallConfirmed(sender, call_hash));
             Self::deposit_event(RawEvent::UpdatedIPFSHash(ipfs_hash));
@@ -123,7 +123,7 @@ impl<T: Trait> Module<T> {
         };
 
         <EnclaveRegistry<T>>::insert(enclaves_count, &new_enclave);
-        <EnclaveCount<T>>::put(new_enclaves_count);
+        <EnclaveCount>::put(new_enclaves_count);
         <EnclaveIndex<T>>::insert(sender, enclaves_count);
 
         Ok(())
@@ -138,7 +138,7 @@ impl<T: Trait> Module<T> {
             ok_or("[SubstraTEERegistry]: Underflow removing an enclave from the registry")?;
 
         Self::swap_and_pop(index_to_remove, new_enclaves_count)?;
-        <EnclaveCount<T>>::put(new_enclaves_count);
+        <EnclaveCount>::put(new_enclaves_count);
 
         Ok(())
     }
@@ -153,6 +153,7 @@ impl<T: Trait> Module<T> {
     }
 
     pub fn list_enclaves() -> Vec<(u64, Enclave<T::AccountId, Vec<u8>>)> {
+        //FIXME
         <EnclaveRegistry<T>>::enumerate().collect::<Vec<(u64, Enclave<T::AccountId, Vec<u8>>)>>()
     }
 

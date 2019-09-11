@@ -26,7 +26,6 @@ use client::{
 use version::RuntimeVersion;
 #[cfg(feature = "std")]
 use version::NativeVersion;
-use crate::substratee_registry::sr_api_hidden_includes_decl_storage::hidden_include::StorageLinkedMap;
 
 // A few exports that help ease life for downstream crates.
 #[cfg(any(feature = "std", test))]

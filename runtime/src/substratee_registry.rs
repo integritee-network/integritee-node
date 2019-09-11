@@ -20,7 +20,7 @@ use rstd::prelude::*;
 use rstd::str;
 use sr_io::{print, verify_ra_report};
 use support::{decl_event, decl_module,
-              decl_storage, dispatch::Result, ensure, StorageMap, StorageValue};
+              decl_storage, dispatch::Result, ensure, StorageLinkedMap, StorageMap, StorageValue};
 use system::ensure_signed;
 
 pub trait Trait: balances::Trait {
@@ -54,7 +54,7 @@ decl_storage! {
 	    // Simple lists are not supported in runtime modules as theoretically O(n)
 	    // operations can be executed while only being charged O(1), see substrate
 	    // Kitties tutorial Chapter 2, Tracking all Kitties.
-        pub EnclaveRegistry get(enclave): map u64 => Enclave<T::AccountId, Vec<u8>>;
+        pub EnclaveRegistry get(enclave): linked_map u64 => Enclave<T::AccountId, Vec<u8>>;
 	    pub EnclaveCount get(num_enclaves): u64;
 	    pub EnclaveIndex: map T::AccountId => u64;
 	    pub LatestIPFSHash get(ipfs_hash) : Vec<u8>;

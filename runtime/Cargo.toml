@@ -30,7 +30,7 @@ rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
 [dependencies.sr-io]
 default-features = false
 path = '../sr-tee-io'
-package = 'sr-tee-io'
+package = 'sr-io'
 
 [dependencies.version]
 default-features = false
@@ -128,7 +128,7 @@ package = "substrate-offchain-primitives"
 rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
 
 [build-dependencies]
-wasm-builder-runner = { package = "substrate-wasm-builder-runner", version = "1.0.2" }
+wasm-builder-runner = { package = "substrate-wasm-builder-runner", version = "1.0.3" }
 
 [features]
 default = ["std"]
@@ -166,3 +166,7 @@ no_oom = [
 ]
 no_std = [
 ]
+
+[patch."https://github.com/paritytech/substrate"]
+sr-io = { package = "sr-io", path = "../sr-tee-io" }
+substrate-executor = { path = "../substratee-executor"}

@@ -5,7 +5,6 @@ use substratee_node_runtime::{
 };
 use babe_primitives::{AuthorityId as BabeId};
 use grandpa_primitives::{AuthorityId as GrandpaId};
-use contracts;
 use substrate_service;
 
 // Note this is the URL for the telemetry server
@@ -41,7 +40,6 @@ pub fn get_authority_keys_from_seed(seed: &str) -> (AccountId, AccountId, Grandp
 		get_from_seed::<BabeId>(seed),
 	)
 }
-
 
 impl Alternative {
 	/// Get an actual chain config from one of the alternatives.
@@ -124,17 +122,10 @@ fn testnet_genesis(initial_authorities: Vec<(AccountId, AccountId, GrandpaId, Ba
 			balances: endowed_accounts.iter().cloned().map(|k|(k, 1 << 60)).collect(),
 			vesting: vec![],
 		}),
-		contracts: Some(ContractConfig {
-			current_schedule: contracts::Schedule {
-				enable_println: true, // this should only be enabled on development chains
-				..Default::default()
-			},
-			gas_price: 1 * MILLICENTS,
-		}),
 		sudo: Some(SudoConfig {
 			key: root_key,
 		}),
-				babe: Some(BabeConfig {
+		babe: Some(BabeConfig {
 			authorities: initial_authorities.iter().map(|x| (x.3.clone(), 1)).collect(),
 		}),
 		grandpa: Some(GrandpaConfig {
@@ -142,4 +133,3 @@ fn testnet_genesis(initial_authorities: Vec<(AccountId, AccountId, GrandpaId, Ba
 		}),
 	}
 }
-

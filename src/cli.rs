@@ -6,7 +6,6 @@ pub use substrate_cli::{VersionInfo, IntoExit, error};
 use substrate_cli::{informant, parse_and_prepare, ParseAndPrepare, NoCustom};
 use substrate_service::{AbstractService, Roles as ServiceRoles};
 use crate::chain_spec;
-use std::ops::Deref;
 use log::info;
 
 /// Parse command line arguments into service configuration.
@@ -17,7 +16,7 @@ pub fn run<I, T, E>(args: I, exit: E, version: VersionInfo) -> error::Result<()>
 {
 	match parse_and_prepare::<NoCustom, NoCustom, _>(&version, "substrate-node", args) {
 		ParseAndPrepare::Run(cmd) => cmd.run::<(), _, _, _, _>(load_spec, exit,
-	 	|exit, _cli_args, _custom_args, config| {
+		|exit, _cli_args, _custom_args, config| {
 			info!("{}", version.name);
 			info!("  version {}", config.full_version());
 			info!("  by {}, 2017, 2018", version.author);
@@ -64,9 +63,9 @@ fn run_until_exit<T, E>(
 	service: T,
 	e: E,
 ) -> error::Result<()>
-	where
- 		T: AbstractService,
- 		E: IntoExit,
+where
+	T: AbstractService,
+	E: IntoExit,
 {
 	let (exit_send, exit) = exit_future::signal();
 

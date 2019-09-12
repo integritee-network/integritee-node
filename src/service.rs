@@ -37,7 +37,7 @@ macro_rules! new_full_start {
 		let mut tasks_to_spawn = None;
 
 		let builder = substrate_service::ServiceBuilder::new_full::<
-			test_node_runtime::opaque::Block, test_node_runtime::RuntimeApi, crate::service::Executor
+			substratee_node_runtime::opaque::Block, substratee_node_runtime::RuntimeApi, crate::service::Executor
 		>($config)?
 			.with_select_chain(|_config, backend| {
 				Ok(substrate_client::LongestChain::new(backend.clone()))
@@ -49,7 +49,7 @@ macro_rules! new_full_start {
 				let select_chain = select_chain.take()
 					.ok_or_else(|| substrate_service::Error::SelectChainRequired)?;
 				let (block_import, link_half) =
-					grandpa::block_import::<_, _, _, test_node_runtime::RuntimeApi, _, _>(
+					grandpa::block_import::<_, _, _, substratee_node_runtime::RuntimeApi, _, _>(
 						client.clone(), client.clone(), select_chain
 					)?;
 				let justification_import = block_import.clone();

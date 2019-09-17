@@ -18,6 +18,7 @@ use primitives::{
 	blake2_128, blake2_256, twox_128, twox_256, twox_64, ed25519, Blake2Hasher, sr25519, Pair,
 };
 
+#[cfg(feature = "enable_host_calls")]
 extern crate host_calls;
 
 // Switch to this after PoC-3
@@ -204,7 +205,13 @@ impl OtherApi for () {
 	}
 
 	fn verify_ra_report(cert: &[u8]) -> Result<(), &'static str>{
-		host_calls::verify_mra_cert(cert)
+		#[cfg(feature = "enable_host_calls")]
+		let ret = host_calls::verify_mra_cert(cert);
+		#[cfg(not(feature = "enable_host_calls"))]
+		let ret = Err();
+		
+		ret
+
 	}
 }
 

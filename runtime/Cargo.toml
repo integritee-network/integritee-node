@@ -168,6 +168,10 @@ no_oom = [
 no_module = [
 ]
 
+enable_host_calls = [
+    "sr-io/enable_host_calls",
+]
+
 no_std = [
 ]
 

@@ -208,7 +208,7 @@ impl OtherApi for () {
 		#[cfg(feature = "enable_host_calls")]
 		let ret = host_calls::verify_mra_cert(cert);
 		#[cfg(not(feature = "enable_host_calls"))]
-		let ret = Err();
+		let ret = Err("enable_host_calls feature not enabled");
 		
 		ret
 

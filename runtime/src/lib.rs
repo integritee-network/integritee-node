@@ -259,6 +259,7 @@ impl substratee_registry::Trait for Runtime {
 	type Event = Event;
 }
 
+#[cfg(not(feature = "no_module"))]
 construct_runtime!(
 	pub enum Runtime where
 		Block = Block,
@@ -275,6 +276,25 @@ construct_runtime!(
         SubstraTEERegistry: substratee_registry::{Module, Call, Storage, Event<T>},
 	}
 );
+
+#[cfg(feature = "no_module")]
+construct_runtime!(
+	pub enum Runtime where
+		Block = Block,
+		NodeBlock = opaque::Block,
+		UncheckedExtrinsic = UncheckedExtrinsic
+	{
+		System: system::{Module, Call, Storage, Config, Event},
+		Timestamp: timestamp::{Module, Call, Storage, Inherent},
+		Babe: babe::{Module, Call, Storage, Config, Inherent(Timestamp)},
+		Grandpa: grandpa::{Module, Call, Storage, Config, Event},
+		Indices: indices::{default, Config<T>},
+		Balances: balances,
+		Sudo: sudo,
+        SubstraTEERegistry: substratee_registry::{Call, Storage, Event<T>},
+	}
+);
+
 
 /// The address format for describing accounts.
 pub type Address = <Indices as StaticLookup>::Source;

@@ -164,6 +164,10 @@ no_panic_handler = [
 no_oom = [
     "sr-io/no_oom"
 ]
+
+no_module = [
+]
+
 no_std = [
 ]
 

@@ -60,7 +60,6 @@ std = [
 	"substrate-state-machine",
 	"libsecp256k1",
 	"tiny-keccak",
-	"host_calls",
 ]
 
 enable_host_calls = [

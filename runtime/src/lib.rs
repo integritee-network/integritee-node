@@ -71,6 +71,7 @@ pub mod substratee_registry;
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
 /// of data like extrinsics, allowing for them to continue syncing the network through upgrades
 /// to even the core datastructures.
+#[cfg(not(feature = "no_module"))]
 pub mod opaque {
 	use super::*;
 
@@ -189,11 +190,12 @@ parameter_types! {
 	pub const ExpectedBlockTime: u64 = MILLISECS_PER_BLOCK;
 }
 
+#[cfg(not(feature = "no_module"))]
 impl babe::Trait for Runtime {
 	type EpochDuration = EpochDuration;
 	type ExpectedBlockTime = ExpectedBlockTime;
 }
-
+#[cfg(not(feature = "no_module"))]
 impl grandpa::Trait for Runtime {
 	type Event = Event;
 }
@@ -322,6 +324,7 @@ pub type CheckedExtrinsic = generic::CheckedExtrinsic<AccountId, Call, SignedExt
 /// Executive: handles dispatch to the various modules.
 pub type Executive = executive::Executive<Runtime, Block, system::ChainContext<Runtime>, Runtime, AllModules>;
 
+#[cfg(not(feature = "no_module"))]
 impl_runtime_apis! {
 	impl client_api::Core<Block> for Runtime {
 		fn version() -> RuntimeVersion {

@@ -176,5 +176,5 @@ no_std = [
 ]
 
 [patch."https://github.com/paritytech/substrate"]
-sr-io = { package = "sr-io", path = "../sr-tee-io" }
-substrate-executor = { path = "../substratee-executor"}
+sr-io = { package = "sr-io", path = "../sr-tee-io", default-features = false}
+substrate-executor = { path = "../substratee-executor", default-features = false}

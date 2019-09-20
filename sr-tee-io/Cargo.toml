@@ -71,3 +71,7 @@ strict = []
 wasm-nice-panic-message = []
 no_panic_handler = []
 no_oom = []
+
+[patch.'https://github.com/paritytech/substrate']
+substrate-primitives = { git = "https://github.com/scs/substrate-api-client", branch = "no_std_rstd"}
+

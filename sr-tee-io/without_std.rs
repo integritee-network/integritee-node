@@ -20,7 +20,8 @@ pub use rstd::{mem, slice};
 
 use core::{intrinsics, panic::PanicInfo};
 use rstd::{vec::Vec, cell::Cell, convert::TryInto};
-use primitives::{offchain, Blake2Hasher};
+use primitives::Blake2Hasher;
+use primitives::offchain;
 use codec::Decode;
 
 #[cfg(not(feature = "no_panic_handler"))]
@@ -923,7 +924,7 @@ impl CryptoApi for () {
 			) == 0
 		}
 	}
-
+	
 	fn sr25519_public_keys(id: KeyTypeId) -> Vec<sr25519::Public> {
 		let mut res_len = 0u32;
 		unsafe {
@@ -931,7 +932,7 @@ impl CryptoApi for () {
 			Vec::decode(&mut rstd::slice::from_raw_parts(res_ptr, res_len as usize)).unwrap_or_default()
 		}
 	}
-
+	
 	fn sr25519_generate(id: KeyTypeId, seed: Option<&str>) -> sr25519::Public {
 		let mut res = [0u8;32];
 		let seed = seed.as_ref().map(|s| s.as_bytes()).unwrap_or(&[]);
@@ -940,7 +941,7 @@ impl CryptoApi for () {
 		};
 		sr25519::Public(res)
 	}
-
+	
 	fn sr25519_sign<M: AsRef<[u8]>>(
 		id: KeyTypeId,
 		pubkey: &sr25519::Public,
@@ -963,7 +964,6 @@ impl CryptoApi for () {
 			None
 		}
 	}
-
 	fn sr25519_verify(sig: &sr25519::Signature, msg: &[u8], pubkey: &sr25519::Public) -> bool {
 		unsafe {
 			ext_sr25519_verify.get()(

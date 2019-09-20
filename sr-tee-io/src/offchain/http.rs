@@ -17,9 +17,10 @@
 //! A non-std set of HTTP types.
 
 use rstd::str;
-use rstd::prelude::Vec;
-#[cfg(not(feature = "std"))]
-use rstd::prelude::vec;
+use rstd::prelude::*;
+
+//#[cfg(not(feature = "std"))]
+//use rstd::prelude::vec;
 use primitives::offchain::{
 	Timestamp,
 	HttpRequestId as RequestId,

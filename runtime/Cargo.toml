@@ -63,12 +63,14 @@ rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
 
 [dependencies.babe]
 default-features = false
+#optional = true
 git = "https://github.com/paritytech/substrate"
 package = "srml-babe"
 rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
 
 [dependencies.babe-primitives]
 default-features = false
+#optional = true
 git = "https://github.com/paritytech/substrate"
 package = "substrate-consensus-babe-primitives"
 rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
@@ -87,6 +89,7 @@ rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
 
 [dependencies.grandpa]
 default-features = false
+#optional = true
 git = "https://github.com/paritytech/substrate"
 package = "srml-grandpa"
 rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
@@ -164,6 +167,12 @@ no_panic_handler = [
 no_oom = [
     "sr-io/no_oom"
 ]
+
+#with_consensus = [
+#    "grandpa",
+#    "babe",
+#    "babe-primitives"
+#]
 
 no_module = [
 ]

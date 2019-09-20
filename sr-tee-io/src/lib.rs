@@ -26,19 +26,20 @@
 #![cfg_attr(feature = "std", doc = "Substrate runtime standard library as compiled when linked with Rust's standard library.")]
 #![cfg_attr(not(feature = "std"), doc = "Substrate's runtime standard library as compiled without Rust's standard library.")]
 
+#[macro_use]
+extern crate alloc;
+
 use hash_db::Hasher;
-use rstd::vec::Vec;
+use rstd::prelude::*;
 
 #[doc(hidden)]
 pub use codec;
 
 pub use primitives::Blake2Hasher;
-use primitives::{
-	crypto::KeyTypeId, ed25519, sr25519,
-	offchain::{
+use primitives::{crypto::KeyTypeId, ed25519, sr25519 };
+use primitives::offchain::{
 		Timestamp, HttpRequestId, HttpRequestStatus, HttpError, StorageKind, OpaqueNetworkState,
-	},
-};
+	};
 
 /// Error verifying ECDSA signature
 pub enum EcdsaVerifyError {

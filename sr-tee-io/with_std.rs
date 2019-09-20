@@ -341,6 +341,7 @@ fn with_offchain<R>(f: impl FnOnce(&mut dyn offchain::Externalities) -> R, msg: 
 	).expect("offchain-worker functions cannot be called outside of an Externalities-provided environment.")
 }
 
+#[cfg(feature = "std")]
 impl OffchainApi for () {
 	fn is_validator() -> bool {
 		with_offchain(|ext| {

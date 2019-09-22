@@ -168,15 +168,6 @@ no_oom = [
     "sr-io/no_oom"
 ]
 
-#with_consensus = [
-#    "grandpa",
-#    "babe",
-#    "babe-primitives"
-#]
-
-no_module = [
-]
-
 enable_host_calls = [
     "sr-io/enable_host_calls",
 ]

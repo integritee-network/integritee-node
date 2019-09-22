@@ -71,7 +71,6 @@ pub mod substratee_registry;
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
 /// of data like extrinsics, allowing for them to continue syncing the network through upgrades
 /// to even the core datastructures.
-#[cfg(not(feature = "no_module"))]
 pub mod opaque {
 	use super::*;
 
@@ -190,12 +189,11 @@ parameter_types! {
 	pub const ExpectedBlockTime: u64 = MILLISECS_PER_BLOCK;
 }
 
-#[cfg(not(feature = "no_module"))]
 impl babe::Trait for Runtime {
 	type EpochDuration = EpochDuration;
 	type ExpectedBlockTime = ExpectedBlockTime;
 }
-#[cfg(not(feature = "no_module"))]
+
 impl grandpa::Trait for Runtime {
 	type Event = Event;
 }
@@ -261,7 +259,6 @@ impl substratee_registry::Trait for Runtime {
 	type Event = Event;
 }
 
-#[cfg(not(feature = "no_module"))]
 construct_runtime!(
 	pub enum Runtime where
 		Block = Block,
@@ -278,25 +275,6 @@ construct_runtime!(
         SubstraTEERegistry: substratee_registry::{Module, Call, Storage, Event<T>},
 	}
 );
-
-#[cfg(feature = "no_module")]
-construct_runtime!(
-	pub enum Runtime where
-		Block = Block,
-		NodeBlock = opaque::Block,
-		UncheckedExtrinsic = UncheckedExtrinsic
-	{
-		System: system::{Module, Call, Storage, Config, Event},
-		Timestamp: timestamp::{Module, Call, Storage, Inherent},
-		Babe: babe::{Module, Call, Storage, Config, Inherent(Timestamp)},
-		Grandpa: grandpa::{Module, Call, Storage, Config, Event},
-		Indices: indices::{default, Config<T>},
-		Balances: balances,
-		Sudo: sudo,
-        SubstraTEERegistry: substratee_registry::{Call, Storage, Event<T>},
-	}
-);
-
 
 /// The address format for describing accounts.
 pub type Address = <Indices as StaticLookup>::Source;
@@ -324,7 +302,6 @@ pub type CheckedExtrinsic = generic::CheckedExtrinsic<AccountId, Call, SignedExt
 /// Executive: handles dispatch to the various modules.
 pub type Executive = executive::Executive<Runtime, Block, system::ChainContext<Runtime>, Runtime, AllModules>;
 
-#[cfg(not(feature = "no_module"))]
 impl_runtime_apis! {
 	impl client_api::Core<Block> for Runtime {
 		fn version() -> RuntimeVersion {

@@ -1,6 +1,6 @@
 [package]
 name = "substratee-node"
-version = "4.0.0"
+version = "4.0.1"
 authors = ["Supercomputing Systems AG <info@scs.ch>"]
 build = "build.rs"
 edition = "2018"
@@ -99,9 +99,6 @@ rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
 [dependencies.substratee-node-runtime]
 path = "runtime"
 features = ["enable_host_calls"]
-#features = ["enable_host_calls", "with_consensus"]
-
-
 
 [dependencies.substrate-client]
 git = "https://github.com/paritytech/substrate"

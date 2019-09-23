@@ -18,6 +18,8 @@ use std::fmt;
 #[macro_use]
 use std::vec::Vec;
 
+use sgx_log::*;
+
 use primitives::{
 	blake2_128, blake2_256, twox_128, twox_256, twox_64, ed25519, Blake2Hasher, sr25519, Pair,
 };
@@ -59,38 +61,64 @@ fn child_storage_key_or_panic(storage_key: &[u8]) -> ChildStorageKey<Blake2Hashe
 }
 */
 
+
+// FIXME: the following is redundant: copy-paste from substraTEE-worker/enclave/hex
+use std::char;
+use sgx_types::*;
+
+#[allow(unused)]
+fn encode_hex_digit(digit: u8) -> char {
+    match char::from_digit(u32::from(digit), 16) {
+        Some(c) => c,
+        _ => panic!(),
+    }
+}
+
+#[allow(unused)]
+fn encode_hex_byte(byte: u8) -> [char; 2] {
+    [encode_hex_digit(byte >> 4), encode_hex_digit(byte & 0x0Fu8)]
+}
+
+#[allow(unused)]
+pub fn encode_hex(bytes: &[u8]) -> String {
+    let strs: Vec<String> = bytes
+        .iter()
+        .map(|byte| encode_hex_byte(*byte).iter().copied().collect())
+        .collect();
+    strs.join("")
+}
+
 impl StorageApi for () {
 	fn storage(key: &[u8]) -> Option<Vec<u8>> {
-		#[cfg(feature = "debug")] println!("storage('{:?}')", key);
-		//hm::with(|hm| println!("key exists?: {:?}", hm.contains_key(key)));
+		debug!("storage('{}')", encode_hex(key));
 		hm::with(|hm| hm.get(key).map(|s| {
-			#[cfg(feature = "debug")] println!("  returning {:?}", s);
+			debug!("  returning {}", encode_hex(s));
 			s.to_vec()
 		}))
 			.expect("storage cannot be called outside of an Externalities-provided environment.")
 	}
 
 	fn read_storage(key: &[u8], value_out: &mut [u8], value_offset: usize) -> Option<usize> {
-		#[cfg(feature = "debug")] println!("read_storage('{:?}' with offset =  {:?}. value_out.len() is {})", key, value_offset, value_out.len());
+		debug!("read_storage('{}' with offset =  {:?}. value_out.len() is {})", encode_hex(key), value_offset, value_out.len());
 		hm::with(|hm| hm.get(key).map(|value| {
-			#[cfg(feature = "debug")] println!("  entire stored value: {:?}", value);
+			debug!("  entire stored value: {:?}", value);
 			let value = &value[value_offset..];
-			#[cfg(feature = "debug")] println!("  stored value at offset: {:?}", value);
+			debug!("  stored value at offset: {:?}", value);
 			let written = std::cmp::min(value.len(), value_out.len());
 			value_out[..written].copy_from_slice(&value[..written]);
-			#[cfg(feature = "debug")] println!("  write back {:?}, return len {}", value_out, value.len());
+			debug!("  write back {:?}, return len {}", value_out, value.len());
 			value.len()
 		})).expect("read_storage cannot be called outside of an Externalities-provided environment.")
 	}
 
 	fn child_storage(storage_key: &[u8], key: &[u8]) -> Option<Vec<u8>> {
         // TODO: unimplemented
-		println!("StorageApi::child_storage() unimplemented");
+		warn!("StorageApi::child_storage() unimplemented");
 		Some(vec![0,1,2,3])
 	}
 
 	fn set_storage(key: &[u8], value: &[u8]) {
-		#[cfg(feature = "debug")] println!("set_storage('{:?}', {:x?})", key, value);
+		debug!("set_storage('{}', {:x?})", encode_hex(key), value);
 		hm::with(|hm|
 			hm.insert(key.to_vec(), value.to_vec())
         );
@@ -103,57 +131,57 @@ impl StorageApi for () {
 		value_offset: usize,
 	) -> Option<usize> {
         // TODO unimplemented
-		println!("StorageApi::read_child_storage() unimplemented");
+		warn!("StorageApi::read_child_storage() unimplemented");
 		Some(0)
 	}
 
 	fn set_child_storage(storage_key: &[u8], key: &[u8], value: &[u8]) {
-        println!("StorageApi::set_child_storage() unimplemented");
+        warn!("StorageApi::set_child_storage() unimplemented");
 	}
 
 	fn clear_storage(key: &[u8]) {
-        println!("StorageApi::clear_storage() unimplemented");
+        warn!("StorageApi::clear_storage() unimplemented");
 	}
 
 	fn clear_child_storage(storage_key: &[u8], key: &[u8]) {
-		println!("StorageApi::clear_child_storage() unimplemented");
+		warn!("StorageApi::clear_child_storage() unimplemented");
 	}
 
 	fn kill_child_storage(storage_key: &[u8]) {
-		println!("StorageApi::kill_child_storage() unimplemented");
+		warn!("StorageApi::kill_child_storage() unimplemented");
 
 	}
 
 	fn exists_storage(key: &[u8]) -> bool {
-		println!("StorageApi::exists_storage() unimplemented");
+		warn!("StorageApi::exists_storage() unimplemented");
 		false
 	}
 
 	fn exists_child_storage(storage_key: &[u8], key: &[u8]) -> bool {
-		println!("StorageApi::exists_child_storage() unimplemented");
+		warn!("StorageApi::exists_child_storage() unimplemented");
 		false
 	}
 
 	fn clear_prefix(prefix: &[u8]) {
-		println!("StorageApi::clear_storage() unimplemented");
+		warn!("StorageApi::clear_storage() unimplemented");
 	}
 
 	fn clear_child_prefix(storage_key: &[u8], prefix: &[u8]) {
-		println!("StorageApi::clear_child_prefix() unimplemented");
+		warn!("StorageApi::clear_child_prefix() unimplemented");
 	}
 
 	fn storage_root() -> [u8; 32] {
-		println!("StorageApi::storage_root() unimplemented");
+		warn!("StorageApi::storage_root() unimplemented");
 		[0u8; 32]
 	}
 
 	fn child_storage_root(storage_key: &[u8]) -> Vec<u8> {
-		println!("StorageApi::child_storage_root() unimplemented");
+		warn!("StorageApi::child_storage_root() unimplemented");
 		vec![0,1,2,3]
 	}
 
 	fn storage_changes_root(parent_hash: [u8; 32]) -> Option<[u8; 32]> {
-		println!("StorageApi::storage_changes_root() unimplemented");
+		warn!("StorageApi::storage_changes_root() unimplemented");
 		Some([0u8; 32])
 	}
 
@@ -165,7 +193,7 @@ impl StorageApi for () {
 		H: Hasher,
 		H::Out: Ord,
 	{
-		println!("StorageApi::trie_root() unimplemented");
+		warn!("StorageApi::trie_root() unimplemented");
 		H::Out::default()
 	}
 
@@ -176,14 +204,14 @@ impl StorageApi for () {
 		H: Hasher,
 		H::Out: Ord,
 	{
-		println!("StorageApi::ordered_trie_root() unimplemented");
+		warn!("StorageApi::ordered_trie_root() unimplemented");
 		H::Out::default()
 	}
 }
 
 impl OtherApi for () {
 	fn chain_id() -> u64 {
-		println!("OtherApi::chain_id unimplemented");
+		warn!("OtherApi::chain_id unimplemented");
 		0
 	}
 
@@ -204,12 +232,12 @@ impl OtherApi for () {
 
 impl CryptoApi for () {
 	fn ed25519_public_keys(id: KeyTypeId) -> Vec<ed25519::Public> {
-        println!("CryptoApi::ed25519_public_keys unimplemented");
+        warn!("CryptoApi::ed25519_public_keys unimplemented");
         vec!(ed25519::Public::default())
 	}
 
 	fn ed25519_generate(id: KeyTypeId, seed: Option<&str>) -> ed25519::Public {
-        println!("CryptoApi::ed25519_generate unimplemented");
+        warn!("CryptoApi::ed25519_generate unimplemented");
         ed25519::Public::default()
 	}
 
@@ -218,22 +246,22 @@ impl CryptoApi for () {
 		pubkey: &ed25519::Public,
 		msg: &M,
 	) -> Option<ed25519::Signature> {
-        println!("CryptoApi::ed25519_sign unimplemented");
+        warn!("CryptoApi::ed25519_sign unimplemented");
         Some(ed25519::Signature::default())
 	}
 
 	fn ed25519_verify(sig: &ed25519::Signature, msg: &[u8], pubkey: &ed25519::Public) -> bool {
-		println!("CryptoApi::ed25519_verify unimplemented");
+		warn!("CryptoApi::ed25519_verify unimplemented");
 		true
 	}
 
 	fn sr25519_public_keys(id: KeyTypeId) -> Vec<sr25519::Public> {
-		println!("CryptoApi::sr25519_public_key unimplemented");
+		warn!("CryptoApi::sr25519_public_key unimplemented");
 		vec!(sr25519::Public::default())
 	}
 
 	fn sr25519_generate(id: KeyTypeId, seed: Option<&str>) -> sr25519::Public {
-		println!("CryptoApi::sr25519_generate unimplemented");
+		warn!("CryptoApi::sr25519_generate unimplemented");
 		sr25519::Public::default()
 	}
 
@@ -242,59 +270,59 @@ impl CryptoApi for () {
 		pubkey: &sr25519::Public,
 		msg: &M,
 	) -> Option<sr25519::Signature> {
-		println!("CryptoApi::sr25519_sign unimplemented");
+		warn!("CryptoApi::sr25519_sign unimplemented");
 		Some(sr25519::Signature::default())
 	}
 
 	fn sr25519_verify(sig: &sr25519::Signature, msg: &[u8], pubkey: &sr25519::Public) -> bool {
-		println!("CryptoApi::sr25519_verify unimplemented");
+		warn!("CryptoApi::sr25519_verify unimplemented");
 		true
 	}
 
 	fn secp256k1_ecdsa_recover(sig: &[u8; 65], msg: &[u8; 32]) -> Result<[u8; 64], EcdsaVerifyError> {
-		println!("CryptoApi::secp256k1_ecdsa_recover unimplemented");
+		warn!("CryptoApi::secp256k1_ecdsa_recover unimplemented");
 		Ok([0;64])
 	}
 }
 
 impl HashingApi for () {
 	fn keccak_256(data: &[u8]) -> [u8; 32] {
-		println!("HashingApi::keccak256 unimplemented");
+		warn!("HashingApi::keccak256 unimplemented");
 		[0u8; 32]
 	}
 
 	fn blake2_128(data: &[u8]) -> [u8; 16] {
-		#[cfg(feature = "debug")] println!("blake2_128 of {:x?}", data);
+		debug!("blake2_128 of {}", encode_hex(data));
 		let hash = blake2_128(data);
-		#[cfg(feature = "debug")] println!("  returning {:?}", hash);
+		debug!("  returning hash {}", encode_hex(&hash));
 		hash
 	}
 
 	fn blake2_256(data: &[u8]) -> [u8; 32] {
-		#[cfg(feature = "debug")] println!("blake2_256 of {:x?}", data);
+		debug!("blake2_256 of {}", encode_hex(data));
 		let hash = blake2_256(data);
-		#[cfg(feature = "debug")] println!("  returning {:?}", hash);
+		debug!("  returning hash {}", encode_hex(&hash));
 		hash
 	}
 
 	fn twox_256(data: &[u8]) -> [u8; 32] {
-		#[cfg(feature = "debug")] println!("twox_256 of {:x?}", data);
+		debug!("twox_256 of {}", encode_hex(data));
 		let hash = twox_256(data);
-		#[cfg(feature = "debug")] println!("  returning {:?}", hash);
+		debug!("  returning {}", encode_hex(&hash));
 		hash
 	}
 
 	fn twox_128(data: &[u8]) -> [u8; 16] {
-		#[cfg(feature = "debug")] println!("twox_128 of {:x?}", data);
+		debug!("twox_128 of {}", encode_hex(data));
 		let hash = twox_128(data);
-		#[cfg(feature = "debug")] println!("  returning {:?}", hash);
+		debug!("  returning {}", encode_hex(&hash));
 		hash
 	}
 
 	fn twox_64(data: &[u8]) -> [u8; 8] {
-		#[cfg(feature = "debug")] println!("twox_64 of {:x?}", data);
+		debug!("twox_64 of {}", encode_hex(data));
 		let hash = twox_64(data);
-		#[cfg(feature = "debug")] println!("  returning {:?}", hash);
+		debug!("  returning {}", encode_hex(&hash));
 		hash
 	}
 }
@@ -311,36 +339,36 @@ fn with_offchain<R>(f: impl FnOnce(&mut dyn offchain::Externalities) -> R, msg: 
 
 impl OffchainApi for () {
 	fn is_validator() -> bool {
-		println!("OffchainApi::submit_extrinsic unimplemented");
+		warn!("OffchainApi::submit_extrinsic unimplemented");
         false
 	}
 
 	fn submit_transaction<T: codec::Encode>(data: &T) -> Result<(), ()> {
-		println!("OffchainApi::submit_transaction unimplemented");
+		warn!("OffchainApi::submit_transaction unimplemented");
         Err(())
 	}
 
 	fn network_state() -> Result<OpaqueNetworkState, ()> {
-		println!("OffchainApi::network_state unimplemented");
+		warn!("OffchainApi::network_state unimplemented");
         Err(())
 	}
 
 	fn timestamp() -> offchain::Timestamp {
-		println!("OffchainApi::timestamp unimplemented");
+		warn!("OffchainApi::timestamp unimplemented");
         offchain::Timestamp::default()
 	}
 
 	fn sleep_until(deadline: offchain::Timestamp) {
-        println!("OffchainApi::sleep_until unimplemented");
+        warn!("OffchainApi::sleep_until unimplemented");
 	}
 
 	fn random_seed() -> [u8; 32] {
-		println!("OffchainApi::random_seed unimplemented");
+		warn!("OffchainApi::random_seed unimplemented");
         [0;32]
 	}
 
 	fn local_storage_set(kind: offchain::StorageKind, key: &[u8], value: &[u8]) {
-		println!("OffchainApi::local_storage_set unimplemented");
+		warn!("OffchainApi::local_storage_set unimplemented");
 	}
 
 	fn local_storage_compare_and_set(
@@ -349,12 +377,12 @@ impl OffchainApi for () {
 		old_value: Option<&[u8]>,
 		new_value: &[u8],
 	) -> bool {
-        println!("OffchainApi::local_storage_compare_and_set unimplemented");	
+        warn!("OffchainApi::local_storage_compare_and_set unimplemented");	
         false
     }
 
 	fn local_storage_get(kind: offchain::StorageKind, key: &[u8]) -> Option<Vec<u8>> {
-		println!("OffchainApi::local_storage_get unimplemented");	
+		warn!("OffchainApi::local_storage_get unimplemented");	
         None
 	}
 
@@ -363,7 +391,7 @@ impl OffchainApi for () {
 		uri: &str,
 		meta: &[u8]
 	) -> Result<offchain::HttpRequestId, ()> {
-		println!("OffchainApi::http_request_start unimplemented");
+		warn!("OffchainApi::http_request_start unimplemented");
         Err(())
 	}
 
@@ -372,7 +400,7 @@ impl OffchainApi for () {
 		name: &str,
 		value: &str
 	) -> Result<(), ()> {
-		println!("OffchainApi::http_request_add_header unimplemented");
+		warn!("OffchainApi::http_request_add_header unimplemented");
         Err(())
 	}
 
@@ -381,7 +409,7 @@ impl OffchainApi for () {
 		chunk: &[u8],
 		deadline: Option<offchain::Timestamp>
 	) -> Result<(), offchain::HttpError> {
-		println!("OffchainApi::http_request_write_body unimplemented");
+		warn!("OffchainApi::http_request_write_body unimplemented");
         Err(offchain::HttpError::IoError)
 	}
 
@@ -389,14 +417,14 @@ impl OffchainApi for () {
 		ids: &[offchain::HttpRequestId],
 		deadline: Option<offchain::Timestamp>
 	) -> Vec<offchain::HttpRequestStatus> {
-		println!("OffchainApi::http_response_wait unimplemented");
+		warn!("OffchainApi::http_response_wait unimplemented");
         Vec::new()
 	}
 
 	fn http_response_headers(
 		request_id: offchain::HttpRequestId
 	) -> Vec<(Vec<u8>, Vec<u8>)> {
-		println!("OffchainApi::http_response_wait unimplemented");
+		warn!("OffchainApi::http_response_wait unimplemented");
         Vec::new()
 	}
 
@@ -405,7 +433,7 @@ impl OffchainApi for () {
 		buffer: &mut [u8],
 		deadline: Option<offchain::Timestamp>
 	) -> Result<usize, offchain::HttpError> {
-		println!("OffchainApi::http_response_read_body unimplemented");
+		warn!("OffchainApi::http_response_read_body unimplemented");
         Err(offchain::HttpError::IoError)
 	}
 }

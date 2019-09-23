@@ -16,6 +16,9 @@ tiny-keccak = { version = "1.4.2", optional = true }
 environmental = { version = "1.0.1", default-features = false, optional = true }
 
 sgx_tstd      = { rev = "v1.0.9", git = "https://github.com/baidu/rust-sgx-sdk", features = ["untrusted_fs","net","backtrace"], optional = true}
+sgx_types     = { rev = "v1.0.9", git = "https://github.com/baidu/rust-sgx-sdk", optional = true}
+sgx_log       = { package = "log", version = "0.4.7", git = "https://github.com/mesalock-linux/log-sgx", optional = true }
+
 twox-hash = { version = "1.3.0", default-features = false, optional = true }
 
 [dependencies.rstd]
@@ -70,6 +73,8 @@ enable_host_calls = [
 ]
 sgx = [
 	"sgx_tstd",
+	"sgx_types",
+	"sgx_log",
 	"twox-hash",
 	"environmental"
 ]

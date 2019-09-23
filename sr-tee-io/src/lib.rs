@@ -29,8 +29,16 @@
 #[macro_use]
 extern crate alloc;
 
-use hash_db::Hasher;
+#[cfg(feature = "sgx")]
+#[macro_use]
+extern crate sgx_tstd as std;
+#[cfg(feature = "sgx")]
+use std::prelude::v1::*;
+
+#[cfg(not(feature = "sgx"))]
 use rstd::prelude::*;
+
+use hash_db::Hasher;
 
 #[doc(hidden)]
 pub use codec;
@@ -405,8 +413,12 @@ mod imp {
 	#[cfg(feature = "std")]
 	include!("../with_std.rs");
 
-	#[cfg(not(feature = "std"))]
+	#[cfg(all(not(feature = "std"), not(feature = "sgx")))]
 	include!("../without_std.rs");
+
+	#[cfg(all(not(feature = "std"), feature = "sgx"))]
+	include!("../with_sgx.rs");
+
 }
 
 #[cfg(feature = "std")]
@@ -414,8 +426,11 @@ pub use self::imp::{
 	StorageOverlay, ChildrenStorageOverlay, with_storage,
 	with_externalities
 };
-#[cfg(not(feature = "std"))]
+
+#[cfg(all(not(feature = "std"), not(feature = "sgx")))]
 pub use self::imp::ext::*;
+#[cfg(all(not(feature = "std"), feature = "sgx"))]
+pub use self::imp::{StorageOverlay, ChildrenStorageOverlay, with_externalities, SgxExternalities};
 
 /// Type alias for Externalities implementation used in tests.
 #[cfg(feature = "std")]

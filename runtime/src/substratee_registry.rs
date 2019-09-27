@@ -15,12 +15,12 @@
 
 */
 
-use parity_codec::{Decode, Encode};
+use codec::{Decode, Encode};
 use rstd::prelude::*;
 use rstd::str;
-use runtime_io::{print, verify_ra_report};
+use sr_io::{print, verify_ra_report};
 use support::{decl_event, decl_module,
-              decl_storage, dispatch::Result, ensure, EnumerableStorageMap, StorageMap, StorageValue};
+              decl_storage, dispatch::Result, ensure, StorageLinkedMap, StorageMap, StorageValue};
 use system::ensure_signed;
 
 pub trait Trait: balances::Trait {
@@ -64,7 +64,7 @@ decl_storage! {
 decl_module! {
 	pub struct Module<T: Trait> for enum Call where origin: T::Origin {
 
- 		fn deposit_event<T>() = default;
+ 		fn deposit_event() = default;
 
 		// the substraTEE-worker wants to register his enclave
  		pub fn register_enclave(origin, ra_report: Vec<u8>, worker_url: Vec<u8>) -> Result {
@@ -98,7 +98,7 @@ decl_module! {
 			ensure!(<EnclaveIndex<T>>::exists(&sender),
 		    "[SubstraTEERegistry]: IPFS state update requested by enclave that is not registered");
 
-            <LatestIPFSHash<T>>::put(ipfs_hash.clone());
+            <LatestIPFSHash>::put(ipfs_hash.clone());
 
  			Self::deposit_event(RawEvent::CallConfirmed(sender, call_hash));
             Self::deposit_event(RawEvent::UpdatedIPFSHash(ipfs_hash));
@@ -123,7 +123,7 @@ impl<T: Trait> Module<T> {
         };
 
         <EnclaveRegistry<T>>::insert(enclaves_count, &new_enclave);
-        <EnclaveCount<T>>::put(new_enclaves_count);
+        <EnclaveCount>::put(new_enclaves_count);
         <EnclaveIndex<T>>::insert(sender, enclaves_count);
 
         Ok(())
@@ -138,7 +138,7 @@ impl<T: Trait> Module<T> {
             ok_or("[SubstraTEERegistry]: Underflow removing an enclave from the registry")?;
 
         Self::swap_and_pop(index_to_remove, new_enclaves_count)?;
-        <EnclaveCount<T>>::put(new_enclaves_count);
+        <EnclaveCount>::put(new_enclaves_count);
 
         Ok(())
     }
@@ -153,6 +153,7 @@ impl<T: Trait> Module<T> {
     }
 
     pub fn list_enclaves() -> Vec<(u64, Enclave<T::AccountId, Vec<u8>>)> {
+        //FIXME
         <EnclaveRegistry<T>>::enumerate().collect::<Vec<(u64, Enclave<T::AccountId, Vec<u8>>)>>()
     }
 

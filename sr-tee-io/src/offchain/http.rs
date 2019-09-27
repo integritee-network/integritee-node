@@ -17,9 +17,10 @@
 //! A non-std set of HTTP types.
 
 use rstd::str;
-use rstd::prelude::Vec;
-#[cfg(not(feature = "std"))]
-use rstd::prelude::vec;
+use rstd::prelude::*;
+
+//#[cfg(not(feature = "std"))]
+//use rstd::prelude::vec;
 use primitives::offchain::{
 	Timestamp,
 	HttpRequestId as RequestId,
@@ -224,7 +225,7 @@ pub enum Error {
 	/// Deadline has been reached.
 	DeadlineReached,
 	/// Request had timed out.
-	Timeout,
+	IoError,
 	/// Unknown error has been ecountered.
 	Unknown,
 }
@@ -283,8 +284,8 @@ impl PendingRequest {
 			.zip(requests.into_iter())
 			.map(|(status, req)| match status {
 				RequestStatus::DeadlineReached => Err(req),
-				RequestStatus::Timeout => Ok(Err(Error::Timeout)),
-				RequestStatus::Unknown => Ok(Err(Error::Unknown)),
+				RequestStatus::IoError => Ok(Err(Error::IoError)),
+				RequestStatus::Invalid => Ok(Err(Error::Unknown)),
 				RequestStatus::Finished(code) => Ok(Ok(Response::new(req.id, code))),
 			})
 			.collect()
@@ -486,9 +487,8 @@ mod tests {
 
 	#[test]
 	fn should_send_a_basic_request_and_get_response() {
-		let offchain = testing::TestOffchainExt::default();
+		let (offchain, state) = testing::TestOffchainExt::new();
 		let mut t = TestExternalities::default();
-		let state = offchain.0.clone();
 		t.set_offchain_externalities(offchain);
 
 		with_externalities(&mut t, || {
@@ -528,9 +528,8 @@ mod tests {
 
 	#[test]
 	fn should_send_a_post_request() {
-		let offchain = testing::TestOffchainExt::default();
+		let (offchain, state) = testing::TestOffchainExt::new();
 		let mut t = TestExternalities::default();
-		let state = offchain.0.clone();
 		t.set_offchain_externalities(offchain);
 
 		with_externalities(&mut t, || {

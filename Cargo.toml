@@ -1,91 +1,115 @@
+[package]
+name = "substratee-node"
+version = "4.0.1"
+authors = ["Supercomputing Systems AG <info@scs.ch>"]
+build = "build.rs"
+edition = "2018"
 [profile.release]
-panic = 'unwind'
+panic = "unwind"
 
 [[bin]]
-name = 'substratee-node'
-path = 'src/main.rs'
+name = "substratee-node"
+path = "src/main.rs"
 
-[build-dependencies]
-vergen = '3'
 
-[package]
-authors = ["Supercomputing Systems AG <info@scs.ch>"]
-build = 'build.rs'
-edition = '2018'
-name = 'substratee-node'
-version = '4.0.0'
+
 
 # to run cargo test with dev-dependencies it must be part of a workspace
 #[workspace]
-#members = [ 'runtime',
-#            'host_calls']
+#members = [ "runtime",
+#            "host_calls"]
 
 [dependencies]
 derive_more = "0.14.0"
-exit-future = '0.1'
-futures = '0.1'
-log = '0.4'
-parity-codec = '3.3'
-parking_lot = "0.8.0"
-tokio = '0.1'
-trie-root = '0.12.2'
-
-[dependencies.basic-authorship]
-git = 'https://github.com/paritytech/substrate'
-package = 'substrate-basic-authorship'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
-
-[dependencies.consensus]
-git = 'https://github.com/paritytech/substrate'
-package = 'substrate-consensus-aura'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
-
-[dependencies.ctrlc]
-features = ['termination']
-version = '3.0'
-
-[dependencies.inherents]
-git = 'https://github.com/paritytech/substrate'
-package = 'substrate-inherents'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
-
-[dependencies.network]
-git = 'https://github.com/paritytech/substrate'
-package = 'substrate-network'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
-
-[dependencies.substratee-node-runtime]
-path = 'runtime'
-
-[dependencies.primitives]
-git = 'https://github.com/paritytech/substrate'
-package = 'substrate-primitives'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+futures = "0.1"
+ctrlc = { version = "3.0", features = ["termination"] }
+log = "0.4"
+tokio = "0.1"
+exit-future = "0.1"
+parking_lot = "0.9.0"
+codec = { package = "parity-scale-codec", version = "1.0.0" }
+trie-root = "0.15.2"
 
 [dependencies.sr-io]
-path = 'sr-tee-io'
+git = "https://github.com/paritytech/substrate"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
 
 [dependencies.substrate-cli]
-git = 'https://github.com/paritytech/substrate'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+git = "https://github.com/paritytech/substrate"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
 
-[dependencies.substrate-client]
-git = 'https://github.com/paritytech/substrate'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+[dependencies.primitives]
+git = "https://github.com/paritytech/substrate"
+package = "substrate-primitives"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
 
 [dependencies.substrate-executor]
-path = "substratee-executor"
-package = 'substrate-executor'
+git = "https://github.com/paritytech/substrate"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
 
 [dependencies.substrate-service]
-git = 'https://github.com/paritytech/substrate'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+git = "https://github.com/paritytech/substrate"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
+
+[dependencies.inherents]
+git = "https://github.com/paritytech/substrate"
+package = "substrate-inherents"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
 
 [dependencies.transaction-pool]
-git = 'https://github.com/paritytech/substrate'
-package = 'substrate-transaction-pool'
-rev = '56b0273fd48b4e742e9da7317bc8e132a740b684'
+git = "https://github.com/paritytech/substrate"
+package = "substrate-transaction-pool"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
 
-[patch.'https://github.com/paritytech/substrate']
-sr-io = { path = 'sr-tee-io' }
-substrate-executor = { path = 'substratee-executor'}
+[dependencies.network]
+git = "https://github.com/paritytech/substrate"
+package = "substrate-network"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
+
+[dependencies.babe]
+git = "https://github.com/paritytech/substrate"
+package = "substrate-consensus-babe"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
+
+[dependencies.babe-primitives]
+git = "https://github.com/paritytech/substrate"
+package = "substrate-consensus-babe-primitives"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
+
+[dependencies.grandpa]
+git = "https://github.com/paritytech/substrate"
+package = "substrate-finality-grandpa"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
+
+[dependencies.grandpa-primitives]
+git = "https://github.com/paritytech/substrate"
+package = "substrate-finality-grandpa-primitives"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
+
+[dependencies.basic-authorship]
+git = "https://github.com/paritytech/substrate"
+package = "substrate-basic-authorship"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
+
+[dependencies.contracts]
+git = "https://github.com/paritytech/substrate"
+package = "srml-contracts"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
+
+[dependencies.substratee-node-runtime]
+path = "runtime"
+features = ["enable_host_calls"]
+
+[dependencies.substrate-client]
+git = "https://github.com/paritytech/substrate"
+rev = "9b08e7ff938a45dbec7fcdb854063202e2b0cb48"
+
+[patch."https://github.com/paritytech/substrate"]
+sr-io = { package = "sr-io", path = "sr-tee-io", default-features=false }
+substrate-executor = { path = "substratee-executor", default-features=false}
+
+[build-dependencies]
+vergen = "3"
+
+
+

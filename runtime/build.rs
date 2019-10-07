@@ -20,7 +20,6 @@ fn main() {
 	build_current_project_with_rustflags(
 		"wasm_binary.rs",
 		WasmBuilderSource::Crates("1.0.7"),
-		//WasmBuilderSource::Git { rev: "2e24acf09ab2cc42f374993523fb5894cd5610a3", repo : "https://github.com/paritytech/substrate.git" },
 		// This instructs LLD to export __heap_base as a global variable, which is used by the
 		// external memory allocator.
 		"-Clink-arg=--export=__heap_base",

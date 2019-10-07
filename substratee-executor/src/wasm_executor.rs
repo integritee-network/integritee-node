@@ -1397,6 +1397,16 @@ impl_wasm_host_interface! {
 				}
 			})
 		}
+
+		ext_verify_ra_report(cert_data:  Pointer<u8>, cert_len: WordSize) -> u32 {
+		if let Ok(cert) = context.read_memory(cert_data, cert_len) {
+			match host_calls::verify_mra_cert(&cert) {
+				Ok(_) => return Ok(0 as u32),
+				Err(_) => return Ok(1 as u32),
+			}
+		}
+		Ok(2 as u32)
+		}
 	}
 }
 

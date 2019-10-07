@@ -18,9 +18,9 @@
 use codec::{Decode, Encode};
 use rstd::prelude::*;
 use rstd::str;
-use sr_io::{print_utf8, verify_ra_report};
+use runtime_io::{print_utf8, verify_ra_report};
 use support::{decl_event, decl_module,
-              decl_storage, dispatch::Result, ensure, StorageLinkedMap, StorageMap};
+              decl_storage, dispatch::Result, ensure, StorageLinkedMap};
 use system::ensure_signed;
 
 pub trait Trait: balances::Trait {

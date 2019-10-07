@@ -87,7 +87,7 @@ no_panic_handler = []
 no_oom = []
 
 [patch.'https://github.com/paritytech/substrate']
-substrate-primitives = { git = "https://github.com/scs/substrate-api-client", branch = "no_std_rstd"}
+substrate-primitives = { git = "https://github.com/scs/substrate", branch = "substraTEE-M5.1"}
 
 [patch.crates-io]
 ed25519-dalek = { git = "https://github.com/scs/ed25519-dalek.git", branch = "no_std_sgx"}

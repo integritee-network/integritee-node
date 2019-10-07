@@ -25,7 +25,7 @@ git = "https://github.com/paritytech/substrate"
 package = "sr-std"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
-[dependencies.sr-io]
+[dependencies.runtime-io]
 default-features = false
 path = '../sr-tee-io'
 package = 'sr-io'
@@ -107,7 +107,7 @@ git = "https://github.com/paritytech/substrate"
 package = "srml-sudo"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
-[dependencies.sr-primitives]
+[dependencies.runtime-primitives]
 default-features = false
 git = "https://github.com/paritytech/substrate"
 package = "sr-primitives"
@@ -129,12 +129,12 @@ rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 wasm-builder-runner = { package = "substrate-wasm-builder-runner", version = "1.0.3" }
 
 [features]
-default = ["std"]
+default = ["std", "enable_host_calls"]
 std = [
     "codec/std",
     "client/std",
     "rstd/std",
-    "sr-io/std",
+    "runtime-io/std",
     "support/std",
     "balances/std",
     "babe/std",
@@ -143,7 +143,7 @@ std = [
     "indices/std",
     "grandpa/std",
     "primitives/std",
-    "sr-primitives/std",
+    "runtime-primitives/std",
     "system/std",
     "timestamp/std",
     "sudo/std",
@@ -157,14 +157,14 @@ no_global_allocator = [
 	"rstd/no_global_allocator",
 ]
 no_panic_handler = [
-    "sr-io/no_panic_handler"
+    "runtime-io/no_panic_handler"
 ]
 no_oom = [
-    "sr-io/no_oom"
+    "runtime-io/no_oom"
 ]
 
 enable_host_calls = [
-    "sr-io/enable_host_calls",
+    "runtime-io/enable_host_calls",
 ]
 
 no_std = [

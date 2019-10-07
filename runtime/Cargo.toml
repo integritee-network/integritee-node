@@ -21,7 +21,7 @@ version = "1.0.0"
 
 [dependencies.rstd]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "sr-std"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
@@ -32,96 +32,96 @@ package = 'sr-io'
 
 [dependencies.version]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "sr-version"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.support]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "srml-support"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.primitives]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "substrate-primitives"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.substrate-session]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.balances]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "srml-balances"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.babe]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "srml-babe"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.babe-primitives]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "substrate-consensus-babe-primitives"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.executive]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "srml-executive"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.indices]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "srml-indices"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.grandpa]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "srml-grandpa"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.system]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "srml-system"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.timestamp]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "srml-timestamp"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.sudo]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "srml-sudo"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.runtime-primitives]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "sr-primitives"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.client]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "substrate-client"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
 [dependencies.offchain-primitives]
 default-features = false
-git = "https://github.com/paritytech/substrate"
+git = "https://github.com/scs/substrate"
 package = "substrate-offchain-primitives"
 rev = "f17d023bbe179f15678ac9989f471c9b18917e17"
 
@@ -170,6 +170,6 @@ enable_host_calls = [
 no_std = [
 ]
 
-[patch."https://github.com/paritytech/substrate"]
+[patch."https://github.com/scs/substrate"]
 sr-io = { package = "sr-io", path = "../sr-tee-io", default-features = false}
 substrate-executor = { path = "../substratee-executor", default-features = false}

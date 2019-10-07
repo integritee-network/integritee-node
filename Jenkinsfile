@@ -13,21 +13,20 @@ pipeline {
     }
     stage('Build') {
       steps {
-        sh './scripts/build.sh'
         sh 'cargo build'
       }
     }
-    // stage('Test') {
-    //   steps {
-    //     echo 'Stage TEST'
-    //     echo 'Not implemented yet'
-    //   }
-    // }
+    stage('Test') {
+      steps {
+        echo 'Stage TEST'
+        sh 'cargo test'
+      }
+    }
     stage('Lint') {
       steps {
         sh 'cargo check 2>&1 | tee rustc.log'
         sh 'cargo clean'
-        sh 'cargo +nightly-2019-05-21 clippy 2>&1 | tee clippy.log'
+        sh 'cargo +nightly-2019-08-01 clippy 2>&1 | tee clippy.log'
       }
     }
     stage('CheckLog') {

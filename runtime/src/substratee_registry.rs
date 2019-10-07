@@ -18,9 +18,9 @@
 use codec::{Decode, Encode};
 use rstd::prelude::*;
 use rstd::str;
-use runtime_io::{print, verify_ra_report};
+use runtime_io::{print_utf8, verify_ra_report};
 use support::{decl_event, decl_module,
-              decl_storage, dispatch::Result, ensure, StorageLinkedMap, StorageMap, StorageValue};
+              decl_storage, dispatch::Result, ensure, StorageLinkedMap};
 use system::ensure_signed;
 
 pub trait Trait: balances::Trait {
@@ -110,7 +110,7 @@ decl_module! {
 impl<T: Trait> Module<T> {
     fn add_enclave(sender: &T::AccountId, url: &[u8]) -> Result {
         if <EnclaveIndex<T>>::exists(sender) {
-            print("Updating already registered enclave");
+            print_utf8(b"Updating already registered enclave");
             return Self::update_enclave(sender, url)
         }
         let enclaves_count = Self::num_enclaves();
@@ -177,7 +177,7 @@ impl<T: Trait> Module<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
-	
+
 	use std::{collections::HashSet, cell::RefCell};
 	use runtime_io::with_externalities;
 	use primitives::{H256, Blake2Hasher};

@@ -13,6 +13,8 @@
 
 // You should have received a copy of the GNU General Public License
 // along with Substrate.  If not, see <http://www.gnu.org/licenses/>.
+extern crate sgx_tstd as std;
+
 #[macro_use]
 use std::fmt;
 #[macro_use]
@@ -43,9 +45,6 @@ use std::{collections::HashMap, convert::TryFrom};
 pub type SgxExternalities = HashMap<Vec<u8>, Vec<u8>>;
 environmental!(hm: SgxExternalities);
 
-/// Additional bounds for `Hasher` trait for with_std.
-pub trait HasherBounds {}
-impl<T: Hasher> HasherBounds for T {}
 
 /// Returns a `ChildStorageKey` if the given `storage_key` slice is a valid storage
 /// key or panics otherwise.
@@ -185,27 +184,14 @@ impl StorageApi for () {
 		Some([0u8; 32])
 	}
 
-	fn trie_root<H, I, A, B>(input: I) -> H::Out
-	where
-		I: IntoIterator<Item = (A, B)>,
-		A: AsRef<[u8]> + Ord,
-		B: AsRef<[u8]>,
-		H: Hasher,
-		H::Out: Ord,
-	{
-		warn!("StorageApi::trie_root() unimplemented");
-		H::Out::default()
+	fn blake2_256_trie_root(_input: Vec<(Vec<u8>, Vec<u8>)>) -> H256 {
+		warn!("StorageApi::blake2_256_trie_root unimplemented");
+		H256::default()
 	}
 
-	fn ordered_trie_root<H, I, A>(input: I) -> H::Out
-	where
-		I: IntoIterator<Item = A>,
-		A: AsRef<[u8]>,
-		H: Hasher,
-		H::Out: Ord,
-	{
-		warn!("StorageApi::ordered_trie_root() unimplemented");
-		H::Out::default()
+	fn blake2_256_ordered_trie_root(input: Vec<Vec<u8>>) -> H256 {
+		warn!("StorageApi::blake2_256_ordered_trie_root unimplemented");
+		H256::default()
 	}
 }
 
@@ -215,8 +201,17 @@ impl OtherApi for () {
 		0
 	}
 
-	fn print<T: Printable + Sized>(value: T) {
-		value.print()
+	fn print_num(val: u64) {
+		println!("{}", val)
+	}
+
+	fn print_utf8(utf8: &[u8]) {
+		println!("{:?}", utf8)
+
+	}
+
+	fn print_hex(data: &[u8]) {
+		println!("{:?}", data)
 	}
 
 	fn verify_ra_report(cert: &[u8]) -> Result<(), &'static str>{
@@ -241,10 +236,10 @@ impl CryptoApi for () {
         ed25519::Public::default()
 	}
 
-	fn ed25519_sign<M: AsRef<[u8]>>(
+	fn ed25519_sign(
 		id: KeyTypeId,
 		pubkey: &ed25519::Public,
-		msg: &M,
+		msg: &[u8],
 	) -> Option<ed25519::Signature> {
         warn!("CryptoApi::ed25519_sign unimplemented");
         Some(ed25519::Signature::default())
@@ -265,10 +260,10 @@ impl CryptoApi for () {
 		sr25519::Public::default()
 	}
 
-	fn sr25519_sign<M: AsRef<[u8]>>(
+	fn sr25519_sign(
 		id: KeyTypeId,
 		pubkey: &sr25519::Public,
-		msg: &M,
+		msg: &[u8],
 	) -> Option<sr25519::Signature> {
 		warn!("CryptoApi::sr25519_sign unimplemented");
 		Some(sr25519::Signature::default())
@@ -343,7 +338,7 @@ impl OffchainApi for () {
         false
 	}
 
-	fn submit_transaction<T: codec::Encode>(data: &T) -> Result<(), ()> {
+	fn submit_transaction(data: Vec<u8>) -> Result<(), ()> {
 		warn!("OffchainApi::submit_transaction unimplemented");
         Err(())
 	}
@@ -472,23 +467,6 @@ pub fn with_storage<R, F: FnOnce() -> R>(
 	r
 }
 */
-impl<'a> Printable for &'a [u8] {
-	fn print(&self) {
-		println!("Runtime: {:?}", &self);
-	}
-}
-
-impl<'a> Printable for &'a str {
-	fn print(&self) {
-		println!("Runtime: {}", self);
-	}
-}
-
-impl Printable for u64 {
-	fn print(&self) {
-		println!("Runtime: {}", self);
-	}
-}
 
 #[cfg(test)]
 mod std_tests {

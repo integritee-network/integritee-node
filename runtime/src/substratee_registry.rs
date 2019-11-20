@@ -19,7 +19,7 @@ use codec::{Decode, Encode};
 use rstd::prelude::*;
 use rstd::str;
 use runtime_io::misc::print_utf8;
-use host_calls::custom_host_calls::verify_ra_report;
+use host_calls::runtime_interfaces::verify_ra_report;
 use support::{decl_event, decl_module,
               decl_storage, dispatch::Result, ensure, StorageLinkedMap};
 use system::ensure_signed;

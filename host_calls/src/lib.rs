@@ -6,7 +6,7 @@ use remote_attestation::verify_mra_cert;
 use runtime_interface::runtime_interface;
 
 #[runtime_interface]
-pub trait CustomHostCalls {
+pub trait RuntimeInterfaces {
 	// Only types that implement the RIType (Runtime Interface Type) trait can be returned
 	fn verify_ra_report(cert_der: &[u8]) -> Option<()> {
 		match verify_mra_cert(cert_der) {

@@ -5,8 +5,11 @@ authors = ["Supercomputing Systems AG <info@scs.ch>"]
 build = "build.rs"
 edition = "2018"
 
-#[workspace]
-#members = []
+[workspace]
+members = [
+    "host_calls",
+    "runtime",
+]
 
 [[bin]]
 name = "substratee-node"

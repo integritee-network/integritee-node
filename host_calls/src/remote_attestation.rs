@@ -15,7 +15,6 @@
 
 */
 
-#![feature(rustc_private)]
 extern crate base64;
 extern crate chrono;
 extern crate log;
@@ -113,8 +112,7 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), &'static str> {
         Ok(c) => c,
         Err(_) => return Err("Decoding Error"),
     };
-    let sig_cert_input = untrusted::Input::from(&sig_cert_dec);
-    let sig_cert = match webpki::EndEntityCert::from(sig_cert_input) {
+    let sig_cert = match webpki::EndEntityCert::from(&sig_cert_dec) {
         Ok(c) => c,
         Err(_) => {
             return Err("Bad DER")
@@ -132,7 +130,6 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), &'static str> {
         Ok(c) => c,
         Err(_) => return Err("Decoding Error"),
     };
-    let ias_cert_input = untrusted::Input::from(&ias_cert_dec);
 
     let mut ca_reader = BufReader::new(&IAS_REPORT_CA[..]);
 
@@ -147,8 +144,8 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), &'static str> {
         .map(|cert| cert.to_trust_anchor())
         .collect();
 
-    let mut chain: Vec<untrusted::Input> = Vec::new();
-    chain.push(ias_cert_input);
+    let mut chain: Vec<&[u8]> = Vec::new();
+    chain.push(&ias_cert_dec);
 
     let now_func = webpki::Time::try_from(SystemTime::now());
 
@@ -164,8 +161,8 @@ pub fn verify_mra_cert(cert_der: &[u8]) -> Result<(), &'static str> {
     // Verify the signature against the signing cert
     match sig_cert.verify_signature(
         &webpki::RSA_PKCS1_2048_8192_SHA256,
-        untrusted::Input::from(&attn_report_raw),
-        untrusted::Input::from(&sig)) {
+        &attn_report_raw,
+        &sig) {
         Ok(_) => info!("Signature good"),
         Err(e) => {
             error!("Signature verification error {:?}", e);

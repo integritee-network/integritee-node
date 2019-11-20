@@ -18,7 +18,8 @@
 use codec::{Decode, Encode};
 use rstd::prelude::*;
 use rstd::str;
-use runtime_io::{print_utf8, verify_ra_report};
+use runtime_io::misc::print_utf8;
+use host_calls::custom_host_calls::verify_ra_report;
 use support::{decl_event, decl_module,
               decl_storage, dispatch::Result, ensure, StorageLinkedMap};
 use system::ensure_signed;
@@ -70,7 +71,9 @@ decl_module! {
  		pub fn register_enclave(origin, ra_report: Vec<u8>, worker_url: Vec<u8>) -> Result {
 			let sender = ensure_signed(origin)?;
 
-            verify_ra_report(&ra_report)?;
+            if let None = verify_ra_report(&ra_report) {
+                return Err("Verifying RA report failed... returning")
+            }
             Self::add_enclave(&sender, &worker_url)?;
             Self::deposit_event(RawEvent::AddedEnclave(sender, worker_url));
  			Ok(())

@@ -29,6 +29,13 @@ git = "https://github.com/paritytech/substrate"
 package = "substrate-runtime-interface"
 rev = "73ca788db50645699805a849edeb50936d960db2"
 
+[dependencies.runtime-io]
+default-features = false
+git = "https://github.com/paritytech/substrate"
+package = "sr-io"
+rev = "73ca788db50645699805a849edeb50936d960db2"
+features = ["disable_allocator", "disable_panic_handler", "disable_oom"]
+
 [features]
 default = ["std"]
 std = [

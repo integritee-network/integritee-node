@@ -5,6 +5,9 @@ authors = ["Supercomputing Systems AG <info@scs.ch>"]
 build = "build.rs"
 edition = "2018"
 
+#[workspace]
+#members = []
+
 [[bin]]
 name = "substratee-node"
 path = "src/main.rs"
@@ -83,7 +86,6 @@ rev = "73ca788db50645699805a849edeb50936d960db2"
 
 [dependencies.substratee-node-runtime]
 path = "runtime"
-#features = ["enable_host_calls"]
 
 [dependencies.sr-primitives]
 git = "https://github.com/paritytech/substrate"
@@ -95,11 +97,8 @@ git = "https://github.com/paritytech/substrate"
 package = "substrate-basic-authorship"
 rev = "73ca788db50645699805a849edeb50936d960db2"
 
-# Added by SCS
-#[dependencies.runtime-interface]
-#git = "https://github.com/paritytech/substrate"
-#package = "substrate-runtime-interface"
-#rev = "73ca788db50645699805a849edeb50936d960db2"
+[dependencies.host_calls]
+path = "host_calls"
 
 [build-dependencies]
 vergen = "3.0.4"

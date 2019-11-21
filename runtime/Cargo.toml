@@ -193,6 +193,7 @@ std = [
 	"transaction-payment/std",
 	"tx-pool-api/std",
 	"version/std",
+	"host_calls/std",
 ]
 
 # --- start changed by SCS -------------------------------------------------

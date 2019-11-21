@@ -232,10 +232,11 @@ impl sudo::Trait for Runtime {
 	type Proposal = Call;
 }
 
-// Added by SCS
+// --- start changed by SCS -----------------------------------------------
 impl substratee_registry::Trait for Runtime {
 	type Event = Event;
 }
+// --- end changed by SCS -------------------------------------------------
 
 construct_runtime!(
 	pub enum Runtime where
@@ -251,9 +252,10 @@ construct_runtime!(
 		Balances: balances::{default, Error},
 		TransactionPayment: transaction_payment::{Module, Storage},
 		Sudo: sudo,
-		// Added by SCS
-        SubstraTEERegistry: substratee_registry::{Module, Call, Storage, Event<T>},
-        RandomnessCollectiveFlip: randomness_collective_flip::{Module, Call, Storage},
+		// --- start changed by SCS -----------------------------------------------
+		SubstraTEERegistry: substratee_registry::{Module, Call, Storage, Event<T>},
+		// --- end changed by SCS -------------------------------------------------
+		RandomnessCollectiveFlip: randomness_collective_flip::{Module, Call, Storage},
 	}
 );
 

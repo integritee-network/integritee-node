@@ -156,6 +156,7 @@ git = "https://github.com/paritytech/substrate"
 package = "sr-version"
 rev = "3bf9540e72df5ecb3955845764dfee7dcdbb26b5"
 
+# added by SCS
 [dependencies.host_calls]
 default-features = false
 path = "../host_calls"
@@ -194,6 +195,7 @@ std = [
 	"version/std",
 ]
 
+# --- start changed by SCS -------------------------------------------------
 disable_allocator = [
 	"runtime-io/disable_allocator",
 ]
@@ -203,3 +205,4 @@ disable_panic_handler = [
 disable_oom = [
     "runtime-io/disable_oom"
 ]
+# --- end changed by SCS -------------------------------------------------

@@ -1,3 +1,6 @@
+// Changes by SCS:
+// - rename 'runtime' to substratee_node_runtime
+
 use primitives::{Pair, Public, sr25519};
 use substratee_node_runtime::{
 	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig,

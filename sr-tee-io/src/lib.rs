@@ -18,7 +18,7 @@
 
 //#![warn(missing_docs)]
 
-// Added by SCS. Such that during compilation with sgx features no warnings are thrown at all those
+// Added by SCS. Prevents warnings during compilation with sgx features at all those
 // unimplemented method stubs.
 #![allow(unused_variables)]
 
@@ -31,6 +31,9 @@
    doc = "Substrate runtime standard library as compiled when linked with Rust's standard library.")]
 #![cfg_attr(not(feature = "std"),
    doc = "Substrate's runtime standard library as compiled without Rust's standard library.")]
+
+
+// Starting from here, the content of the lib.rs file has been moved to without_sgx.rs.
 
 #[cfg(not(feature = "sgx"))]
 include!("../without_sgx.rs");

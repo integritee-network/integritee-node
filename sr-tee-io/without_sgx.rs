@@ -1,3 +1,5 @@
+// The content of this file is exactly the same as in the
+// sr-io/src/lib.rs file in the substrate repository
 use rstd::vec::Vec;
 
 #[cfg(feature = "std")]

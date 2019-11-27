@@ -137,7 +137,7 @@ pub mod storage {
 
     pub fn child_get(storage_key: &[u8], key: &[u8]) -> Option<Vec<u8>> {
         // TODO: unimplemented
-        warn!("StorageApi::child_storage() unimplemented");
+        warn!("storage::child_get() unimplemented");
         Some(vec![0,1,2,3])
     }
 
@@ -155,67 +155,66 @@ pub mod storage {
         value_offset: usize,
     ) -> Option<usize> {
         // TODO unimplemented
-        warn!("StorageApi::read_child_storage() unimplemented");
+        warn!("storage::child_read() unimplemented");
         Some(0)
     }
 
     pub fn child_set(storage_key: &[u8], key: &[u8], value: &[u8]) {
-        warn!("StorageApi::set_child_storage() unimplemented");
+        warn!("storage::child_set() unimplemented");
     }
 
     pub fn clear(key: &[u8]) {
-        warn!("StorageApi::clear_storage() unimplemented");
+        warn!("storage::clear() unimplemented");
     }
 
     pub fn child_clear(storage_key: &[u8], key: &[u8]) {
-        warn!("StorageApi::clear_child_storage() unimplemented");
+        warn!("storage::child_clear() unimplemented");
     }
 
     pub fn child_storage_kill(storage_key: &[u8]) {
-        warn!("StorageApi::kill_child_storage() unimplemented");
-
+        warn!("storage::child_storage_kill() unimplemented");
     }
 
     pub fn exists(key: &[u8]) -> bool {
-        warn!("StorageApi::exists_storage() unimplemented");
+        warn!("storage::exists unimplemented");
         false
     }
 
     pub fn child_exists(storage_key: &[u8], key: &[u8]) -> bool {
-        warn!("StorageApi::exists_child_storage() unimplemented");
+        warn!("storage::child_exists() unimplemented");
         false
     }
 
     pub fn clear_prefix(prefix: &[u8]) {
-        warn!("StorageApi::clear_storage() unimplemented");
+        warn!("storage::clear_prefix() unimplemented");
     }
 
     pub fn child_clear_prefix(storage_key: &[u8], prefix: &[u8]) {
-        warn!("StorageApi::clear_child_prefix() unimplemented");
+        warn!("storage::child_clear_prefix() unimplemented");
     }
 
     pub fn root() -> [u8; 32] {
-        warn!("StorageApi::storage_root() unimplemented");
+        warn!("storage::root() unimplemented");
         [0u8; 32]
     }
 
     pub fn child_root(storage_key: &[u8]) -> Vec<u8> {
-        warn!("StorageApi::child_storage_root() unimplemented");
+        warn!("storage::child_root() unimplemented");
         vec![0,1,2,3]
     }
 
     pub fn changes_root(parent_hash: [u8; 32]) -> Option<[u8; 32]> {
-        warn!("StorageApi::storage_changes_root() unimplemented");
+        warn!("storage::changes_root() unimplemented");
         Some([0u8; 32])
     }
 
     pub fn blake2_256_trie_root(_input: Vec<(Vec<u8>, Vec<u8>)>) -> H256 {
-        warn!("StorageApi::blake2_256_trie_root unimplemented");
+        warn!("storage::blake2_256_trie_root unimplemented");
         H256::default()
     }
 
     pub fn blake2_256_ordered_trie_root(input: Vec<Vec<u8>>) -> H256 {
-        warn!("StorageApi::blake2_256_ordered_trie_root unimplemented");
+        warn!("storage::blake2_256_ordered_trie_root unimplemented");
         H256::default()
     }
 }
@@ -225,7 +224,7 @@ pub mod hashing {
     use super::*;
 
     pub fn keccak_256(data: &[u8]) -> [u8; 32] {
-        warn!("HashingApi::keccak256 unimplemented");
+        warn!("hashing::keccak256 unimplemented");
         [0u8; 32]
     }
 
@@ -270,12 +269,12 @@ pub mod crypto {
     use super::*;
 
     pub fn ed25519_public_keys(id: KeyTypeId) -> Vec<ed25519::Public> {
-        warn!("CryptoApi::ed25519_public_keys unimplemented");
+        warn!("crypto::ed25519_public_keys unimplemented");
         vec!(ed25519::Public::default())
     }
 
     pub fn ed25519_generate(id: KeyTypeId, seed: Option<Vec<u8>>) -> ed25519::Public {
-        warn!("CryptoApi::ed25519_generate unimplemented");
+        warn!("crypto::ed25519_generate unimplemented");
         ed25519::Public::default()
     }
 
@@ -284,22 +283,22 @@ pub mod crypto {
         pubkey: &ed25519::Public,
         msg: &[u8],
     ) -> Option<ed25519::Signature> {
-        warn!("CryptoApi::ed25519_sign unimplemented");
+        warn!("crypto::ed25519_sign unimplemented");
         Some(ed25519::Signature::default())
     }
 
     pub fn ed25519_verify(sig: &ed25519::Signature, msg: &[u8], pubkey: &ed25519::Public) -> bool {
-        warn!("CryptoApi::ed25519_verify unimplemented");
+        warn!("crypto::ed25519_verify unimplemented");
         true
     }
 
     pub fn sr25519_public_keys(id: KeyTypeId) -> Vec<sr25519::Public> {
-        warn!("CryptoApi::sr25519_public_key unimplemented");
+        warn!("crypto::sr25519_public_key unimplemented");
         vec!(sr25519::Public::default())
     }
 
     pub fn sr25519_generate(id: KeyTypeId, seed: Option<Vec<u8>>) -> sr25519::Public {
-        warn!("CryptoApi::sr25519_generate unimplemented");
+        warn!("crypto::sr25519_generate unimplemented");
         sr25519::Public::default()
     }
 
@@ -308,22 +307,22 @@ pub mod crypto {
         pubkey: &sr25519::Public,
         msg: &[u8],
     ) -> Option<sr25519::Signature> {
-        warn!("CryptoApi::sr25519_sign unimplemented");
+        warn!("crypto::sr25519_sign unimplemented");
         Some(sr25519::Signature::default())
     }
 
     pub fn sr25519_verify(sig: &sr25519::Signature, msg: &[u8], pubkey: &sr25519::Public) -> bool {
-        warn!("CryptoApi::sr25519_verify unimplemented");
+        warn!("crypto::sr25519_verify unimplemented");
         true
     }
 
     pub fn secp256k1_ecdsa_recover(sig: &[u8; 65], msg: &[u8; 32]) -> Result<[u8; 64], EcdsaVerifyError> {
-        warn!("CryptoApi::secp256k1_ecdsa_recover unimplemented");
+        warn!("crypto::secp256k1_ecdsa_recover unimplemented");
         Ok([0; 64])
     }
 
     pub fn secp256k1_ecdsa_recover_compressed(sig: &[u8; 65], msg: &[u8; 32]) -> Result<[u8; 33], EcdsaVerifyError> {
-        warn!("CryptoApi::secp256k1_ecdsa_recover unimplemented");
+        warn!("crypto::secp256k1_ecdsa_recover unimplemented");
         Ok([0; 33])
     }
 }
@@ -332,36 +331,36 @@ pub mod offchain{
     use super::*;
 
     pub fn is_validator() -> bool {
-        warn!("OffchainApi::submit_extrinsic unimplemented");
+        warn!("offchain::is_validator unimplemented");
         false
     }
 
     pub fn submit_transaction(data: Vec<u8>) -> Result<(), ()> {
-        warn!("OffchainApi::submit_transaction unimplemented");
+        warn!("offchain::submit_transaction unimplemented");
         Err(())
     }
 
     pub fn network_state() -> Result<OpaqueNetworkState, ()> {
-        warn!("OffchainApi::network_state unimplemented");
+        warn!("offchain::network_state unimplemented");
         Err(())
     }
 
     pub fn timestamp() -> offchain::Timestamp {
-        warn!("OffchainApi::timestamp unimplemented");
+        warn!("offchain::timestamp unimplemented");
         offchain::Timestamp::default()
     }
 
     pub fn sleep_until(deadline: offchain::Timestamp) {
-        warn!("OffchainApi::sleep_until unimplemented");
+        warn!("offchain::sleep_until unimplemented");
     }
 
     pub fn random_seed() -> [u8; 32] {
-        warn!("OffchainApi::random_seed unimplemented");
+        warn!("offchain::random_seed unimplemented");
         [0;32]
     }
 
     pub fn local_storage_set(kind: offchain::StorageKind, key: &[u8], value: &[u8]) {
-        warn!("OffchainApi::local_storage_set unimplemented");
+        warn!("offchain::local_storage_set unimplemented");
     }
 
     pub fn local_storage_compare_and_set(
@@ -370,12 +369,12 @@ pub mod offchain{
         old_value: Option<&[u8]>,
         new_value: &[u8],
     ) -> bool {
-        warn!("OffchainApi::local_storage_compare_and_set unimplemented");
+        warn!("offchain::local_storage_compare_and_set unimplemented");
         false
     }
 
     pub fn local_storage_get(kind: offchain::StorageKind, key: &[u8]) -> Option<Vec<u8>> {
-        warn!("OffchainApi::local_storage_get unimplemented");
+        warn!("offchain::local_storage_get unimplemented");
         None
     }
 
@@ -384,7 +383,7 @@ pub mod offchain{
         uri: &str,
         meta: &[u8]
     ) -> Result<offchain::HttpRequestId, ()> {
-        warn!("OffchainApi::http_request_start unimplemented");
+        warn!("offchain::http_request_start unimplemented");
         Err(())
     }
 
@@ -393,7 +392,7 @@ pub mod offchain{
         name: &str,
         value: &str
     ) -> Result<(), ()> {
-        warn!("OffchainApi::http_request_add_header unimplemented");
+        warn!("offchain::http_request_add_header unimplemented");
         Err(())
     }
 
@@ -402,7 +401,7 @@ pub mod offchain{
         chunk: &[u8],
         deadline: Option<offchain::Timestamp>
     ) -> Result<(), offchain::HttpError> {
-        warn!("OffchainApi::http_request_write_body unimplemented");
+        warn!("offchain::http_request_write_body unimplemented");
         Err(offchain::HttpError::IoError)
     }
 
@@ -410,14 +409,14 @@ pub mod offchain{
         ids: &[offchain::HttpRequestId],
         deadline: Option<offchain::Timestamp>
     ) -> Vec<offchain::HttpRequestStatus> {
-        warn!("OffchainApi::http_response_wait unimplemented");
+        warn!("offchain::http_response_wait unimplemented");
         Vec::new()
     }
 
     pub fn http_response_headers(
         request_id: offchain::HttpRequestId
     ) -> Vec<(Vec<u8>, Vec<u8>)> {
-        warn!("OffchainApi::http_response_wait unimplemented");
+        warn!("offchain::http_response_wait unimplemented");
         Vec::new()
     }
 
@@ -426,7 +425,7 @@ pub mod offchain{
         buffer: &mut [u8],
         deadline: Option<offchain::Timestamp>
     ) -> Result<usize, offchain::HttpError> {
-        warn!("OffchainApi::http_response_read_body unimplemented");
+        warn!("offchain::http_response_read_body unimplemented");
         Err(offchain::HttpError::IoError)
     }
 }

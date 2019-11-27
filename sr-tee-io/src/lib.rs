@@ -17,6 +17,9 @@
 //! This is part of the Substrate runtime.
 
 //#![warn(missing_docs)]
+
+// Added by SCS. Such that during compilation with sgx features no warnings are thrown at all those
+// unimplemented method stubs.
 #![allow(unused_variables)]
 
 #![cfg_attr(not(feature = "std"), no_std)]

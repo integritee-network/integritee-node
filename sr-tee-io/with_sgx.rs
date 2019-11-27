@@ -86,13 +86,13 @@ pub fn with_externalities<F: FnOnce(&mut SgxExternalities) -> R, R>(f: F) -> Opt
     ext::with(f)
 }
 
-pub trait Basic {
+pub trait BasicExternalities {
     fn new() -> Self;
     fn insert(&mut self, k: Vec<u8>, v: Vec<u8>) -> Option<Vec<u8>>;
     fn execute_with<R>(&mut self, f: impl FnOnce() -> R) -> R;
 }
 
-impl Basic for SgxExternalities {
+impl BasicExternalities for SgxExternalities {
     /// Create a new instance of `BasicExternalities`
     fn new() -> Self {
         SgxExternalities::default()
@@ -110,173 +110,6 @@ impl Basic for SgxExternalities {
         set_and_run_with_externalities(self, f)
     }
 }
-
-impl LimitedExternalities for SgxExternalities {
-    fn storage(&self, key: &[u8]) -> Option<Vec<u8>> {
-        self.get(key).cloned()
-    }
-}
-
-
-
-pub trait LimitedExternalities {
-    fn storage(&self, key: &[u8]) -> Option<Vec<u8>>;
-
-    fn storage_hash(&self, key: &[u8]) -> Option<H256> {
-        warn!("storage::original_storage_hash unimplemented");
-        Some(H256::default())
-    }
-
-    fn original_storage(&self, key: &[u8]) -> Option<Vec<u8>> {
-        warn!("storage::original_storage_hash unimplemented");
-        Some(vec![1, 2, 3])
-    }
-
-    fn original_storage_hash(&self, key: &[u8]) -> Option<H256> {
-        warn!("storage::original_storage_hash unimplemented");
-        Some(H256::default())
-    }
-
-    fn child_storage(&self, storage_key: ChildStorageKey, key: &[u8]) -> Option<Vec<u8>> {
-        warn!("storage::child_storage unimplemented");
-        Some(vec![1, 2, 3])
-    }
-
-    fn child_storage_hash(&self, storage_key: ChildStorageKey, key: &[u8]) -> Option<H256> {
-        warn!("storage::child_storage_hash unimplemented");
-        Some(H256::default())
-    }
-
-    fn original_child_storage_hash(&self, storage_key: ChildStorageKey, key: &[u8]) -> Option<H256> {
-        warn!("storage::original_child_storage_hash unimplemented");
-        Some(H256::default())
-    }
-
-    fn original_child_storage(&self, storage_key: ChildStorageKey, key: &[u8]) -> Option<Vec<u8>> {
-        warn!("storage::original_child_storage unimplemented");
-        Some(vec![1, 2, 3])
-    }
-
-    fn place_storage(&mut self, key: Vec<u8>, maybe_value: Option<Vec<u8>>) {
-        warn!("storage::place_storage unimplemented");
-    }
-
-    fn place_child_storage(
-        &mut self,
-        storage_key: ChildStorageKey,
-        key: Vec<u8>,
-        value: Option<Vec<u8>>,
-    ) {
-        warn!("storage::place_child_storage unimplemented");
-    }
-
-    fn kill_child_storage(&mut self, storage_key: ChildStorageKey) {
-        warn!("storage::kill_child_storage unimplemented");
-    }
-
-    fn clear_prefix(&mut self, prefix: &[u8]) {
-        warn!("storage::clear_prefix unimplemented");
-    }
-
-    fn clear_child_prefix(&mut self, storage_key: ChildStorageKey, prefix: &[u8]) {
-        warn!("storage::clear_child_prefix unimplemented");
-    }
-
-    fn chain_id(&self) -> u64 { 42 }
-
-    fn storage_root(&mut self) -> H256 {
-        warn!("storage::storage_root unimplemented");
-        H256::default()
-    }
-
-    fn child_storage_root(&mut self, storage_key: ChildStorageKey) -> Vec<u8> {
-        // TODO: unimplemented
-        warn!("storage::child_storage_root() unimplemented");
-        vec![0, 1, 2, 3]
-    }
-
-    fn storage_changes_root(&mut self, _parent: H256) -> Result<Option<H256>, ()> {
-        Ok(None)
-    }
-}
-
-//pub mod storage {
-//    use super::*;
-//
-//    trait Storage {
-//        /// Returns the data for `key` in the storage or `None` if the key can not be found.
-//        fn get(&self, key: &[u8]) -> Option<Vec<u8>>;
-//        /// Get `key` from storage, placing the value into `value_out` and return the number of
-//        /// bytes that the entry in storage has beyond the offset or `None` if the storage entry
-//        /// doesn't exist at all.
-//        /// If `value_out` length is smaller than the returned length, only `value_out` length bytes
-//        /// are copied into `value_out`.
-//        fn read(&self, key: &[u8], value_out: &mut [u8], value_offset: u32) -> Option<u32>;
-//        /// Set `key` to `value` in the storage.
-//        fn set(&mut self, key: &[u8], value: &[u8]);
-//        /// Clear the storage of the given `key` and its value.
-//        fn clear(&mut self, key: &[u8]);
-//    }
-//
-//    impl Storage for &mut dyn crate::LimitedExternalities {
-//        fn get(&self, key: &[u8]) -> Option<Vec<u8>> {
-//            Some(Vec::new())
-//        }
-//
-//        fn read(&self, key: &[u8], value_out: &mut [u8], value_offes: u32) -> Option<u32> {
-//            warn!("storage::read() unimplemented");
-//            Some(1u32)
-//        }
-//
-//        fn set(&mut self, key: &[u8], value: &[u8]) {
-//            warn!("storage::child_storage_root() unimplemented");
-//        }
-//
-//        fn clear(&mut self, key: &[u8]) {
-//            warn!("storage::child_storage_root() unimplemented");
-//        }
-//    }
-//
-//    pub fn get(key: &[u8]) -> Option<Vec<u8>> {
-//        with_externalities(|ext| Storage::get(&ext, key))
-//            .expect("`set_or_clear` called outside of an Externalities-provided environment.")
-//    }
-//
-//    pub fn read(key: &[u8], value_out: &mut [u8], value_offset: u32) -> Option<u32> {
-//        with_externalities(|ext| Storage::read(&ext, key, value_out, value_offset))
-//            .expect("`set_or_clear` called outside of an Externalities-provided environment.")
-//    }
-//
-//    pub fn set(key: &[u8], value: &[u8]) {
-//        with_externalities(|mut ext| Storage::set(&mut ext, key, value))
-//            .expect("`set_or_clear` called outside of an Externalities-provided environment.")
-//    }
-//
-//    pub fn clear(key: &[u8]) {
-//        with_externalities(|mut ext| Storage::clear(&mut ext, key))
-//            .expect("`set_or_clear` called outside of an Externalities-provided environment.")
-//    }
-//
-//    pub fn root() -> H256 {
-//        warn!("CryptoApi::ed25519_public_keys unimplemented");
-//        H256::default()
-//    }
-//
-//    pub fn changes_root(parent_hash: [u8; 32]) -> Option<H256> {
-//        warn!("CryptoApi::ed25519_public_keys unimplemented");
-//        Some(H256::default())
-//    }
-//
-//    pub fn blake2_256_trie_root(input: Vec<(Vec<u8>, Vec<u8>)>) -> H256 {
-//        warn!("CryptoApi::ed25519_public_keys unimplemented");
-//        H256::default()
-//    }
-//
-//    pub fn blake2_256_ordered_trie_root(input: Vec<Vec<u8>>) -> H256 {
-//        warn!("CryptoApi::ed25519_public_keys unimplemented");
-//        H256::default()
-//    }
-//}
 
 pub mod storage {
     use super::*;

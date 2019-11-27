@@ -16,26 +16,19 @@
 
 extern crate sgx_tstd as std;
 
-use std::println;
 use std::prelude::v1::String;
 
 use codec::{Decode, Encode};
 use environmental::environmental;
 use primitives::{
-    blake2_128, blake2_256, Blake2Hasher, crypto::KeyTypeId, ed25519, Pair, sr25519, twox_128, twox_256, twox_64
-};
-use primitives::{
-//    LogLevel,
-    hash::H256, storage::{
-        ChildStorageKey, well_known_keys::is_child_storage_key,
-    },
+    hash::H256, storage::ChildStorageKey,
     offchain::{
         Timestamp, HttpRequestId, HttpRequestStatus, HttpError, StorageKind, OpaqueNetworkState,
-    }
+    },
+    crypto::KeyTypeId, ed25519, sr25519
 };
 
 use std::char;
-use sgx_types::*;
 
 #[allow(unused)]
 fn encode_hex_digit(digit: u8) -> char {
@@ -60,7 +53,7 @@ pub fn encode_hex(bytes: &[u8]) -> String {
 }
 
 use sgx_log::*;
-use std::{collections::HashMap, convert::TryFrom, vec, vec::Vec};
+use std::{collections::HashMap, vec, vec::Vec};
 
 pub type SgxExternalities = HashMap<Vec<u8>, Vec<u8>>;
 environmental!(ext: SgxExternalities);

@@ -19,9 +19,8 @@ extern crate sgx_tstd as std;
 use std::prelude::v1::String;
 
 use codec::{Decode, Encode};
-use environmental::environmental;
 use primitives::{
-    hash::H256, storage::ChildStorageKey,
+    hash::H256,
     offchain::{
         Timestamp, HttpRequestId, HttpRequestStatus, HttpError, StorageKind, OpaqueNetworkState,
     },
@@ -53,10 +52,11 @@ pub fn encode_hex(bytes: &[u8]) -> String {
 }
 
 use sgx_log::*;
-use std::{collections::HashMap, vec, vec::Vec};
+use std::{vec, vec::Vec};
 
-pub type SgxExternalities = HashMap<Vec<u8>, Vec<u8>>;
-environmental!(ext: SgxExternalities);
+// Reexport here, such that the worker does not need to import other crate.
+// Not sure if this is a good Idea though.
+pub use sgx_externalities::{with_externalities, SgxExternalities, SgxExternalitiesTrait};
 
 /// Error verifying ECDSA signature
 #[derive(Encode, Decode)]
@@ -68,47 +68,6 @@ pub enum EcdsaVerifyError {
     /// Invalid signature
     BadSignature,
 
-}
-
-/// Set the given externalities while executing the given closure. To get access to the externalities
-/// while executing the given closure [`with_externalities`] grants access to them. The externalities
-/// are only set for the same thread this function was called from.
-pub fn set_and_run_with_externalities<F, R>(ext: &mut SgxExternalities, f: F) -> R
-                                            where F: FnOnce() -> R
-{
-    ext::using(ext, f)
-}
-
-/// Execute the given closure with the currently set externalities.
-///
-/// Returns `None` if no externalities are set or `Some(_)` with the result of the closure.
-pub fn with_externalities<F: FnOnce(&mut SgxExternalities) -> R, R>(f: F) -> Option<R> {
-    ext::with(f)
-}
-
-pub trait BasicExternalities {
-    fn new() -> Self;
-    fn insert(&mut self, k: Vec<u8>, v: Vec<u8>) -> Option<Vec<u8>>;
-    fn execute_with<R>(&mut self, f: impl FnOnce() -> R) -> R;
-}
-
-impl BasicExternalities for SgxExternalities {
-    /// Create a new instance of `BasicExternalities`
-    fn new() -> Self {
-        SgxExternalities::default()
-    }
-
-    /// Insert key/value
-    fn insert(&mut self, k: Vec<u8>, v: Vec<u8>) -> Option<Vec<u8>> {
-        self.insert(k, v)
-    }
-
-    /// Execute the given closure while `self` is set as externalities.
-    ///
-    /// Returns the result of the given closure.
-    fn execute_with<R>(&mut self, f: impl FnOnce() -> R) -> R {
-        set_and_run_with_externalities(self, f)
-    }
 }
 
 pub mod storage {

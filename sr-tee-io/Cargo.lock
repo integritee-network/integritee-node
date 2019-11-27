@@ -960,6 +960,16 @@ version = "1.1.0"
 source = "git+https://github.com/apache/incubator-mesatee-sgx/?rev=v1.1.0#e5482289dee5057491e124050bdfa215f68c23a6"
 
 [[package]]
+name = "sgx_externalities"
+version = "0.1.0"
+dependencies = [
+ "environmental 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.4.8 (git+https://github.com/mesalock-linux/log-sgx)",
+ "sgx_tstd 1.1.0 (git+https://github.com/apache/incubator-mesatee-sgx/?rev=v1.1.0)",
+ "sgx_types 1.1.0 (git+https://github.com/baidu/rust-sgx-sdk.git?rev=v1.1.0)",
+]
+
+[[package]]
 name = "sgx_libc"
 version = "1.1.0"
 source = "git+https://github.com/apache/incubator-mesatee-sgx/?rev=v1.1.0#e5482289dee5057491e124050bdfa215f68c23a6"
@@ -1075,6 +1085,7 @@ dependencies = [
  "log 0.4.8 (git+https://github.com/mesalock-linux/log-sgx)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "parity-scale-codec 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sgx_externalities 0.1.0",
  "sgx_tstd 1.1.0 (git+https://github.com/apache/incubator-mesatee-sgx/?rev=v1.1.0)",
  "sgx_types 1.1.0 (git+https://github.com/baidu/rust-sgx-sdk.git?rev=v1.1.0)",
  "sr-std 2.0.0 (git+https://github.com/paritytech/substrate?rev=3bf9540e72df5ecb3955845764dfee7dcdbb26b5)",

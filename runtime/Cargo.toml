@@ -195,15 +195,3 @@ std = [
 	"version/std",
 	"host_calls/std",
 ]
-
-# --- start changed by SCS -------------------------------------------------
-disable_allocator = [
-	"runtime-io/disable_allocator",
-]
-disable_panic_handler = [
-    "runtime-io/disable_panic_handler"
-]
-disable_oom = [
-    "runtime-io/disable_oom"
-]
-# --- end changed by SCS -------------------------------------------------

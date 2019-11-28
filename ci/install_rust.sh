@@ -14,12 +14,12 @@ chmod +x ./rustup.sh
 # Load new environment
 source $HOME/.cargo/env
 
-rustup install nightly-2019-08-01
-rustup default nightly-2019-08-01
+rustup install nightly-2019-11-17
+rustup default nightly-2019-11-17
 
 # Install aux components, clippy for linter, rustfmt for formatting
-rustup component add clippy --toolchain=nightly-2019-08-01
-rustup component add rustfmt --toolchain=nightly-2019-08-01
+rustup component add clippy --toolchain=nightly-2019-11-17
+rustup component add rustfmt --toolchain=nightly-2019-11-17
 
 # Show the installed versions
 rustup show

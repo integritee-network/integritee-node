@@ -26,7 +26,7 @@ pipeline {
       steps {
         sh 'cargo check 2>&1 | tee rustc.log'
         sh 'cargo clean'
-        sh 'cargo +nightly-2019-08-01 clippy 2>&1 | tee clippy.log'
+        sh 'cargo +nightly-2019-11-17 clippy 2>&1 | tee clippy.log'
       }
     }
     stage('CheckLog') {

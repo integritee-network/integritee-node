@@ -5,23 +5,16 @@ authors = ["Supercomputing Systems AG <info@scs.ch>"]
 edition = "2018"
 
 [dependencies]
-sgx_tcrypto     = { rev = "v1.0.9", git = "https://github.com/baidu/rust-sgx-sdk.git" }
-sgx_types       = { rev = "v1.0.9", git = "https://github.com/baidu/rust-sgx-sdk.git" }
+sgx_types       = { rev = "v1.1.0", git = "https://github.com/baidu/rust-sgx-sdk" }
 
 base64          = { version = "0.11", optional = true }
-bit-vec         = { version = "0.6", optional = true  }
-chrono          = { version = "0.4", optional = true  }
-httparse        = { version = "1.3", optional = true  }
+chrono          = { version = "0.4", optional = true }
 itertools       = { version = "0.8", optional = true }
-log             = { version = "0.4", optional = true  }
-num-bigint      = { version = "0.2", optional = true  }
+log             = { version = "0.4", optional = true }  # Todo: replace with runtime logger: palette-support/debug
 rustls          = { version = "0.16", optional = true }
-serde_json      = { version = "1.0", optional = true  }
-serde_derive    = { version = "1.0", optional = true  }
-untrusted       = { version = "0.7", optional = true  }
-webpki          = { version = "0.21", optional = true }
-webpki-roots    = { version = "0.18", optional = true }
-yasna           = { version = "0.3", optional = true  }
+serde_json      = { version = "1.0", optional = true }
+serde_derive    = { version = "1.0", optional = true }
+webpki          = { version = "0.21", default-features = false }
 
 [dependencies.runtime-interface]
 default-features = false
@@ -40,19 +33,13 @@ features = ["disable_allocator", "disable_panic_handler", "disable_oom"]
 default = ["std"]
 std = [
     "base64",
-    "bit-vec",
     "chrono",
-    "httparse",
     "itertools",
     "log",
-    "num-bigint",
     "rustls",
     "serde_json",
     "serde_derive",
-    "untrusted",
-    "webpki",
-    "webpki-roots",
-    "yasna",
+    "webpki/std",
     "runtime-interface/std",
     "runtime-io/std",
 ]

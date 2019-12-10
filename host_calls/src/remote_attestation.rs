@@ -15,16 +15,6 @@
 
 */
 
-extern crate base64;
-extern crate chrono;
-extern crate log;
-extern crate serde_json;
-extern crate sgx_tcrypto;
-extern crate sgx_types;
-extern crate untrusted;
-extern crate webpki;
-extern crate yasna;
-
 use std::io::BufReader;
 use std::ptr;
 use std::time::SystemTime;

@@ -4,6 +4,10 @@ pipeline {
       label 'rust&&sgx'
     }
   }
+  options {
+    timeout(time: 2, unit: 'HOURS')
+    buildDiscarder(logRotator(numToKeepStr: '14'))
+  }
   stages {
     stage('Environment') {
       steps {
@@ -22,31 +26,56 @@ pipeline {
         sh 'cargo test'
       }
     }
-    stage('Lint') {
+    stage('Clippy') {
       steps {
-        sh 'cargo check 2>&1 | tee rustc.log'
         sh 'cargo clean'
-        sh 'cargo +nightly-2019-11-17 clippy 2>&1 | tee clippy.log'
-      }
-    }
-    stage('CheckLog') {
-      steps {
-        echo 'Checking the logs'
-        script {
-          try {
-            sh './ci/check_logs.sh'
-          }
-          catch (exc) {
-            currentBuild.result = 'UNSTABLE'
-          }
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'cargo check 2>&1 | tee rustc.log'
+        }
+        sh 'cargo clean'
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'cargo +nightly-2019-11-17 clippy 2>&1 | tee clippy.log'
         }
       }
-      post {
-        unstable {
-          emailext attachmentsPattern: '*.log',
-          body: "Mr. Jenkins and Mrs. Clippy have bad news for you:\n${env.JOB_NAME}#${env.BUILD_NUMBER} is ${currentBuild.currentResult}\n\nWarnings or errors have been found by Mrs. Clippy.\n\nCheck console output at ${env.BUILD_URL} to view the results.",
-          subject: "Bad news for build ${env.JOB_NAME}",
-          to: "${env.RECIPIENTS_SUBSTRATEE}"
+    }
+    stage('Formater') {
+      steps {
+        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+          sh 'cargo fmt -- --check > ${WORKSPACE}/fmt.log'
+        }
+      }
+    }
+    stage('Results') {
+      steps {
+        recordIssues(
+          aggregatingResults: true,
+          enabledForFailure: true,
+          qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]],
+          tools: [
+              cargo(
+                pattern: 'build_*.log',
+                reportEncoding: 'UTF-8'
+              ),
+              groovyScript(
+                parserId:'clippy-warnings',
+                pattern: 'clippy_*.log',
+                reportEncoding: 'UTF-8'
+              ),
+              groovyScript(
+                parserId:'clippy-errors',
+                pattern: 'clippy_*.log',
+                reportEncoding: 'UTF-8'
+              )
+          ]
+        )
+        script {
+          try {
+            sh './ci/check_fmt_log.sh'
+          }
+          catch (exc) {
+            echo 'Style changes detected. Setting stage to unstable'
+            currentStage.result = 'UNSTABLE'
+          }
         }
       }
     }
@@ -54,6 +83,15 @@ pipeline {
       steps {
         archiveArtifacts artifacts: '*.log'
       }
+    }
+  }
+  post {
+    unsuccessful {
+        emailext (
+          subject: "Jenkins Build '${env.JOB_NAME} [${env.BUILD_NUMBER}]' is ${currentBuild.currentResult}",
+          body: "${env.JOB_NAME} build ${env.BUILD_NUMBER} is ${currentBuild.currentResult}\n\nMore info at: ${env.BUILD_URL}",
+          to: "${env.RECIPIENTS_SUBSTRATEE}"
+        )
     }
   }
 }

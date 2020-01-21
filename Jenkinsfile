@@ -33,7 +33,7 @@ pipeline {
         }
         sh 'cargo clean'
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-          sh 'cargo +nightly-2019-11-17 clippy 2>&1 | tee clippy.log'
+          sh 'cargo +nightly-2019-11-25 clippy 2>&1 | tee clippy.log'
         }
       }
     }

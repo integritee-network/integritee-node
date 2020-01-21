@@ -24,3 +24,5 @@ rustup component add rustfmt --toolchain=nightly-2019-11-17
 
 # Show the installed versions
 rustup show
+
+rustup target add wasm32-unknown-unknown --toolchain nightly-2019-11-17

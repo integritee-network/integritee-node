@@ -180,15 +180,14 @@ impl<T: Trait> Module<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
-
+    use crate::substratee_registry;
+	use support::{impl_outer_event, impl_outer_origin, parameter_types, assert_ok};
+	use sr_primitives::{Perbill, traits::{IdentityLookup, BlakeTwo256}, testing::Header};
 	use std::{collections::HashSet, cell::RefCell};
-	use runtime_io::with_externalities;
-	use primitives::{H256, Blake2Hasher};
-	use support::{impl_outer_origin, assert_ok, parameter_types};
+	use externalities::set_and_run_with_externalities;
+	use primitives::{H256, Blake2Hasher, Pair, Public, sr25519};
 	use support::traits::{Currency, Get, FindAuthor, LockIdentifier};
-	use runtime_primitives::{traits::{BlakeTwo256, IdentityLookup}, testing::Header};
-	use runtime_primitives::weights::Weight;
-	use runtime_primitives::Perbill;
+	use sr_primitives::weights::Weight;
 
 	thread_local! {
 		static EXISTENTIAL_DEPOSIT: RefCell<u64> = RefCell::new(0);
@@ -207,30 +206,28 @@ mod tests {
     const CERT: &[u8] = b"0\x82\x0c\x8c0\x82\x0c2\xa0\x03\x02\x01\x02\x02\x01\x010\n\x06\x08*\x86H\xce=\x04\x03\x020\x121\x100\x0e\x06\x03U\x04\x03\x0c\x07MesaTEE0\x1e\x17\r190617124609Z\x17\r190915124609Z0\x121\x100\x0e\x06\x03U\x04\x03\x0c\x07MesaTEE0Y0\x13\x06\x07*\x86H\xce=\x02\x01\x06\x08*\x86H\xce=\x03\x01\x07\x03B\0\x04RT\x16\x16 \xef_\xd8\xe7\xc3\xb7\x03\x1d\xd6:\x1fF\xe3\xf2b!\xa9/\x8b\xd4\x82\x8f\xd1\xff[\x9c\x97\xbc\xf27\xb8,L\x8a\x01\xb0r;;\xa9\x83\xdc\x86\x9f\x1d%y\xf4;I\xe4Y\xc80'$K[\xd6\xa3\x82\x0bw0\x82\x0bs0\x82\x0bo\x06\t`\x86H\x01\x86\xf8B\x01\r\x04\x82\x0b`{\"id\":\"117077750682263877593646412006783680848\",\"timestamp\":\"2019-06-17T12:46:04.002066\",\"version\":3,\"isvEnclaveQuoteStatus\":\"GROUP_OUT_OF_DATE\",\"platformInfoBlob\":\"1502006504000900000909020401800000000000000000000008000009000000020000000000000B401A355B313FC939B4F48A54349C914A32A3AE2C4871BFABF22E960C55635869FC66293A3D9B2D58ED96CA620B65D669A444C80291314EF691E896F664317CF80C\",\"isvEnclaveQuoteBody\":\"AgAAAEALAAAIAAcAAAAAAOE6wgoHKsZsnVWSrsWX9kky0kWt9K4xcan0fQ996Ct+CAj//wGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAHAAAAAAAAAFJJYIbPVot9NzRCjW2z9+k+9K8BsHQKzVMEHOR14hNbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACD1xnnferKFHD2uvYqTXdDA8iZ22kCD5xw7h38CMfOngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSVBYWIO9f2OfDtwMd1jofRuPyYiGpL4vUgo/R/1ucl7zyN7gsTIoBsHI7O6mD3IafHSV59DtJ5FnIMCckS1vW\"}|EbPFH/ThUaS/dMZoDKC5EgmdUXUORFtQzF49Umi1P55oeESreJaUvmA0sg/ATSTn5t2e+e6ZoBQIUbLHjcWLMLzK4pJJUeHhok7EfVgoQ378i+eGR9v7ICNDGX7a1rroOe0s1OKxwo/0hid2KWvtAUBvf1BDkqlHy025IOiXWhXFLkb/qQwUZDWzrV4dooMfX5hfqJPi1q9s18SsdLPmhrGBheh9keazeCR9hiLhRO9TbnVgR9zJk43SPXW+pHkbNigW+2STpVAi5ugWaSwBOdK11ZjaEU1paVIpxQnlW1D6dj1Zc3LibMH+ly9ZGrbYtuJks4eRnjPhroPXxlJWpQ==|MIIEoTCCAwmgAwIBAgIJANEHdl0yo7CWMA0GCSqGSIb3DQEBCwUAMH4xCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJDQTEUMBIGA1UEBwwLU2FudGEgQ2xhcmExGjAYBgNVBAoMEUludGVsIENvcnBvcmF0aW9uMTAwLgYDVQQDDCdJbnRlbCBTR1ggQXR0ZXN0YXRpb24gUmVwb3J0IFNpZ25pbmcgQ0EwHhcNMTYxMTIyMDkzNjU4WhcNMjYxMTIwMDkzNjU4WjB7MQswCQYDVQQGEwJVUzELMAkGA1UECAwCQ0ExFDASBgNVBAcMC1NhbnRhIENsYXJhMRowGAYDVQQKDBFJbnRlbCBDb3Jwb3JhdGlvbjEtMCsGA1UEAwwkSW50ZWwgU0dYIEF0dGVzdGF0aW9uIFJlcG9ydCBTaWduaW5nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqXot4OZuphR8nudFrAFiaGxxkgma/Es/BA+tbeCTUR106AL1ENcWA4FX3K+E9BBL0/7X5rj5nIgX/R/1ubhkKWw9gfqPG3KeAtIdcv/uTO1yXv50vqaPvE1CRChvzdS/ZEBqQ5oVvLTPZ3VEicQjlytKgN9cLnxbwtuvLUK7eyRPfJW/ksddOzP8VBBniolYnRCD2jrMRZ8nBM2ZWYwnXnwYeOAHV+W9tOhAImwRwKF/95yAsVwd21ryHMJBcGH70qLagZ7Ttyt++qO/6+KAXJuKwZqjRlEtSEz8gZQeFfVYgcwSfo96oSMAzVr7V0L6HSDLRnpb6xxmbPdqNol4tQIDAQABo4GkMIGhMB8GA1UdIwQYMBaAFHhDe3amfrzQr35CN+s1fDuHAVE8MA4GA1UdDwEB/wQEAwIGwDAMBgNVHRMBAf8EAjAAMGAGA1UdHwRZMFcwVaBToFGGT2h0dHA6Ly90cnVzdGVkc2VydmljZXMuaW50ZWwuY29tL2NvbnRlbnQvQ1JML1NHWC9BdHRlc3RhdGlvblJlcG9ydFNpZ25pbmdDQS5jcmwwDQYJKoZIhvcNAQELBQADggGBAGcIthtcK9IVRz4rRq+ZKE+7k50/OxUsmW8aavOzKb0iCx07YQ9rzi5nU73tME2yGRLzhSViFs/LpFa9lpQL6JL1aQwmDR74TxYGBAIi5f4I5TJoCCEqRHz91kpG6Uvyn2tLmnIdJbPE4vYvWLrtXXfFBSSPD4Afn7+3/XUggAlc7oCTizOfbbtOFlYA4g5KcYgS1J2ZAeMQqbUdZseZCcaZZZn65tdqee8UXZlDvx0+NdO0LR+5pFy+juM0wWbu59MvzcmTXbjsi7HY6zd53Yq5K244fwFHRQ8eOB0IWB+4PfM7FeAApZvlfqlKOlLcZL2uyVmzRkyR5yW72uo9mehX44CiPJ2fse9Y6eQtcfEhMPkmHXI01sN+KwPbpA39+xOsStjhP9N1Y1a2tQAVo+yVgLgV2Hws73Fc0o3wC78qPEA+v2aRs/Be3ZFDgDyghc/1fgU+7C+P6kbqd4poyb6IW8KCJbxfMJvkordNOgOUUxndPHEi/tb/U7uLjLOgPA==0\n\x06\x08*\x86H\xce=\x04\x03\x02\x03H\00E\x02!\0\xae6\x06\t@Sy\x8f\x8ec\x9d\xdci^Ex*\x92}\xdcG\x15A\x97\xd7\xd7\xd1\xccx\xe0\x1e\x08\x02 \x15Q\xa0BT\xde'~\xec\xbd\x027\xd3\xd8\x83\xf7\xe6Z\xc5H\xb4D\xf7\xe2\r\xa7\xe4^f\x10\x85p";
     const URL: &[u8] = &[119, 115, 58, 47, 47, 49, 50, 55, 46, 48, 46, 48, 46, 49, 58, 57, 57, 57, 49];
 
-    #[derive(Clone, Eq, PartialEq)]
-    pub struct Test;
-
-    impl_outer_origin! {
-        pub enum Origin for Test {}
-    }
-
-    parameter_types! {
-		pub const BlockHashCount: u64 = 250;
-		pub const MaximumBlockWeight: Weight = 1024;
-		pub const MaximumBlockLength: u32 = 2 * 1024;
-		pub const AvailableBlockRatio: Perbill = Perbill::from_percent(75);
+	#[derive(Clone, PartialEq, Eq, Debug)]
+	pub struct TestRuntime;
+	impl Trait for TestRuntime {
+		type Event = ();
 	}
-	impl system::Trait for Test {
+
+	parameter_types! {
+		pub const BlockHashCount: u64 = 250;
+		pub const MaximumBlockWeight: u32 = 1024;
+		pub const MaximumBlockLength: u32 = 2 * 1024;
+		pub const AvailableBlockRatio: Perbill = Perbill::one();
+	}
+	impl system::Trait for TestRuntime {
 		type Origin = Origin;
-		type Call = ();
 		type Index = u64;
-		type BlockNumber = u64;
-		type Hash = H256;
-		type Hashing = BlakeTwo256;
+		type Call = ();
+		type BlockNumber = BlockNumber;
+        type Hash = H256;
+        type Hashing = BlakeTwo256;
 		type AccountId = u64;
 		type Lookup = IdentityLookup<Self::AccountId>;
 		type Header = Header;
-		type WeightMultiplierUpdate = ();
 		type Event = ();
 		type BlockHashCount = BlockHashCount;
 		type MaximumBlockWeight = MaximumBlockWeight;
@@ -238,32 +235,47 @@ mod tests {
 		type AvailableBlockRatio = AvailableBlockRatio;
 		type Version = ();
 	}
+  	pub type System = system::Module<TestRuntime>;
+
 	parameter_types! {
 		pub const TransferFee: Balance = 0;
 		pub const CreationFee: Balance = 0;
 		pub const TransactionBaseFee: u64 = 0;
 		pub const TransactionByteFee: u64 = 0;
 	}
-	impl balances::Trait for Test {
+	impl balances::Trait for TestRuntime {
 		type Balance = Balance;
 		type OnFreeBalanceZero = ();
 		type OnNewAccount = ();
 		type Event = ();
-		type TransactionPayment = ();
 		type TransferPayment = ();
 		type DustRemoval = ();
 		type ExistentialDeposit = ExistentialDeposit;
 		type TransferFee = TransferFee;
 		type CreationFee = CreationFee;
-		type TransactionBaseFee = TransactionBaseFee;
-		type TransactionByteFee = TransactionByteFee;
-		type WeightToFee = ();
 	}
-    // Implement the trait for our own module, `super::Trait`
-    impl super::Trait for Test { type Event = (); }
+	pub type Balances = balances::Module<TestRuntime>;
 
     // Easy access alias
-    type Registry = super::Module<Test>;
+    type Registry = super::Module<TestRuntime>;
+    
+    pub struct ExtBuilder;
+    
+	impl ExtBuilder {
+		pub fn build() -> runtime_io::TestExternalities {
+			let mut storage = system::GenesisConfig::default().build_storage::<TestRuntime>().unwrap();
+			balances::GenesisConfig::<TestRuntime> {
+				balances: vec![],
+				vesting: vec![],
+			}.assimilate_storage(&mut storage).unwrap();		
+			runtime_io::TestExternalities::from(storage)
+		}
+	}
+
+	impl_outer_origin!{
+		pub enum Origin for TestRuntime {}
+	}
+
 
 //    Fixme:    Was not able to use these statics for the tests, always threw cannot move out of
 //              dereference of raw pointer. As copy trait not implemented for whatever reason.
@@ -276,13 +288,10 @@ mod tests {
 //        static ref ENC_3: Enclave<u64, Vec<u8>> = Enclave { pubkey: 30, url: URL.to_vec() };
 //    }
 
-	fn new_test_ext() -> runtime_io::TestExternalities<Blake2Hasher> {
-		system::GenesisConfig::default().build_storage::<Test>().unwrap().into()
-	}
 
     #[test]
     fn add_enclave_works() {
-        with_externalities(&mut new_test_ext(), || {
+        ExtBuilder::build().execute_with(|| {
             assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec(), URL.to_vec()));
             assert_eq!(Registry::num_enclaves(), 1);
         })
@@ -290,7 +299,7 @@ mod tests {
 
     #[test]
     fn add_and_remove_enclave_works() {
-        with_externalities(&mut new_test_ext(), || {
+        ExtBuilder::build().execute_with(|| {
             assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec(), URL.to_vec()));
             assert_eq!(Registry::num_enclaves(), 1);
             assert_ok!(Registry::unregister_enclave(Origin::signed(10)));
@@ -301,7 +310,7 @@ mod tests {
 
     #[test]
     fn list_enclaves_works() {
-        with_externalities(&mut new_test_ext(), || {
+        ExtBuilder::build().execute_with(|| {
             let e_1: Enclave<u64, Vec<u8>> = Enclave { pubkey: 10, url: URL.to_vec() };
             assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec(), URL.to_vec()));
             assert_eq!(Registry::num_enclaves(), 1);
@@ -311,7 +320,7 @@ mod tests {
 
     #[test]
     fn remove_middle_enclave_works() {
-        with_externalities(&mut new_test_ext(), || {
+        ExtBuilder::build().execute_with(|| {
             // add enclave 1
             let e_1: Enclave<u64, Vec<u8>> = Enclave { pubkey: 10, url: URL.to_vec() };
             let e_2: Enclave<u64, Vec<u8>> = Enclave { pubkey: 20, url: URL.to_vec() };
@@ -345,7 +354,7 @@ mod tests {
 
     #[test]
     fn update_enclave_url_works() {
-        with_externalities(&mut new_test_ext(), || {
+        ExtBuilder::build().execute_with(|| {
             let url2 = "my fancy url".as_bytes();
             let e_1: Enclave<u64, Vec<u8>> = Enclave { pubkey: 10, url: url2.to_vec() };
 
@@ -358,7 +367,7 @@ mod tests {
 
     #[test]
     fn update_ipfs_hash_works() {
-        with_externalities(&mut new_test_ext(), || {
+        ExtBuilder::build().execute_with(|| {
             let ipfs_hash = "QmYY9U7sQzBYe79tVfiMyJ4prEJoJRWCD8t85j9qjssS9y";
             assert_ok!(Registry::register_enclave(Origin::signed(10), CERT.to_vec(), URL.to_vec()));
             assert_ok!(Registry::confirm_call(Origin::signed(10), vec![], ipfs_hash.as_bytes().to_vec()));
@@ -368,7 +377,7 @@ mod tests {
 
     #[test]
     fn ipfs_update_from_unregistered_enclave_fails() {
-        with_externalities(&mut new_test_ext(), || {
+        ExtBuilder::build().execute_with(|| {
             let ipfs_hash = "QmYY9U7sQzBYe79tVfiMyJ4prEJoJRWCD8t85j9qjssS9y";
             assert!(Registry::confirm_call(Origin::signed(10), vec![], ipfs_hash.as_bytes().to_vec()).is_err());
         })

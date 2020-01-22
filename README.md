@@ -2,9 +2,7 @@
 
 This repository belongs to the [substraTEE project](https://github.com/scs/substraTEE).
 
-A SRML-based Substrate node that implements a module to forward an encrypted payload to the substraTEE-worker.
-
-The node uses ed25519 signatures.
+A substrate-based node that maintains a registry of remote attested substraTEE-worker enclaves. The node also acts as a proxy for encrypted requests which are forwarded to the substraTEE-worker.
 
 # Building
 
@@ -20,13 +18,7 @@ Install required tools:
 ./scripts/init.sh
 ```
 
-Build the WebAssembly binary:
-
-```bash
-./scripts/build.sh
-```
-
-Build all native code:
+Build the node:
 
 ```bash
 cargo build
@@ -38,6 +30,12 @@ You can start a development chain with:
 
 ```bash
 cargo run -- --dev
+```
+
+or 
+
+```bash
+./target/release/substratee-node --dev
 ```
 
 Additional CLI usage options are available and may be shown by running `cargo run -- --help`.

@@ -8,10 +8,10 @@ mod chain_spec;
 mod service;
 mod cli;
 
-pub use substrate_cli::{VersionInfo, IntoExit, error};
+pub use substrate_cli::{error, IntoExit, VersionInfo};
 
 fn main() -> Result<(), cli::error::Error> {
-	let version = VersionInfo {
+    let version = VersionInfo {
         name: "Substrate Node",
         commit: env!("VERGEN_SHA_SHORT"),
         version: env!("CARGO_PKG_VERSION"),
@@ -19,7 +19,7 @@ fn main() -> Result<(), cli::error::Error> {
         author: "Supercomputing Systems AG",
         description: "substratee-node",
         support_url: "support.anonymous.an",
-	};
+    };
 
-	cli::run(std::env::args(), cli::Exit, version)
+    cli::run(std::env::args(), cli::Exit, version)
 }

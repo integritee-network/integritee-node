@@ -82,5 +82,8 @@ pipeline {
           to: "${env.RECIPIENTS_SUBSTRATEE}"
         )
     }
+    always {
+      cleanWs()
+    }
   }
 }

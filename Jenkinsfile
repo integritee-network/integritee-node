@@ -48,17 +48,17 @@ pipeline {
           qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]],
           tools: [
               cargo(
-                pattern: 'build_*.log',
+                pattern: 'build.log',
                 reportEncoding: 'UTF-8'
               ),
               groovyScript(
                 parserId:'clippy-warnings',
-                pattern: 'clippy_*.log',
+                pattern: 'clippy.log',
                 reportEncoding: 'UTF-8'
               ),
               groovyScript(
                 parserId:'clippy-errors',
-                pattern: 'clippy_*.log',
+                pattern: 'clippy.log',
                 reportEncoding: 'UTF-8'
               )
           ]

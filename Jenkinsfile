@@ -16,7 +16,7 @@ pipeline {
     }
     stage('Build') {
       steps {
-        sh 'cargo build'
+        sh 'cargo build | tee build.log'
       }
     }
     stage('Test') {

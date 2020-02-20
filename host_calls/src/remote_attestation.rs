@@ -28,7 +28,7 @@ use sgx_types::*;
 use sgx_ucrypto::SgxEccHandle;
 
 use super::{SgxReport, SgxStatus};
-use codec::{Decode, Encode};
+use codec::Encode;
 
 type SignatureAlgorithms = &'static [&'static webpki::SignatureAlgorithm];
 
@@ -50,12 +50,12 @@ pub const IAS_REPORT_CA: &[u8] = include_bytes!("../AttestationReportSigningCACe
 
 // prevents panics in case of index out of bounds
 fn safe_indexing(data: &[u8], start: usize, end: usize) -> Result<&[u8], &'static str> {
-    if (start > end) { return Err("Illegal indexing")}
-    if (data.len() < end) { return Err("Index would be out of bounds")}
+    if start > end { return Err("Illegal indexing")}
+    if data.len() < end { return Err("Index would be out of bounds")}
     Ok(&data[start..end])
 }
 fn safe_indexing_one(data: &[u8], idx: usize) -> Result<u8, &'static str> {
-    if (data.len() < idx) { return Err("Index would be out of bounds")}
+    if data.len() < idx { return Err("Index would be out of bounds")}
     Ok(data[idx])
 }
 
@@ -271,7 +271,7 @@ pub fn verify_mra_cert(
         let _result = ecc_handle.open();
 
         let mut ephemeral_pub = sgx_ec256_public_t::default();
-        if (pub_k.len() != 64) { return Err("wrong size of signer ephemeral public key") }
+        if pub_k.len() != 64 { return Err("wrong size of signer ephemeral public key") }
         ephemeral_pub.gx.copy_from_slice(&pub_k[..32]);
         ephemeral_pub.gy.copy_from_slice(&pub_k[32..]);
         // key is stored in little-endian order in RA report. reverse!
@@ -279,7 +279,7 @@ pub fn verify_mra_cert(
         ephemeral_pub.gy.reverse();
 
         let mut signature = sgx_ec256_signature_t::default();
-        if (xt_signer_attn.len() != 16) { return Err("wrong size of signer attestation signature") }
+        if xt_signer_attn.len() != 16 { return Err("wrong size of signer attestation signature") }
         signature.x.copy_from_slice(&xt_signer_attn[..8]);
         signature.y.copy_from_slice(&xt_signer_attn[8..]);
 
@@ -311,6 +311,7 @@ pub fn verify_mra_cert(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use codec::Decode;
     // reproduce with "substratee_worker dump_ra"
     const TEST1_CERT: &[u8] = include_bytes!("../test/test_ra_cert_MRSIGNER1_MRENCLAVE1.der");
     const TEST2_CERT: &[u8] = include_bytes!("../test/test_ra_cert_MRSIGNER2_MRENCLAVE2.der");

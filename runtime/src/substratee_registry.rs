@@ -17,7 +17,7 @@
 
 use codec::{Decode, Encode};
 use host_calls::runtime_interfaces::verify_ra_report;
-use host_calls::{SgxReport, SgxStatus};
+use host_calls::SgxReport;
 use rstd::prelude::*;
 use rstd::str;
 use runtime_io::misc::print_utf8;
@@ -31,7 +31,6 @@ pub trait Trait: balances::Trait {
 
 const MAX_RA_REPORT_LEN: usize = 4096;
 const MAX_URL_LEN: usize = 256;
-const RA_SIGNER_ATTN_LEN: usize = 64;
 
 #[derive(Encode, Decode, Default, Copy, Clone, PartialEq)]
 #[cfg_attr(feature = "std", derive(Debug))]
@@ -131,7 +130,7 @@ decl_module! {
         }
 
         pub fn call_worker(origin, request: Request) -> Result {
-            let sender = ensure_signed(origin)?;
+            let _sender = ensure_signed(origin)?;
             Self::deposit_event(RawEvent::Forwarded(request));
             Ok(())
         }
@@ -156,7 +155,7 @@ impl<T: Trait> Module<T> {
     fn register_verified_enclave(sender: &T::AccountId, report: &SgxReport, url: &Vec<u8>) -> Result {
         let enclave = Enclave {
             pubkey: sender.clone(),
-            mr_enclave: report.mr_enclave.clone(),
+            mr_enclave: report.mr_enclave,
             timestamp: report.timestamp,
             url: url.clone(),
         };

@@ -1,3 +1,41 @@
+[package]
+authors = ["encointer.org <alain@encointer.org>"]
+edition = '2018'
+homepage = 'https://encointer.org'
+license = "GPL-3.0"
+name = 'encointer-node-runtime'
+repository = 'https://github.com/paritytech/substrate/'
+version = '0.2.0'
+
+[dependencies.encointer-scheduler]
+default-features = false
+git = "https://github.com/encointer/pallet-encointer-scheduler"
+branch = "v2.0.0-alpha.5"
+package = "pallet-encointer-scheduler"
+
+[dependencies.encointer-ceremonies]
+default-features = false
+git = "https://github.com/encointer/pallet-encointer-ceremonies"
+branch = "v2.0.0-alpha.5"
+package = "pallet-encointer-ceremonies"
+
+[dependencies.encointer-currencies]
+default-features = false
+git = "https://github.com/encointer/pallet-encointer-currencies"
+branch = "v2.0.0-alpha.5"
+package = "pallet-encointer-currencies"
+
+[dependencies.encointer-balances]
+default-features = false
+git = "https://github.com/encointer/pallet-encointer-balances"
+branch = "v2.0.0-alpha.5"
+package = "pallet-encointer-balances"
+
+[dependencies.fixed]
+default-features = false
+git = "https://github.com/encointer/substrate-fixed"
+package = "substrate-fixed"
+
 [dependencies.aura]
 default-features = false
 package = 'pallet-aura'
@@ -95,12 +133,6 @@ default-features = false
 package = 'frame-system'
 version = '2.0.0-alpha.7'
 
-[dependencies.template]
-default-features = false
-package = 'pallet-template'
-path = '../pallets/template'
-version = '2.0.0-alpha.7'
-
 [dependencies.timestamp]
 default-features = false
 package = 'pallet-timestamp'
@@ -114,15 +146,6 @@ version = '2.0.0-alpha.7'
 [build-dependencies.wasm-builder-runner]
 package = 'substrate-wasm-builder-runner'
 version = '1.0.5'
-
-[package]
-authors = ['Anonymous']
-edition = '2018'
-homepage = 'https://substrate.dev'
-license = 'Unlicense'
-name = 'node-template-runtime'
-repository = 'https://github.com/paritytech/substrate/'
-version = '2.0.0-alpha.7'
 
 [package.metadata.docs.rs]
 targets = ['x86_64-unknown-linux-gnu']
@@ -154,5 +177,9 @@ std = [
     'system/std',
     'timestamp/std',
     'transaction-payment/std',
-    'template/std',
+	"encointer-scheduler/std",
+	"encointer-ceremonies/std",
+	"encointer-balances/std",
+	"encointer-currencies/std",
+    "fixed/std"    
 ]

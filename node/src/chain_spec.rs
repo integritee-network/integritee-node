@@ -1,7 +1,9 @@
 use sp_core::{Pair, Public, sr25519};
-use node_template_runtime::{
+use encointer_node_runtime::{
 	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig,
-	SudoConfig, SystemConfig, WASM_BINARY, Signature
+	SudoConfig, SystemConfig, WASM_BINARY, Signature,
+	CeremonyPhaseType, BalanceType,
+	EncointerCeremoniesConfig, EncointerCurrenciesConfig, EncointerSchedulerConfig,
 };
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_finality_grandpa::AuthorityId as GrandpaId;
@@ -120,5 +122,23 @@ fn testnet_genesis(initial_authorities: Vec<(AuraId, GrandpaId)>,
 		sudo: Some(SudoConfig {
 			key: root_key,
 		}),
+	    encointer_scheduler: Some(EncointerSchedulerConfig {
+            //current_phase: CeremonyPhaseType::REGISTERING,
+            current_ceremony_index: 1,
+			ceremony_master: get_account_id_from_seed::<sr25519::Public>("Alice"),
+			phase_durations: vec![
+                (CeremonyPhaseType::REGISTERING, 86_400_000),
+                (CeremonyPhaseType::ASSIGNING, 86_400_000),
+                (CeremonyPhaseType::ATTESTING, 86_400_000),
+            ],
+		}),
+		encointer_ceremonies: Some(EncointerCeremoniesConfig {
+			ceremony_reward: BalanceType::from_num(1),
+			time_tolerance: 600_000, // +-10min
+			location_tolerance: 1_000, // [m] 
+		}),
+		encointer_currencies: Some(EncointerCurrenciesConfig {
+            currency_master: get_account_id_from_seed::<sr25519::Public>("Alice"),
+        }),
 	}
 }

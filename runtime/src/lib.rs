@@ -40,8 +40,14 @@ pub use frame_support::{
 	},
 };
 
-/// Importing a template pallet
-pub use template;
+
+pub use encointer_scheduler::Call as EncointerSchedulerCall;
+pub use encointer_ceremonies::Call as EncointerCeremoniesCall;
+pub use encointer_currencies::Call as EncointerCurrenciesCall;
+pub use encointer_balances::Call as EncointerBalancesCall;
+
+pub use encointer_scheduler::CeremonyPhaseType;
+pub use encointer_balances::{BalanceType, BalanceEntry};
 
 /// An index to a block.
 pub type BlockNumber = u32;
@@ -68,6 +74,10 @@ pub type Hash = sp_core::H256;
 
 /// Digest item type.
 pub type DigestItem = generic::DigestItem<Hash>;
+
+/// A type to hold UTC unix epoch [ms]
+pub type Moment = u64;
+pub const ONE_DAY: Moment = 86_400_000;
 
 /// Opaque types. These are used by the CLI to instantiate machinery that don't need to know
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
@@ -232,9 +242,27 @@ impl sudo::Trait for Runtime {
 	type Call = Call;
 }
 
-/// Used for the module template in `./template.rs`
-impl template::Trait for Runtime {
+parameter_types! {
+	pub const MomentsPerDay: Moment = 86_400_000; // [ms/d]
+}
+impl encointer_scheduler::Trait for Runtime {
 	type Event = Event;
+	type OnCeremonyPhaseChange = encointer_ceremonies::Module<Runtime>;
+	type MomentsPerDay = MomentsPerDay;
+}
+
+impl encointer_ceremonies::Trait for Runtime {
+	type Event = Event;
+	type Public = <MultiSignature as Verify>::Signer;
+	type Signature = MultiSignature;
+}
+
+impl encointer_currencies::Trait for Runtime {
+	type Event = Event;
+}
+
+impl encointer_balances::Trait for Runtime {
+	type Event = Event; 
 }
 
 construct_runtime!(
@@ -251,8 +279,10 @@ construct_runtime!(
 		Balances: balances::{Module, Call, Storage, Config<T>, Event<T>},
 		TransactionPayment: transaction_payment::{Module, Storage},
 		Sudo: sudo::{Module, Call, Config<T>, Storage, Event<T>},
-		// Used for the module template in `./template.rs`
-		TemplateModule: template::{Module, Call, Storage, Event<T>},
+		EncointerScheduler: encointer_scheduler::{Module, Call, Storage, Config<T>, Event},
+		EncointerCeremonies: encointer_ceremonies::{Module, Call, Storage, Config<T>, Event<T>},
+		EncointerCurrencies: encointer_currencies::{Module, Call, Storage, Config<T>, Event<T>},
+		EncointerBalances: encointer_balances::{Module, Call, Storage, Event<T>},
 	}
 );
 

@@ -1512,7 +1512,7 @@ dependencies = [
  "indexmap",
  "log",
  "slab",
- "tokio 0.2.13",
+ "tokio 0.2.14",
  "tokio-util",
 ]
 
@@ -1723,7 +1723,7 @@ dependencies = [
  "net2",
  "pin-project",
  "time",
- "tokio 0.2.13",
+ "tokio 0.2.14",
  "tower-service",
  "want 0.3.0",
 ]
@@ -1741,7 +1741,7 @@ dependencies = [
  "log",
  "rustls 0.17.0",
  "rustls-native-certs",
- "tokio 0.2.13",
+ "tokio 0.2.14",
  "tokio-rustls",
  "webpki",
 ]
@@ -2992,8 +2992,8 @@ dependencies = [
 
 [[package]]
 name = "pallet-encointer-balances"
-version = "0.1.0"
-source = "git+https://github.com/encointer/pallet-encointer-balances?branch=v2.0.0-alpha.5#a09eac75244411c37d1c92a449fcbdf57d885074"
+version = "0.2.0"
+source = "git+https://github.com/encointer/pallet-encointer-balances?branch=v2.0.0-alpha.5#8032ef523b0166abd638f0114e6a3a0ae892fdfe"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3010,8 +3010,8 @@ dependencies = [
 
 [[package]]
 name = "pallet-encointer-ceremonies"
-version = "0.1.0"
-source = "git+https://github.com/encointer/pallet-encointer-ceremonies?branch=v2.0.0-alpha.5#d87e7a660f60e6b3dce5247e2d49d9a3c3ea8fb5"
+version = "0.2.0"
+source = "git+https://github.com/encointer/pallet-encointer-ceremonies?branch=v2.0.0-alpha.5#b72f9212f79c998cd49083b8f47e14a3788b36e5"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3030,8 +3030,8 @@ dependencies = [
 
 [[package]]
 name = "pallet-encointer-currencies"
-version = "0.1.0"
-source = "git+https://github.com/encointer/pallet-encointer-currencies?branch=v2.0.0-alpha.5#65f2af7dce4333430e1c1124300c7483cede8973"
+version = "0.2.0"
+source = "git+https://github.com/encointer/pallet-encointer-currencies?branch=v2.0.0-alpha.5#7f4e18bcac92878bb24c0bfae4a3dffb0a43eabc"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3047,8 +3047,8 @@ dependencies = [
 
 [[package]]
 name = "pallet-encointer-scheduler"
-version = "0.1.0"
-source = "git+https://github.com/encointer/pallet-encointer-scheduler?branch=v2.0.0-alpha.5#1345e6aa0134fce7d007ecfefed16dc1153f8152"
+version = "0.2.0"
+source = "git+https://github.com/encointer/pallet-encointer-scheduler?branch=v2.0.0-alpha.5#178967ff7367e5f2bce146cc0c8f5813fb15e0b9"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3383,9 +3383,9 @@ dependencies = [
 
 [[package]]
 name = "paste"
-version = "0.1.9"
+version = "0.1.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "092d791bf7847f70bbd49085489fba25fc2c193571752bff9e36e74e72403932"
+checksum = "ab4fb1930692d1b6a9cfabdde3d06ea0a7d186518e2f4d67660d8970e2fa647a"
 dependencies = [
  "paste-impl",
  "proc-macro-hack",
@@ -3393,9 +3393,9 @@ dependencies = [
 
 [[package]]
 name = "paste-impl"
-version = "0.1.9"
+version = "0.1.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "406c23fb4c45cc6f68a9bbabb8ec7bd6f8cfcbd17e9e8f72c2460282f8325729"
+checksum = "a62486e111e571b1e93b710b61e8f493c0013be39629b714cb166bdb06aa5a8a"
 dependencies = [
  "proc-macro-hack",
  "proc-macro2",
@@ -4183,7 +4183,7 @@ dependencies = [
  "structopt",
  "substrate-prometheus-endpoint",
  "time",
- "tokio 0.2.13",
+ "tokio 0.2.14",
 ]
 
 [[package]]
@@ -5805,7 +5805,7 @@ dependencies = [
  "hyper 0.13.4",
  "log",
  "prometheus",
- "tokio 0.2.13",
+ "tokio 0.2.14",
 ]
 
 [[package]]
@@ -6001,9 +6001,9 @@ dependencies = [
 
 [[package]]
 name = "tiny-keccak"
-version = "2.0.1"
+version = "2.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2953ca5148619bc99695c1274cb54c5275bbb913c6adad87e72eaf8db9787f69"
+checksum = "2c9d3793400a45f954c52e73d068316d76b6f4e36977e3fcebb13a2721e80237"
 dependencies = [
  "crunchy",
 ]
@@ -6034,9 +6034,9 @@ dependencies = [
 
 [[package]]
 name = "tokio"
-version = "0.2.13"
+version = "0.2.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0fa5e81d6bc4e67fe889d5783bd2a128ab2e0cfa487e0be16b6a8d177b101616"
+checksum = "2751672f9da075d045c67fdb0068be9850ab7b231fa77bb51d6fd35da9c0bb0d"
 dependencies = [
  "bytes 0.5.4",
  "fnv",
@@ -6156,7 +6156,7 @@ checksum = "4adb8b3e5f86b707f1b54e7c15b6de52617a823608ccda98a15d3a24222f265a"
 dependencies = [
  "futures-core",
  "rustls 0.17.0",
- "tokio 0.2.13",
+ "tokio 0.2.14",
  "webpki",
 ]
 
@@ -6268,7 +6268,7 @@ dependencies = [
  "futures-sink",
  "log",
  "pin-project-lite",
- "tokio 0.2.13",
+ "tokio 0.2.14",
 ]
 
 [[package]]
@@ -6832,7 +6832,3 @@ dependencies = [
  "syn",
  "synstructure",
 ]
-
-[[patch.unused]]
-name = "pallet-encointer-scheduler"
-version = "0.2.0"

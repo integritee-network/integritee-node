@@ -17,6 +17,11 @@ features = ['derive']
 package = 'parity-scale-codec'
 version = '1.3.0'
 
+[dependencies.serde]
+features = ["derive"]
+optional = true
+version = "1.0.101"
+
 [dependencies.frame-support]
 default-features = false
 version = '2.0.0-alpha.6'
@@ -40,6 +45,7 @@ version = '2.0.0-alpha.6'
 default = ['std']
 std = [
     'codec/std',
+    'serde/std',
     'frame-support/std',
     'frame-system/std',
 ]

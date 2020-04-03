@@ -1,6 +1,6 @@
 use sp_core::{Pair, Public, sr25519};
 use node_template_runtime::{
-	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig,
+	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig, TemplateModuleConfig,
 	SudoConfig, SystemConfig, WASM_BINARY, Signature
 };
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
@@ -120,5 +120,8 @@ fn testnet_genesis(initial_authorities: Vec<(AuraId, GrandpaId)>,
 		sudo: Some(SudoConfig {
 			key: root_key,
 		}),
+		template: Some(TemplateModuleConfig {
+			some_double_map: vec![(1, 2, 3)],
+		})
 	}
 }

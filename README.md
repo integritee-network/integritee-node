@@ -2,18 +2,15 @@
 Encointer-node is the implementation of the [encointer.org](https://encointer.org) blockchain.
 Use this together with the mobile phone app [encointer-app](https://github.com/encointer/encointer-app) 
 
-# PoC2
+# PoC2 (v0.2.0)
 Goal: show the entire flow from bootstrapping to regular ceremonies at live demos
 
 Simplifications for PoC2 (with respect to whitepaper)
 
-* ignore geoposition
-* ignore exact time (Demonstration Speaker can warp time to next phase when people are ready)
+* fake time (Demonstration Speaker can warp time to next phase when people are ready)
 * no anonymity, only pseudonymity
-* use srml_balances for token
 * tx fees instead of POET
 * permissioned consensus instead of dPOET
-* no chat functionality in app
 * assignments on-chain instead of IPFS
 
 The cli client is based on [substrate-api-client](https://github.com/scs/substrate-api-client)
@@ -70,3 +67,12 @@ To run a full demo (you may need to fix ports in the scripts if you change them)
 encointer-node/client> ./bootstrap_demo_currency.sh
 encointer-node/client> ./demo_poc1.sh
 ```
+
+## Web UI
+
+There is no specific UI yet, but you can use [polkadot-js apps](https://github.com/polkadot-js/apps) and add [encointer types](./client/polkadot-js-apps-types.json) at Settings -> Developer 
+This allows you to explore chain state but it doesn't support all types of extrinsic parameters needed.
+
+## Mobile App
+
+The PoC1 Android App doesn't work with this release anymore, but you can watch progress at [encointer-app](https://github.com/encointer/encointer-app)

@@ -1,0 +1,17 @@
+{
+    "CeremonyPhaseType": {
+      "_enum": [
+        "Registering",
+        "Assigning",
+        "Attesting"
+      ]
+    },
+    "CeremonyIndexType": "u32",
+    "ParticipantIndexType": "u64",
+    "MeetupIndexType": "u64",
+    "AttestationIndexType": "u64",
+    "CurrencyIdentifier": "Hash",
+    "BalanceType": "i128",
+    "BalanceEntry": "(BalanceType,Moment)",
+    "CurrencyCeremony": "(CurrencyIdentifier,CeremonyIndexType)"
+  }

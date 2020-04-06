@@ -241,18 +241,16 @@ fn main() {
                 let cid = get_cid(cid_str);
                 let bn = get_block_number(&api);
                 let dr = get_demurrage_per_block(&api, cid);
-                let result_str = api
-                    .get_storage_double_map("EncointerBalances", "Balance", cid.encode(), accountid.encode())
+                let entry: BalanceEntry<BlockNumber> = api
+                    .get_storage_double_map("EncointerBalances", "Balance", cid, accountid)
                     .unwrap();
-                let entry: BalanceEntry<BlockNumber> = Decode::decode(&mut &hexstr_to_vec(result_str).unwrap()[..]).unwrap();
                 let balance = apply_demurrage(entry, bn, dr);
                 println!("NCTR balance for {} is {} in currency {}", account, balance, cid.encode().to_base58());
             }
             None => {
-                let result_str = api
-                    .get_storage("Balances", "FreeBalance", Some(accountid.encode()))
+                let balance: BalanceType = api
+                    .get_storage_map("Balances", "FreeBalance", accountid)
                     .unwrap();
-                let balance = hexstr_to_u256(result_str).unwrap();
                 println!("ERT balance for {} is {}", account, balance);
             }
         };
@@ -430,7 +428,7 @@ fn main() {
                 cindex, m, get_meetup_time(&api, cid, m));
             match get_meetup_participants(&api, (cid, cindex), m) {
                 Some(participants) => {
-                    println!("MeetupRegistry[{}, {}]participants are:", cindex, m);
+                    println!("MeetupRegistry[{}, {}] participants are:", cindex, m);
                     for p in participants.iter() {
                         println!("   {:?}", p);
                     }
@@ -605,60 +603,44 @@ fn get_block_number(api: &Api<sr25519::Pair>) -> BlockNumber {
 }
 
 fn get_demurrage_per_block(api: &Api<sr25519::Pair>, cid: CurrencyIdentifier) -> BalanceType {
-    let dr_enc = hexstr_to_vec(
-        api.get_storage("EncointerCurrencies", "CurrencyProperties", Some(cid.encode()))
-            .unwrap(),
-    ).unwrap();
-    debug!("DemurragePerBlock raw is {:?}", dr_enc);
-    let prop: CurrencyPropertiesType = Decode::decode(&mut &dr_enc[..]).unwrap();
-    prop.demurrage_per_block
+    let cp: CurrencyPropertiesType = api
+        .get_storage_map("EncointerCurrencies", "CurrencyProperties", cid)
+        .unwrap();
+    debug!("CurrencyProperties are {:?}", cp);
+    cp.demurrage_per_block
 }
 
 fn get_ceremony_index(api: &Api<sr25519::Pair>) -> CeremonyIndexType {
-    hexstr_to_u64(
-        api.get_storage("EncointerScheduler", "CurrentCeremonyIndex", None)
-            .unwrap(),
-    )
-    .unwrap() as CeremonyIndexType
+    api.get_storage_value("EncointerScheduler", "CurrentCeremonyIndex")
+        .unwrap()
 }
 
 fn get_current_phase(api: &Api<sr25519::Pair>) -> CeremonyPhaseType {
-    let result_str = api
-        .get_storage("EncointerScheduler", "CurrentPhase", None)
-        .unwrap();
-    CeremonyPhaseType::decode(&mut &hexstr_to_vec(result_str).unwrap()[..]).unwrap()
+    api.get_storage_value("EncointerScheduler", "CurrentPhase")
+        .or(Some(CeremonyPhaseType::default()))
+        .unwrap()
 }
 
 fn get_meetup_count(api: &Api<sr25519::Pair>, key: CurrencyCeremony) -> MeetupIndexType {
-    hexstr_to_u64(
-        api.get_storage("EncointerCeremonies", "MeetupCount", Some(key.encode()))
-            .unwrap(),
-    )
-    .unwrap() as MeetupIndexType
+    api.get_storage_map("EncointerCeremonies", "MeetupCount", key)
+        .or(Some(0))
+        .unwrap()
 }
 
 fn get_participant_count(api: &Api<sr25519::Pair>, key: CurrencyCeremony) -> ParticipantIndexType {
-    hexstr_to_u64(
-        api.get_storage(
-            "EncointerCeremonies",
-            "ParticipantCount",
-            Some(key.encode()),
-        )
-        .unwrap(),
-    )
-    .unwrap() as ParticipantIndexType
+    api.get_storage_map(
+        "EncointerCeremonies",
+        "ParticipantCount",
+        key,
+    ).or(Some(0)).unwrap()
 }
 
 fn get_attestation_count(api: &Api<sr25519::Pair>, key: CurrencyCeremony) -> ParticipantIndexType {
-    hexstr_to_u64(
-        api.get_storage(
+    api.get_storage_map(
             "EncointerCeremonies",
             "AttestationCount",
-            Some(key.encode()),
-        )
-        .unwrap(),
-    )
-    .unwrap() as ParticipantIndexType
+            key,
+    ).or(Some(0)).unwrap()
 }
 
 fn get_participant(
@@ -666,22 +648,12 @@ fn get_participant(
     key: CurrencyCeremony,
     pindex: ParticipantIndexType,
 ) -> Option<AccountId> {
-    let res = api
-        .get_storage_double_map(
-            "EncointerCeremonies",
-            "ParticipantRegistry",
-            key.encode(),
-            pindex.encode(),
-        )
-        .unwrap();
-    match res.as_str() {
-        "null" => None,
-        _ => {
-            let accountid: AccountId =
-                Decode::decode(&mut &hexstr_to_vec(res).unwrap()[..]).unwrap();
-            Some(accountid)
-        }
-    }
+    api.get_storage_double_map(
+        "EncointerCeremonies",
+        "ParticipantRegistry",
+        key,
+        pindex,
+    )
 }
 
 fn get_meetup_index_for(
@@ -689,22 +661,12 @@ fn get_meetup_index_for(
     key: CurrencyCeremony,
     account: &AccountId,
 ) -> Option<MeetupIndexType> {
-    let res = hexstr_to_u64(
-        api.get_storage_double_map(
-            "EncointerCeremonies",
-            "MeetupIndex",
-            key.encode(),
-            (*account).encode(),
-        )
-        .unwrap(),
+    api.get_storage_double_map(
+        "EncointerCeremonies",
+        "MeetupIndex",
+        key,
+        account.clone(),
     )
-    .unwrap();
-    info!(
-        "got meetup index for {}: {}",
-        (*account).to_ss58check(),
-        res
-    );
-    Some(res)
 }
 
 fn get_meetup_participants(
@@ -712,22 +674,12 @@ fn get_meetup_participants(
     key: CurrencyCeremony,
     mindex: MeetupIndexType,
 ) -> Option<Vec<AccountId>> {
-    let res = api
-        .get_storage_double_map(
-            "EncointerCeremonies",
-            "MeetupRegistry",
-            key.encode(),
-            mindex.encode(),
-        )
-        .unwrap();
-    match res.as_str() {
-        "null" => None,
-        _ => {
-            let participants: Vec<AccountId> =
-                Decode::decode(&mut &hexstr_to_vec(res).unwrap()[..]).unwrap();
-            Some(participants)
-        }
-    }
+    api.get_storage_double_map(
+        "EncointerCeremonies",
+        "MeetupRegistry",
+        key,
+        mindex,
+    )
 }
 
 fn get_attestations(
@@ -735,22 +687,12 @@ fn get_attestations(
     key: CurrencyCeremony,
     windex: ParticipantIndexType,
 ) -> Option<Vec<AccountId>> {
-    let res = api
-        .get_storage_double_map(
-            "EncointerCeremonies",
-            "AttestationRegistry",
-            key.encode(),
-            windex.encode(),
-        )
-        .unwrap();
-    match res.as_str() {
-        "null" => None,
-        _ => {
-            let attestations: Vec<AccountId> =
-                Decode::decode(&mut &hexstr_to_vec(res).unwrap()[..]).unwrap();
-            Some(attestations)
-        }
-    }
+    api.get_storage_double_map(
+        "EncointerCeremonies",
+        "AttestationRegistry",
+        key,
+        windex,
+    )
 }
 
 fn get_participant_attestation_index(
@@ -758,21 +700,12 @@ fn get_participant_attestation_index(
     key: CurrencyCeremony,
     accountid: &AccountId,
 ) -> Option<ParticipantIndexType> {
-    let res = api
-        .get_storage_double_map(
-            "EncointerCeremonies",
-            "AttestationIndex",
-            key.encode(),
-            accountid.encode(),
-        )
-        .unwrap();
-    match res.as_str() {
-        "null" => None,
-        _ => match hexstr_to_u64(res) {
-            Ok(windex) => Some(windex as ParticipantIndexType),
-            _ => None,
-        },
-    }
+    api.get_storage_double_map(
+        "EncointerCeremonies",
+        "AttestationIndex",
+        key,
+        accountid,
+    )
 }
 
 fn new_claim_for(
@@ -813,31 +746,19 @@ fn sign_claim(claim: ClaimOfAttendance<AccountId, Moment>, account_str: &str) ->
 }
 
 fn get_currency_identifiers(api: &Api<sr25519::Pair>) -> Option<Vec<CurrencyIdentifier>> {
-    let res = api
-        .get_storage("EncointerCurrencies", "CurrencyIdentifiers", None)
-        .unwrap();
-    match res.as_str() {
-        "null" => None,
-        _ => {
-            let cids: Vec<CurrencyIdentifier> =
-                Decode::decode(&mut &hexstr_to_vec(res).unwrap()[..]).unwrap();
-            Some(cids)
-        }
-    }
+    api.get_storage_value("EncointerCurrencies", "CurrencyIdentifiers")
 }
 
-fn get_currency_locations(api: &Api<sr25519::Pair>, cid: CurrencyIdentifier) -> Vec<Location> {
-    Decode::decode(&mut &hexstr_to_vec(
-        api.get_storage(
-            "EncointerCurrencies",
-            "Locations",
-            Some(cid.encode())
-        )
-        .unwrap()).unwrap()[..]).unwrap()
+fn get_currency_locations(api: &Api<sr25519::Pair>, cid: CurrencyIdentifier) -> Option<Vec<Location>> {
+    api.get_storage_map(
+        "EncointerCurrencies",
+        "Locations",
+        cid
+    )
 }
 
 fn get_meetup_location(api: &Api<sr25519::Pair>, cid: CurrencyIdentifier, mindex: MeetupIndexType) -> Option<Location> {
-    let locations = get_currency_locations(api, cid);
+    let locations = get_currency_locations(api, cid).or(Some(vec![])).unwrap();
     let lidx = (mindex -1) as usize;
     if lidx >= locations.len() {
         return None 
@@ -850,20 +771,19 @@ fn get_meetup_time(api: &Api<sr25519::Pair>, cid: CurrencyIdentifier, mindex: Me
     let mlon: f64 = mlocation.lon.lossy_into();
     let cindex = get_ceremony_index(&api);
 
-    let next_phase_timestamp = hexstr_to_u64(api.get_storage(
+    let next_phase_timestamp: Moment = api.get_storage_value(
         "EncointerScheduler",
-        "NextPhaseTimestamp",
-        None
-    ).unwrap()).unwrap();
+        "NextPhaseTimestamp"
+    ).unwrap();
 
     let attesting_start = match get_current_phase(api) {
         CeremonyPhaseType::ASSIGNING => next_phase_timestamp - next_phase_timestamp.rem(ONE_DAY),
         CeremonyPhaseType::ATTESTING => {
-            let attesting_duration = hexstr_to_u64(api.get_storage(
+            let attesting_duration: Moment = api.get_storage_map(
                 "EncointerScheduler",
                 "PhaseDurations",
-                Some(CeremonyPhaseType::ATTESTING.encode()),
-            ).unwrap()).unwrap();
+                CeremonyPhaseType::ATTESTING,
+            ).unwrap();
             next_phase_timestamp - attesting_duration - next_phase_timestamp.rem(ONE_DAY)
         },
         CeremonyPhaseType::REGISTERING => panic!("ceremony phase must be ASSIGNING or ATTESTING to request meetup location.")

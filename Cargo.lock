@@ -1512,7 +1512,7 @@ dependencies = [
  "indexmap",
  "log",
  "slab",
- "tokio 0.2.14",
+ "tokio 0.2.16",
  "tokio-util",
 ]
 
@@ -1723,7 +1723,7 @@ dependencies = [
  "net2",
  "pin-project",
  "time",
- "tokio 0.2.14",
+ "tokio 0.2.16",
  "tower-service",
  "want 0.3.0",
 ]
@@ -1741,7 +1741,7 @@ dependencies = [
  "log",
  "rustls 0.17.0",
  "rustls-native-certs",
- "tokio 0.2.14",
+ "tokio 0.2.16",
  "tokio-rustls",
  "webpki",
 ]
@@ -2810,6 +2810,39 @@ dependencies = [
 ]
 
 [[package]]
+name = "node-template-runtime"
+version = "2.0.0-alpha.5"
+source = "git+https://github.com/scs/substrate-node-template?branch=test-api-client#1b3776325ef469fe63efa87aa6b984216fda5ea6"
+dependencies = [
+ "frame-executive",
+ "frame-support",
+ "frame-system",
+ "pallet-aura",
+ "pallet-balances",
+ "pallet-grandpa",
+ "pallet-randomness-collective-flip",
+ "pallet-sudo",
+ "pallet-template",
+ "pallet-timestamp",
+ "pallet-transaction-payment",
+ "parity-scale-codec",
+ "serde",
+ "sp-api",
+ "sp-block-builder",
+ "sp-consensus-aura",
+ "sp-core",
+ "sp-inherents",
+ "sp-io",
+ "sp-offchain",
+ "sp-runtime",
+ "sp-session",
+ "sp-std",
+ "sp-transaction-pool",
+ "sp-version",
+ "substrate-wasm-builder-runner",
+]
+
+[[package]]
 name = "nodrop"
 version = "0.1.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2993,7 +3026,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-balances"
 version = "0.2.0"
-source = "git+https://github.com/encointer/pallet-encointer-balances?branch=v2.0.0-alpha.5#8032ef523b0166abd638f0114e6a3a0ae892fdfe"
+source = "git+https://github.com/encointer/pallet-encointer-balances?branch=v2.0.0-alpha.5#1879502f94bd94265b5a700a364c0005300ed81e"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3003,6 +3036,7 @@ dependencies = [
  "parity-scale-codec",
  "safe-mix",
  "serde",
+ "sp-io",
  "sp-runtime",
  "sp-std",
  "substrate-fixed",
@@ -3011,7 +3045,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-ceremonies"
 version = "0.2.0"
-source = "git+https://github.com/encointer/pallet-encointer-ceremonies?branch=v2.0.0-alpha.5#b72f9212f79c998cd49083b8f47e14a3788b36e5"
+source = "git+https://github.com/encointer/pallet-encointer-ceremonies?branch=v2.0.0-alpha.5#915cc2f756002d9aa309290970619ba784ab2cc7"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3031,7 +3065,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-currencies"
 version = "0.2.0"
-source = "git+https://github.com/encointer/pallet-encointer-currencies?branch=v2.0.0-alpha.5#7f4e18bcac92878bb24c0bfae4a3dffb0a43eabc"
+source = "git+https://github.com/encointer/pallet-encointer-currencies?branch=v2.0.0-alpha.5#b54888e1d1a081ac65ddaa0694d9df15d1dc2a5c"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3048,7 +3082,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-scheduler"
 version = "0.2.0"
-source = "git+https://github.com/encointer/pallet-encointer-scheduler?branch=v2.0.0-alpha.5#178967ff7367e5f2bce146cc0c8f5813fb15e0b9"
+source = "git+https://github.com/encointer/pallet-encointer-scheduler?branch=v2.0.0-alpha.5#1d2bcfbefb8c54efe0604f8a553ddd54299da8a9"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3099,23 +3133,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "pallet-indices"
-version = "2.0.0-alpha.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "be7290d7e65f8412b7237e41aff0ca4330b90253299184acded9ccccf6414305"
-dependencies = [
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "serde",
- "sp-core",
- "sp-io",
- "sp-keyring",
- "sp-runtime",
- "sp-std",
-]
-
-[[package]]
 name = "pallet-randomness-collective-flip"
 version = "2.0.0-alpha.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3161,6 +3178,18 @@ dependencies = [
  "sp-io",
  "sp-runtime",
  "sp-std",
+]
+
+[[package]]
+name = "pallet-template"
+version = "2.0.0-alpha.5"
+source = "git+https://github.com/scs/substrate-node-template?branch=test-api-client#1b3776325ef469fe63efa87aa6b984216fda5ea6"
+dependencies = [
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "safe-mix",
+ "serde",
 ]
 
 [[package]]
@@ -4183,7 +4212,7 @@ dependencies = [
  "structopt",
  "substrate-prometheus-endpoint",
  "time",
- "tokio 0.2.14",
+ "tokio 0.2.16",
 ]
 
 [[package]]
@@ -4909,18 +4938,18 @@ checksum = "a0eddf2e8f50ced781f288c19f18621fa72a3779e3cb58dbf23b07469b0abeb4"
 
 [[package]]
 name = "serde"
-version = "1.0.105"
+version = "1.0.106"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e707fbbf255b8fc8c3b99abb91e7257a622caeb20a9818cbadbeeede4e0932ff"
+checksum = "36df6ac6412072f67cf767ebbde4133a5b2e88e76dc6187fa7104cd16f783399"
 dependencies = [
  "serde_derive",
 ]
 
 [[package]]
 name = "serde_derive"
-version = "1.0.105"
+version = "1.0.106"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ac5d00fc561ba2724df6758a17de23df5914f20e41cb00f94d5b7ae42fffaff8"
+checksum = "9e549e3abf4fb8621bd1609f11dfc9f5e50320802273b12f3811a67e6716ea6c"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4929,9 +4958,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.50"
+version = "1.0.51"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "78a7a12c167809363ec3bd7329fc0a3369056996de43c4b37ef3cd54a6ce4867"
+checksum = "da07b57ee2623368351e9a0488bb0b261322a15a6e0ae53e243cbdc0f4208da9"
 dependencies = [
  "itoa",
  "ryu",
@@ -5730,7 +5759,7 @@ dependencies = [
 [[package]]
 name = "substrate-api-client"
 version = "2.0.0"
-source = "git+https://github.com/scs/substrate-api-client.git?branch=v2.0.0-alpha.5#be4701d364677ce7bf6959704d84b4b298d76d71"
+source = "git+https://github.com/scs/substrate-api-client.git?branch=v2.0.0-alpha.5#4b50777902fcbfd8c386a079c9e1e42098206bbf"
 dependencies = [
  "env_logger",
  "frame-metadata",
@@ -5738,14 +5767,15 @@ dependencies = [
  "frame-system",
  "hex",
  "log",
+ "node-template-runtime",
  "pallet-balances",
- "pallet-indices",
  "parity-scale-codec",
  "primitive-types 0.6.2",
  "serde",
  "serde_json",
  "sp-core",
  "sp-io",
+ "sp-keyring",
  "sp-runtime",
  "sp-std",
  "sp-version",
@@ -5805,7 +5835,7 @@ dependencies = [
  "hyper 0.13.4",
  "log",
  "prometheus",
- "tokio 0.2.14",
+ "tokio 0.2.16",
 ]
 
 [[package]]
@@ -6034,9 +6064,9 @@ dependencies = [
 
 [[package]]
 name = "tokio"
-version = "0.2.14"
+version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2751672f9da075d045c67fdb0068be9850ab7b231fa77bb51d6fd35da9c0bb0d"
+checksum = "ee5a0dd887e37d37390c13ff8ac830f992307fe30a1fff0ab8427af67211ba28"
 dependencies = [
  "bytes 0.5.4",
  "fnv",
@@ -6156,7 +6186,7 @@ checksum = "4adb8b3e5f86b707f1b54e7c15b6de52617a823608ccda98a15d3a24222f265a"
 dependencies = [
  "futures-core",
  "rustls 0.17.0",
- "tokio 0.2.14",
+ "tokio 0.2.16",
  "webpki",
 ]
 
@@ -6268,7 +6298,7 @@ dependencies = [
  "futures-sink",
  "log",
  "pin-project-lite",
- "tokio 0.2.14",
+ "tokio 0.2.16",
 ]
 
 [[package]]

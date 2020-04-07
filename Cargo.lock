@@ -3673,9 +3673,9 @@ checksum = "a1d01941d82fa2ab50be1e79e6714289dd7cde78eba4c074bc5a4374f650dfe0"
 
 [[package]]
 name = "quicksink"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a8461ef7445f61fd72d8dcd0629ce724b9131b3c2eb36e83a5d3d4161c127530"
+checksum = "77de3c815e5a160b1539c6592796801df2043ae35e123b46d73380cfa57af858"
 dependencies = [
  "futures-core",
  "futures-sink",
@@ -5759,7 +5759,7 @@ dependencies = [
 [[package]]
 name = "substrate-api-client"
 version = "2.0.0"
-source = "git+https://github.com/scs/substrate-api-client.git?branch=v2.0.0-alpha.5#4b50777902fcbfd8c386a079c9e1e42098206bbf"
+source = "git+https://github.com/scs/substrate-api-client.git?branch=v2.0.0-alpha.5#16b9ced416e1b2d2fb7c29c2adc8550cdb42d82a"
 dependencies = [
  "env_logger",
  "frame-metadata",
@@ -5775,7 +5775,6 @@ dependencies = [
  "serde_json",
  "sp-core",
  "sp-io",
- "sp-keyring",
  "sp-runtime",
  "sp-std",
  "sp-version",

@@ -46,7 +46,7 @@ use substrate_api_client::{
     extrinsic::xt_primitives::{GenericAddress, UncheckedExtrinsicV4},
     node_metadata::Metadata,
     utils::{hexstr_to_u256, hexstr_to_u64, hexstr_to_vec},
-    Api,
+    Api, XtStatus
 };
 
 use base58::{FromBase58, ToBase58};
@@ -134,7 +134,7 @@ fn main() {
             "[+] Alice is generous and pre funds account {}\n",
             accountid.to_ss58check()
         );
-        let tx_hash = _api.send_extrinsic(xt.hex_encode()).unwrap();
+        let tx_hash = _api.send_extrinsic(xt.hex_encode(), XtStatus::Finalized).unwrap();
         info!(
             "[+] Pre-Funding transaction got finalized. Hash: {:?}\n",
             tx_hash
@@ -283,16 +283,16 @@ fn main() {
                     cid,
                     amount
                 );
-                _api.send_extrinsic(xt.hex_encode()).unwrap()
+                _api.send_extrinsic(xt.hex_encode(), XtStatus::Finalized).unwrap()
             },
             None => {
                 let amount = u128::from_str_radix(_matches.value_of("amount").unwrap(), 10)
                     .expect("amount can be converted to u128");
                 let xt = _api.balance_transfer(GenericAddress::from(to.clone()), amount);
-                _api.send_extrinsic(xt.hex_encode()).unwrap()
+                _api.send_extrinsic(xt.hex_encode(), XtStatus::Finalized).unwrap()
             }
         };
-        println!("[+] Transaction got finalized. Hash: {:?}\n", tx_hash);
+        println!("[+] Transaction in pool. Hash: {:?}\n", tx_hash);
         let result = _api.get_account_data(&to.clone()).unwrap();
         println!("balance for {} is now {}", to, result.free);
     }
@@ -304,7 +304,7 @@ fn main() {
             compose_extrinsic!(_api.clone(), "EncointerScheduler", "next_phase");
 
         // send and watch extrinsic until finalized
-        let tx_hash = _api.send_extrinsic(xt.hex_encode()).unwrap();
+        let tx_hash = _api.send_extrinsic(xt.hex_encode(), XtStatus::Finalized).unwrap();
         let phase = get_current_phase(&api);
         println!(
             "Transaction got finalized. Phase is now: {:?}. tx hash: {:?}",
@@ -332,7 +332,7 @@ fn main() {
         );
 
         // send and watch extrinsic until finalized
-        let tx_hash = _api.send_extrinsic(xt.hex_encode()).unwrap();
+        let tx_hash = _api.send_extrinsic(xt.hex_encode(), XtStatus::Finalized).unwrap();
         println!(
             "Transaction got finalized. Account: {} should now have reputation. txhash: {:?}",
             accountid.to_ss58check(),
@@ -375,8 +375,8 @@ fn main() {
         );
 
         // send and watch extrinsic until finalized
-        let tx_hash = _api.send_extrinsic(xt.hex_encode()).unwrap();
-        info!("Transaction got finalized. tx hash: {:?}", tx_hash);
+        let tx_hash = _api.send_extrinsic(xt.hex_encode(), XtStatus::Finalized).unwrap();
+        info!("Transaction in pool. tx hash: {:?}", tx_hash);
         println!("registration finalized: {}", p.public().to_ss58check());
     }
 
@@ -403,7 +403,8 @@ fn main() {
             attestations.clone()
         );
         // send and watch extrinsic until finalized
-        let tx_hash = _api.send_extrinsic(xt.hex_encode()).unwrap();
+        let tx_hash = _api.send_extrinsic(xt.hex_encode(), XtStatus::Finalized).unwrap();
+        info!("Transaction in pool. tx hash: {:?}", tx_hash);
         println!("Transaction got finalized. tx hash: {:?}", tx_hash);
     }
 
@@ -551,7 +552,7 @@ fn main() {
             loc,
             bootstrappers
         );
-        let tx_hash = _api.send_extrinsic(xt.hex_encode()).unwrap();
+        let tx_hash = _api.send_extrinsic(xt.hex_encode(), XtStatus::Finalized).unwrap();
         info!("[+] Transaction got finalized. Hash: {:?}\n", tx_hash);
         println!("{}", cid.to_base58())
     }

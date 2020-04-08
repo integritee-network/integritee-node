@@ -1,17 +1,35 @@
 {
-    "CeremonyPhaseType": {
-      "_enum": [
-        "Registering",
-        "Assigning",
-        "Attesting"
-      ]
-    },
-    "CeremonyIndexType": "u32",
-    "ParticipantIndexType": "u64",
-    "MeetupIndexType": "u64",
-    "AttestationIndexType": "u64",
-    "CurrencyIdentifier": "Hash",
-    "BalanceType": "i128",
-    "BalanceEntry": "(BalanceType,Moment)",
-    "CurrencyCeremony": "(CurrencyIdentifier,CeremonyIndexType)"
-  }
+  "CeremonyPhaseType": {
+    "_enum": [
+      "Registering",
+      "Assigning",
+      "Attesting"
+    ]
+  },
+  "CeremonyIndexType": "u32",
+  "ParticipantIndexType": "u64",
+  "MeetupIndexType": "u64",
+  "AttestationIndexType": "u64",
+  "CurrencyIdentifier": "Hash",
+  "BalanceType": "i128",
+  "BalanceEntry": "(BalanceType,Moment)",
+  "CurrencyCeremony": "(CurrencyIdentifier,CeremonyIndexType)",
+  "Location": {
+    "lat": "i64",
+    "lon": "i64"
+  },
+  "Reputation": {
+    "_enum": [
+      "Unverified",
+      "UnverifiedReputable",
+      "VerifiedUnlinked",
+      "VerifiedLinked"
+    ]
+  },
+  "CurrencyPropertiesType": {
+    "name_utf8": "Text",
+    "demurrage_per_block": "i128"
+  },
+  "Attestation": "Vec<u8>",
+  "ProofOfAttendance": "Vec<u8>"
+}

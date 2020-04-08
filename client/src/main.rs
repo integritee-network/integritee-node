@@ -81,7 +81,7 @@ fn main() {
 
     let url = matches.value_of("URL").expect("must specify URL");
     info!("connecting to {}", url);
-    let api = Api::<sr25519::Pair>::new(format!("ws://{}", url));
+    let api = Api::<sr25519::Pair>::new(format!("{}", url));
 
     if let Some(_matches) = matches.subcommand_matches("print_metadata") {
         let metaraw = api.get_metadata();
@@ -248,9 +248,11 @@ fn main() {
                 println!("NCTR balance for {} is {} in currency {}", account, balance, cid.encode().to_base58());
             }
             None => {
-                let balance: BalanceType = api
-                    .get_storage_map("Balances", "FreeBalance", accountid)
-                    .unwrap();
+                let balance = if let Some(data) = api.get_account_data(&accountid) {
+                    data.free
+                } else {
+                    0
+                };
                 println!("ERT balance for {} is {}", account, balance);
             }
         };

@@ -23,17 +23,17 @@ args:
         takes_value: true
         help: Currency identifier (base58 encoded hash)
 subcommands:
-    - next_phase:
+    - next-phase:
         about: Advance ceremony state machine to next phase by ROOT call
-    - grant_reputation:
+    - grant-reputation:
         about: pretend that an account has previous reputation
         args:
             - account:
                 required: true
                 index: 1
-    - get_phase:
+    - get-phase:
         about: read current ceremony phase from chain
-    - get_balance:
+    - get-balance:
         about: get balance for account. If no --cid is specified, get NCTR balance
         settings:
             - ColoredHelp
@@ -41,7 +41,7 @@ subcommands:
             - account:
                 required: true
                 index: 1
-    - register_participant:
+    - register-participant:
         about: call register_participant with extrinsic
         settings:
             - ColoredHelp
@@ -51,7 +51,7 @@ subcommands:
                 index: 1
             - proof:
                 long: proof
-    - new_currency:
+    - new-currency:
         about: register a new currency
         settings:
             - ColoredHelp
@@ -62,11 +62,11 @@ subcommands:
             - signer:
                 required: true
                 index: 2
-    - new_account:
+    - new-account:
         about: generate new account and store it in keystore
         settings:
             - ColoredHelp
-    - new_claim:
+    - new-claim:
         about: generate a new claim for meetup
         settings:
             - ColoredHelp
@@ -74,10 +74,10 @@ subcommands:
             - account:
                 required: true
                 index: 1
-            - n_participants:
+            - n-participants:
                 required: true
                 index: 2
-    - sign_claim:
+    - sign-claim:
         about: attest another participants attendance by signing her claim
         args:
             - signer:
@@ -86,7 +86,7 @@ subcommands:
             - claim:
                 required: true
                 index: 2
-    - fund_account:
+    - fund-account:
         about: Alice will pre-fund this new account
         settings:
             - ColoredHelp
@@ -94,13 +94,13 @@ subcommands:
             - account:
                 required: true
                 index: 1
-    - list_accounts:
+    - list-accounts:
         about: list all accounts in the keystore
         settings:
             - ColoredHelp
     - listen:
         about: listen to events form EncointerCeremonies
-    - print_metadata:
+    - print-metadata:
         about: query node metadata and print it to stdout
     - transfer:
         about: transfer funds from one account to another
@@ -116,15 +116,15 @@ subcommands:
             - amount:
                 required: true
                 index: 3
-    - list_meetup_registry:
+    - list-meetup-registry:
         about: query entire meetup registry and list all meetups and participants
-    - list_participant_registry:
+    - list-participant-registry:
         about: query entire participant registry 
-    - list_attestations_registry:
+    - list-attestations-registry:
         about: query entire witnesses registry 
-    - list_currencies:
+    - list-currencies:
         about: list all currencies and their properties
-    - register_attestations:
+    - register-attestations:
         about: send attestations for other participants to the chain
         args:
             - account:

@@ -83,12 +83,12 @@ fn main() {
     info!("connecting to {}", url);
     let api = Api::<sr25519::Pair>::new(format!("{}", url));
 
-    if let Some(_matches) = matches.subcommand_matches("print_metadata") {
+    if let Some(_matches) = matches.subcommand_matches("print-metadata") {
         let metaraw = api.get_metadata();
         println!("{}", Metadata::pretty_format(&metaraw).unwrap());
     }
 
-    if let Some(_matches) = matches.subcommand_matches("new_account") {
+    if let Some(_matches) = matches.subcommand_matches("new-account") {
         // open store without password protection
         let store = Store::open(PathBuf::from(&KEYSTORE_PATH), None).unwrap();
         let key: sr25519::AppPair = store.write().generate().unwrap();
@@ -96,7 +96,7 @@ fn main() {
         println!("{}", key.public().to_ss58check())
     }
 
-    if let Some(_matches) = matches.subcommand_matches("new_claim") {
+    if let Some(_matches) = matches.subcommand_matches("new-claim") {
         let account = _matches.value_of("account").unwrap();
         let accountid = get_accountid_from_str(account);
         let cid = get_cid(
@@ -105,7 +105,7 @@ fn main() {
                 .expect("please supply argument --cid"),
         );
         let n_participants = _matches
-            .value_of("n_participants")
+            .value_of("n-participants")
             .unwrap()
             .parse::<u32>()
             .unwrap();
@@ -113,7 +113,7 @@ fn main() {
         println!("{}", hex::encode(claim))
     }
 
-    if let Some(_matches) = matches.subcommand_matches("sign_claim") {
+    if let Some(_matches) = matches.subcommand_matches("sign-claim") {
         let signer_arg = _matches.value_of("signer").unwrap();
         info!("first call to get_pair_from_str");
         let claim = ClaimOfAttendance::decode(
@@ -124,7 +124,7 @@ fn main() {
         println!("{}", hex::encode(attestation))
     }
 
-    if let Some(_matches) = matches.subcommand_matches("fund_account") {
+    if let Some(_matches) = matches.subcommand_matches("fund-account") {
         let account = _matches.value_of("account").unwrap();
         let accountid = get_accountid_from_str(account);
 
@@ -232,7 +232,7 @@ fn main() {
         }
     }
 
-    if let Some(_matches) = matches.subcommand_matches("get_balance") {
+    if let Some(_matches) = matches.subcommand_matches("get-balance") {
         let account = _matches.value_of("account").unwrap();
         let accountid = get_accountid_from_str(account);
         info!("ss58 is {}", accountid.to_ss58check());
@@ -241,10 +241,10 @@ fn main() {
                 let cid = get_cid(cid_str);
                 let bn = get_block_number(&api);
                 let dr = get_demurrage_per_block(&api, cid);
-                let entry: BalanceEntry<BlockNumber> = api
-                    .get_storage_double_map("EncointerBalances", "Balance", cid, accountid)
-                    .unwrap();
-                let balance = apply_demurrage(entry, bn, dr);
+                let balance = if let Some(entry) = api
+                    .get_storage_double_map("EncointerBalances", "Balance", cid, accountid) {
+                        apply_demurrage(entry, bn, dr)
+                } else { BalanceType::from_num(0) }; 
                 println!("NCTR balance for {} is {} in currency {}", account, balance, cid.encode().to_base58());
             }
             None => {
@@ -258,7 +258,7 @@ fn main() {
         };
     }
 
-    if let Some(_matches) = matches.subcommand_matches("get_phase") {
+    if let Some(_matches) = matches.subcommand_matches("get-phase") {
         let phase = get_current_phase(&api);
         println!("{:?}", phase);
     }
@@ -299,7 +299,7 @@ fn main() {
         println!("balance for {} is now {}", to, result.free);
     }
 
-    if let Some(_matches) = matches.subcommand_matches("next_phase") {
+    if let Some(_matches) = matches.subcommand_matches("next-phase") {
         let _api = api.clone().set_signer(AccountKeyring::Alice.pair());
 
         let xt: UncheckedExtrinsicV4<_> =
@@ -314,7 +314,7 @@ fn main() {
         );
     }
 
-    if let Some(_matches) = matches.subcommand_matches("grant_reputation") {
+    if let Some(_matches) = matches.subcommand_matches("grant-reputation") {
         // root call, must be signed by master
         let _api = api.clone().set_signer(AccountKeyring::Alice.pair());
         let p_arg = _matches.value_of("account").unwrap();
@@ -342,7 +342,7 @@ fn main() {
         );
     }
 
-    if let Some(_matches) = matches.subcommand_matches("register_participant") {
+    if let Some(_matches) = matches.subcommand_matches("register-participant") {
         let p_arg = _matches.value_of("account").unwrap();
         let accountid = get_accountid_from_str(p_arg);
         let p = get_pair_from_str(p_arg);
@@ -382,7 +382,7 @@ fn main() {
         println!("registration finalized: {}", p.public().to_ss58check());
     }
 
-    if let Some(_matches) = matches.subcommand_matches("register_attestations") {
+    if let Some(_matches) = matches.subcommand_matches("register-attestations") {
         let p_arg = _matches.value_of("account").unwrap();
         let signer = get_pair_from_str(p_arg);
 
@@ -410,7 +410,7 @@ fn main() {
         println!("Transaction got finalized. tx hash: {:?}", tx_hash);
     }
 
-    if let Some(_matches) = matches.subcommand_matches("list_meetup_registry") {
+    if let Some(_matches) = matches.subcommand_matches("list-meetup-registry") {
         let cindex = get_ceremony_index(&api);
         let cid = get_cid(
             matches
@@ -441,7 +441,7 @@ fn main() {
         }
     }
 
-    if let Some(_matches) = matches.subcommand_matches("list_participant_registry") {
+    if let Some(_matches) = matches.subcommand_matches("list-participant-registry") {
         let cindex = get_ceremony_index(&api);
         let cid = get_cid(
             matches
@@ -461,7 +461,7 @@ fn main() {
         }
     }
 
-    if let Some(_matches) = matches.subcommand_matches("list_currencies") {
+    if let Some(_matches) = matches.subcommand_matches("list-currencies") {
         let cids = get_currency_identifiers(&api).expect("no currency registered");
         println!("number of currencies:  {}", cids.len());
         for cid in cids.iter() {
@@ -469,7 +469,7 @@ fn main() {
         }
     }
 
-    if let Some(_matches) = matches.subcommand_matches("list_attestations_registry") {
+    if let Some(_matches) = matches.subcommand_matches("list-attestations-registry") {
         let cindex = get_ceremony_index(&api);
         let cid = get_cid(
             matches
@@ -505,7 +505,7 @@ fn main() {
         }
     }
 
-    if let Some(_matches) = matches.subcommand_matches("new_currency") {
+    if let Some(_matches) = matches.subcommand_matches("new-currency") {
         let p_arg = _matches.value_of("signer").unwrap();
         let signer = get_pair_from_str(p_arg);
 
@@ -780,21 +780,20 @@ fn get_meetup_time(api: &Api<sr25519::Pair>, cid: CurrencyIdentifier, mindex: Me
     ).unwrap();
 
     let attesting_start = match get_current_phase(api) {
-        CeremonyPhaseType::ASSIGNING => next_phase_timestamp - next_phase_timestamp.rem(ONE_DAY),
+        CeremonyPhaseType::ASSIGNING => next_phase_timestamp, // - next_phase_timestamp.rem(ONE_DAY),
         CeremonyPhaseType::ATTESTING => {
             let attesting_duration: Moment = api.get_storage_map(
                 "EncointerScheduler",
                 "PhaseDurations",
                 CeremonyPhaseType::ATTESTING,
             ).unwrap();
-            next_phase_timestamp - attesting_duration - next_phase_timestamp.rem(ONE_DAY)
+            next_phase_timestamp - attesting_duration //- next_phase_timestamp.rem(ONE_DAY)
         },
         CeremonyPhaseType::REGISTERING => panic!("ceremony phase must be ASSIGNING or ATTESTING to request meetup location.")
     };
     
-    // next phase is ATTESTING
     Some(attesting_start + ONE_DAY
-    - (mlon / 360.0 * ONE_DAY as f64) as Moment )
+    - (mlon * (ONE_DAY as f64) / 360.0) as Moment )
 }
 
 fn prove_attendance(

@@ -36,7 +36,7 @@ Build all native code:
 cargo build --release
 ```
 
-## Run Node
+## Run Dev Node
 
 You can start a development chain with:
 
@@ -45,6 +45,13 @@ You can start a development chain with:
 ```
 
 Additional CLI usage options are available and may be shown by running `./target/release/encointer-node --help`.
+
+## Run Testnet Gesell Node
+Join our testnet as a full node with 
+
+```bash
+./target/release/encointer-node --chain gesellSpecRaw.json --name giveyournodeaname
+```
 
 ## Run Client
 encointer comes with a cli application that allows interaction with the chain

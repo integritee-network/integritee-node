@@ -33,7 +33,7 @@ Install required tools:
 Build all native code:
 
 ```bash
-cargo build --release
+cargo build --release --all
 ```
 
 ## Run Dev Node

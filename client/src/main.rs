@@ -17,7 +17,6 @@
 //! examples
 //! encointer-client 127.0.0.1:9944 transfer //Alice 5G9RtsTbiYJYQYMHbWfyPoeuuxNaCbC16tZ2JGrZ4gRKwz14 1000
 //!
-#![feature(rustc_private)]
 
 #[macro_use]
 extern crate clap;

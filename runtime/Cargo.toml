@@ -10,30 +10,31 @@ version = '0.2.0'
 [dependencies.encointer-scheduler]
 default-features = false
 git = "https://github.com/encointer/pallet-encointer-scheduler"
-branch = "v2.0.0-alpha.5"
+tag = "v0.2.0"
 package = "pallet-encointer-scheduler"
 
 [dependencies.encointer-ceremonies]
 default-features = false
 git = "https://github.com/encointer/pallet-encointer-ceremonies"
-branch = "v2.0.0-alpha.5"
+tag = "v0.2.0"
 package = "pallet-encointer-ceremonies"
 
 [dependencies.encointer-currencies]
 default-features = false
 git = "https://github.com/encointer/pallet-encointer-currencies"
-branch = "v2.0.0-alpha.5"
+tag = "v0.2.0"
 package = "pallet-encointer-currencies"
 
 [dependencies.encointer-balances]
 default-features = false
 git = "https://github.com/encointer/pallet-encointer-balances"
-branch = "v2.0.0-alpha.5"
+tag = "v0.2.0"
 package = "pallet-encointer-balances"
 
 [dependencies.fixed]
 default-features = false
 git = "https://github.com/encointer/substrate-fixed"
+tag = "v0.5.4+sub_v0.1"
 package = "substrate-fixed"
 
 [dependencies.aura]

@@ -28,9 +28,8 @@ use app_crypto::{ed25519, sr25519};
 use keyring::AccountKeyring;
 use keystore::Store;
 use std::path::PathBuf;
-use std::ops::Rem;
 use std::str::FromStr;
-use std::convert::{TryInto, TryFrom};
+use std::convert::TryInto;
 
 use codec::{Decode, Encode};
 use primitives::{
@@ -45,7 +44,7 @@ use substrate_api_client::{
     compose_extrinsic, 
     extrinsic::xt_primitives::{GenericAddress, UncheckedExtrinsicV4},
     node_metadata::Metadata,
-    utils::{hexstr_to_u256, hexstr_to_u64, hexstr_to_vec},
+    utils::hexstr_to_vec,
     Api, XtStatus
 };
 
@@ -143,7 +142,7 @@ fn main() {
         println!("balance for {} is now {}", accountid.to_ss58check(), result.free);
     }
 
-    if let Some(_matches) = matches.subcommand_matches("list_accounts") {
+    if let Some(_matches) = matches.subcommand_matches("list-accounts") {
         let store = Store::open(PathBuf::from(&KEYSTORE_PATH), None).unwrap();
         println!("sr25519 keys:");
         for pubkey in store
@@ -772,7 +771,6 @@ fn get_meetup_location(api: &Api<sr25519::Pair>, cid: CurrencyIdentifier, mindex
 fn get_meetup_time(api: &Api<sr25519::Pair>, cid: CurrencyIdentifier, mindex: MeetupIndexType) -> Option<Moment> {
     let mlocation = get_meetup_location(api, cid, mindex).unwrap();
     let mlon: f64 = mlocation.lon.lossy_into();
-    let cindex = get_ceremony_index(&api);
 
     let next_phase_timestamp: Moment = api.get_storage_value(
         "EncointerScheduler",

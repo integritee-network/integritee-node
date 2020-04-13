@@ -30,10 +30,10 @@ Install required tools:
 ./scripts/init.sh
 ```
 
-Build all native code:
+Build the node:
 
 ```bash
-cargo build --release --all
+cargo +nightly build --release
 ```
 
 ## Run Dev Node
@@ -53,8 +53,14 @@ Join our testnet as a full node with
 ./target/release/encointer-node --chain gesellSpecRaw.json --name giveyournodeaname
 ```
 
+## Build CLI client
+We currently have limited support for the [polkadot-js apps](https://polkadot.js.org/apps) UI. Encointer comes with a cli application instead that supports all interactions with the chain:
+
+```bash
+cargo +nightly build encointer-client --release
+```
+
 ## Run Client
-encointer comes with a cli application that allows interaction with the chain
 
 ```
 encointer-node/client> cargo build --release
@@ -77,8 +83,8 @@ encointer-node/client> ./demo_poc1.sh
 
 ## Web UI
 
-There is no specific UI yet, but you can use [polkadot-js apps](https://github.com/polkadot-js/apps) and add [encointer types](./client/polkadot-js-apps-types.json) at Settings -> Developer 
-This allows you to explore chain state but it doesn't support all types of extrinsic parameters needed.
+There is no fully featured UI yet, but you can use [polkadot-js apps](https://github.com/polkadot-js/apps). 
+This allows you to explore chain state but it doesn't support all types of extrinsic parameters needed. Use our CLI client instead.
 
 ## Mobile App
 

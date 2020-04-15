@@ -1,6 +1,6 @@
 [package]
 name = "encointer-client"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["encointer.org <alain@encointer.org>"]
 edition = "2018"
 

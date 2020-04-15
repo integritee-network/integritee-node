@@ -431,7 +431,7 @@ fn main() {
                 Some(participants) => {
                     println!("MeetupRegistry[{}, {}] participants are:", cindex, m);
                     for p in participants.iter() {
-                        println!("   {:?}", p);
+                        println!("   {}", p);
                     }
                 }
                 None => println!("MeetupRegistry[{}, {}] EMPTY", cindex, m),
@@ -455,7 +455,7 @@ fn main() {
         println!("number of participants assigned:  {}", pcount);
         for p in 1..pcount + 1 {
             let accountid = get_participant(&api, (cid, cindex), p).unwrap();
-            println!("ParticipantRegistry[{}, {}] = {:?}", cindex, p, accountid);
+            println!("ParticipantRegistry[{}, {}] = {}", cindex, p, accountid);
         }
     }
 

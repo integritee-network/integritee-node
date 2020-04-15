@@ -50,7 +50,7 @@ use substrate_api_client::{
 use base58::{FromBase58, ToBase58};
 use encointer_ceremonies::{
     Attestation, AttestationIndexType, ClaimOfAttendance,
-    CurrencyCeremony, MeetupIndexType, ParticipantIndexType, ProofOfAttendance,
+    CurrencyCeremony, MeetupIndexType, ParticipantIndexType, ProofOfAttendance, Reputation
 };
 use encointer_scheduler::{CeremonyIndexType, CeremonyPhaseType};
 use encointer_currencies::{CurrencyIdentifier, CurrencyPropertiesType, Location, Degree};
@@ -350,12 +350,21 @@ fn main() {
                 .value_of("cid")
                 .expect("please supply argument --cid"),
         );
+        let rep = get_reputation(&api, &accountid, cid, cindex -1);
+        info!("{} has reputation {:?}", accountid, rep);
+        let proof = match rep {
+            Reputation::Unverified => None,
+            Reputation::UnverifiedReputable => None, // this should never by the case during REGISTERING!
+            Reputation::VerifiedUnlinked => Some(prove_attendance(accountid, cid, cindex - 1, p_arg)),
+            Reputation::VerifiedLinked => panic!("reputation of {} has already been linked! Not registering again", accountid),
+        };
         // FIXME:
-        let proof = if _matches.is_present("proof") {
+/*        let proof = if _matches.is_present("proof") {
             Some(prove_attendance(accountid, cid, cindex - 1, p_arg))
         } else {
             None
         };
+        */
         //let proof : Option<ProofOfAttendance<Signature, AccountId>> = None;
         // assume users keep the same pair forever (so prover == attendee)
         //let proof = prove_attendance(acountid, cid, cindex-1)
@@ -811,6 +820,20 @@ fn prove_attendance(
             attendee.sign(&msg.encode()),
         )),
     }
+}
+
+fn get_reputation(
+    api: &Api<sr25519::Pair>, 
+    prover: &AccountId,
+    cid: CurrencyIdentifier,
+    cindex: CeremonyIndexType,    
+) -> Reputation {
+    api.get_storage_double_map(
+        "EncointerCeremonies",
+        "ParticipantReputation",
+        (cid, cindex),
+        prover.clone()
+    ).or(Some(Reputation::Unverified)).unwrap()   
 }
 
 fn apply_demurrage(entry: BalanceEntry<BlockNumber>, current_block: BlockNumber, demurrage_per_block: BalanceType) -> BalanceType {

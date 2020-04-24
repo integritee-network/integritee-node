@@ -109,14 +109,14 @@ version = '2.0.0-alpha.6'
 
 [dependencies.substratee-registry]
 default-features = false
+git = " https://github.com/scs/pallet-substratee-registry.git"
+branch = "nohostcalls"
 package = 'pallet-substratee-registry'
-path = '../pallets/substratee-registry'
-version = '0.6.0'
 
-[dependencies.substratee-registry-host-calls]
-default-features = false
-path = '../pallets/substratee-registry/host-calls'
-version = '0.6.0'
+#[dependencies.substratee-registry-host-calls]
+#default-features = false
+#path = '../pallets/substratee-registry/host-calls'
+#version = '0.6.0'
 
 [dependencies.timestamp]
 default-features = false

@@ -5,7 +5,6 @@ use std::time::Duration;
 use sc_client::LongestChain;
 use sc_client_api::ExecutorProvider;
 use substratee_node_runtime::{self, opaque::Block, RuntimeApi};
-use substratee_registry_host_calls::runtime_interfaces;
 use sc_service::{error::{Error as ServiceError}, AbstractService, Configuration, ServiceBuilder};
 use sp_inherents::InherentDataProviders;
 use sc_executor::native_executor_instance;
@@ -18,8 +17,6 @@ native_executor_instance!(
 	pub Executor,
 	substratee_node_runtime::api::dispatch,
 	substratee_node_runtime::native_version,
-	// Added by SCS
-	runtime_interfaces::HostFunctions	
 );
 
 /// Starts a `ServiceBuilder` for a full service.

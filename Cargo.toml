@@ -1,9 +1,10 @@
 [workspace]
 members = [
     'node',
-    'pallets/substratee-registry',
-    'pallets/substratee-registry/host-calls',
     'runtime',
 ]
 [profile.release]
 panic = 'unwind'
+
+#[patch."https://github.com/scs/pallet-substratee-registry.git"]
+#pallet-substratee-registry = { path = '../pallet-substratee-registry' }

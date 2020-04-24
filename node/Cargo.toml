@@ -21,10 +21,6 @@ structopt = '0.3.8'
 path = '../runtime'
 version = '0.6.0'
 
-[dependencies.substratee-registry-host-calls]
-path = '../pallets/substratee-registry/host-calls'
-version = '0.6.0'
-
 [dependencies.sc-basic-authorship]
 version = '0.8.0-alpha.6'
 

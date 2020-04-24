@@ -5,6 +5,7 @@ This repository belongs to the [substraTEE project](https://github.com/scs/subst
 A substrate-based node that maintains a registry of remote attested substraTEE-worker enclaves. The node also acts as a proxy for encrypted requests which are forwarded to the substraTEE-worker.
 
 ## Build
+If you have the Intel SGX SDK installed, you can do: 
 
 Install Rust:
 
@@ -22,6 +23,16 @@ Build Wasm and native code:
 
 ```bash
 cargo build --release
+```
+
+### build with docker
+If you do not have the Intel SGX dependencies installed, you may use our docker image:
+
+```
+docker pull scssubstratee/substratee_dev:18.04-2.9-1.1.1
+docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9-1.1.1 /bin/bash
+container> cd work
+container> cargo build --release
 ```
 
 ## Run

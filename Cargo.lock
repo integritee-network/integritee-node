@@ -1332,7 +1332,7 @@ dependencies = [
  "indexmap",
  "log",
  "slab",
- "tokio 0.2.18",
+ "tokio 0.2.19",
  "tokio-util",
 ]
 
@@ -1372,9 +1372,9 @@ dependencies = [
 
 [[package]]
 name = "hermit-abi"
-version = "0.1.11"
+version = "0.1.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8a0d737e0f947a1864e93d33fdef4af8445a00d1ed8dc0c8ddb73139ea6abf15"
+checksum = "61565ff7aaace3525556587bd2dc31d4a07071957be715e63ce7b1eccf51a8f4"
 dependencies = [
  "libc",
 ]
@@ -1533,7 +1533,7 @@ dependencies = [
  "net2",
  "pin-project",
  "time",
- "tokio 0.2.18",
+ "tokio 0.2.19",
  "tower-service",
  "want 0.3.0",
 ]
@@ -1551,7 +1551,7 @@ dependencies = [
  "log",
  "rustls",
  "rustls-native-certs",
- "tokio 0.2.18",
+ "tokio 0.2.19",
  "tokio-rustls",
  "webpki 0.21.2",
 ]
@@ -1559,12 +1559,12 @@ dependencies = [
 [[package]]
 name = "ias-verify"
 version = "0.1.0"
-source = "git+https://github.com/scs/pallet-substratee-registry.git?branch=nohostcalls#27908620cb870520592b78dc65accac124130c4a"
+source = "git+https://github.com/scs/pallet-substratee-registry.git?tag=v0.6.0#72d1355588e2b355aebf965aa30d0fb2c2283834"
 dependencies = [
  "base64",
  "chrono",
+ "frame-support",
  "parity-scale-codec",
- "ring 0.16.9",
  "serde_json",
  "sp-io",
  "sp-std",
@@ -2792,7 +2792,7 @@ dependencies = [
 [[package]]
 name = "pallet-substratee-registry"
 version = "0.6.0"
-source = "git+https://github.com/scs/pallet-substratee-registry.git?branch=nohostcalls#27908620cb870520592b78dc65accac124130c4a"
+source = "git+https://github.com/scs/pallet-substratee-registry.git?tag=v0.6.0#72d1355588e2b355aebf965aa30d0fb2c2283834"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3838,7 +3838,7 @@ dependencies = [
  "structopt",
  "substrate-prometheus-endpoint",
  "time",
- "tokio 0.2.18",
+ "tokio 0.2.19",
 ]
 
 [[package]]
@@ -5421,7 +5421,7 @@ dependencies = [
  "hyper 0.13.5",
  "log",
  "prometheus",
- "tokio 0.2.18",
+ "tokio 0.2.19",
 ]
 
 [[package]]
@@ -5708,9 +5708,9 @@ dependencies = [
 
 [[package]]
 name = "tokio"
-version = "0.2.18"
+version = "0.2.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "34ef16d072d2b6dc8b4a56c70f5c5ced1a37752116f8e7c1e80c659aa7cb6713"
+checksum = "7d9c43f1bb96970e153bcbae39a65e249ccb942bd9d36dbdf086024920417c9c"
 dependencies = [
  "bytes 0.5.4",
  "fnv",
@@ -5830,7 +5830,7 @@ checksum = "4adb8b3e5f86b707f1b54e7c15b6de52617a823608ccda98a15d3a24222f265a"
 dependencies = [
  "futures-core",
  "rustls",
- "tokio 0.2.18",
+ "tokio 0.2.19",
  "webpki 0.21.2",
 ]
 
@@ -5942,7 +5942,7 @@ dependencies = [
  "futures-sink",
  "log",
  "pin-project-lite",
- "tokio 0.2.18",
+ "tokio 0.2.19",
 ]
 
 [[package]]

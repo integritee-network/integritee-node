@@ -22,7 +22,7 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Stage TEST'
-        sh 'cargo test --all'
+        sh 'SKIP_WASM_BUILD= cargo test --all'
       }
     }
     // running clippy doesn't actually make sense here, as it's 99% upstream code.

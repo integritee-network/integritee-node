@@ -1,4 +1,8 @@
+
 //! Service and ServiceFactory implementation. Specialized wrapper over substrate service.
+
+// SCS: these warnings are caused by upstream code
+#![allow(clippy::redundant_clone)]
 
 use std::sync::Arc;
 use std::time::Duration;

@@ -22,24 +22,27 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Stage TEST'
-        sh 'cargo test --all'
+        sh 'BUILD_DUMMY_WASM_BINARY=1 cargo test --all'
       }
     }
+    // running clippy doesn't actually make sense here, as it's 99% upstream code.
+    // however, right now it didn't take much to make it pass
     stage('Clippy') {
       steps {
         sh 'cargo clean'
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-          sh 'cargo +nightly-2019-11-25 clippy 2>&1 | tee clippy.log'
+          sh 'cargo clippy 2>&1 | tee clippy.log'
         }
       }
     }
-    stage('Formatter') {
+    // NEVER!!! run cargo fmt! This is 99% upstream code and we need easy-rebase!
+/*    stage('Formatter') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
           sh 'cargo fmt -- --check > ${WORKSPACE}/fmt.log'
         }
       }
-    }
+    } */
     stage('Results') {
       steps {
         recordIssues(
@@ -63,9 +66,9 @@ pipeline {
               )
           ]
         )
-        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                  sh './ci/check_fmt_log.sh'
-        }
+//        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+//                  sh './ci/check_fmt_log.sh'
+//        }
       }
     }
     stage('Archive build output') {

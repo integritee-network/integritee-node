@@ -22,7 +22,7 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Stage TEST'
-        sh 'SKIP_WASM_BUILD= cargo test --all'
+        sh 'BUILD_DUMMY_WASM_BINARY=1 cargo test --all'
       }
     }
     // running clippy doesn't actually make sense here, as it's 99% upstream code.
@@ -31,7 +31,7 @@ pipeline {
       steps {
         sh 'cargo clean'
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-          sh 'cargo +nightly-2019-11-25 clippy 2>&1 | tee clippy.log'
+          sh 'cargo clippy 2>&1 | tee clippy.log'
         }
       }
     }

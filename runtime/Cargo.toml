@@ -1,12 +1,12 @@
 [dependencies.aura]
 default-features = false
 package = 'pallet-aura'
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.balances]
 default-features = false
 package = 'pallet-balances'
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.codec]
 default-features = false
@@ -16,21 +16,21 @@ version = '1.3.0'
 
 [dependencies.frame-executive]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.frame-support]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.grandpa]
 default-features = false
 package = 'pallet-grandpa'
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.randomness-collective-flip]
 default-features = false
 package = 'pallet-randomness-collective-flip'
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.serde]
 features = ['derive']
@@ -39,77 +39,77 @@ version = '1.0.101'
 
 [dependencies.sp-api]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-block-builder]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-consensus-aura]
 default-features = false
-version = '0.8.0-alpha.6'
+version = '0.8.0-alpha.7'
 
 [dependencies.sp-core]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-inherents]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-io]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-offchain]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-runtime]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-session]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-std]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-transaction-pool]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-version]
 default-features = false
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.sudo]
 default-features = false
 package = 'pallet-sudo'
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.system]
 default-features = false
 package = 'frame-system'
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.template]
 default-features = false
 package = 'pallet-template'
 path = '../pallets/template'
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.timestamp]
 default-features = false
 package = 'pallet-timestamp'
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [dependencies.transaction-payment]
 default-features = false
 package = 'pallet-transaction-payment'
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [build-dependencies.wasm-builder-runner]
 package = 'substrate-wasm-builder-runner'
@@ -122,7 +122,7 @@ homepage = 'https://substrate.dev'
 license = 'Unlicense'
 name = 'node-template-runtime'
 repository = 'https://github.com/paritytech/substrate/'
-version = '2.0.0-alpha.6'
+version = '2.0.0-alpha.7'
 
 [package.metadata.docs.rs]
 targets = ['x86_64-unknown-linux-gnu']

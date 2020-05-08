@@ -13,12 +13,12 @@ targets = ['x86_64-unknown-linux-gnu']
 [dependencies.aura]
 default-features = false
 package = 'pallet-aura'
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.balances]
 default-features = false
 package = 'pallet-balances'
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.codec]
 default-features = false
@@ -28,21 +28,21 @@ version = '1.3.0'
 
 [dependencies.frame-executive]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.frame-support]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.grandpa]
 default-features = false
 package = 'pallet-grandpa'
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.randomness-collective-flip]
 default-features = false
 package = 'pallet-randomness-collective-flip'
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.serde]
 features = ['derive']
@@ -51,78 +51,77 @@ version = '1.0.101'
 
 [dependencies.sp-api]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-block-builder]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-consensus-aura]
 default-features = false
 version = '0.8.0-alpha.7'
-tag = 'v2.0.0-alpha.7'
 
 [dependencies.sp-core]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-inherents]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-io]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-offchain]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-runtime]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-session]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-std]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-transaction-pool]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.sp-version]
 default-features = false
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.sudo]
 default-features = false
 package = 'pallet-sudo'
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.system]
 default-features = false
 package = 'frame-system'
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.substratee-registry]
 default-features = false
 package = 'pallet-substratee-registry'
 git = " https://github.com/scs/pallet-substratee-registry.git"
-tag = "v0.6.1"
+tag = "v0.6.2-sub2.0.0-alpha.7"
 
 [dependencies.timestamp]
 default-features = false
 package = 'pallet-timestamp'
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [dependencies.transaction-payment]
 default-features = false
 package = 'pallet-transaction-payment'
-tag = 'v2.0.0-alpha.7'
+version = '2.0.0-alpha.7'
 
 [build-dependencies.wasm-builder-runner]
 package = 'substrate-wasm-builder-runner'

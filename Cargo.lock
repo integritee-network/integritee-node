@@ -1535,7 +1535,7 @@ dependencies = [
 [[package]]
 name = "ias-verify"
 version = "0.1.0"
-source = "git+https://github.com/scs/pallet-substratee-registry.git?tag=v0.6.2-sub2.0.0-alpha.7#24cfaca4cba000e593eaf911ea54d57e5acd0bfc"
+source = "git+https://github.com/scs/pallet-substratee-registry.git?tag=v0.6.4-sub2.0.0-alpha.7#baa1167b9bd5bb165ee00da145cf71420bb022dc"
 dependencies = [
  "base64",
  "chrono",
@@ -2775,8 +2775,8 @@ dependencies = [
 
 [[package]]
 name = "pallet-substratee-registry"
-version = "0.6.2"
-source = "git+https://github.com/scs/pallet-substratee-registry.git?tag=v0.6.2-sub2.0.0-alpha.7#24cfaca4cba000e593eaf911ea54d57e5acd0bfc"
+version = "0.6.3"
+source = "git+https://github.com/scs/pallet-substratee-registry.git?tag=v0.6.4-sub2.0.0-alpha.7#baa1167b9bd5bb165ee00da145cf71420bb022dc"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3616,7 +3616,7 @@ dependencies = [
 [[package]]
 name = "ring"
 version = "0.16.9"
-source = "git+https://github.com/Phala-Network/phala-blockchain.git#685348a29a7c902f1b6ba4fdc16f0e972ecab7e8"
+source = "git+https://github.com/Phala-Network/phala-blockchain.git?rev=7d342012105f2125ca0e48a3b9c702176af23471#7d342012105f2125ca0e48a3b9c702176af23471"
 dependencies = [
  "cc",
  "libc",
@@ -6303,7 +6303,7 @@ dependencies = [
 [[package]]
 name = "webpki"
 version = "0.21.0"
-source = "git+https://github.com/Phala-Network/phala-blockchain.git#685348a29a7c902f1b6ba4fdc16f0e972ecab7e8"
+source = "git+https://github.com/Phala-Network/phala-blockchain.git?rev=7d342012105f2125ca0e48a3b9c702176af23471#7d342012105f2125ca0e48a3b9c702176af23471"
 dependencies = [
  "ring 0.16.9",
  "untrusted",

@@ -5,30 +5,30 @@ homepage = 'https://encointer.org'
 license = "GPL-3.0"
 name = 'encointer-node-runtime'
 repository = 'https://github.com/paritytech/substrate/'
-version = '0.2.0'
+version = '0.3.0'
 
 [dependencies.encointer-scheduler]
 default-features = false
-git = "https://github.com/encointer/pallet-encointer-scheduler"
-tag = "v0.2.0"
+git = "https://github.com/encointer/pallets"
+tag = "v0.3.0"
 package = "pallet-encointer-scheduler"
 
 [dependencies.encointer-ceremonies]
 default-features = false
-git = "https://github.com/encointer/pallet-encointer-ceremonies"
-tag = "v0.2.0"
+git = "https://github.com/encointer/pallets"
+tag = "v0.3.0"
 package = "pallet-encointer-ceremonies"
 
 [dependencies.encointer-currencies]
 default-features = false
-git = "https://github.com/encointer/pallet-encointer-currencies"
-tag = "v0.2.0"
+git = "https://github.com/encointer/pallets"
+tag = "v0.3.0"
 package = "pallet-encointer-currencies"
 
 [dependencies.encointer-balances]
 default-features = false
-git = "https://github.com/encointer/pallet-encointer-balances"
-tag = "v0.2.0"
+git = "https://github.com/encointer/pallets"
+tag = "v0.3.0"
 package = "pallet-encointer-balances"
 
 [dependencies.fixed]

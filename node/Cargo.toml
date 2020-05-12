@@ -1,13 +1,13 @@
 [package]
 authors = ["encointer.org <alain@encointer.org>"]
 build = 'build.rs'
-description = 'Substrate Node template'
+description = 'Encointer Node'
 edition = '2018'
 homepage = 'https://encointer.org'
 license = "GPL-3.0"
 name = 'encointer-node'
 repository = 'https://github.com/encointer/encointer-node'
-version = '0.2.0'
+version = '0.3.0'
 
 [package.metadata.docs.rs]
 targets = ['x86_64-unknown-linux-gnu']
@@ -19,7 +19,7 @@ structopt = '0.3.8'
 
 [dependencies.encointer-node-runtime]
 path = '../runtime'
-version = '0.2.0'
+version = '0.3.0'
 
 [dependencies.sc-basic-authorship]
 version = '0.8.0-alpha.7'
@@ -47,7 +47,6 @@ version = '0.8.0-alpha.7'
 
 [dependencies.sc-service]
 version = '0.8.0-alpha.7'
-default-features = false
 
 [dependencies.sc-transaction-pool]
 version = '2.0.0-alpha.7'

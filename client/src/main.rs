@@ -604,9 +604,7 @@ fn get_pair_from_str(account: &str) -> sr25519::AppPair {
 }
 
 fn get_block_number(api: &Api<sr25519::Pair>) -> BlockNumber {
-    let ret = api.get_header(None).unwrap();
-    debug!("header json: {}", ret);
-    let hdr: Header = serde_json::from_str(&ret).unwrap();
+    let hdr: Header = api.get_header(None).unwrap();
     debug!("decoded: {:?}", hdr);
     //let hdr: Header= Decode::decode(&mut .as_bytes()).unwrap();
     hdr.number

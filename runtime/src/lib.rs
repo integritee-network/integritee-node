@@ -273,9 +273,9 @@ construct_runtime!(
 		Balances: balances::{Module, Call, Storage, Config<T>, Event<T>},
 		TransactionPayment: transaction_payment::{Module, Storage},
 		Sudo: sudo::{Module, Call, Config<T>, Storage, Event<T>},
+		SubstrateeRegistry: substratee_registry::{Module, Call, Storage, Event<T>},
 		EncointerScheduler: encointer_scheduler::{Module, Call, Storage, Config<T>, Event},
 		EncointerCurrencies: encointer_currencies::{Module, Call, Storage, Config<T>, Event<T>},
-		SubstrateeRegistry: substratee_registry::{Module, Call, Storage, Event<T>},
 	}
 );
 

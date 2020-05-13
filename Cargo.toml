@@ -2,7 +2,6 @@
 members = [
     'node',
     'runtime',
-    'client',
 ]
 
 #only while debugging

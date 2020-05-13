@@ -2,8 +2,7 @@ use sp_core::{Pair, Public, sr25519};
 use encointer_node_runtime::{
 	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig,
 	SudoConfig, SystemConfig, WASM_BINARY, Signature,
-	CeremonyPhaseType, BalanceType,
-	EncointerCeremoniesConfig, EncointerCurrenciesConfig, EncointerSchedulerConfig,
+	CeremonyPhaseType, EncointerCurrenciesConfig, EncointerSchedulerConfig,
 };
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_finality_grandpa::AuthorityId as GrandpaId;
@@ -131,11 +130,6 @@ fn testnet_genesis(initial_authorities: Vec<(AuraId, GrandpaId)>,
                 (CeremonyPhaseType::ASSIGNING, 28800000),
                 (CeremonyPhaseType::ATTESTING, 172800000),
             ],
-		}),
-		encointer_ceremonies: Some(EncointerCeremoniesConfig {
-			ceremony_reward: BalanceType::from_num(1),
-			time_tolerance: 600_000, // +-10min
-			location_tolerance: 1_000, // [m] 
 		}),
 		encointer_currencies: Some(EncointerCurrenciesConfig {
             currency_master: get_account_id_from_seed::<sr25519::Public>("Alice"),

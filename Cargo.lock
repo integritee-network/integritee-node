@@ -5430,7 +5430,7 @@ checksum = "d2a965994514ab35d3893e9260245f2947fd1981cdd4fffd2c6e6d1a9ce02e6a"
 
 [[package]]
 name = "substratee-node"
-version = "0.6.0"
+version = "0.6.2-sub2.0.0-alpha.7"
 dependencies = [
  "futures 0.3.4",
  "log",
@@ -5458,7 +5458,7 @@ dependencies = [
 
 [[package]]
 name = "substratee-node-runtime"
-version = "0.6.1"
+version = "0.6.2-sub2.0.0-alpha.7"
 dependencies = [
  "frame-executive",
  "frame-support",

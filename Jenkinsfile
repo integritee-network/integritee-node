@@ -1,7 +1,11 @@
 pipeline {
   agent {
-    node {
-      label 'rust&&sgx'
+    docker {
+      image 'scssubstratee/substratee_dev:18.04-2.9.1-1.1.2'
+      args '''
+        -u root
+        --privileged
+      '''
     }
   }
   options {
@@ -9,11 +13,6 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '14'))
   }
   stages {
-    stage('Environment') {
-      steps {
-        sh './ci/install_rust.sh'
-      }
-    }
     stage('Build') {
       steps {
         sh 'cargo build | tee build.log'

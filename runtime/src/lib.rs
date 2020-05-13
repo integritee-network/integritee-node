@@ -238,6 +238,7 @@ impl sudo::Trait for Runtime {
 /// added by SCS
 impl substratee_registry::Trait for Runtime {
 	type Event = Event;
+	type Currency = balances::Module<Runtime>;
 }
 
 construct_runtime!(

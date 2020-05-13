@@ -111,7 +111,8 @@ version = '2.0.0-alpha.7'
 default-features = false
 package = 'pallet-substratee-registry'
 git = " https://github.com/scs/pallet-substratee-registry.git"
-tag = "v0.6.4-sub2.0.0-alpha.7"
+branch = "cl-shield-funds-call"
+#tag = "v0.6.4-sub2.0.0-alpha.7"
 
 [dependencies.timestamp]
 default-features = false

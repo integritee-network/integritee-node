@@ -45,6 +45,7 @@ pub use frame_support::{
 pub use encointer_scheduler::Call as EncointerSchedulerCall;
 pub use encointer_currencies::Call as EncointerCurrenciesCall;
 pub use substratee_registry::Call as SubstrateeRegistryCall;
+pub use substratee_registry; 
 
 pub use encointer_scheduler::CeremonyPhaseType;
 

@@ -257,6 +257,7 @@ impl encointer_currencies::Trait for Runtime {
 
 impl substratee_registry::Trait for Runtime {
 	type Event = Event;
+	type Currency = balances::Module<Runtime>;
 }
 
 construct_runtime!(

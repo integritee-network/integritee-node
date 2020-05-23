@@ -48,6 +48,7 @@ pub use substratee_registry::Call as SubstrateeRegistryCall;
 pub use substratee_registry; 
 
 pub use encointer_scheduler::CeremonyPhaseType;
+pub use encointer_balances::{BalanceType, BalanceEntry};
 
 /// An index to a block.
 pub type BlockNumber = u32;

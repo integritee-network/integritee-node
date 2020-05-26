@@ -110,8 +110,8 @@ version = '2.0.0-alpha.7'
 [dependencies.substratee-registry]
 default-features = false
 package = 'pallet-substratee-registry'
-git = " https://github.com/scs/pallet-substratee-registry.git"
-tag = "v0.6.5-sub2.0.0-alpha.7"
+git = "https://github.com/scs/pallet-substratee-registry.git"
+tag = "v0.6.6-sub2.0.0-alpha.7"
 
 [dependencies.timestamp]
 default-features = false

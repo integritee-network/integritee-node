@@ -7,7 +7,7 @@ homepage = 'https://www.scs.ch'
 license = 'Apache2'
 name = 'substratee-node'
 repository = 'https://github.com/scs/substratee-node/'
-version = '0.6.4-sub2.0.0-alpha.7'
+version = '0.6.5-sub2.0.0-alpha.7'
 
 [package.metadata.docs.rs]
 targets = ['x86_64-unknown-linux-gnu']
@@ -19,7 +19,7 @@ structopt = '0.3.8'
 
 [dependencies.substratee-node-runtime]
 path = '../runtime'
-version = '0.6.4-sub2.0.0-alpha.7'
+version = '0.6.5-sub2.0.0-alpha.7'
 
 [dependencies.sc-basic-authorship]
 version = '0.8.0-alpha.7'

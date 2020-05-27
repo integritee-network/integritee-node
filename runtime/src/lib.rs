@@ -72,6 +72,10 @@ pub type Hash = sp_core::H256;
 /// Digest item type.
 pub type DigestItem = generic::DigestItem<Hash>;
 
+/// added by scs
+/// A timestamp: milliseconds since the unix epoch.
+pub type Moment = u64;
+
 /// Opaque types. These are used by the CLI to instantiate machinery that don't need to know
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
 /// of data like extrinsics, allowing for them to continue syncing the network through upgrades
@@ -199,7 +203,7 @@ parameter_types! {
 
 impl timestamp::Trait for Runtime {
 	/// A timestamp: milliseconds since the unix epoch.
-	type Moment = u64;
+	type Moment = Moment;
 	type OnTimestampSet = Aura;
 	type MinimumPeriod = MinimumPeriod;
 }
@@ -235,10 +239,15 @@ impl sudo::Trait for Runtime {
 	type Call = Call;
 }
 
+parameter_types! {
+	pub const MomentsPerDay: Moment = 86_400_000; // [ms/d]
+}
+
 /// added by SCS
 impl substratee_registry::Trait for Runtime {
 	type Event = Event;
 	type Currency = balances::Module<Runtime>;
+	type MomentsPerDay = MomentsPerDay;
 }
 
 construct_runtime!(

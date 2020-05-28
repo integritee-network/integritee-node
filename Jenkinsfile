@@ -15,13 +15,18 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'cargo build --release | tee build.log'
+        sh 'cargo build --release 2>&1 | tee build_release.log'
+        sh 'cargo build 2>&1 | tee build_debug.log'
+      }
+    }
+    stage('Archive build output') {
+      steps {
+        archiveArtifacts artifacts: '**/substratee-node', caseSensitive: false, fingerprint: true, onlyIfSuccessful: true
       }
     }
     stage('Test') {
       steps {
-        echo 'Stage TEST'
-        sh 'BUILD_DUMMY_WASM_BINARY=1 cargo test --all'
+        sh 'BUILD_DUMMY_WASM_BINARY=1 cargo test --all 2>&1 | tee test.log'
       }
     }
     // running clippy doesn't actually make sense here, as it's 99% upstream code.
@@ -30,18 +35,11 @@ pipeline {
       steps {
         sh 'cargo clean'
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-          sh 'cargo clippy 2>&1 | tee clippy.log'
+          sh 'cargo clippy 2>&1 | tee clippy_debug.log'
         }
       }
     }
     // NEVER!!! run cargo fmt! This is 99% upstream code and we need easy-rebase!
-/*    stage('Formatter') {
-      steps {
-        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-          sh 'cargo fmt -- --check > ${WORKSPACE}/fmt.log'
-        }
-      }
-    } */
     stage('Results') {
       steps {
         recordIssues(
@@ -70,9 +68,9 @@ pipeline {
 //        }
       }
     }
-    stage('Archive build output') {
+    stage('Archive logs') {
       steps {
-        archiveArtifacts artifacts: 'target/release/substratee-node, *.log', caseSensitive: false, fingerprint: true, onlyIfSuccessful: true
+        archiveArtifacts artifacts: '*.log', caseSensitive: false, fingerprint: true, onlyIfSuccessful: true
       }
     }
   }

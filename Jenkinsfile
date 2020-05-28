@@ -72,7 +72,7 @@ pipeline {
     }
     stage('Archive build output') {
       steps {
-        archiveArtifacts artifacts: '*.log'
+        archiveArtifacts artifacts: 'target/release/substratee-node, *.log', caseSensitive: false, fingerprint: true, onlyIfSuccessful: true
       }
     }
   }

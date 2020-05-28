@@ -72,7 +72,11 @@ pipeline {
     }
     stage('Archive build output') {
       steps {
-        archiveArtifacts artifacts: '*.log'
+        archiveArtifacts {
+          pattern('*.log')
+          pattern('target/release/substratee-node')
+          onlyIfSuccessful()
+        }
       }
     }
   }

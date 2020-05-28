@@ -5,7 +5,7 @@ homepage = 'https://www.scs.ch'
 license = 'Apache2'
 name = 'substratee-node-runtime'
 repository = 'https://github.com/scs/substratee-node/'
-version = '0.6.5-sub2.0.0-alpha.7'
+version = '0.6.6-sub2.0.0-alpha.7'
 
 [package.metadata.docs.rs]
 targets = ['x86_64-unknown-linux-gnu']
@@ -111,7 +111,7 @@ version = '2.0.0-alpha.7'
 default-features = false
 package = 'pallet-substratee-registry'
 git = "https://github.com/scs/pallet-substratee-registry.git"
-tag = "v0.6.7-sub2.0.0-alpha.7"
+tag = "v0.6.8-sub2.0.0-alpha.7"
 
 [dependencies.timestamp]
 default-features = false

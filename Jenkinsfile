@@ -68,7 +68,7 @@ pipeline {
 //        }
       }
     }
-    stage('Archive build output') {
+    stage('Archive logs') {
       steps {
         archiveArtifacts artifacts: '*.log', caseSensitive: false, fingerprint: true, onlyIfSuccessful: true
       }

@@ -34,7 +34,7 @@ package = "pallet-encointer-balances"
 [dependencies.substratee-registry]
 default-features = false
 git = " https://github.com/scs/pallet-substratee-registry.git"
-tag = "v0.6.5-sub2.0.0-alpha.7"
+tag = "v0.6.8-sub2.0.0-alpha.7"
 package = 'pallet-substratee-registry'
 
 [dependencies.fixed]

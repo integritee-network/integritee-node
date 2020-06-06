@@ -2,7 +2,10 @@
   "name": "Encointer Testnet Cantillon",
   "id": "nctr-cln",
   "chainType": "Live",
-  "bootNodes": [],
+  "bootNodes": [
+    "/dns4/cantillon01.encointer.org/tcp/30333/p2p/QmcbmuhKU9yjqoHbMWQjfiTzbgvjQHBy6zf4G9TKoVKGJ5",
+    "/dns4/cantillon02.encointer.org/tcp/30333/p2p/QmNbdMXpeNhFmfZFjTFDVo6UFsCrz8yUFLptSqnpbSKEMJ"
+  ],
   "telemetryEndpoints": [
     [
       "wss://telemetry.polkadot.io/submit/",
@@ -24,18 +27,18 @@
       },
       "aura": {
         "authorities": [
-          "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
+          "5CD3zfUV7TjNkz5wzW3upn5BfjNyknT43P5WVA5QzPRSERRu",
+          "5GgVRUDjdK6EVg555W6Krnized57VLdjk1yJxnnvJyVsXmnH"
         ]
       },
       "grandpa": {
         "authorities": [
           [
-            "5FA9nQDVg267DEd8m1ZypXLBnvN7SFxYwV7ndqSYGiN9TTpu",
+            "5FxU9dBZChQH9n8ek8b4jnTz3qLKpUMtr6ziuhwCEwbuxVzd",
             1
           ],
           [
-            "5GoNkf6WdbxCFnPdAnYYQyCjAKPJgLNxXwPjwTh6DGg6gN3E",
+            "5FX1AHS5VogegrR9CvBABrwnKSBrRBTcsahkZM9Jo2NNoMfv",
             1
           ]
         ]

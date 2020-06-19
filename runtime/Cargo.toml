@@ -151,6 +151,15 @@ version = '1.0.5'
 [package.metadata.docs.rs]
 targets = ['x86_64-unknown-linux-gnu']
 
+# for extended rpc
+[dependencies.frame-system-rpc-runtime-api]
+version = "2.0.0-alpha.7"
+default-features = false
+
+[dependencies.pallet-transaction-payment-rpc-runtime-api]
+version = "2.0.0-alpha.7"
+default-features = false
+
 [features]
 default = ['std']
 std = [

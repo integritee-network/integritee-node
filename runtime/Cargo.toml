@@ -3,7 +3,7 @@ authors = ["encointer.org <alain@encointer.org>"]
 edition = '2018'
 homepage = 'https://encointer.org'
 license = "GPL-3.0"
-name = 'encointer-node-notee-runtime'
+name = 'encointer-node-teeproxy-runtime'
 repository = 'https://github.com/paritytech/substrate/'
 version = '0.3.2'
 

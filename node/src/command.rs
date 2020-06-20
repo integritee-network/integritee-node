@@ -21,7 +21,7 @@ use sc_cli::SubstrateCli;
 
 impl SubstrateCli for Cli {
 	fn impl_name() -> &'static str {
-		"Encointer Node noTEE"
+		"Encointer Node TEE proxy"
 	}
 
 	fn impl_version() -> &'static str {

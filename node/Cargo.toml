@@ -1,11 +1,11 @@
 [package]
 authors = ["encointer.org <alain@encointer.org>"]
 build = 'build.rs'
-description = 'Encointer Node noTEE'
+description = 'Encointer Node TEE proxy'
 edition = '2018'
 homepage = 'https://encointer.org'
 license = "GPL-3.0"
-name = 'encointer-node-notee'
+name = 'encointer-node-teeproxy'
 repository = 'https://github.com/encointer/encointer-node'
 version = '0.3.2'
 
@@ -19,9 +19,9 @@ structopt = '0.3.8'
 jsonrpc-core = "14.2.0"
 
 [dependencies.encointer-node-runtime]
-package = "encointer-node-notee-runtime"
+package = "encointer-node-teeproxy-runtime"
 path = '../runtime'
-version = '0.3.0'
+version = '0.3.2'
 
 [dependencies.sc-basic-authorship]
 version = '0.8.0-alpha.7'
@@ -93,4 +93,4 @@ version = "2.0.0-alpha.7"
 version = "2.0.0-alpha.7"
 
 [[bin]]
-name = 'encointer-node-notee'
+name = 'encointer-node-teeproxy'

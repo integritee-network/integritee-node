@@ -257,6 +257,15 @@ fn main() {
     }
 
     if let Some(_matches) = matches.subcommand_matches("get-phase") {
+        let bn = get_block_number(&api);
+        info!("block number: {}", bn);
+        let cindex = get_ceremony_index(&api);
+        info!("ceremony index: {}", cindex);
+        let tnext: Moment = api.get_storage_value(
+            "EncointerScheduler",
+            "NextPhaseTimestamp"
+        ).unwrap();
+        info!("next phase timestamp: {}", tnext);
         let phase = get_current_phase(&api);
         println!("{:?}", phase);
     }
@@ -358,6 +367,7 @@ fn main() {
             Reputation::VerifiedUnlinked => Some(prove_attendance(accountid, cid, cindex - 1, p_arg)),
             Reputation::VerifiedLinked => panic!("reputation of {} has already been linked! Not registering again", accountid),
         };
+        debug!("proof: {:x?}", proof.encode());
         // FIXME:
 /*        let proof = if _matches.is_present("proof") {
             Some(prove_attendance(accountid, cid, cindex - 1, p_arg))
@@ -809,6 +819,7 @@ fn prove_attendance(
     let msg = (prover.clone(), cindex);
     let attendee = get_pair_from_str(attendee_str);
     let attendeeid = get_accountid_from_str(attendee_str);
+    debug!("generating proof of attendance for {} and cindex: {}", prover, cindex);
     ProofOfAttendance {
         prover_public: prover,
         currency_identifier: cid,

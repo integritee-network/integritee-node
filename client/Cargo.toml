@@ -1,6 +1,6 @@
 [package]
-name = "encointer-client"
-version = "0.2.1"
+name = "encointer-client-notee"
+version = "0.3.2"
 authors = ["encointer.org <alain@encointer.org>"]
 edition = "2018"
 
@@ -21,25 +21,25 @@ base58  = "0.1"
 [dependencies.encointer-scheduler]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.0"
+tag = "v0.3.1"
 package = "pallet-encointer-scheduler"
 
 [dependencies.encointer-ceremonies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.0"
+tag = "v0.3.1"
 package = "pallet-encointer-ceremonies"
 
 [dependencies.encointer-currencies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.0"
+tag = "v0.3.1"
 package = "pallet-encointer-currencies"
 
 [dependencies.encointer-balances]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.0"
+tag = "v0.3.1"
 package = "pallet-encointer-balances"
 
 [dependencies.fixed]
@@ -83,6 +83,7 @@ version = '2.0.0-alpha.7'
 package = 'frame-system'
 
 [dependencies.encointer-node-runtime]
+package = "encointer-node-notee-runtime"
 path = '../runtime'
 
 [dependencies.keyring]
@@ -92,6 +93,9 @@ package = "sp-keyring"
 [dependencies.app-crypto]
 version = '2.0.0-alpha.7'
 package = "sp-application-crypto"
+
+[dependencies.substrate-frame-rpc-system]
+version = "2.0.0-alpha.7"
 
 #[patch.crates-io]
 #ed25519-dalek = { git = "https://github.com/scs/ed25519-dalek.git", branch = "no_std_sgx"}

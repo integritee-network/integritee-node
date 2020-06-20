@@ -1,6 +1,6 @@
 name: "encointer client"
-version: "0.2.1"
-about: Example client for encointer-node
+version: "0.3.2"
+about: Example client for encointer-node without TEEs
 author: encointer.org
 
 # AppSettings can be defined as a list and are **not** ascii case sensitive

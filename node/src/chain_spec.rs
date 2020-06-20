@@ -125,12 +125,11 @@ fn testnet_genesis(initial_authorities: Vec<(AuraId, GrandpaId)>,
 	    encointer_scheduler: Some(EncointerSchedulerConfig {
             current_phase: CeremonyPhaseType::REGISTERING,
 			current_ceremony_index: 1,
-			//next_phase_timestamp: 0,
 			ceremony_master: get_account_id_from_seed::<sr25519::Public>("Alice"),
 			phase_durations: vec![
-                (CeremonyPhaseType::REGISTERING, 600_000),
-                (CeremonyPhaseType::ASSIGNING, 600_000),
-                (CeremonyPhaseType::ATTESTING, 600_000),
+                (CeremonyPhaseType::REGISTERING, 57600000),
+                (CeremonyPhaseType::ASSIGNING, 28800000),
+                (CeremonyPhaseType::ATTESTING, 172800000),
             ],
 		}),
 		encointer_ceremonies: Some(EncointerCeremoniesConfig {

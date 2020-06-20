@@ -743,12 +743,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bb1f6b1ce1c140482ea30ddd3335fc0024ac7ee112895426e0a629a6c20adfe3"
 
 [[package]]
-name = "encointer-client"
-version = "0.2.1"
+name = "encointer-client-notee"
+version = "0.3.2"
 dependencies = [
  "base58",
  "clap",
- "encointer-node-runtime",
+ "encointer-node-notee-runtime",
  "env_logger",
  "frame-system",
  "geojson",
@@ -772,14 +772,15 @@ dependencies = [
  "substrate-api-client",
  "substrate-bip39 0.3.1",
  "substrate-fixed",
+ "substrate-frame-rpc-system",
  "tiny-bip39 0.6.2",
 ]
 
 [[package]]
-name = "encointer-node"
-version = "0.3.0"
+name = "encointer-node-notee"
+version = "0.3.2"
 dependencies = [
- "encointer-node-runtime",
+ "encointer-node-notee-runtime",
  "futures 0.3.4",
  "jsonrpc-core",
  "log",
@@ -810,8 +811,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "encointer-node-runtime"
-version = "0.3.0"
+name = "encointer-node-notee-runtime"
+version = "0.3.2"
 dependencies = [
  "frame-executive",
  "frame-support",
@@ -2937,7 +2938,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-balances"
 version = "0.3.0"
-source = "git+https://github.com/encointer/pallets?tag=v0.3.0#f60169a908675bb90ae54cfa8b9000fc08ca45e7"
+source = "git+https://github.com/encointer/pallets?tag=v0.3.1#21f1fba74f66052564764d93c119a712d27d0aa3"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -2956,7 +2957,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-ceremonies"
 version = "0.3.0"
-source = "git+https://github.com/encointer/pallets?tag=v0.3.0#f60169a908675bb90ae54cfa8b9000fc08ca45e7"
+source = "git+https://github.com/encointer/pallets?tag=v0.3.1#21f1fba74f66052564764d93c119a712d27d0aa3"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -2976,7 +2977,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-currencies"
 version = "0.3.0"
-source = "git+https://github.com/encointer/pallets?tag=v0.3.0#f60169a908675bb90ae54cfa8b9000fc08ca45e7"
+source = "git+https://github.com/encointer/pallets?tag=v0.3.1#21f1fba74f66052564764d93c119a712d27d0aa3"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -2992,8 +2993,8 @@ dependencies = [
 
 [[package]]
 name = "pallet-encointer-scheduler"
-version = "0.3.0"
-source = "git+https://github.com/encointer/pallets?tag=v0.3.0#f60169a908675bb90ae54cfa8b9000fc08ca45e7"
+version = "0.3.1"
+source = "git+https://github.com/encointer/pallets?tag=v0.3.1#21f1fba74f66052564764d93c119a712d27d0aa3"
 dependencies = [
  "frame-support",
  "frame-system",

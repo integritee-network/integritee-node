@@ -3,32 +3,32 @@ authors = ["encointer.org <alain@encointer.org>"]
 edition = '2018'
 homepage = 'https://encointer.org'
 license = "GPL-3.0"
-name = 'encointer-node-runtime'
+name = 'encointer-node-notee-runtime'
 repository = 'https://github.com/paritytech/substrate/'
-version = '0.3.0'
+version = '0.3.2'
 
 [dependencies.encointer-scheduler]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.0"
+tag = "v0.3.1"
 package = "pallet-encointer-scheduler"
 
 [dependencies.encointer-ceremonies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.0"
+tag = "v0.3.1"
 package = "pallet-encointer-ceremonies"
 
 [dependencies.encointer-currencies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.0"
+tag = "v0.3.1"
 package = "pallet-encointer-currencies"
 
 [dependencies.encointer-balances]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.0"
+tag = "v0.3.1"
 package = "pallet-encointer-balances"
 
 [dependencies.fixed]

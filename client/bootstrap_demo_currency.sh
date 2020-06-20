@@ -48,6 +48,7 @@ $CLIENT next-phase
 
 echo "*** start meetup"
 claim1=$($CLIENT --cid $cid new-claim $account1 3)
+echo "claim for $account1 is $claim1"
 claim2=$($CLIENT --cid $cid new-claim $account2 3)
 claim3=$($CLIENT --cid $cid new-claim $account3 3)
 
@@ -56,6 +57,7 @@ witness1_2=$($CLIENT sign-claim $account1 $claim2)
 witness1_3=$($CLIENT sign-claim $account1 $claim3)
 
 witness2_1=$($CLIENT sign-claim $account2 $claim1)
+echo "attestation for $account1 by $account2 is $witness2_1"
 witness2_3=$($CLIENT sign-claim $account2 $claim3)
 
 witness3_1=$($CLIENT sign-claim $account3 $claim1)

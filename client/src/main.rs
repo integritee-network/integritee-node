@@ -240,7 +240,7 @@ fn main() {
                 let bn = get_block_number(&api);
                 let dr = get_demurrage_per_block(&api, cid);
                 let balance = if let Some(entry) = api
-                    .get_storage_double_map("EncointerBalances", "Balance", cid, accountid) {
+                    .get_storage_double_map("EncointerBalances", "Balance", cid, accountid, None) {
                         apply_demurrage(entry, bn, dr)
                 } else { BalanceType::from_num(0) }; 
                 println!("NCTR balance for {} is {} in currency {}", account, balance, cid.encode().to_base58());
@@ -263,7 +263,8 @@ fn main() {
         info!("ceremony index: {}", cindex);
         let tnext: Moment = api.get_storage_value(
             "EncointerScheduler",
-            "NextPhaseTimestamp"
+            "NextPhaseTimestamp",
+            None
         ).unwrap();
         info!("next phase timestamp: {}", tnext);
         let phase = get_current_phase(&api);
@@ -622,25 +623,25 @@ fn get_block_number(api: &Api<sr25519::Pair>) -> BlockNumber {
 
 fn get_demurrage_per_block(api: &Api<sr25519::Pair>, cid: CurrencyIdentifier) -> BalanceType {
     let cp: CurrencyPropertiesType = api
-        .get_storage_map("EncointerCurrencies", "CurrencyProperties", cid)
+        .get_storage_map("EncointerCurrencies", "CurrencyProperties", cid, None)
         .unwrap();
     debug!("CurrencyProperties are {:?}", cp);
     cp.demurrage_per_block
 }
 
 fn get_ceremony_index(api: &Api<sr25519::Pair>) -> CeremonyIndexType {
-    api.get_storage_value("EncointerScheduler", "CurrentCeremonyIndex")
+    api.get_storage_value("EncointerScheduler", "CurrentCeremonyIndex", None)
         .unwrap()
 }
 
 fn get_current_phase(api: &Api<sr25519::Pair>) -> CeremonyPhaseType {
-    api.get_storage_value("EncointerScheduler", "CurrentPhase")
+    api.get_storage_value("EncointerScheduler", "CurrentPhase", None)
         .or(Some(CeremonyPhaseType::default()))
         .unwrap()
 }
 
 fn get_meetup_count(api: &Api<sr25519::Pair>, key: CurrencyCeremony) -> MeetupIndexType {
-    api.get_storage_map("EncointerCeremonies", "MeetupCount", key)
+    api.get_storage_map("EncointerCeremonies", "MeetupCount", key, None)
         .or(Some(0))
         .unwrap()
 }
@@ -650,6 +651,7 @@ fn get_participant_count(api: &Api<sr25519::Pair>, key: CurrencyCeremony) -> Par
         "EncointerCeremonies",
         "ParticipantCount",
         key,
+        None
     ).or(Some(0)).unwrap()
 }
 
@@ -658,6 +660,7 @@ fn get_attestation_count(api: &Api<sr25519::Pair>, key: CurrencyCeremony) -> Par
             "EncointerCeremonies",
             "AttestationCount",
             key,
+            None
     ).or(Some(0)).unwrap()
 }
 
@@ -671,6 +674,7 @@ fn get_participant(
         "ParticipantRegistry",
         key,
         pindex,
+        None
     )
 }
 
@@ -684,6 +688,7 @@ fn get_meetup_index_for(
         "MeetupIndex",
         key,
         account.clone(),
+        None
     )
 }
 
@@ -697,6 +702,7 @@ fn get_meetup_participants(
         "MeetupRegistry",
         key,
         mindex,
+        None
     )
 }
 
@@ -710,6 +716,7 @@ fn get_attestations(
         "AttestationRegistry",
         key,
         windex,
+        None
     )
 }
 
@@ -723,6 +730,7 @@ fn get_participant_attestation_index(
         "AttestationIndex",
         key,
         accountid,
+        None
     )
 }
 
@@ -764,14 +772,15 @@ fn sign_claim(claim: ClaimOfAttendance<AccountId, Moment>, account_str: &str) ->
 }
 
 fn get_currency_identifiers(api: &Api<sr25519::Pair>) -> Option<Vec<CurrencyIdentifier>> {
-    api.get_storage_value("EncointerCurrencies", "CurrencyIdentifiers")
+    api.get_storage_value("EncointerCurrencies", "CurrencyIdentifiers", None)
 }
 
 fn get_currency_locations(api: &Api<sr25519::Pair>, cid: CurrencyIdentifier) -> Option<Vec<Location>> {
     api.get_storage_map(
         "EncointerCurrencies",
         "Locations",
-        cid
+        cid,
+        None
     )
 }
 
@@ -790,7 +799,8 @@ fn get_meetup_time(api: &Api<sr25519::Pair>, cid: CurrencyIdentifier, mindex: Me
 
     let next_phase_timestamp: Moment = api.get_storage_value(
         "EncointerScheduler",
-        "NextPhaseTimestamp"
+        "NextPhaseTimestamp",
+        None
     ).unwrap();
 
     let attesting_start = match get_current_phase(api) {
@@ -800,6 +810,7 @@ fn get_meetup_time(api: &Api<sr25519::Pair>, cid: CurrencyIdentifier, mindex: Me
                 "EncointerScheduler",
                 "PhaseDurations",
                 CeremonyPhaseType::ATTESTING,
+                None
             ).unwrap();
             next_phase_timestamp - attesting_duration //- next_phase_timestamp.rem(ONE_DAY)
         },
@@ -841,7 +852,8 @@ fn get_reputation(
         "EncointerCeremonies",
         "ParticipantReputation",
         (cid, cindex),
-        prover.clone()
+        prover.clone(),
+        None
     ).or(Some(Reputation::Unverified)).unwrap()   
 }
 

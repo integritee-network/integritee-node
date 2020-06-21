@@ -5,7 +5,7 @@ authors = ["encointer.org <alain@encointer.org>"]
 edition = "2018"
 
 [dependencies]
-substrate-api-client = { git = "https://github.com/scs/substrate-api-client.git", branch="marcel-use_substrate-api-client-test-node"}
+substrate-api-client = { git = "https://github.com/scs/substrate-api-client.git", tag="v0.4.6-sub2.0.0-alpha.7"}
 log = "0.4"
 env_logger = "0.7"
 hex = "0.4"

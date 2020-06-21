@@ -5742,8 +5742,8 @@ dependencies = [
 
 [[package]]
 name = "substrate-api-client"
-version = "0.4.3-sub2.0.0-alpha.7"
-source = "git+https://github.com/scs/substrate-api-client.git?branch=marcel-use_substrate-api-client-test-node#7cf68e39b357ace1256194ef93fe143d5000b869"
+version = "0.4.6-sub2.0.0-alpha.7"
+source = "git+https://github.com/scs/substrate-api-client.git?tag=v0.4.6-sub2.0.0-alpha.7#cce8441c09224ab641619ea077b5b7fb118f6bf6"
 dependencies = [
  "env_logger",
  "frame-metadata",
@@ -5754,6 +5754,7 @@ dependencies = [
  "pallet-balances",
  "parity-scale-codec",
  "primitive-types 0.6.2",
+ "sc-rpc-api",
  "serde",
  "serde_json",
  "sp-core",

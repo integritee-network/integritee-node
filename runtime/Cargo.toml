@@ -168,6 +168,7 @@ std = [
     'codec/std',
     'frame-executive/std',
     'frame-support/std',
+    'frame-system-rpc-runtime-api/std',
     'grandpa/std',
     'randomness-collective-flip/std',
     'serde',

@@ -1,5 +1,5 @@
 #!/bin/bash
-CLIENT="../target/release/encointer-client ws://127.0.0.1:9979 "
+CLIENT="../target/release/encointer-client-notee ws://127.0.0.1:9979 "
 
 # register new currency
 cid=$($CLIENT new-currency test-locations-mediterranean.json //Alice)

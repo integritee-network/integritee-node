@@ -831,6 +831,7 @@ fn prove_attendance(
     let attendee = get_pair_from_str(attendee_str);
     let attendeeid = get_accountid_from_str(attendee_str);
     debug!("generating proof of attendance for {} and cindex: {}", prover, cindex);
+    debug!("signature payload is {:x?}", msg.encode());
     ProofOfAttendance {
         prover_public: prover,
         currency_identifier: cid,

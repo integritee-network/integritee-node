@@ -764,7 +764,7 @@ dependencies = [
 
 [[package]]
 name = "encointer-node-teeproxy-runtime"
-version = "0.3.2"
+version = "0.3.3"
 dependencies = [
  "frame-executive",
  "frame-support",
@@ -2795,8 +2795,8 @@ dependencies = [
 
 [[package]]
 name = "pallet-encointer-balances"
-version = "0.3.0"
-source = "git+https://github.com/encointer/pallets?tag=v0.3.1#21f1fba74f66052564764d93c119a712d27d0aa3"
+version = "0.3.2"
+source = "git+https://github.com/encointer/pallets?tag=v0.3.2#9765159a7fa55dd69f1bc164d0b8d560d0413f0d"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -2815,7 +2815,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-ceremonies"
 version = "0.3.0"
-source = "git+https://github.com/encointer/pallets?tag=v0.3.1#21f1fba74f66052564764d93c119a712d27d0aa3"
+source = "git+https://github.com/encointer/pallets?tag=v0.3.2#9765159a7fa55dd69f1bc164d0b8d560d0413f0d"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -2835,7 +2835,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-currencies"
 version = "0.3.0"
-source = "git+https://github.com/encointer/pallets?tag=v0.3.1#21f1fba74f66052564764d93c119a712d27d0aa3"
+source = "git+https://github.com/encointer/pallets?tag=v0.3.2#9765159a7fa55dd69f1bc164d0b8d560d0413f0d"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -2852,7 +2852,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-scheduler"
 version = "0.3.1"
-source = "git+https://github.com/encointer/pallets?tag=v0.3.1#21f1fba74f66052564764d93c119a712d27d0aa3"
+source = "git+https://github.com/encointer/pallets?tag=v0.3.2#9765159a7fa55dd69f1bc164d0b8d560d0413f0d"
 dependencies = [
  "frame-support",
  "frame-system",

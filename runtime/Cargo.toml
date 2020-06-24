@@ -5,30 +5,30 @@ homepage = 'https://encointer.org'
 license = "GPL-3.0"
 name = 'encointer-node-teeproxy-runtime'
 repository = 'https://github.com/paritytech/substrate/'
-version = '0.3.2'
+version = '0.3.3'
 
 [dependencies.encointer-scheduler]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.1"
+tag = "v0.3.2"
 package = "pallet-encointer-scheduler"
 
 [dependencies.encointer-ceremonies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.1"
+tag = "v0.3.2"
 package = "pallet-encointer-ceremonies"
 
 [dependencies.encointer-currencies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.1"
+tag = "v0.3.2"
 package = "pallet-encointer-currencies"
 
 [dependencies.encointer-balances]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.1"
+tag = "v0.3.2"
 package = "pallet-encointer-balances"
 
 [dependencies.substratee-registry]

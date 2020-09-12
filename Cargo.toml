@@ -1,10 +1,11 @@
+[profile.release]
+panic = 'unwind'
+
 [workspace]
 members = [
     'node',
     'runtime',
 ]
-[profile.release]
-panic = 'unwind'
 
 #[patch."https://github.com/scs/pallet-substratee-registry.git"]
 #pallet-substratee-registry = { path = '../pallet-substratee-registry' }

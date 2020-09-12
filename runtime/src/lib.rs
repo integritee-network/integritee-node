@@ -12,17 +12,17 @@
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
 use sp_std::prelude::*;
-use sp_core::OpaqueMetadata;
+use sp_core::{crypto::KeyTypeId, OpaqueMetadata};
 use sp_runtime::{
 	ApplyExtrinsicResult, generic, create_runtime_str, impl_opaque_keys, MultiSignature,
 	transaction_validity::{TransactionValidity, TransactionSource},
 };
 use sp_runtime::traits::{
-	BlakeTwo256, Block as BlockT, IdentityLookup, Verify, ConvertInto, IdentifyAccount
+	BlakeTwo256, Block as BlockT, IdentityLookup, Verify, IdentifyAccount, NumberFor, Saturating,
 };
 use sp_api::impl_runtime_apis;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
-use grandpa::AuthorityList as GrandpaAuthorityList;
+use grandpa::{AuthorityId as GrandpaId, AuthorityList as GrandpaAuthorityList};
 use grandpa::fg_primitives;
 use sp_version::RuntimeVersion;
 #[cfg(feature = "std")]
@@ -35,10 +35,10 @@ pub use timestamp::Call as TimestampCall;
 pub use balances::Call as BalancesCall;
 pub use sp_runtime::{Permill, Perbill};
 pub use frame_support::{
-	StorageValue, construct_runtime, parameter_types,
-	traits::Randomness,
+	construct_runtime, parameter_types, StorageValue,
+	traits::{KeyOwnerProofSystem, Randomness},
 	weights::{
-		Weight,
+		Weight, IdentityFee,
 		constants::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_PER_SECOND},
 	},
 };
@@ -100,22 +100,21 @@ pub mod opaque {
 	}
 }
 
-/// This runtime version.
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("substratee-node-runtime"),
 	impl_name: create_runtime_str!("substratee-node-runtime"),
 	authoring_version: 1,
 	spec_version: 1,
 	impl_version: 1,
-	transaction_version: 1,
 	apis: RUNTIME_API_VERSIONS,
+	transaction_version: 1,
 };
 
 pub const MILLISECS_PER_BLOCK: u64 = 6000;
 
 pub const SLOT_DURATION: u64 = MILLISECS_PER_BLOCK;
 
-// These time units are defined in number of blocks.
+// Time is measured by number of blocks.
 pub const MINUTES: BlockNumber = 60_000 / (MILLISECS_PER_BLOCK as BlockNumber);
 pub const HOURS: BlockNumber = MINUTES * 60;
 pub const DAYS: BlockNumber = HOURS * 24;
@@ -130,15 +129,22 @@ pub fn native_version() -> NativeVersion {
 }
 
 parameter_types! {
-	pub const BlockHashCount: BlockNumber = 250;
+	pub const BlockHashCount: BlockNumber = 2400;
 	/// We allow for 2 seconds of compute with a 6 second average block time.
 	pub const MaximumBlockWeight: Weight = 2 * WEIGHT_PER_SECOND;
 	pub const AvailableBlockRatio: Perbill = Perbill::from_percent(75);
+	/// Assume 10% of weight for average on_initialize calls.
+	pub MaximumExtrinsicWeight: Weight = AvailableBlockRatio::get()
+		.saturating_sub(Perbill::from_percent(10)) * MaximumBlockWeight::get();
 	pub const MaximumBlockLength: u32 = 5 * 1024 * 1024;
 	pub const Version: RuntimeVersion = VERSION;
 }
 
+// Configure FRAME pallets to include in runtime.
+
 impl system::Trait for Runtime {
+	/// The basic call filter to use in dispatchable.
+	type BaseCallFilter = ();
 	/// The identifier used to distinguish between accounts.
 	type AccountId = AccountId;
 	/// The aggregated dispatch type that is available for extrinsics.
@@ -163,18 +169,22 @@ impl system::Trait for Runtime {
 	type BlockHashCount = BlockHashCount;
 	/// Maximum weight of each block.
 	type MaximumBlockWeight = MaximumBlockWeight;
+	/// The weight of database operations that the runtime can invoke.
+	type DbWeight = RocksDbWeight;
+	/// The weight of the overhead invoked on the block import process, independent of the
+	/// extrinsics included in that block.
+	type BlockExecutionWeight = BlockExecutionWeight;
+	/// The base weight of any extrinsic processed by the runtime, independent of the
+	/// logic of that extrinsic. (Signature verification, nonce increment, fee, etc...)
+	type ExtrinsicBaseWeight = ExtrinsicBaseWeight;
+	/// The maximum weight that a single extrinsic of `Normal` dispatch class can have,
+	/// idependent of the logic of that extrinsics. (Roughly max block weight - average on
+	/// initialize cost).
+	type MaximumExtrinsicWeight = MaximumExtrinsicWeight;
 	/// Maximum size of all encoded transactions (in bytes) that are allowed in one block.
 	type MaximumBlockLength = MaximumBlockLength;
 	/// Portion of the block weight that is available to all normal transactions.
 	type AvailableBlockRatio = AvailableBlockRatio;
-	/// The weight of the overhead invoked on the block import process, independent of the
-	/// extrinsics included in that block.
-	type BlockExecutionWeight = BlockExecutionWeight;
-	/// The weight of database operations that the runtime can invoke.
-	type DbWeight = RocksDbWeight;
-	/// The base weight of any extrinsic processed by the runtime, independent of the
-	/// logic of that extrinsic. (Signature verification, nonce increment, fee, etc...)
-	type ExtrinsicBaseWeight = ExtrinsicBaseWeight;
 	/// Version of the runtime.
 	type Version = Version;
 	/// Converts a module to the index of the module in `construct_runtime!`.
@@ -187,6 +197,8 @@ impl system::Trait for Runtime {
 	type OnKilledAccount = ();
 	/// The data to be stored in an account.
 	type AccountData = balances::AccountData<Balance>;
+	/// Weight information for the extrinsics of this pallet.
+	type SystemWeightInfo = ();
 }
 
 impl aura::Trait for Runtime {
@@ -195,6 +207,19 @@ impl aura::Trait for Runtime {
 
 impl grandpa::Trait for Runtime {
 	type Event = Event;
+	type Call = Call;
+
+	type KeyOwnerProofSystem = ();
+
+	type KeyOwnerProof =
+		<Self::KeyOwnerProofSystem as KeyOwnerProofSystem<(KeyTypeId, GrandpaId)>>::Proof;
+
+	type KeyOwnerIdentification = <Self::KeyOwnerProofSystem as KeyOwnerProofSystem<(
+		KeyTypeId,
+		GrandpaId,
+	)>>::IdentificationTuple;
+
+	type HandleEquivocation = ();
 }
 
 parameter_types! {
@@ -206,6 +231,7 @@ impl timestamp::Trait for Runtime {
 	type Moment = Moment;
 	type OnTimestampSet = Aura;
 	type MinimumPeriod = MinimumPeriod;
+	type WeightInfo = ();
 }
 
 parameter_types! {
@@ -220,6 +246,7 @@ impl balances::Trait for Runtime {
 	type DustRemoval = ();
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
+	type WeightInfo = ();
 }
 
 parameter_types! {
@@ -230,7 +257,7 @@ impl transaction_payment::Trait for Runtime {
 	type Currency = balances::Module<Runtime>;
 	type OnTransactionPayment = ();
 	type TransactionByteFee = TransactionByteFee;
-	type WeightToFee = ConvertInto;
+	type WeightToFee = IdentityFee<Balance>;
 	type FeeMultiplierUpdate = ();
 }
 
@@ -250,6 +277,7 @@ impl substratee_registry::Trait for Runtime {
 	type MomentsPerDay = MomentsPerDay;
 }
 
+// Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
 	pub enum Runtime where
 		Block = Block,
@@ -259,7 +287,7 @@ construct_runtime!(
 		System: system::{Module, Call, Config, Storage, Event<T>},
 		RandomnessCollectiveFlip: randomness_collective_flip::{Module, Call, Storage},
 		Timestamp: timestamp::{Module, Call, Storage, Inherent},
-		Aura: aura::{Module, Config<T>, Inherent(Timestamp)},
+		Aura: aura::{Module, Config<T>, Inherent},
 		Grandpa: grandpa::{Module, Call, Storage, Config, Event},
 		Balances: balances::{Module, Call, Storage, Config<T>, Event<T>},
 		TransactionPayment: transaction_payment::{Module, Storage},
@@ -281,7 +309,8 @@ pub type SignedBlock = generic::SignedBlock<Block>;
 pub type BlockId = generic::BlockId<Block>;
 /// The SignedExtension to the basic transaction logic.
 pub type SignedExtra = (
-	system::CheckVersion<Runtime>,
+	system::CheckSpecVersion<Runtime>,
+	system::CheckTxVersion<Runtime>,
 	system::CheckGenesis<Runtime>,
 	system::CheckEra<Runtime>,
 	system::CheckNonce<Runtime>,
@@ -373,7 +402,7 @@ impl_runtime_apis! {
 
 		fn decode_session_keys(
 			encoded: Vec<u8>,
-		) -> Option<Vec<(Vec<u8>, sp_core::crypto::KeyTypeId)>> {
+		) -> Option<Vec<(Vec<u8>, KeyTypeId)>> {
 			opaque::SessionKeys::decode_into_raw_public_keys(&encoded)
 		}
 	}
@@ -381,6 +410,26 @@ impl_runtime_apis! {
 	impl fg_primitives::GrandpaApi<Block> for Runtime {
 		fn grandpa_authorities() -> GrandpaAuthorityList {
 			Grandpa::grandpa_authorities()
+		}
+
+		fn submit_report_equivocation_unsigned_extrinsic(
+			_equivocation_proof: fg_primitives::EquivocationProof<
+				<Block as BlockT>::Hash,
+				NumberFor<Block>,
+			>,
+			_key_owner_proof: fg_primitives::OpaqueKeyOwnershipProof,
+		) -> Option<()> {
+			None
+		}
+
+		fn generate_key_ownership_proof(
+			_set_id: fg_primitives::SetId,
+			_authority_id: GrandpaId,
+		) -> Option<fg_primitives::OpaqueKeyOwnershipProof> {
+			// NOTE: this is the only implementation possible since we've
+			// defined our key owner proof type as a bottom type (i.e. a type
+			// with no values).
+			None
 		}
 	}
 }

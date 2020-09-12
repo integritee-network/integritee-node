@@ -867,7 +867,7 @@ checksum = "2fad85553e09a6f881f739c29f0b00b0f01357c743266d478b68951ce23285f3"
 
 [[package]]
 name = "fork-tree"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "00caa7b4d3f6b29b211cd82dfceb1fbe30281fdf6f05e95f1d519837f92443a6"
 dependencies = [
@@ -876,7 +876,7 @@ dependencies = [
 
 [[package]]
 name = "frame-benchmarking"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b22054d77cb9377dcb9660f9634e79b2e50fcd4129fae7921e98ca30dc5c12e7"
 dependencies = [
@@ -894,7 +894,7 @@ dependencies = [
 
 [[package]]
 name = "frame-executive"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "76692e90be57adc50ca89c08ff92b6d501a1ec9e0800aedd67f3c9eb9cd26b37"
 dependencies = [
@@ -910,7 +910,7 @@ dependencies = [
 
 [[package]]
 name = "frame-metadata"
-version = "11.0.0-alpha.7"
+version = "11.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d4ed1031c3ab5fd338d4922380ecaa1784d96c4670b5e329838c1be9821f1596"
 dependencies = [
@@ -922,7 +922,7 @@ dependencies = [
 
 [[package]]
 name = "frame-support"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bdd5a22a0c3e66a82b4ca1965e21373d3e0d29266313130d04a5045906c81dc4"
 dependencies = [
@@ -947,7 +947,7 @@ dependencies = [
 
 [[package]]
 name = "frame-support-procedural"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1a6b4279196725ff56647d12a285328a79685a7d05be6c507f55a11e00f492c0"
 dependencies = [
@@ -959,7 +959,7 @@ dependencies = [
 
 [[package]]
 name = "frame-support-procedural-tools"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d9135714a5cd9e01b9839c16433d5f075706ef87f8f2fc412944ff826fc8ccd1"
 dependencies = [
@@ -972,7 +972,7 @@ dependencies = [
 
 [[package]]
 name = "frame-support-procedural-tools-derive"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ab73d20fca63196489400b98b71aa96a8709968d83dc26e7c99aa135ba1eaf4f"
 dependencies = [
@@ -983,7 +983,7 @@ dependencies = [
 
 [[package]]
 name = "frame-system"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "eb202b187ce580c0414d9c7608478377bd2fe90bb15a5777e8c6b746d4c9519a"
 dependencies = [
@@ -1535,7 +1535,7 @@ dependencies = [
 [[package]]
 name = "ias-verify"
 version = "0.1.0"
-source = "git+https://github.com/scs/pallet-substratee-registry.git?tag=v0.6.8-sub2.0.0-alpha.7#9adb121943960f983e6261d64c74f7d4bba37918"
+source = "git+https://github.com/scs/pallet-substratee-registry.git?tag=v0.6.8-sub2.0.0-rc.5#9adb121943960f983e6261d64c74f7d4bba37918"
 dependencies = [
  "base64",
  "chrono",
@@ -2668,7 +2668,7 @@ dependencies = [
 
 [[package]]
 name = "pallet-aura"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "84bfe377cb99f04a51ef30521bd3236acdf57ae76187d6ae8f0b1896fae1ba1d"
 dependencies = [
@@ -2690,7 +2690,7 @@ dependencies = [
 
 [[package]]
 name = "pallet-balances"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5933eed290294f48ae9c6ca9b83c48f73c0e50eb2d86532a388d2076806f9d37"
 dependencies = [
@@ -2706,7 +2706,7 @@ dependencies = [
 
 [[package]]
 name = "pallet-finality-tracker"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "99b6aaf467788f82d9f18c940f57b6773e6114988120c63630ec1a30ef6af73d"
 dependencies = [
@@ -2723,7 +2723,7 @@ dependencies = [
 
 [[package]]
 name = "pallet-grandpa"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0be9854b7b21a8ab2d14bc323d08b18b6d57d1bbdba1657f37169a02ac198162"
 dependencies = [
@@ -2742,7 +2742,7 @@ dependencies = [
 
 [[package]]
 name = "pallet-randomness-collective-flip"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e6f06234e000e7b7554d75d62280e953f902981196d6dcde0d084ad5c7df4809"
 dependencies = [
@@ -2756,7 +2756,7 @@ dependencies = [
 
 [[package]]
 name = "pallet-session"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6aace05f197abe3905182ec817e6fadc3c985b3c2ec41bfc74bb9918d1585e9e"
 dependencies = [
@@ -2775,8 +2775,8 @@ dependencies = [
 
 [[package]]
 name = "pallet-substratee-registry"
-version = "0.6.8-sub2.0.0-alpha.7"
-source = "git+https://github.com/scs/pallet-substratee-registry.git?tag=v0.6.8-sub2.0.0-alpha.7#9adb121943960f983e6261d64c74f7d4bba37918"
+version = "0.6.8-sub2.0.0-rc.5"
+source = "git+https://github.com/scs/pallet-substratee-registry.git?tag=v0.6.8-sub2.0.0-rc.5#9adb121943960f983e6261d64c74f7d4bba37918"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -2791,7 +2791,7 @@ dependencies = [
 
 [[package]]
 name = "pallet-sudo"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "246c9c0b5c29baff01d925ebadee6c0c642fa4c56ba8de1957f1ecc1438cc7dc"
 dependencies = [
@@ -2806,7 +2806,7 @@ dependencies = [
 
 [[package]]
 name = "pallet-timestamp"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4c90b652dfb8796d657a2df5fa6200ada33b9784554b81a32efd73de2fe00575"
 dependencies = [
@@ -2824,7 +2824,7 @@ dependencies = [
 
 [[package]]
 name = "pallet-transaction-payment"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "52333b8598b2bcb3af5e158c61cb2d30821220a5034e92a74c6a4ef116d82a7f"
 dependencies = [
@@ -2838,7 +2838,7 @@ dependencies = [
 
 [[package]]
 name = "pallet-transaction-payment-rpc-runtime-api"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "40f6cc2ebdaff949b9f38cc03f19e541bd22773ce32e84532ac1d85a481cb112"
 dependencies = [
@@ -3748,7 +3748,7 @@ dependencies = [
 
 [[package]]
 name = "sc-basic-authorship"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "606bb1a659f6d10c9d6d1b1520d81b07df6cca26008c865ca4a1eb957841ebfb"
 dependencies = [
@@ -3771,7 +3771,7 @@ dependencies = [
 
 [[package]]
 name = "sc-block-builder"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ad86d3862ea0507e4ab26581b64ac902508f5e91f2bdae618327db12d70840c9"
 dependencies = [
@@ -3788,7 +3788,7 @@ dependencies = [
 
 [[package]]
 name = "sc-chain-spec"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "95ab12f5eabca6fd4e16c202f045dc8e7542b9049294b92747cfcabf037586a4"
 dependencies = [
@@ -3805,7 +3805,7 @@ dependencies = [
 
 [[package]]
 name = "sc-chain-spec-derive"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a11bc26f24e234d61e708f92339efe51ad3d299e0e11d368ee9b3bf94787076f"
 dependencies = [
@@ -3817,7 +3817,7 @@ dependencies = [
 
 [[package]]
 name = "sc-cli"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e0cd2a720cc286c964f011f94cd54eb32c9d612883e88b4df2a07902bd6d7822"
 dependencies = [
@@ -3860,7 +3860,7 @@ dependencies = [
 
 [[package]]
 name = "sc-client-api"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4242f40585bfd1375bbde27f169e2ecaaa40ef1b60b44294c454bc97d5048cdd"
 dependencies = [
@@ -3897,7 +3897,7 @@ dependencies = [
 
 [[package]]
 name = "sc-client-db"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b3395df025dfa8edf1be099a2ac941082b953707ea536cffeda5d3e51b23e896"
 dependencies = [
@@ -3927,7 +3927,7 @@ dependencies = [
 
 [[package]]
 name = "sc-consensus"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1f7378c44bc005807c427fe3f342fb3a851ff2fe82289e73a10e794ab1a33eee"
 dependencies = [
@@ -3939,7 +3939,7 @@ dependencies = [
 
 [[package]]
 name = "sc-consensus-aura"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "78617a2a24923df03b803b928e763c687a4ac9a44bf44a96ed7e47290efae83f"
 dependencies = [
@@ -3970,7 +3970,7 @@ dependencies = [
 
 [[package]]
 name = "sc-consensus-slots"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d21cdecefdce1abe0fab714c2850f067093a2eed46422d748879a09e66aa2ecf"
 dependencies = [
@@ -3992,7 +3992,7 @@ dependencies = [
 
 [[package]]
 name = "sc-executor"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2cba18b495c2959a9bfed031f4df4175dfebbbc827ff3524d6eeae05de1f4530"
 dependencies = [
@@ -4020,7 +4020,7 @@ dependencies = [
 
 [[package]]
 name = "sc-executor-common"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7b92cabca9418211b63c407c939523672fae62051f0dd8088c3068ab3e883dae"
 dependencies = [
@@ -4038,7 +4038,7 @@ dependencies = [
 
 [[package]]
 name = "sc-executor-wasmi"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8a8f35b44090ffdb0bbc4350dcf686ee649099ac7dc3ca0608d513018d4c84ae"
 dependencies = [
@@ -4054,7 +4054,7 @@ dependencies = [
 
 [[package]]
 name = "sc-finality-grandpa"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "32a0e197ef12caf06b0d01d922dbe24d018e99a62d723da1df4a303efe9d86be"
 dependencies = [
@@ -4092,7 +4092,7 @@ dependencies = [
 
 [[package]]
 name = "sc-informant"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7560120ce244b775d755e8550f894b6b57bed6bbb20cb12164e2ceb25e1fc9c6"
 dependencies = [
@@ -4110,7 +4110,7 @@ dependencies = [
 
 [[package]]
 name = "sc-keystore"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e1e44f10a561c72a7fa604cb1a356564ef496609b8306a330b4185840231fe9d"
 dependencies = [
@@ -4126,7 +4126,7 @@ dependencies = [
 
 [[package]]
 name = "sc-network"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4ef69b5eb4ed887f9b4a02227f922412d814085023f38bc395ad194713f73749"
 dependencies = [
@@ -4178,7 +4178,7 @@ dependencies = [
 
 [[package]]
 name = "sc-network-gossip"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4002e0430151434a6039e3187b84267cf89e04214de6f677d9ddd89e6a31dafd"
 dependencies = [
@@ -4195,7 +4195,7 @@ dependencies = [
 
 [[package]]
 name = "sc-offchain"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "31712efd8cb5ff149885bc19c752555c696e95d27c8a075d1cc58ebb5d6cc957"
 dependencies = [
@@ -4223,7 +4223,7 @@ dependencies = [
 
 [[package]]
 name = "sc-peerset"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6c6d53c1c8de2f896ac3dec705285a216ea50b9b387a631362ae2635f6b6fe74"
 dependencies = [
@@ -4237,7 +4237,7 @@ dependencies = [
 
 [[package]]
 name = "sc-rpc"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f02f88a10ad3271bc0da9e70d30fcfa182f33226b5e5e9af1b0e0dbeaab032bb"
 dependencies = [
@@ -4270,7 +4270,7 @@ dependencies = [
 
 [[package]]
 name = "sc-rpc-api"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a27aa7d70aec2be0967110b5df9a11ac3aa76fe4c8576455c266d3135d8fe63a"
 dependencies = [
@@ -4295,7 +4295,7 @@ dependencies = [
 
 [[package]]
 name = "sc-rpc-server"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "40b5547f9bb330a6d4273f471b44f8f2b12791abb9cb8557135f372075c42372"
 dependencies = [
@@ -4311,7 +4311,7 @@ dependencies = [
 
 [[package]]
 name = "sc-service"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "361410fc964e1cc77435f4c3bd1c724b39ad518bdf145c40f7c80701782e6e78"
 dependencies = [
@@ -4370,7 +4370,7 @@ dependencies = [
 
 [[package]]
 name = "sc-state-db"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2f18e23f3d774df943bbd8a9fbe90140263de6dcae46aabb702a354198a7e3b4"
 dependencies = [
@@ -4385,7 +4385,7 @@ dependencies = [
 
 [[package]]
 name = "sc-telemetry"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0c9db676096e46d39083d9cccb62437234b515a085d77488a23b24443b6182ad"
 dependencies = [
@@ -4408,7 +4408,7 @@ dependencies = [
 
 [[package]]
 name = "sc-tracing"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6d3da8fdeb53322e32e8576c62170cbeea78a0417238b6bd510f7584a6e411fb"
 dependencies = [
@@ -4424,7 +4424,7 @@ dependencies = [
 
 [[package]]
 name = "sc-transaction-graph"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "48864c813861c919d5c167c11dce9875d74019d633384d66a3ae97ed7db17857"
 dependencies = [
@@ -4445,7 +4445,7 @@ dependencies = [
 
 [[package]]
 name = "sc-transaction-pool"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3f59734238f19b1d8c3dd1fa0afa9569ee438ae0296a83417c5c9bdd0c6f2d24"
 dependencies = [
@@ -4763,7 +4763,7 @@ dependencies = [
 
 [[package]]
 name = "sp-allocator"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1cdb45d1695a4b2004ce17681387bfbeb7ef9ae370c7903de9333f7bf905fbb9"
 dependencies = [
@@ -4776,7 +4776,7 @@ dependencies = [
 
 [[package]]
 name = "sp-api"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4e34c770de3ada5729a094ed0e594a94fe03f4d6bfffd5d27f40e00778d20998"
 dependencies = [
@@ -4792,7 +4792,7 @@ dependencies = [
 
 [[package]]
 name = "sp-api-proc-macro"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "53f6276132fc841a61e38d6eaa3a89acd10ccec1d8167cedf453c2fff0513b93"
 dependencies = [
@@ -4805,7 +4805,7 @@ dependencies = [
 
 [[package]]
 name = "sp-application-crypto"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f2997e5072ef4fa6ac54658b0e79149095ececd89e3bd693f8fed90ad69862e8"
 dependencies = [
@@ -4818,7 +4818,7 @@ dependencies = [
 
 [[package]]
 name = "sp-arithmetic"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "35ee0e06a6d46a3d6fb8706dfa2ca593b60a06c248fbd5173ab56070c209612e"
 dependencies = [
@@ -4833,7 +4833,7 @@ dependencies = [
 
 [[package]]
 name = "sp-block-builder"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e4b654cf89dd73ad85848b2c7e60812f231ba2785aeec9c4708a434323fecf9a"
 dependencies = [
@@ -4846,7 +4846,7 @@ dependencies = [
 
 [[package]]
 name = "sp-blockchain"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "40b9c16247ff5ddd2b5aae78c51ffb49eddd804492be6182442281afff391e1e"
 dependencies = [
@@ -4863,7 +4863,7 @@ dependencies = [
 
 [[package]]
 name = "sp-chain-spec"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2997456fa5b605fec06c5f2267a0e7cb44708b210548b1a557ce89b07bc04211"
 dependencies = [
@@ -4873,7 +4873,7 @@ dependencies = [
 
 [[package]]
 name = "sp-consensus"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dff4f5824b4d69bbe0db4e67018abadf76acad541b12b58b6880f67fdd6ecc53"
 dependencies = [
@@ -4896,7 +4896,7 @@ dependencies = [
 
 [[package]]
 name = "sp-consensus-aura"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3dc4bdd9859ad3917bf8c4a40ec422259b9b538d9e8ba545dfd6870cd6a88ba5"
 dependencies = [
@@ -4911,7 +4911,7 @@ dependencies = [
 
 [[package]]
 name = "sp-core"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a4d4e7309949c9ce65a0347b20bbc89cc09efee55b1918c3253392286dab0df9"
 dependencies = [
@@ -4953,7 +4953,7 @@ dependencies = [
 
 [[package]]
 name = "sp-database"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c96e050dc3b7a9119e78254bdde9365a27d951a810f7afdcb58fc5799f8bddbb"
 dependencies = [
@@ -4963,7 +4963,7 @@ dependencies = [
 
 [[package]]
 name = "sp-debug-derive"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b2c4cb00ba7694df96793cf024418e6a75d5f224716460961b5c9dbfa621c0e8"
 dependencies = [
@@ -4974,7 +4974,7 @@ dependencies = [
 
 [[package]]
 name = "sp-externalities"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "93a826d5f8f0085804f5e7174885958611955a904ff184ae0ad289d6b83d8a3e"
 dependencies = [
@@ -4986,7 +4986,7 @@ dependencies = [
 
 [[package]]
 name = "sp-finality-grandpa"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c91cc8d9e62f28d3dd90c3e4291f26147c5094f6f2587aeea4301bf3731d4a3c"
 dependencies = [
@@ -5000,7 +5000,7 @@ dependencies = [
 
 [[package]]
 name = "sp-finality-tracker"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8f050f19f1e07b63f61a872552fecf7239c75e77dc133a5f5ae00dac0e7b348d"
 dependencies = [
@@ -5011,7 +5011,7 @@ dependencies = [
 
 [[package]]
 name = "sp-inherents"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8367b0e285f8c3ab00400a5f5b53ff0dba263005d2458fdc3e9652f824205f0b"
 dependencies = [
@@ -5024,7 +5024,7 @@ dependencies = [
 
 [[package]]
 name = "sp-io"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ede88516c08b2070ad2b49f5e4ebff896910b11c0a63184eb5c20b0b604b8655"
 dependencies = [
@@ -5045,7 +5045,7 @@ dependencies = [
 
 [[package]]
 name = "sp-keyring"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "509e39a8b8c8c6532fcbea3140e3f92ec6712ee028bdc968f4ccb90181205c24"
 dependencies = [
@@ -5057,7 +5057,7 @@ dependencies = [
 
 [[package]]
 name = "sp-offchain"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e63092c0ecd8fc90971a14a169f62337b78d885873e55dee87f33fe5f76d6591"
 dependencies = [
@@ -5068,7 +5068,7 @@ dependencies = [
 
 [[package]]
 name = "sp-panic-handler"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "acec634cd613519673edad420f56d5bbd087da9923c05aa66708882ee9676d20"
 dependencies = [
@@ -5078,7 +5078,7 @@ dependencies = [
 
 [[package]]
 name = "sp-rpc"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7bd0ae1f6a934590356ce844ce9d0ef71993cab223f6c9371c2fdea98b23c334"
 dependencies = [
@@ -5088,7 +5088,7 @@ dependencies = [
 
 [[package]]
 name = "sp-runtime"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0d37f6a2e111dd82dd194fa9ef77ba49b17e70162afc237f99e7c5dc6f95834f"
 dependencies = [
@@ -5110,7 +5110,7 @@ dependencies = [
 
 [[package]]
 name = "sp-runtime-interface"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bc743ea280556cbaf82203ec63ade39f4167402cb571aaf012c6c43f092ccf33"
 dependencies = [
@@ -5126,7 +5126,7 @@ dependencies = [
 
 [[package]]
 name = "sp-runtime-interface-proc-macro"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "be673dffcf1084e6a0da85712866afde7bbdefa152e9e3e5dbf4a04f1994a673"
 dependencies = [
@@ -5139,7 +5139,7 @@ dependencies = [
 
 [[package]]
 name = "sp-serializer"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "747ed260860bde3b6b098caf3091905b1fcea95135fb73fb7fded7a7662ae622"
 dependencies = [
@@ -5149,7 +5149,7 @@ dependencies = [
 
 [[package]]
 name = "sp-session"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fd4f193d095bb211ea75c14d924b97e03163e6807185b2ab45ff49a51d259fa8"
 dependencies = [
@@ -5161,7 +5161,7 @@ dependencies = [
 
 [[package]]
 name = "sp-staking"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d87f659f9742c456a35382af6ed58160cd1f23e0ddb51c38180b2cf80d5ac8a1"
 dependencies = [
@@ -5172,7 +5172,7 @@ dependencies = [
 
 [[package]]
 name = "sp-state-machine"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bd342d0b85891ea0e69c34483651df4e05420989b6fa74eb1982994118482985"
 dependencies = [
@@ -5192,13 +5192,13 @@ dependencies = [
 
 [[package]]
 name = "sp-std"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6e32241a20350ba20f445c73fec53b4c904559756b922ca2c3dda87ab2c1be9e"
 
 [[package]]
 name = "sp-storage"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "645dcf4a75d63a5494eabdc076d19a834c3cc46df65d84506fc40e67bd0bdd40"
 dependencies = [
@@ -5211,7 +5211,7 @@ dependencies = [
 
 [[package]]
 name = "sp-timestamp"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f981570875b33311c4ae95a721511951689d4d89e2f58bd0933dcbfe67230364"
 dependencies = [
@@ -5226,7 +5226,7 @@ dependencies = [
 
 [[package]]
 name = "sp-tracing"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "11a4caabab12ba64d7e5d3ff6d2d5a698425227eb8c697f8b3dcac67813a192b"
 dependencies = [
@@ -5235,7 +5235,7 @@ dependencies = [
 
 [[package]]
 name = "sp-transaction-pool"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "008ceb7db9fe134ced1e67226edb36db783e5f9434ca3544efcc94d8db9e1c99"
 dependencies = [
@@ -5251,7 +5251,7 @@ dependencies = [
 
 [[package]]
 name = "sp-trie"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1620f438771be44e7aee5445c348623c40bc32a15c875689ac9f2e3aecdc3aa3"
 dependencies = [
@@ -5266,7 +5266,7 @@ dependencies = [
 
 [[package]]
 name = "sp-utils"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e3aa5acc361bb7ccab3940584d9c032a587b8b4414cd949a92a7b391e6f39384"
 dependencies = [
@@ -5278,7 +5278,7 @@ dependencies = [
 
 [[package]]
 name = "sp-version"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d032c1e5c3b484c0e88486a1a6e9bfb736cbe6cb68b074cf0436b2935d38372a"
 dependencies = [
@@ -5291,7 +5291,7 @@ dependencies = [
 
 [[package]]
 name = "sp-wasm-interface"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0154beac23726c550f7fd68b9aad2fd97369221d5aa4b4e18d937e2eddc4246b"
 dependencies = [
@@ -5402,7 +5402,7 @@ dependencies = [
 
 [[package]]
 name = "substrate-build-script-utils"
-version = "2.0.0-alpha.7"
+version = "2.0.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "19b350e0eacbf0f7a5d6394417e3371e6f29b412ce95b4df02bab46db16d66a5"
 dependencies = [
@@ -5411,7 +5411,7 @@ dependencies = [
 
 [[package]]
 name = "substrate-prometheus-endpoint"
-version = "0.8.0-alpha.7"
+version = "0.8.0-rc.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2d0d8bbb7ede14a1d0212218945b83606e358878eac510685819d5c6394bcad9"
 dependencies = [
@@ -5432,7 +5432,7 @@ checksum = "d2a965994514ab35d3893e9260245f2947fd1981cdd4fffd2c6e6d1a9ce02e6a"
 
 [[package]]
 name = "substratee-node"
-version = "0.6.6-sub2.0.0-alpha.7"
+version = "0.6.6-sub2.0.0-rc.5"
 dependencies = [
  "futures 0.3.4",
  "log",
@@ -5460,7 +5460,7 @@ dependencies = [
 
 [[package]]
 name = "substratee-node-runtime"
-version = "0.6.6-sub2.0.0-alpha.7"
+version = "0.6.6-sub2.0.0-rc.5"
 dependencies = [
  "frame-executive",
  "frame-support",

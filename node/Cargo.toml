@@ -7,7 +7,7 @@ homepage = 'https://www.scs.ch'
 license = 'Apache2'
 name = 'substratee-node'
 repository = 'https://github.com/scs/substratee-node/'
-version = '0.6.6-sub2.0.0-alpha.7'
+version = '0.6.6-sub2.0.0-rc.5'
 
 [package.metadata.docs.rs]
 targets = ['x86_64-unknown-linux-gnu']
@@ -19,61 +19,61 @@ structopt = '0.3.8'
 
 [dependencies.substratee-node-runtime]
 path = '../runtime'
-version = '0.6.6-sub2.0.0-alpha.7'
+version = '0.6.6-sub2.0.0-rc.5'
 
 [dependencies.sc-basic-authorship]
-version = '0.8.0-alpha.7'
+version = '0.8.0-rc.5'
 
 [dependencies.sc-cli]
-version = '0.8.0-alpha.7'
+version = '0.8.0-rc.5'
 
 [dependencies.sc-client-api]
-version = '2.0.0-alpha.7'
+version = '2.0.0-rc.5'
 
 [dependencies.sc-consensus]
-version = '0.8.0-alpha.7'
+version = '0.8.0-rc.5'
 
 [dependencies.sc-consensus-aura]
-version = '0.8.0-alpha.7'
+version = '0.8.0-rc.5'
 
 [dependencies.sc-executor]
-version = '0.8.0-alpha.7'
+version = '0.8.0-rc.5'
 
 [dependencies.sc-finality-grandpa]
-version = '0.8.0-alpha.7'
+version = '0.8.0-rc.5'
 
 [dependencies.sc-network]
-version = '0.8.0-alpha.7'
+version = '0.8.0-rc.5'
 
 [dependencies.sc-service]
-version = '0.8.0-alpha.7'
+version = '0.8.0-rc.5'
 
 [dependencies.sc-transaction-pool]
-version = '2.0.0-alpha.7'
+version = '2.0.0-rc.5'
 
 [dependencies.sp-consensus]
-version = '0.8.0-alpha.7'
+version = '0.8.0-rc.5'
 
 [dependencies.sp-consensus-aura]
-version = '0.8.0-alpha.7'
+version = '0.8.0-rc.5'
 
 [dependencies.sp-core]
-version = '2.0.0-alpha.7'
+version = '2.0.0-rc.5'
 
 [dependencies.sp-finality-grandpa]
-version = '2.0.0-alpha.7'
+version = '2.0.0-rc.5'
 
 [dependencies.sp-inherents]
-version = '2.0.0-alpha.7'
+version = '2.0.0-rc.5'
 
 [dependencies.sp-runtime]
-version = '2.0.0-alpha.7'
+version = '2.0.0-rc.5'
 
 [dependencies.sp-transaction-pool]
-version = '2.0.0-alpha.7'
+version = '2.0.0-rc.5'
 
 [build-dependencies.substrate-build-script-utils]
-version = '2.0.0-alpha.7'
+version = '2.0.0-rc.5'
 
 [[bin]]
 name = 'substratee-node'

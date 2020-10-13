@@ -1,11 +1,11 @@
 [package]
 name = "encointer-client-notee"
-version = "0.3.2"
+version = "0.3.3"
 authors = ["encointer.org <alain@encointer.org>"]
 edition = "2018"
 
 [dependencies]
-substrate-api-client = { git = "https://github.com/scs/substrate-api-client.git", tag="v0.4.6-sub2.0.0-alpha.7"}
+substrate-api-client = { git = "https://github.com/scs/substrate-api-client.git", tag="v0.4.9-sub2.0.0"}
 log = "0.4"
 env_logger = "0.7"
 hex = "0.4"
@@ -21,25 +21,25 @@ base58  = "0.1"
 [dependencies.encointer-scheduler]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.1"
+tag = "v0.3.5"
 package = "pallet-encointer-scheduler"
 
 [dependencies.encointer-ceremonies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.1"
+tag = "v0.3.5"
 package = "pallet-encointer-ceremonies"
 
 [dependencies.encointer-currencies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.1"
+tag = "v0.3.5"
 package = "pallet-encointer-currencies"
 
 [dependencies.encointer-balances]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.1"
+tag = "v0.3.5"
 package = "pallet-encointer-balances"
 
 [dependencies.fixed]
@@ -77,7 +77,7 @@ default-features = false
 package = 'pallet-balances'
 version = '2.0.0-alpha.7'
 
-[dependencies.system]
+[dependencies.frame-system]
 default-features = false
 version = '2.0.0-alpha.7'
 package = 'frame-system'

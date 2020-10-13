@@ -1,4 +1,7 @@
 # encointer-node
+
+![badge](https://img.shields.io/badge/substrate-2.0.0-success)
+
 Encointer-node is the implementation of the [encointer.org](https://encointer.org) blockchain.
 Use this together with the mobile phone app [encointer-app](https://github.com/encointer/encointer-app) 
 

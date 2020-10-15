@@ -649,7 +649,15 @@ dependencies = [
  "textwrap",
  "unicode-width",
  "vec_map",
- "yaml-rust",
+]
+
+[[package]]
+name = "clap-nested"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "faa5865f3ba063d4f7db76f514e14cfa8af09b5f2c584371452a8c86d1c383b4"
+dependencies = [
+ "clap",
 ]
 
 [[package]]
@@ -1084,6 +1092,7 @@ version = "0.3.3"
 dependencies = [
  "base58",
  "clap",
+ "clap-nested",
  "encointer-node-notee-runtime",
  "env_logger",
  "frame-system",
@@ -1114,7 +1123,7 @@ dependencies = [
 
 [[package]]
 name = "encointer-node-notee"
-version = "0.3.2"
+version = "0.3.3"
 dependencies = [
  "encointer-node-notee-runtime",
  "frame-benchmarking",
@@ -8142,12 +8151,6 @@ dependencies = [
  "rand_core 0.5.1",
  "zeroize 1.1.0",
 ]
-
-[[package]]
-name = "yaml-rust"
-version = "0.3.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e66366e18dc58b46801afbf2ca7661a9f59cc8c5962c29892b6039b4f86fa992"
 
 [[package]]
 name = "yamux"

@@ -5,30 +5,31 @@ homepage = 'https://encointer.org'
 license = "GPL-3.0"
 name = 'encointer-node-notee-runtime'
 repository = 'https://github.com/encointer/encointer-node/'
-version = '0.3.3'
+# minor revision must always match runtime spec_version
+version = '0.3.5'
 
 [dependencies.encointer-scheduler]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.5"
+tag = "v0.3.6"
 package = "pallet-encointer-scheduler"
 
 [dependencies.encointer-ceremonies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.5"
+tag = "v0.3.6"
 package = "pallet-encointer-ceremonies"
 
 [dependencies.encointer-currencies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.5"
+tag = "v0.3.6"
 package = "pallet-encointer-currencies"
 
 [dependencies.encointer-balances]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.5"
+tag = "v0.3.6"
 package = "pallet-encointer-balances"
 
 [dependencies.fixed]

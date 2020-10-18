@@ -1,6 +1,6 @@
 [package]
 name = "encointer-client-notee"
-version = "0.3.3"
+version = "0.3.5"
 authors = ["encointer.org <alain@encointer.org>"]
 edition = "2018"
 
@@ -22,25 +22,25 @@ base58  = "0.1"
 [dependencies.encointer-scheduler]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.5"
+tag = "v0.3.6"
 package = "pallet-encointer-scheduler"
 
 [dependencies.encointer-ceremonies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.5"
+tag = "v0.3.6"
 package = "pallet-encointer-ceremonies"
 
 [dependencies.encointer-currencies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.5"
+tag = "v0.3.6"
 package = "pallet-encointer-currencies"
 
 [dependencies.encointer-balances]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.5"
+tag = "v0.3.6"
 package = "pallet-encointer-balances"
 
 [dependencies.fixed]

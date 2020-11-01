@@ -1,6 +1,6 @@
 # substraTEE-node
 
-![badge](https://img.shields.io/badge/substrate-2.0.0--rc5-success)
+![badge](https://img.shields.io/badge/substrate-2.0.0-success)
 
 This repository belongs to the [substraTEE project](https://www.substratee.com).
 

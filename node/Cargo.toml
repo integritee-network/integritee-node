@@ -1,79 +1,57 @@
 [package]
 authors = ["Supercomputing Systems AG <info@scs.ch>"]
 build = 'build.rs'
-description = 'Substrate Node template'
+description = 'A fresh FRAME-based Substrate node, ready for hacking.'
 edition = '2018'
 homepage = 'https://www.scs.ch'
 license = 'Apache2'
 name = 'substratee-node'
 repository = 'https://github.com/scs/substratee-node/'
-version = '0.6.11-sub2.0.0-rc5'
+version = '0.6.12-sub2.0.0'
+
+[[bin]]
+name = 'substratee-node'
 
 [package.metadata.docs.rs]
 targets = ['x86_64-unknown-linux-gnu']
 
+[build-dependencies]
+substrate-build-script-utils = '2.0.0'
+
 [dependencies]
-futures = '0.3.4'
-log = '0.4.8'
+jsonrpc-core = '15.0.0'
 structopt = '0.3.8'
 
-[dependencies.substratee-node-runtime]
-path = '../runtime'
-version = '0.6.11-sub2.0.0-rc5'
+# local dependencies
+substratee-node-runtime = { path = '../runtime', version = '0.6.12-sub2.0.0' }
 
-[dependencies.sc-basic-authorship]
-version = '0.8.0-rc5'
+# Substrate dependencies
+frame-benchmarking = '2.0.0'
+frame-benchmarking-cli = '2.0.0'
+pallet-transaction-payment-rpc = '2.0.0'
+sc-basic-authorship = '0.8.0'
+sc-cli = { features = ['wasmtime'], version = '0.8.0' }
+sc-client-api = '2.0.0'
+sc-consensus = '0.8.0'
+sc-consensus-aura = '0.8.0'
+sc-executor = { features = ['wasmtime'], version = '0.8.0' }
+sc-finality-grandpa = '0.8.0'
+sc-rpc = '2.0.0'
+sc-rpc-api = '0.8.0'
+sc-service = { features = ['wasmtime'], version = '0.8.0' }
+sc-transaction-pool = '2.0.0'
+sp-api = '2.0.0'
+sp-block-builder = '2.0.0'
+sp-blockchain = '2.0.0'
+sp-consensus = '0.8.0'
+sp-consensus-aura = '0.8.0'
+sp-core = '2.0.0'
+sp-finality-grandpa = '2.0.0'
+sp-inherents = '2.0.0'
+sp-runtime = '2.0.0'
+sp-transaction-pool = '2.0.0'
+substrate-frame-rpc-system = '2.0.0'
 
-[dependencies.sc-cli]
-version = '0.8.0-rc5'
-
-[dependencies.sc-client-api]
-version = '2.0.0-rc5'
-
-[dependencies.sc-consensus]
-version = '0.8.0-rc5'
-
-[dependencies.sc-consensus-aura]
-version = '0.8.0-rc5'
-
-[dependencies.sc-executor]
-version = '0.8.0-rc5'
-
-[dependencies.sc-finality-grandpa]
-version = '0.8.0-rc5'
-
-[dependencies.sc-network]
-version = '0.8.0-rc5'
-
-[dependencies.sc-service]
-version = '0.8.0-rc5'
-
-[dependencies.sc-transaction-pool]
-version = '2.0.0-rc5'
-
-[dependencies.sp-consensus]
-version = '0.8.0-rc5'
-
-[dependencies.sp-consensus-aura]
-version = '0.8.0-rc5'
-
-[dependencies.sp-core]
-version = '2.0.0-rc5'
-
-[dependencies.sp-finality-grandpa]
-version = '2.0.0-rc5'
-
-[dependencies.sp-inherents]
-version = '2.0.0-rc5'
-
-[dependencies.sp-runtime]
-version = '2.0.0-rc5'
-
-[dependencies.sp-transaction-pool]
-version = '2.0.0-rc5'
-
-[build-dependencies.substrate-build-script-utils]
-version = '2.0.0-rc5'
-
-[[bin]]
-name = 'substratee-node'
+[features]
+default = []
+runtime-benchmarks = ['node-template-runtime/runtime-benchmarks']

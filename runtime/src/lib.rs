@@ -277,7 +277,7 @@ parameter_types! {
 /// added by SCS
 impl substratee_registry::Trait for Runtime {
 	type Event = Event;
-	type Currency = balances::Module<Runtime>;
+	type Currency = pallet_balances::Module<Runtime>;
 	type MomentsPerDay = MomentsPerDay;
 }
 

@@ -5,154 +5,96 @@ homepage = 'https://www.scs.ch'
 license = 'Apache2'
 name = 'substratee-node-runtime'
 repository = 'https://github.com/scs/substratee-node/'
-version = '0.6.11-sub2.0.0-rc5'
+version = '0.6.12-sub2.0.0'
 
 [package.metadata.docs.rs]
 targets = ['x86_64-unknown-linux-gnu']
 
-[dependencies.aura]
-default-features = false
-package = 'pallet-aura'
-version = '2.0.0-rc5'
+[build-dependencies]
+wasm-builder-runner = { package = 'substrate-wasm-builder-runner', version = '2.0.0' }
 
-[dependencies.balances]
-default-features = false
-package = 'pallet-balances'
-version = '2.0.0-rc5'
-
+# alias "parity-scale-code" to "codec"
 [dependencies.codec]
 default-features = false
 features = ['derive']
 package = 'parity-scale-codec'
-version = '1.3.0'
+version = '1.3.4'
 
-[dependencies.frame-executive]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.frame-support]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.grandpa]
-default-features = false
-package = 'pallet-grandpa'
-version = '2.0.0-rc5'
-
-[dependencies.randomness-collective-flip]
-default-features = false
-package = 'pallet-randomness-collective-flip'
-version = '2.0.0-rc5'
-
-[dependencies.serde]
-features = ['derive']
-optional = true
-version = '1.0.101'
-
-[dependencies.sp-api]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.sp-block-builder]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.sp-consensus-aura]
-default-features = false
-version = '0.8.0-rc5'
-
-[dependencies.sp-core]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.sp-inherents]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.sp-io]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.sp-offchain]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.sp-runtime]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.sp-session]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.sp-std]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.sp-transaction-pool]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.sp-version]
-default-features = false
-version = '2.0.0-rc5'
-
-[dependencies.sudo]
-default-features = false
-package = 'pallet-sudo'
-version = '2.0.0-rc5'
-
-[dependencies.system]
-default-features = false
-package = 'frame-system'
-version = '2.0.0-rc5'
-
+# local dependencies
 [dependencies.substratee-registry]
 default-features = false
 package = 'pallet-substratee-registry'
 git = "https://github.com/scs/pallet-substratee-registry.git"
-tag = "v0.6.11-sub2.0.0-rc5"
+tag = "v0.6.12-sub2.0.0"
 
-[dependencies.timestamp]
-default-features = false
-package = 'pallet-timestamp'
-version = '2.0.0-rc5'
+[dependencies]
+hex-literal = { optional = true, version = '0.3.1' }
+serde = { features = ['derive'], optional = true, version = '1.0.101' }
 
-[dependencies.transaction-payment]
-default-features = false
-package = 'pallet-transaction-payment'
-version = '2.0.0-rc5'
-
-[build-dependencies.wasm-builder-runner]
-package = 'substrate-wasm-builder-runner'
-version = '1.0.5'
+# Substrate dependencies
+frame-benchmarking = { default-features = false, optional = true, version = '2.0.0' }
+frame-executive = { default-features = false, version = '2.0.0' }
+frame-support = { default-features = false, version = '2.0.0' }
+frame-system = { default-features = false, version = '2.0.0' }
+frame-system-benchmarking = { default-features = false, optional = true, version = '2.0.0' }
+frame-system-rpc-runtime-api = { default-features = false, version = '2.0.0' }
+pallet-aura = { default-features = false, version = '2.0.0' }
+pallet-balances = { default-features = false, version = '2.0.0' }
+pallet-grandpa = { default-features = false, version = '2.0.0' }
+pallet-randomness-collective-flip = { default-features = false, version = '2.0.0' }
+pallet-sudo = { default-features = false, version = '2.0.0' }
+pallet-timestamp = { default-features = false, version = '2.0.0' }
+pallet-transaction-payment = { default-features = false, version = '2.0.0' }
+pallet-transaction-payment-rpc-runtime-api = { default-features = false, version = '2.0.0' }
+sp-api = { default-features = false, version = '2.0.0' }
+sp-block-builder = { default-features = false, version = '2.0.0' }
+sp-consensus-aura = { default-features = false, version = '0.8.0' }
+sp-core = { default-features = false, version = '2.0.0' }
+sp-inherents = { default-features = false, version = '2.0.0' }
+sp-offchain = { default-features = false, version = '2.0.0' }
+sp-runtime = { default-features = false, version = '2.0.0' }
+sp-session = { default-features = false, version = '2.0.0' }
+sp-std = { default-features = false, version = '2.0.0' }
+sp-transaction-pool = { default-features = false, version = '2.0.0' }
+sp-version = { default-features = false, version = '2.0.0' }
 
 [features]
 default = ['std']
+runtime-benchmarks = [
+    'hex-literal',
+    'frame-benchmarking',
+    'frame-support/runtime-benchmarks',
+    'frame-system-benchmarking',
+    'frame-system/runtime-benchmarks',
+    'pallet-balances/runtime-benchmarks',
+    'pallet-timestamp/runtime-benchmarks',
+    'sp-runtime/runtime-benchmarks',
+]
 std = [
-    'aura/std',
-    'balances/std',
     'codec/std',
+    'serde',
     'frame-executive/std',
     'frame-support/std',
-    'grandpa/std',
-    'randomness-collective-flip/std',
-    'serde',
+    'frame-system/std',
+    'frame-system-rpc-runtime-api/std',
+    'pallet-aura/std',
+    'pallet-balances/std',
+    'pallet-grandpa/std',
+    'pallet-randomness-collective-flip/std',
+    'pallet-sudo/std',
+    'pallet-timestamp/std',
+    'pallet-transaction-payment/std',
+    'pallet-transaction-payment-rpc-runtime-api/std',
     'sp-api/std',
     'sp-block-builder/std',
     'sp-consensus-aura/std',
     'sp-core/std',
     'sp-inherents/std',
-    'sp-io/std',
     'sp-offchain/std',
     'sp-runtime/std',
     'sp-session/std',
     'sp-std/std',
     'sp-transaction-pool/std',
     'sp-version/std',
-    'sudo/std',
-    'system/std',
-    'timestamp/std',
-    'transaction-payment/std',
     'substratee-registry/std',
 ]

@@ -2244,6 +2244,7 @@ dependencies = [
 [[package]]
 name = "ias-verify"
 version = "0.1.2"
+source = "git+https://github.com/scs/pallet-substratee-registry.git#a8143a18a03abf5d546e3fd9d0042ececb448b30"
 dependencies = [
  "base64 0.11.0",
  "chrono",
@@ -3684,6 +3685,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-balances"
 version = "0.3.6"
+source = "git+https://github.com/encointer/pallets#a0830b1fe7b966d2860b0482b7fa3706978e378f"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3703,6 +3705,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-ceremonies"
 version = "0.3.6"
+source = "git+https://github.com/encointer/pallets#a0830b1fe7b966d2860b0482b7fa3706978e378f"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3722,6 +3725,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-currencies"
 version = "0.3.6"
+source = "git+https://github.com/encointer/pallets#a0830b1fe7b966d2860b0482b7fa3706978e378f"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3738,6 +3742,7 @@ dependencies = [
 [[package]]
 name = "pallet-encointer-scheduler"
 version = "0.3.6"
+source = "git+https://github.com/encointer/pallets#a0830b1fe7b966d2860b0482b7fa3706978e378f"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -3808,6 +3813,7 @@ dependencies = [
 [[package]]
 name = "pallet-substratee-registry"
 version = "0.6.12-sub2.0.0"
+source = "git+https://github.com/scs/pallet-substratee-registry.git#a8143a18a03abf5d546e3fd9d0042ececb448b30"
 dependencies = [
  "frame-support",
  "frame-system",

@@ -8,13 +8,13 @@ members = [
 ]
 
 #only while debugging
-[patch."https://github.com/encointer/pallets"]
-pallet-encointer-ceremonies = { path = "../encointer-pallets/ceremonies" }
-pallet-encointer-currencies = { path = "../encointer-pallets/currencies" }
-pallet-encointer-balances = { path = "../encointer-pallets/balances" }
-pallet-encointer-scheduler = { path = "../encointer-pallets/scheduler" }
-[patch."https://github.com/scs/pallet-substratee-registry.git"]
-pallet-substratee-registry = { path = "../pallet-substratee-registry" }
+#[patch."https://github.com/encointer/pallets"]
+#pallet-encointer-ceremonies = { path = "../encointer-pallets/ceremonies" }
+#pallet-encointer-currencies = { path = "../encointer-pallets/currencies" }
+#pallet-encointer-balances = { path = "../encointer-pallets/balances" }
+#pallet-encointer-scheduler = { path = "../encointer-pallets/scheduler" }
+#[patch."https://github.com/scs/pallet-substratee-registry.git"]
+#pallet-substratee-registry = { path = "../pallet-substratee-registry" }
 
 #[patch."https://github.com/encointer/substrate-fixed"]
 #substrate-fixed = { path = "../substrate-fixed" }

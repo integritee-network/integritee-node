@@ -12,31 +12,31 @@ version = '0.3.5'
 [dependencies.encointer-scheduler]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.6"
+#tag = "v0.3.6"
 package = "pallet-encointer-scheduler"
 
 [dependencies.encointer-ceremonies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.6"
+#tag = "v0.3.6"
 package = "pallet-encointer-ceremonies"
 
 [dependencies.encointer-currencies]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.6"
+#tag = "v0.3.6"
 package = "pallet-encointer-currencies"
 
 [dependencies.encointer-balances]
 default-features = false
 git = "https://github.com/encointer/pallets"
-tag = "v0.3.6"
+#tag = "v0.3.6"
 package = "pallet-encointer-balances"
 
 [dependencies.substratee-registry]
 default-features = false
 git = " https://github.com/scs/pallet-substratee-registry.git"
-tag = "v0.6.12-sub2.0.0"
+#tag = "v0.6.12-sub2.0.0"
 package = 'pallet-substratee-registry'
 
 [dependencies.fixed]

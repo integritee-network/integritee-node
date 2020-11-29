@@ -7,8 +7,7 @@ homepage = 'https://encointer.org'
 license = "GPL-3.0"
 name = 'encointer-node-teeproxy'
 repository = 'https://github.com/encointer/encointer-node'
-#keep with client version
-version = '0.3.6'
+version = '0.3.7'
 
 [[bin]]
 name = 'encointer-node-teeproxy'

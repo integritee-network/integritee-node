@@ -7,7 +7,7 @@ name = 'encointer-node-teeproxy-runtime'
 repository = 'https://github.com/encointer/encointer-node/'
 # minor revision must match node/client
 # patch revision must match runtime spec_version
-version = '0.3.5'
+version = '0.3.6'
 
 [dependencies.encointer-scheduler]
 default-features = false

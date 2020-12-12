@@ -18,7 +18,7 @@ use sp_runtime::{
 	transaction_validity::{TransactionValidity, TransactionSource},
 };
 use sp_runtime::traits::{
-	BlakeTwo256, Block as BlockT, IdentityLookup, Verify, IdentifyAccount, NumberFor, Saturating,
+	BlakeTwo256, Block as BlockT, AccountIdLookup, Verify, IdentifyAccount, NumberFor, Saturating,
 };
 use sp_api::impl_runtime_apis;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
@@ -42,6 +42,7 @@ pub use frame_support::{
 		constants::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_PER_SECOND},
 	},
 };
+use pallet_transaction_payment::CurrencyAdapter;
 
 /// added by SCS
 pub use substratee_registry;
@@ -103,10 +104,35 @@ pub mod opaque {
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("substratee-node-runtime"),
 	impl_name: create_runtime_str!("substratee-node-runtime"),
+
+	/// `authoring_version` is the version of the authorship interface. An authoring node
+    /// will not attempt to author blocks unless this is equal to its native runtime.
 	authoring_version: 1,
+
+	/// Version of the runtime specification. A full-node will not attempt to use its native
+    /// runtime in substitute for the on-chain Wasm runtime unless all of `spec_name`,
+    /// `spec_version` and `authoring_version` are the same between Wasm and native.
 	spec_version: 1,
+
+	/// Version of the implementation of the specification. Nodes are free to ignore this; it
+    /// serves only as an indication that the code is different; as long as the other two versions
+    /// are the same then while the actual code may be different, it is nonetheless required to
+    /// do the same thing.
+    /// Non-consensus-breaking optimizations are about the only changes that could be made which
+    /// would result in only the `impl_version` changing.
 	impl_version: 1,
+	
 	apis: RUNTIME_API_VERSIONS,
+	
+	/// All existing dispatches are fully compatible when this number doesn't change. If this
+	/// number changes, then `spec_version` must change, also.
+	///
+	/// This number must change when an existing dispatchable (module ID, dispatch ID) is changed,
+	/// either through an alteration in its user-level semantics, a parameter added/removed/changed,
+	/// a dispatchable being removed, a module being removed, or a dispatchable/module changing its
+	/// index.
+	///
+	/// It need *not* change when a new module is added or when a dispatchable is added.
 	transaction_version: 1,
 };
 
@@ -150,7 +176,7 @@ impl frame_system::Trait for Runtime {
 	/// The aggregated dispatch type that is available for extrinsics.
 	type Call = Call;
 	/// The lookup mechanism to get account ID from whatever is passed in dispatchers.
-	type Lookup = IdentityLookup<AccountId>;
+	type Lookup = AccountIdLookup<AccountId, ()>;
 	/// The index type for storing how many extrinsics an account has signed.
 	type Index = Index;
 	/// The index type for blocks.
@@ -250,7 +276,7 @@ impl pallet_balances::Trait for Runtime {
 	type DustRemoval = ();
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
-	type WeightInfo = ();
+	type WeightInfo = pallet_balances::weights::SubstrateWeight<Runtime>;
 }
 
 parameter_types! {
@@ -258,8 +284,7 @@ parameter_types! {
 }
 
 impl pallet_transaction_payment::Trait for Runtime {
-	type Currency = Balances;
-	type OnTransactionPayment = ();
+	type OnChargeTransaction = CurrencyAdapter<Balances, ()>;
 	type TransactionByteFee = TransactionByteFee;
 	type WeightToFee = IdentityFee<Balance>;
 	type FeeMultiplierUpdate = ();
@@ -302,7 +327,7 @@ construct_runtime!(
 );
 
 /// The address format for describing accounts.
-pub type Address = AccountId;
+pub type Address = sp_runtime::MultiAddress<AccountId, ()>;
 /// Block header type as expected by this runtime.
 pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 /// Block type as expected by this runtime.

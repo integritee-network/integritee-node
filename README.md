@@ -1,7 +1,5 @@
 # substraTEE-node
 
-![badge](https://img.shields.io/badge/substrate-2.0.0-success)
-
 This repository belongs to the [substraTEE project](https://www.substratee.com).
 
 A substrate-based node that maintains a registry of remote attested substraTEE-worker enclaves. The node also acts as a proxy for encrypted requests which are forwarded to the substraTEE-worker.

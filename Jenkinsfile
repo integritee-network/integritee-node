@@ -13,6 +13,11 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '14'))
   }
   stages {
+    stage('rustup') {
+      steps {
+        sh './ci/install_rust.sh'
+      }
+    }
     stage('Build') {
       steps {
         sh 'cargo build --release 2>&1 | tee build_release.log'

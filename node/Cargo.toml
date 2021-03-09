@@ -7,51 +7,58 @@ homepage = 'https://www.scs.ch'
 license = 'Apache2'
 name = 'substratee-node'
 repository = 'https://github.com/scs/substratee-node/'
-version = '0.7.0'
+version = '0.8.0'
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
 
 [[bin]]
 name = 'substratee-node'
 
-[package.metadata.docs.rs]
-targets = ['x86_64-unknown-linux-gnu']
-
-[build-dependencies]
-substrate-build-script-utils = '2.0.0'
-
 [dependencies]
-jsonrpc-core = '15.0.0'
-structopt = '0.3.8'
+structopt = "0.3.8"
+
+sc-cli = { version = "0.9.0", git = "https://github.com/paritytech/substrate.git", features = ["wasmtime"] }
+sp-core = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+sc-executor = { version = "0.9.0", git = "https://github.com/paritytech/substrate.git", features = ["wasmtime"] }
+sc-service = { version = "0.9.0", git = "https://github.com/paritytech/substrate.git", features = ["wasmtime"] }
+sc-telemetry = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+sc-keystore = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+sp-inherents = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+sc-transaction-pool = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+sp-transaction-pool = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+sc-consensus-aura = { version = "0.9.0", git = "https://github.com/paritytech/substrate.git" }
+sp-consensus-aura = { version = "0.9.0", git = "https://github.com/paritytech/substrate.git" }
+sp-consensus = { version = "0.9.0", git = "https://github.com/paritytech/substrate.git" }
+sc-consensus = { version = "0.9.0", git = "https://github.com/paritytech/substrate.git" }
+sc-finality-grandpa = { version = "0.9.0", git = "https://github.com/paritytech/substrate.git" }
+sp-finality-grandpa = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+sc-client-api = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+sp-runtime = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+
+# These dependencies are used for the node template's RPCs
+jsonrpc-core = "15.1.0"
+sc-rpc = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+sp-api = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+sc-rpc-api = { version = "0.9.0", git = "https://github.com/paritytech/substrate.git" }
+sp-blockchain = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+sp-block-builder = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+sc-basic-authorship = { version = "0.9.0", git = "https://github.com/paritytech/substrate.git" }
+substrate-frame-rpc-system = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+pallet-transaction-payment-rpc = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+
+# These dependencies are used for runtime benchmarking
+frame-benchmarking = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
+frame-benchmarking-cli = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
 
 # local dependencies
 substratee-node-runtime = { path = '../runtime' }
 
-# Substrate dependencies
-frame-benchmarking = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-frame-benchmarking-cli = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-pallet-transaction-payment-rpc = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sc-basic-authorship = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sc-cli = { features = ['wasmtime'], git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sc-client-api = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sc-consensus = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sc-consensus-aura = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sc-executor = { features = ['wasmtime'], git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sc-finality-grandpa = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sc-rpc = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sc-rpc-api = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sc-service = { features = ['wasmtime'], git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sc-transaction-pool = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sp-api = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sp-block-builder = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sp-blockchain = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sp-consensus = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sp-consensus-aura = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sp-core = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sp-finality-grandpa = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sp-inherents = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sp-runtime = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-sp-transaction-pool = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
-substrate-frame-rpc-system = { git = "https://github.com/paritytech/substrate.git", rev = "a208da16" }
+[build-dependencies]
+substrate-build-script-utils = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git" }
 
 [features]
 default = []
-runtime-benchmarks = ['substratee-node-runtime/runtime-benchmarks']
+runtime-benchmarks = [
+	"substratee-node-runtime/runtime-benchmarks",
+]

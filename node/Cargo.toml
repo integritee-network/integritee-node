@@ -63,3 +63,5 @@ default = []
 runtime-benchmarks = [
 	"substratee-node-runtime/runtime-benchmarks",
 ]
+# allow workers to register without remote attestation for dev purposes
+skip-ias-check = ["substratee-node-runtime/skip-ias-check"]

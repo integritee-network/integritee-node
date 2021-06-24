@@ -2302,7 +2302,7 @@ dependencies = [
 [[package]]
 name = "ias-verify"
 version = "0.1.4"
-source = "git+https://github.com/scs/pallet-substratee-registry.git?branch=feature-gate-ias-check#8970ea03a8a28ae084a802044877ef4a5f4d5a6a"
+source = "git+https://github.com/scs/pallet-substratee-registry.git?branch=feature-gate-ias-check#b1eac3de80ee7ead87899ba10673aaa4c8506c1f"
 dependencies = [
  "base64 0.11.0",
  "chrono",
@@ -3941,8 +3941,8 @@ dependencies = [
 
 [[package]]
 name = "pallet-substratee-registry"
-version = "0.8.0"
-source = "git+https://github.com/scs/pallet-substratee-registry.git?branch=feature-gate-ias-check#8970ea03a8a28ae084a802044877ef4a5f4d5a6a"
+version = "0.9.0"
+source = "git+https://github.com/scs/pallet-substratee-registry.git?branch=feature-gate-ias-check#b1eac3de80ee7ead87899ba10673aaa4c8506c1f"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -7944,7 +7944,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "04f8ab788026715fa63b31960869617cba39117e520eb415b0139543e325ab59"
 dependencies = [
  "cfg-if 0.1.10",
- "rand 0.3.23",
+ "rand 0.7.3",
  "static_assertions",
 ]
 

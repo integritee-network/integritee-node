@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install latest nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly-2021-03-25
+          override: true
+          target: wasm32-unknown-unknown
+      - name: Install llvm-10
+        run: sudo apt-get install llvm-10 clang-10
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+      - name: Build
+        run: cargo build --release

@@ -14,7 +14,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies.substratee-registry]
 default-features = false
 git = " https://github.com/scs/pallet-substratee-registry.git"
-branch = "feature-gate-ias-check"
+branch = "master"
 package = 'pallet-substratee-registry'
 
 [dependencies]

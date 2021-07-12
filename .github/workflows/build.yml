@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: integritee-node-${{ github.sha }}
-          path: target/release/integritee-collator
+          path: target/release/integritee-node
 
   build-skip-ais-check:
     runs-on: ubuntu-20.04
@@ -55,4 +55,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: integritee-node-skip-ias-check-${{ github.sha }}
-          path: target/release/integritee-collator
+          path: target/release/integritee-node

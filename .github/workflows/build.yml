@@ -31,7 +31,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: integritee-node-${{ github.sha }}
+          name: integritee-node
           path: target/release/integritee-node
 
   build-skip-ais-check:
@@ -54,5 +54,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: integritee-node-skip-ias-check-${{ github.sha }}
+          name: integritee-node-skip-ias-check
           path: target/release/integritee-node

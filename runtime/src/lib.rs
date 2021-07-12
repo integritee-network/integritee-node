@@ -86,8 +86,8 @@ pub mod opaque {
 }
 
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("substratee-node-runtime"),
-	impl_name: create_runtime_str!("substratee-node-runtime"),
+	spec_name: create_runtime_str!("integritee-node-runtime"),
+	impl_name: create_runtime_str!("integritee-node-runtime"),
 
 	/// `authoring_version` is the version of the authorship interface. An authoring node
     /// will not attempt to author blocks unless this is equal to its native runtime.

@@ -1,11 +1,11 @@
 [package]
 authors = ["Supercomputing Systems AG <info@scs.ch>"]
 build = 'build.rs'
-description = 'SubstraTEE node'
+description = 'Integritee node'
 edition = '2018'
 homepage = 'https://www.scs.ch'
 license = 'Apache2'
-name = 'substratee-node'
+name = 'integritee-node'
 repository = 'https://github.com/scs/substratee-node/'
 version = '0.9.0'
 
@@ -13,7 +13,7 @@ version = '0.9.0'
 targets = ["x86_64-unknown-linux-gnu"]
 
 [[bin]]
-name = 'substratee-node'
+name = 'integritee-node'
 
 [dependencies]
 structopt = "0.3.8"
@@ -53,7 +53,7 @@ frame-benchmarking = { version = "3.0.0", git = "https://github.com/paritytech/s
 frame-benchmarking-cli = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git", branch = "master" }
 
 # local dependencies
-substratee-node-runtime = { path = '../runtime' }
+integritee-node-runtime = { path = '../runtime' }
 
 [build-dependencies]
 substrate-build-script-utils = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git", branch = "master" }
@@ -61,7 +61,7 @@ substrate-build-script-utils = { version = "3.0.0", git = "https://github.com/pa
 [features]
 default = []
 runtime-benchmarks = [
-	"substratee-node-runtime/runtime-benchmarks",
+	"integritee-node-runtime/runtime-benchmarks",
 ]
 # allow workers to register without remote attestation for dev purposes
-skip-ias-check = ["substratee-node-runtime/skip-ias-check"]
+skip-ias-check = ["integritee-node-runtime/skip-ias-check"]

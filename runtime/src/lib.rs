@@ -40,7 +40,7 @@ pub use frame_support::{
 use pallet_transaction_payment::CurrencyAdapter;
 
 /// added by SCS
-pub use substratee_registry;
+pub use pallet_teerex;
 
 /// An index to a block.
 pub type BlockNumber = u32;
@@ -293,10 +293,12 @@ parameter_types! {
 }
 
 /// added by SCS
-impl substratee_registry::Config for Runtime {
+impl pallet_teerex::Config for Runtime {
 	type Event = Event;
 	type Currency = pallet_balances::Pallet<Runtime>;
 	type MomentsPerDay = MomentsPerDay;
+	// currently we have only benchmarks there for the integritee-parachain
+	type WeightInfo = pallet_teerex::weights::IntegriteeParachainWeight<Runtime>;
 }
 
 // Create the runtime by composing the FRAME pallets that were previously configured.
@@ -315,7 +317,7 @@ construct_runtime!(
 		TransactionPayment: pallet_transaction_payment::{Pallet, Storage},
 		Sudo: pallet_sudo::{Pallet, Call, Config<T>, Storage, Event<T>},
 		// added by SCS
-		SubstrateeRegistry: substratee_registry::{Pallet, Call, Storage, Event<T>},
+		Teerex: pallet_teerex::{Pallet, Call, Storage, Event<T>},
 	}
 );
 

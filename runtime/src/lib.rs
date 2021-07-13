@@ -305,7 +305,7 @@ impl pallet_teerex::Config for Runtime {
 	type Currency = pallet_balances::Pallet<Runtime>;
 	type MomentsPerDay = MomentsPerDay;
 	// currently we have only benchmarks there for the integritee-parachain
-	type WeightInfo = pallet_teerex::weights::IntegriteeParachainWeight<Runtime>;
+	type WeightInfo = pallet_teerex::weights::IntegriteeWeight<Runtime>;
 }
 
 // Create the runtime by composing the FRAME pallets that were previously configured.

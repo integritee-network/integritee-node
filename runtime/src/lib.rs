@@ -40,7 +40,7 @@ pub use frame_support::{
 use pallet_transaction_payment::CurrencyAdapter;
 
 /// added by SCS
-pub use substratee_registry;
+pub use pallet_teerex;
 
 /// An index to a block.
 pub type BlockNumber = u32;
@@ -52,6 +52,10 @@ pub type Signature = MultiSignature;
 /// to the public key of our transaction signing scheme.
 pub type AccountId = <<Signature as Verify>::Signer as IdentifyAccount>::AccountId;
 
+/// The type for looking up accounts. We don't expect more than 4 billion of them, but you
+/// never know...
+pub type AccountIndex = u32;
+
 /// Balance of an account.
 pub type Balance = u128;
 
@@ -60,6 +64,9 @@ pub type Index = u32;
 
 /// A hash of some data used by the chain.
 pub type Hash = sp_core::H256;
+
+/// Digest item type.
+pub type DigestItem = generic::DigestItem<Hash>;
 
 /// Opaque types. These are used by the CLI to instantiate machinery that don't need to know
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
@@ -86,8 +93,8 @@ pub mod opaque {
 }
 
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("substratee-node-runtime"),
-	impl_name: create_runtime_str!("substratee-node-runtime"),
+	spec_name: create_runtime_str!("integritee-node-runtime"),
+	impl_name: create_runtime_str!("integritee-node-runtime"),
 
 	/// `authoring_version` is the version of the authorship interface. An authoring node
     /// will not attempt to author blocks unless this is equal to its native runtime.
@@ -293,10 +300,12 @@ parameter_types! {
 }
 
 /// added by SCS
-impl substratee_registry::Config for Runtime {
+impl pallet_teerex::Config for Runtime {
 	type Event = Event;
 	type Currency = pallet_balances::Pallet<Runtime>;
 	type MomentsPerDay = MomentsPerDay;
+	// currently we have only benchmarks there for the integritee-parachain
+	type WeightInfo = pallet_teerex::weights::IntegriteeWeight<Runtime>;
 }
 
 // Create the runtime by composing the FRAME pallets that were previously configured.
@@ -315,7 +324,7 @@ construct_runtime!(
 		TransactionPayment: pallet_transaction_payment::{Pallet, Storage},
 		Sudo: pallet_sudo::{Pallet, Call, Config<T>, Storage, Event<T>},
 		// added by SCS
-		SubstrateeRegistry: substratee_registry::{Pallet, Call, Storage, Event<T>},
+		Teerex: pallet_teerex::{Pallet, Call, Storage, Event<T>},
 	}
 );
 
@@ -337,6 +346,8 @@ pub type SignedExtra = (
 );
 /// Unchecked extrinsic type as expected by this runtime.
 pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<Address, Call, Signature, SignedExtra>;
+/// Extrinsic type that has already been checked.
+pub type CheckedExtrinsic = generic::CheckedExtrinsic<AccountId, Call, SignedExtra>;
 /// Executive: handles dispatch to the various modules.
 pub type Executive = frame_executive::Executive<
 	Runtime,

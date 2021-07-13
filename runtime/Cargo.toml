@@ -1,28 +1,28 @@
 [package]
-authors = ["Supercomputing Systems AG <info@scs.ch>"]
+authors = ["Integritee AG"]
 edition = '2018'
-homepage = 'https://www.scs.ch'
+homepage = 'https://integritee.network/'
 license = 'Apache2'
-name = 'substratee-node-runtime'
-repository = 'https://github.com/scs/substratee-node/'
+name = 'integritee-node-runtime'
+repository = 'https://github.com/integritee-network/integritee-node'
 version = '0.9.0'
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
 
 # local dependencies
-[dependencies.substratee-registry]
+[dependencies.pallet-teerex]
 default-features = false
-git = " https://github.com/scs/pallet-substratee-registry.git"
+git = " https://github.com/integritee-network/pallet-teerex.git"
 branch = "master"
-package = 'pallet-substratee-registry'
+package = 'pallet-teerex'
 
 [dependencies]
 codec = { package = "parity-scale-codec", version = "2.0.0", default-features = false, features = ["derive"] }
 
 pallet-aura = { version = "3.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
 pallet-balances = { version = "3.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
-pallet-grandpa = { version = "3.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
+pallet-grandpa = { version = "3.1.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
 pallet-randomness-collective-flip = { version = "3.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
 pallet-sudo = { version = "3.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
 pallet-timestamp = { version = "3.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
@@ -59,7 +59,7 @@ substrate-wasm-builder = { version = "4.0.0", git = "https://github.com/parityte
 
 [features]
 default = ["std"]
-skip-ias-check = ["substratee-registry/skip-ias-check"]
+skip-ias-check = ["pallet-teerex/skip-ias-check"]
 std = [
 	"codec/std",
 	"frame-executive/std",
@@ -85,7 +85,7 @@ std = [
 	"sp-std/std",
 	"sp-transaction-pool/std",
 	"sp-version/std",
-	"substratee-registry/std",
+	"pallet-teerex/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking",

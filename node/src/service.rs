@@ -2,7 +2,7 @@
 
 use std::{sync::Arc, time::Duration};
 use sc_client_api::{ExecutorProvider, RemoteBackend};
-use substratee_node_runtime::{self, opaque::Block, RuntimeApi};
+use integritee_node_runtime::{self, opaque::Block, RuntimeApi};
 use sc_service::{error::Error as ServiceError, Configuration, TaskManager};
 use sc_executor::native_executor_instance;
 pub use sc_executor::NativeExecutor;
@@ -16,8 +16,8 @@ use sp_consensus::SlotData;
 // Our native executor instance.
 native_executor_instance!(
 	pub Executor,
-	substratee_node_runtime::api::dispatch,
-	substratee_node_runtime::native_version,
+	integritee_node_runtime::api::dispatch,
+	integritee_node_runtime::native_version,
 	frame_benchmarking::benchmarking::HostFunctions,
 );
 
@@ -245,7 +245,6 @@ pub fn new_full(mut config: Configuration) -> Result<TaskManager, ServiceError> 
 				sync_oracle: network.clone(),
 				justification_sync_link: network.clone(),
 				block_proposal_slot_portion: SlotProportion::new(2f32 / 3f32),
-				max_block_proposal_slot_portion: None,
 				telemetry: telemetry.as_ref().map(|x| x.handle()),
 			},
 		)?;

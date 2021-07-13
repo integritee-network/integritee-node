@@ -11,11 +11,11 @@ version = '0.9.0'
 targets = ["x86_64-unknown-linux-gnu"]
 
 # local dependencies
-[dependencies.substratee-registry]
+[dependencies.pallet-teerex]
 default-features = false
-git = " https://github.com/scs/pallet-substratee-registry.git"
+git = " https://github.com/integritee-network/pallet-teerex.git"
 branch = "master"
-package = 'pallet-substratee-registry'
+package = 'pallet-teerex'
 
 [dependencies]
 codec = { package = "parity-scale-codec", version = "2.0.0", default-features = false, features = ["derive"] }
@@ -59,7 +59,7 @@ substrate-wasm-builder = { version = "4.0.0", git = "https://github.com/parityte
 
 [features]
 default = ["std"]
-skip-ias-check = ["substratee-registry/skip-ias-check"]
+skip-ias-check = ["pallet-teerex/skip-ias-check"]
 std = [
 	"codec/std",
 	"frame-executive/std",
@@ -85,7 +85,7 @@ std = [
 	"sp-std/std",
 	"sp-transaction-pool/std",
 	"sp-version/std",
-	"substratee-registry/std",
+	"pallet-teerex/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking",

@@ -26,7 +26,7 @@ pipeline {
     }
     stage('Archive build output') {
       steps {
-        archiveArtifacts artifacts: '**/substratee-node', caseSensitive: false, fingerprint: true, onlyIfSuccessful: true
+        archiveArtifacts artifacts: '**/integritee-node', caseSensitive: false, fingerprint: true, onlyIfSuccessful: true
       }
     }
     stage('Test') {

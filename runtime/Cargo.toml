@@ -22,7 +22,7 @@ codec = { package = "parity-scale-codec", version = "2.0.0", default-features = 
 
 pallet-aura = { version = "3.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
 pallet-balances = { version = "3.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
-pallet-grandpa = { version = "3.1.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
+pallet-grandpa = { version = "3.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
 pallet-randomness-collective-flip = { version = "3.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
 pallet-sudo = { version = "3.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
 pallet-timestamp = { version = "3.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }

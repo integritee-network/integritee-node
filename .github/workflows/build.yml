@@ -17,8 +17,6 @@ jobs:
       - name: Install latest nightly
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly-2021-03-25
-          override: true
           target: wasm32-unknown-unknown
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10
@@ -40,8 +38,6 @@ jobs:
       - name: Install latest nightly
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly-2021-03-25
-          override: true
           target: wasm32-unknown-unknown
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10

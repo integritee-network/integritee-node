@@ -14,17 +14,18 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
-      - name: Install latest nightly
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly-2021-03-25
-          override: true
-          target: wasm32-unknown-unknown
+      # With rustup's nice new toml format, we just need to run rustup show to install the toolchain
+      # https://github.com/actions-rs/toolchain/issues/126#issuecomment-782989659
+      - name: Setup Rust toolchain
+        run: rustup show
+
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10
+
       - uses: actions/checkout@v2
         with:
           submodules: 'true'
+
       - name: cargo build
         run: cargo build --release
 
@@ -37,17 +38,16 @@ jobs:
   build-skip-ais-check:
     runs-on: ubuntu-18.04
     steps:
-      - name: Install latest nightly
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly-2021-03-25
-          override: true
-          target: wasm32-unknown-unknown
+      - name: Setup Rust toolchain
+        run: rustup show
+
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10
+
       - uses: actions/checkout@v2
         with:
           submodules: 'true'
+
       - name: cargo build
         run: cargo build --release --features skip-ias-check
 

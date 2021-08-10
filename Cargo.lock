@@ -2302,7 +2302,7 @@ dependencies = [
 [[package]]
 name = "ias-verify"
 version = "0.1.4"
-source = "git+https://github.com/integritee-network/pallet-teerex.git?branch=skip-ias-add_mrenclave#8be733d5737e3772a01b199d6e0bcde45b31a04c"
+source = "git+https://github.com/integritee-network/pallet-teerex.git?branch=master#32eec55c0b4691390745bbc27ddc6bd588d04c05"
 dependencies = [
  "base64 0.11.0",
  "chrono",
@@ -4028,7 +4028,7 @@ dependencies = [
 [[package]]
 name = "pallet-teerex"
 version = "0.9.0"
-source = "git+https://github.com/integritee-network/pallet-teerex.git?branch=skip-ias-add_mrenclave#8be733d5737e3772a01b199d6e0bcde45b31a04c"
+source = "git+https://github.com/integritee-network/pallet-teerex.git?branch=master#32eec55c0b4691390745bbc27ddc6bd588d04c05"
 dependencies = [
  "frame-benchmarking",
  "frame-support",

@@ -14,7 +14,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies.pallet-teerex]
 default-features = false
 git = " https://github.com/integritee-network/pallet-teerex.git"
-branch = "cl-bump-substrate-4.0.0-dev"
+branch = "master"
 package = 'pallet-teerex'
 
 [dependencies]

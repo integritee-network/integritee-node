@@ -12,7 +12,7 @@ env:
 jobs:
 
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     steps:
       - name: Install latest nightly
         uses: actions-rs/toolchain@v1
@@ -25,5 +25,34 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: 'true'
-      - name: Build
+      - name: cargo build
         run: cargo build --release
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: integritee-node
+          path: target/release/integritee-node
+
+  build-skip-ais-check:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Install latest nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly-2021-03-25
+          override: true
+          target: wasm32-unknown-unknown
+      - name: Install llvm-10
+        run: sudo apt-get install llvm-10 clang-10
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+      - name: cargo build
+        run: cargo build --release --features skip-ias-check
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: integritee-node-skip-ias-check
+          path: target/release/integritee-node

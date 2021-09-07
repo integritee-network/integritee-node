@@ -296,7 +296,7 @@ impl pallet_sudo::Config for Runtime {
 
 parameter_types! {
 	pub const MomentsPerDay: Moment = 86_400_000; // [ms/d]
-	pub const SilenceDuration: Moment =172_800_000; // 48h
+	pub const MaxSilenceTime: Moment =172_800_000; // 48h
 }
 
 /// added by SCS
@@ -304,7 +304,7 @@ impl pallet_teerex::Config for Runtime {
 	type Event = Event;
 	type Currency = pallet_balances::Pallet<Runtime>;
 	type MomentsPerDay = MomentsPerDay;
-	type SilenceDuration = SilenceDuration;
+	type MaxSilenceTime = MaxSilenceTime;
 	// currently we have only benchmarks there for the integritee-parachain
 	type WeightInfo = pallet_teerex::weights::IntegriteeWeight<Runtime>;
 }

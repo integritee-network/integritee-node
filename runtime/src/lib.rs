@@ -41,7 +41,7 @@ pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
 use frame_system::EnsureRoot;
 
-/// added by SCS
+/// added by Integritee
 pub use pallet_teerex;
 use frame_support::traits::{OnUnbalanced, Imbalance};
 
@@ -148,7 +148,7 @@ pub const TEER: Balance = 1_000_000_000_000;
 pub const MILLITEER: Balance = 1_000_000_000;
 pub const MICROTEER: Balance = 1_000_000;
 
-/// added by scs
+/// added by Integritee
 /// A timestamp: milliseconds since the unix epoch.
 pub type Moment = u64;
 
@@ -328,7 +328,7 @@ parameter_types! {
 	pub const MaxSilenceTime: Moment =172_800_000; // 48h
 }
 
-/// added by SCS
+/// added by Integritee
 impl pallet_teerex::Config for Runtime {
 	type Event = Event;
 	type Currency = pallet_balances::Pallet<Runtime>;
@@ -381,7 +381,7 @@ construct_runtime!(
 		Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
 		TransactionPayment: pallet_transaction_payment::{Pallet, Storage},
 		Sudo: pallet_sudo::{Pallet, Call, Config<T>, Storage, Event<T>},
-		// added by SCS
+		// added by Integritee
 		Teerex: pallet_teerex::{Pallet, Call, Storage, Event<T>},
 		Treasury: pallet_treasury::{Pallet, Call, Storage, Config, Event<T>},
 	}

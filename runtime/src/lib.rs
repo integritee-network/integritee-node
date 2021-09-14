@@ -362,7 +362,7 @@ impl pallet_treasury::Config for Runtime {
 	type Burn = (); //No burn
 	type BurnDestination = (); //No burn
 	type SpendFunds = (); //No spend, no bounty
-	type MaxApprovals = MaxApprovals;
+	type MaxApprovals = MaxApprovals; //0:cannot approve any proposal
 	type WeightInfo = pallet_treasury::weights::SubstrateWeight<Runtime>;
 }
 

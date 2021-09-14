@@ -143,9 +143,9 @@ fn testnet_genesis(
 			balances: endowed_accounts.iter().cloned().map(|k| {
 			 if k == TREASURY_ACCOUNT_ID.into()
 			 {
-				 return (k, TREASURY_INITIAL_FUNDING);
+				 (k, TREASURY_INITIAL_FUNDING)
 			 } else {
-				 return (k, 1 << 60);
+				 (k, 1 << 60)
 			 }
 			}).collect(),
 		},

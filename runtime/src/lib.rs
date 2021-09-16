@@ -363,7 +363,7 @@ impl pallet_treasury::Config for Runtime {
 	type BurnDestination = (); //No burn
 	type SpendFunds = (); //No spend, no bounty
 	type MaxApprovals = MaxApprovals; //0:cannot approve any proposal
-	type WeightInfo = pallet_treasury::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = ();
 }
 
 // Create the runtime by composing the FRAME pallets that were previously configured.

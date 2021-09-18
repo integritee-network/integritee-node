@@ -43,7 +43,7 @@ use frame_system::EnsureRoot;
 
 /// added by SCS
 pub use pallet_teerex;
-use frame_support::traits::OnUnbalanced;
+use frame_support::traits::{OnUnbalanced, Imbalance};
 
 
 /// An index to a block.
@@ -165,16 +165,16 @@ impl OnUnbalanced<pallet_balances::NegativeImbalance<Runtime>> for DealWithFees
 		mut fees_then_tips: impl Iterator<Item = pallet_balances::NegativeImbalance<Runtime>>,
 	) {
 		if let Some(fees) = fees_then_tips.next() {
-			// for fees, 80% to treasury, 20% to author
-			//let mut split = fees.ration(80, 20);
-			/*			if let Some(tips) = fees_then_tips.next() {
-                            // for tips, if any, 80% to treasury, 20% to author (though this can be anything)
-                            tips.ration_merge_into(80, 20, &mut split);
-                        }
-            */
-			//everything to the Treasury
-			Treasury::on_unbalanced(fees);
-//			Author::on_unbalanced(split.1);
+			// for fees, 1% to treasury, 99% burned
+			// TODO: apply burning function based on cumulative number of extrinsics (#32)
+			let mut split = fees.ration(1, 99);
+
+			// tips (voluntary extra fees) go to the treasury entirely. no burning
+			if let Some(tips) = fees_then_tips.next() {
+				tips.merge_into(&mut split.0);
+			}
+			Treasury::on_unbalanced(split.0);
+			// burn remainder by not assigning imbalance to someone
 		}
 	}
 }

@@ -31,7 +31,7 @@ pub use frame_support::{
 		constants::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_PER_SECOND},
 		IdentityFee, Weight,
 	},
-	StorageValue,
+	PalletId, StorageValue,
 };
 pub use pallet_balances::Call as BalancesCall;
 pub use pallet_timestamp::Call as TimestampCall;
@@ -39,9 +39,12 @@ use pallet_transaction_payment::CurrencyAdapter;
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
+use frame_system::EnsureRoot;
 
 /// added by SCS
 pub use pallet_teerex;
+use frame_support::traits::OnUnbalanced;
+
 
 /// An index to a block.
 pub type BlockNumber = u32;
@@ -153,6 +156,27 @@ pub type Moment = u64;
 #[cfg(feature = "std")]
 pub fn native_version() -> NativeVersion {
 	NativeVersion { runtime_version: VERSION, can_author_with: Default::default() }
+}
+
+pub struct DealWithFees;
+impl OnUnbalanced<pallet_balances::NegativeImbalance<Runtime>> for DealWithFees
+{
+	fn on_unbalanceds<B>(
+		mut fees_then_tips: impl Iterator<Item = pallet_balances::NegativeImbalance<Runtime>>,
+	) {
+		if let Some(fees) = fees_then_tips.next() {
+			// for fees, 80% to treasury, 20% to author
+			//let mut split = fees.ration(80, 20);
+			/*			if let Some(tips) = fees_then_tips.next() {
+                            // for tips, if any, 80% to treasury, 20% to author (though this can be anything)
+                            tips.ration_merge_into(80, 20, &mut split);
+                        }
+            */
+			//everything to the Treasury
+			Treasury::on_unbalanced(fees);
+//			Author::on_unbalanced(split.1);
+		}
+	}
 }
 
 const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(75);
@@ -288,7 +312,7 @@ impl pallet_balances::Config for Runtime {
 }
 
 impl pallet_transaction_payment::Config for Runtime {
-	type OnChargeTransaction = CurrencyAdapter<Balances, ()>;
+	type OnChargeTransaction = CurrencyAdapter<Balances, DealWithFees>;
 	type TransactionByteFee = TransactionByteFee;
 	type WeightToFee = IdentityFee<Balance>;
 	type FeeMultiplierUpdate = ();
@@ -314,6 +338,34 @@ impl pallet_teerex::Config for Runtime {
 	type WeightInfo = pallet_teerex::weights::IntegriteeWeight<Runtime>;
 }
 
+parameter_types! {
+	pub const ProposalBond: Permill = Permill::from_percent(5);
+	pub const ProposalBondMinimum: Balance = 100 * MILLITEER;
+	pub const SpendPeriod: BlockNumber = 24 * DAYS;
+	pub const Burn: Permill = Permill::from_percent(1);
+	pub const TreasuryPalletId: PalletId = PalletId(*b"py/trsry");
+	pub const MaxApprovals: u32 = 0; //100
+}
+
+type RootOrigin = EnsureRoot<AccountId>;
+
+impl pallet_treasury::Config for Runtime {
+	type PalletId = TreasuryPalletId;
+	type Currency = pallet_balances::Pallet<Runtime>;
+	type ApproveOrigin = RootOrigin;
+	type RejectOrigin = RootOrigin;
+	type Event = Event;
+	type OnSlash = (); //No proposal
+	type ProposalBond = (); //No proposal
+	type ProposalBondMinimum = (); //No proposal
+	type SpendPeriod = SpendPeriod; //Cannot be 0: Error: Thread 'tokio-runtime-worker' panicked at 'attempt to calculate the remainder with a divisor of zero
+	type Burn = (); //No burn
+	type BurnDestination = (); //No burn
+	type SpendFunds = (); //No spend, no bounty
+	type MaxApprovals = MaxApprovals; //0:cannot approve any proposal
+	type WeightInfo = ();
+}
+
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
 	pub enum Runtime where
@@ -331,6 +383,7 @@ construct_runtime!(
 		Sudo: pallet_sudo::{Pallet, Call, Config<T>, Storage, Event<T>},
 		// added by SCS
 		Teerex: pallet_teerex::{Pallet, Call, Storage, Event<T>},
+		Treasury: pallet_treasury::{Pallet, Call, Storage, Config, Event<T>},
 	}
 );
 
@@ -507,6 +560,7 @@ impl_runtime_apis! {
 			list_benchmark!(list, extra, frame_system, SystemBench::<Runtime>);
 			list_benchmark!(list, extra, pallet_balances, Balances);
 			list_benchmark!(list, extra, pallet_timestamp, Timestamp);
+			list_benchmark!(list, extra, pallet_treasury, Treasury);
 
 			let storage_info = AllPalletsWithSystem::storage_info();
 
@@ -532,6 +586,8 @@ impl_runtime_apis! {
 				hex_literal::hex!("26aa394eea5630e07c48ae0c9558cef70a98fdbe9ce6c55837576c60c7af3850").to_vec().into(),
 				// System Events
 				hex_literal::hex!("26aa394eea5630e07c48ae0c9558cef780d41e5e16056765bc8461851072c9d7").to_vec().into(),
+				// Treasury Account
+				hex_literal::hex!("26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da95ecffd7b6c0f78751baa9d281e0bfa3a6d6f646c70792f74727372790000000000000000000000000000000000000000").to_vec().into(),
 			];
 
 			let mut batches = Vec::<BenchmarkBatch>::new();
@@ -540,6 +596,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, frame_system, SystemBench::<Runtime>);
 			add_benchmark!(params, batches, pallet_balances, Balances);
 			add_benchmark!(params, batches, pallet_timestamp, Timestamp);
+			add_benchmark!(params, batches, pallet_treasury, Treasury);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)

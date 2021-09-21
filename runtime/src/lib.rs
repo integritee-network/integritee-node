@@ -354,7 +354,7 @@ impl pallet_teerex::Config for Runtime {
 parameter_types! {
 	pub const ProposalBond: Permill = Permill::from_percent(5);
 	pub const ProposalBondMinimum: Balance = 100 * MILLITEER;
-	pub const SpendPeriod: BlockNumber = 1 * MINUTES; //6* DAYS
+	pub const SpendPeriod: BlockNumber = 6 * DAYS;
 	pub const Burn: Permill = Permill::from_percent(1);
 	pub const TreasuryPalletId: PalletId = PalletId(*b"py/trsry");
 	pub const MaxApprovals: u32 = 10;

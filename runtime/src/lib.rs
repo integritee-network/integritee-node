@@ -354,10 +354,10 @@ impl pallet_teerex::Config for Runtime {
 parameter_types! {
 	pub const ProposalBond: Permill = Permill::from_percent(5);
 	pub const ProposalBondMinimum: Balance = 100 * MILLITEER;
-	pub const SpendPeriod: BlockNumber = 24 * DAYS;
+	pub const SpendPeriod: BlockNumber = 1 * MINUTES; //6* DAYS
 	pub const Burn: Permill = Permill::from_percent(1);
 	pub const TreasuryPalletId: PalletId = PalletId(*b"py/trsry");
-	pub const MaxApprovals: u32 = 0; //100
+	pub const MaxApprovals: u32 = 10;
 }
 
 type RootOrigin = EnsureRoot<AccountId>;
@@ -369,8 +369,8 @@ impl pallet_treasury::Config for Runtime {
 	type RejectOrigin = RootOrigin;
 	type Event = Event;
 	type OnSlash = (); //No proposal
-	type ProposalBond = (); //No proposal
-	type ProposalBondMinimum = (); //No proposal
+	type ProposalBond = ProposalBond; //No proposal
+	type ProposalBondMinimum = ProposalBondMinimum; //No proposal
 	type SpendPeriod = SpendPeriod; //Cannot be 0: Error: Thread 'tokio-runtime-worker' panicked at 'attempt to calculate the remainder with a divisor of zero
 	type Burn = (); //No burn
 	type BurnDestination = (); //No burn

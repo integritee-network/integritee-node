@@ -79,9 +79,9 @@ jobs:
 
       - name: Release
         if: ${{ matrix.binary == 'release' }}
-        run: cargo build --release
-          # cargo clean -p integritee-node
-          
+        run: |
+          cargo clean -p integritee-node
+          cargo build --release
         
       # Upload artifacts
       - name: Upload integritee-node

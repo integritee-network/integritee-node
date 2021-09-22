@@ -79,9 +79,9 @@ jobs:
 
       - name: Release
         if: ${{ matrix.binary == 'release' }}
-        run: |
-          cargo clean -p integritee-collator
-          cargo build --release
+        run: cargo build --release
+          # cargo clean -p integritee-node
+          
         
       # Upload artifacts
       - name: Upload integritee-node
@@ -244,15 +244,15 @@ jobs:
 
       # - uses: actions/download-artifact@v2
       #   with:
-      #     name: integritee-collator-${{ github.sha }}
+      #     name: integritee-node-${{ github.sha }}
           
       # - name: 'Create binaries for artifacts'
       #   # Note: there is no way to pass the parachain-id to the `build-spec` cmd, which which imposes to set
       #   # `DEFAULT_PARA_ID=2015` in the `polkadot-parachains/command`.
       #   run: |
-      #     chmod +x ./integritee-collator
-      #     ./integritee-collator export-genesis-state --chain ${{ env.CHAIN_SPEC }} --parachain-id 2015 >  ${{ env.CHAIN_SPEC }}.state
-      #     ./integritee-collator build-spec --chain ${{ env.CHAIN_SPEC }} --disable-default-bootnode --raw > ${{ env.CHAIN_SPEC }}.json
+      #     chmod +x ./integritee-node
+      #     ./integritee-node export-genesis-state --chain ${{ env.CHAIN_SPEC }} --parachain-id 2015 >  ${{ env.CHAIN_SPEC }}.state
+      #     ./integritee-node build-spec --chain ${{ env.CHAIN_SPEC }} --disable-default-bootnode --raw > ${{ env.CHAIN_SPEC }}.json
 
 
       # - name: Compute file metadata
@@ -293,7 +293,7 @@ jobs:
       - name: Download Integritee Collator
         uses: actions/download-artifact@v2
         with:
-          name: integritee-collator-${{ github.sha }}
+          name: integritee-node-${{ github.sha }}
 
       - name: Create required package.json
         run: test -f package.json || echo '{}' >package.json

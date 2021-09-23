@@ -19,6 +19,7 @@ on:
 env:
   VERBOSE: ${{ github.events.input.verbose }}
   SUBWASM_VERSION: 0.12.0
+  CARGO_TERM_COLOR: always
 
 
 jobs:
@@ -356,8 +357,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.asset_upload_url }}
-          asset_path: "${{ matrix.runtime }}-runtime-${{ github.sha }}/${{ matrix.runtime }}_runtime.compact.wasm"
-          asset_name: ${{ matrix.runtime }}_runtime-v${{ steps.get-runtime-ver.outputs.runtime_ver }}.compact.wasm
+          asset_path: "${{ matrix.runtime }}-runtime-${{ github.sha }}/integritee_node_runtime.compact.wasm"
+          asset_name: integritee_node_runtime-v${{ steps.get-runtime-ver.outputs.runtime_ver }}.compact.wasm
           asset_content_type: application/wasm
 
       - name: Upload compressed ${{ matrix.runtime }} wasm
@@ -366,8 +367,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.asset_upload_url }}
-          asset_path: "${{ matrix.runtime }}-runtime-${{ github.sha }}/${{ matrix.runtime }}_runtime.compact.compressed.wasm"
-          asset_name: ${{ matrix.runtime }}_runtime-v${{ steps.get-runtime-ver.outputs.runtime_ver }}.compact.compressed.wasm
+          asset_path: "${{ matrix.runtime }}-runtime-${{ github.sha }}/integritee_node_runtime.compact.compressed.wasm"
+          asset_name: integritee_node_runtime-v${{ steps.get-runtime-ver.outputs.runtime_ver }}.compact.compressed.wasm
           asset_content_type: application/wasm
 
       - name: Slack Notification

@@ -7,8 +7,11 @@ on:
 
 jobs:
   main:
-    name: Push to Dockerhub
+    name: Push Integritee Node to Dockerhub
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        binary: ["integritee-node", "integritee-node-dev"]
     steps:
       - uses: actions/checkout@v2
 
@@ -16,7 +19,7 @@ jobs:
         uses: dsaltares/fetch-gh-release-asset@master
         with:
           version: "tags/${{ github.event.release.tag_name }}"
-          file: "integritee-node"
+          file: "${{ matrix.binary }}"
           target: "integritee-node"
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -44,8 +47,8 @@ jobs:
           push: true
           context: .
           tags: |
-            integritee/integritee-node:latest
-            integritee/integritee-node:${{ github.event.release.tag_name }}
+            integritee/${{ matrix.binary }}:latest
+            integritee/${{ matrix.binary }}:${{ github.event.release.tag_name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 

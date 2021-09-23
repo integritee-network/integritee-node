@@ -8,6 +8,9 @@ jobs:
   purge-image:
     name: Delete image from ghcr.io
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        binary: ["integritee-node", "integritee-node-dev"]
     steps:
       - uses: actions/checkout@v2
 
@@ -36,7 +39,7 @@ jobs:
       - name: Delete docker tag
         run: |
           ORGANIZATION="integritee"
-          IMAGE="integritee-node"
+          IMAGE="${{ matrix.binary }}"
           TAG="${{ steps.vars.outputs.tag }}"
 
           login_data() {

@@ -45,7 +45,7 @@ jobs:
           context: .
           tags: |
             integritee/integritee-node:latest
-            integritee/integritee-:${{ github.event.release.tag_name }}
+            integritee/integritee-node:${{ github.event.release.tag_name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 

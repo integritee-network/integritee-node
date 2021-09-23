@@ -349,12 +349,17 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: integritee-node-dev-${{ github.sha }}
+          path: integritee-node-dev
 
       - name: Download Integritee Collator
         uses: actions/download-artifact@v2
         with:
           name: integritee-node-${{ github.sha }}
+          path: integritee-node
 
+      - name: Display structure of downloaded files
+        run: ls -R
+        
       - name: Create required package.json
         run: test -f package.json || echo '{}' >package.json
 

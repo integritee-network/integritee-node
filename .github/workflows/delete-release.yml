@@ -35,7 +35,6 @@ jobs:
 
       # Unfortunately accessing the repo with personal access token is not possible
       # Workaround: disable 2FA and user password instead of TOKEN
-      # Update: if 2FA is disabled TOKEN works as well.
       - name: Delete docker tag
         run: |
           ORGANIZATION="integritee"

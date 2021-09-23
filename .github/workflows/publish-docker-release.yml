@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Download integritee-node from release
+      - name: Download ${{ matrix.binary }} from release
         uses: dsaltares/fetch-gh-release-asset@master
         with:
           version: "tags/${{ github.event.release.tag_name }}"

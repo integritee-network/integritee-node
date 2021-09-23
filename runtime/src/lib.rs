@@ -40,7 +40,6 @@ use sp_std::prelude::*;
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 // A few exports that help ease life for downstream crates.
-use frame_support::traits::{Imbalance, InstanceFilter, OnUnbalanced};
 pub use frame_support::{
 	construct_runtime, parameter_types,
 	traits::{KeyOwnerProofSystem, Randomness, StorageInfo},
@@ -59,6 +58,10 @@ use pallet_transaction_payment::CurrencyAdapter;
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
+use frame_system::EnsureRoot;
+/// added by Integritee
+pub use pallet_teerex;
+use frame_support::traits::{OnUnbalanced, Imbalance, InstanceFilter, Contains};
 
 mod weights;
 
@@ -214,11 +217,25 @@ parameter_types! {
 	pub const SS58Prefix: u8 = 13;
 }
 
+//Don't allow any token actions
+pub struct BaseFilter;
+impl Contains<Call> for BaseFilter {
+	fn contains(call: &Call) -> bool
+	{
+		!matches!(
+			call,
+			Call::Balances(..) |
+			Call::Treasury(..)
+			//Call::Vesting(_)
+		)
+	}
+}
+
 // Configure FRAME pallets to include in runtime.
 
 impl frame_system::Config for Runtime {
 	/// The basic call filter to use in dispatchable.
-	type BaseCallFilter = frame_support::traits::Everything;
+	type BaseCallFilter = BaseFilter;
 	/// Block & extrinsics weights: base values and limits.
 	type BlockWeights = BlockWeights;
 	/// The maximum length of a block (in bytes).

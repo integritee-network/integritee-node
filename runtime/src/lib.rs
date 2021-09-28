@@ -161,6 +161,11 @@ pub const TEER: Balance = 1_000_000_000_000;
 pub const MILLITEER: Balance = 1_000_000_000;
 pub const MICROTEER: Balance = 1_000_000;
 
+//Logic from polkaodt/kusuma
+pub const fn deposit(items: u32, bytes: u32) -> Balance {
+	items as Balance * 20 * TEER + (bytes as Balance) * 1_000 * MICROTEER
+}
+
 /// added by Integritee
 /// A timestamp: milliseconds since the unix epoch.
 pub type Moment = u64;
@@ -379,6 +384,24 @@ impl pallet_treasury::Config for Runtime {
 	type WeightInfo = ();
 }
 
+parameter_types! {
+	// One storage item; key size is 32; value is size 4+4+16+32 bytes = 56 bytes.
+	pub const DepositBase: Balance = deposit(1, 88);
+	// Additional storage item size of 32 bytes.
+	pub const DepositFactor: Balance = deposit(0, 32);
+	pub const MaxSignatories: u16 = 10; //100
+}
+
+impl pallet_multisig::Config for Runtime {
+	type Event = Event;
+	type Call = Call;
+	type Currency = Balances;
+	type DepositBase = DepositBase;
+	type DepositFactor = DepositFactor;
+	type MaxSignatories = MaxSignatories;
+	type WeightInfo = ();
+}
+
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
 	pub enum Runtime where
@@ -397,6 +420,7 @@ construct_runtime!(
 		// added by Integritee
 		Teerex: pallet_teerex::{Pallet, Call, Storage, Event<T>},
 		Treasury: pallet_treasury::{Pallet, Call, Storage, Config, Event<T>},
+		Multisig: pallet_multisig::{Pallet, Call, Storage, Event<T>},
 	}
 );
 
@@ -574,7 +598,7 @@ impl_runtime_apis! {
 			list_benchmark!(list, extra, pallet_balances, Balances);
 			list_benchmark!(list, extra, pallet_timestamp, Timestamp);
 			list_benchmark!(list, extra, pallet_treasury, Treasury);
-
+			list_benchmark!(list, extra, pallet_multisig, Multisig);
 			let storage_info = AllPalletsWithSystem::storage_info();
 
 			return (list, storage_info)
@@ -610,6 +634,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_balances, Balances);
 			add_benchmark!(params, batches, pallet_timestamp, Timestamp);
 			add_benchmark!(params, batches, pallet_treasury, Treasury);
+			add_benchmark!(params, batches, pallet_multisig, Multisig);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)

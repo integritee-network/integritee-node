@@ -225,8 +225,8 @@ impl Contains<Call> for BaseFilter {
 		!matches!(
 			call,
 			Call::Balances(..) |
-			Call::Treasury(..)
-			//Call::Vesting(_)
+			Call::Treasury(..) |
+			Call::Vesting(_)
 		)
 	}
 }
@@ -235,6 +235,9 @@ impl Contains<Call> for BaseFilter {
 
 impl frame_system::Config for Runtime {
 	/// The basic call filter to use in dispatchable.
+	#[cfg(not(feature = "mainnet-launch"))]
+	type BaseCallFilter = frame_support::traits::Everything;
+	#[cfg(feature = "mainnet-launch")]
 	type BaseCallFilter = BaseFilter;
 	/// Block & extrinsics weights: base values and limits.
 	type BlockWeights = BlockWeights;

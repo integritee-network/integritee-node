@@ -192,7 +192,6 @@ impl IntegriteeKeys {
 			.into()
 	}
 	fn authorities() -> Vec<(AuraId, GrandpaId)> {
-		// Todo: Alain check grandpa keys
 		vec![
 			(
 				public_from_ss58::<sr25519::Public>(
@@ -200,7 +199,7 @@ impl IntegriteeKeys {
 				)
 				.into(),
 				public_from_ss58::<ed25519::Public>(
-					"2PPzpwiTGvcgc4stV326en2mWqY1qFzhQ95SCqYZ4Q5dqwhJ",
+					"2N8Q3CSCrXjEEBRiSaiXSLTDcbHCSeoKdXePZiSr8ySnoP4f",
 				)
 				.into(),
 			),
@@ -210,7 +209,7 @@ impl IntegriteeKeys {
 				)
 				.into(),
 				public_from_ss58::<ed25519::Public>(
-					"2Px7JZCbMTBhBdWHT7cbC2SGqsVF2cFygdvdaYmuNgV53Bgh",
+					"2MrnyHrQgJb1omjrCu8ZJ4LYBaczcXnREREYX72gmkZZHYFG",
 				)
 				.into(),
 			),
@@ -220,7 +219,7 @@ impl IntegriteeKeys {
 				)
 				.into(),
 				public_from_ss58::<ed25519::Public>(
-					"2PGjX1Nyq2SC7uuWTHWiEMQuJBMRupaefgaG5t6t588nFMZU",
+					"2PLiyfMnuEc7mcgSqfqA7ZHstYeQh3kVZ8eJrsUcYsqTKU3W",
 				)
 				.into(),
 			),
@@ -230,7 +229,7 @@ impl IntegriteeKeys {
 				)
 				.into(),
 				public_from_ss58::<ed25519::Public>(
-					"2Jhqi21p3UdGu1SBJzeUyQM9FudC5iC7e4KryAuJ4NZMhYPe",
+					"2LCKNXvVSWpL6rBusK2RUkYaFV1wv9MnWG2UpGQecsrKpp4R",
 				)
 				.into(),
 			),
@@ -240,7 +239,7 @@ impl IntegriteeKeys {
 				)
 				.into(),
 				public_from_ss58::<ed25519::Public>(
-					"2JwCMVvx8DgzpRD7sF1PKpzCDbmGiB2oa67ka2SuUe2TSJgB",
+					"2P4Bbk7edF41ny7FSMrQ6u2UsjoTaDhD1DARzwdkeDwBiZfn",
 				)
 				.into(),
 			),
@@ -256,7 +255,6 @@ impl CrannyKeys {
 			.into()
 	}
 	fn authorities() -> Vec<(AuraId, GrandpaId)> {
-		// Todo: Alain check grandpa keys
 		vec![
 			(
 				public_from_ss58::<sr25519::Public>(
@@ -264,7 +262,7 @@ impl CrannyKeys {
 				)
 				.into(),
 				public_from_ss58::<ed25519::Public>(
-					"5DDBqKzDw4GnEVmqRXvo8iiWzFxT76E3KUDTk79NnM9F6B8V",
+					"5CyuN5TUy6hd1WN2o3uZLpRoBjsAqzXLxUFD2GNT1Sjv3sS5",
 				)
 				.into(),
 			),
@@ -274,7 +272,7 @@ impl CrannyKeys {
 				)
 				.into(),
 				public_from_ss58::<ed25519::Public>(
-					"5GhK3Hm39J7yL6ZYoeUxynhfTkPxCd3EqnAPfgHcDo37wqmz",
+					"5FBqLTmuJWUFkceoeyWRqrSkYpuqJi9hXNAFFfLL3oTJzSCp",
 				)
 				.into(),
 			),
@@ -284,7 +282,7 @@ impl CrannyKeys {
 				)
 				.into(),
 				public_from_ss58::<ed25519::Public>(
-					"5DHwmxfN57NvGpLYFFfxrshnGxccE12VbUGsFCzGSYZQKMfD",
+					"5DpXQisSziSLWvRKBPH4F8Twdg89gnKbYpMQDtGmgTJrEzyr",
 				)
 				.into(),
 			),

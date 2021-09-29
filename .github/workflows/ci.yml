@@ -104,7 +104,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-18.04]
         rust: [stable]
         binary: [release]
     env:
@@ -142,7 +142,7 @@ jobs:
       - name: Upload integritee-node-dev
         uses: actions/upload-artifact@v2
         with:
-          name: integritee-node-dev-${{ github.sha }}
+          name: integritee-node-dev-${{ matrix.os }}-${{ github.sha }}
           path: target/release/integritee-node
           
       - name: Slack Notification

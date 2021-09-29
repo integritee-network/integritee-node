@@ -25,7 +25,6 @@ pub fn get_from_seed<TPublic: Public>(seed: &str) -> <TPublic::Pair as Pair>::Pu
 
 pub fn public_from_ss58<TPublic: Public + FromStr>(ss58: &str) -> TPublic
 where
-	// what's up with this weird trait bound??
 	<TPublic as FromStr>::Err: std::fmt::Debug,
 {
 	TPublic::from_ss58check(ss58).expect("supply valid ss58!")
@@ -59,7 +58,7 @@ pub fn development_config() -> Result<ChainSpec, String> {
 		"dev",
 		ChainType::Development,
 		move || {
-			testnet_genesis(
+			genesis_config(
 				wasm_binary,
 				// Initial PoA authorities
 				vec![authority_keys_from_seed("Alice")],
@@ -98,7 +97,7 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 		"local_testnet",
 		ChainType::Local,
 		move || {
-			testnet_genesis(
+			genesis_config(
 				wasm_binary,
 				// Initial PoA authorities
 				vec![authority_keys_from_seed("Alice"), authority_keys_from_seed("Bob")],
@@ -155,7 +154,6 @@ fn chain_spec<F: Fn() -> GenesisConfig + 'static + Send + Sync>(
 		Some("teer"),
 		// properties
 		Some(
-			// make configarble
 			serde_json::from_str(token_specs).unwrap(),
 		),
 		None,
@@ -323,14 +321,13 @@ pub fn integritee_chain_spec(
 			(CrannyKeys::root(), vec![CrannyKeys::root()], CrannyKeys::authorities()),
 	};
 
-	// Todo: Chris check wasm binary
 	let wasm_binary = WASM_BINARY.ok_or_else(|| "Development wasm not available".to_string())?;
 
 	Ok(chain_spec(
 		&chain_name,
 		&chain_id,
 		move || {
-			testnet_genesis(wasm_binary, authorities.clone(), root.clone(), endowed.clone(), false)
+			genesis_config(wasm_binary, authorities.clone(), root.clone(), endowed.clone(), false)
 		},
 		token_specs,
 	))
@@ -338,8 +335,7 @@ pub fn integritee_chain_spec(
 
 /// Configure initial storage state for FRAME modules.
 ///
-/// Todo: rename to genesis_config
-fn testnet_genesis(
+fn genesis_config(
 	wasm_binary: &[u8],
 	initial_authorities: Vec<(AuraId, GrandpaId)>,
 	root_key: AccountId,

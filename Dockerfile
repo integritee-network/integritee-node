@@ -18,8 +18,8 @@ RUN ldd /usr/local/bin/integritee-node && \
 	/usr/local/bin/integritee-node --version
 
 # Shrinking
-RUN rm -rf /usr/lib/python* && \
-	rm -rf /usr/bin /usr/sbin /usr/share/man
+#RUN rm -rf /usr/lib/python* && \
+#	rm -rf /usr/bin /usr/sbin /usr/share/man
 
 USER integritee
 EXPOSE 30333 9933 9944 9615

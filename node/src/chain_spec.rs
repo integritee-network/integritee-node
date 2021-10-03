@@ -1,6 +1,6 @@
 use integritee_node_runtime::{AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig,
 							  Multisig, Signature, SudoConfig, SystemConfig, TreasuryPalletId,
-							  WASM_BINARY, Proxy, ProxyType, BlockNumber};
+							  WASM_BINARY, ProxyType, BlockNumber};
 use sc_service::ChainType;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_core::{crypto::Ss58Codec, ed25519, sr25519, Pair, Public, blake2_256};

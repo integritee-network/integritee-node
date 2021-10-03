@@ -444,7 +444,7 @@ impl InstanceFilter<Call> for ProxyType {
 				// Specifically omitting Indices `transfer`, `force_transfer`
 				// Specifically omitting the entire Balances pallet
 				Call::Grandpa(..) |
-				Call::Treasury(..) |
+				Call::Treasury(..)
 //				Call::Vesting(pallet_vesting::Call::vest(..)) |
 //				Call::Vesting(pallet_vesting::Call::vest_other(..)) |
 				// Specifically omitting Vesting `vested_transfer`, and `force_vested_transfer`

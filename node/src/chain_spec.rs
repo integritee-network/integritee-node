@@ -1,13 +1,13 @@
-use integritee_node_runtime::{
-	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig, Multisig, Signature, SudoConfig,
-	SystemConfig, TreasuryPalletId, WASM_BINARY 
-};
+use integritee_node_runtime::{AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig,
+							  Multisig, Signature, SudoConfig, SystemConfig, TreasuryPalletId,
+							  WASM_BINARY, Proxy, ProxyType, BlockNumber};
 use sc_service::ChainType;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
-use sp_core::{crypto::Ss58Codec, ed25519, sr25519, Pair, Public};
+use sp_core::{crypto::Ss58Codec, ed25519, sr25519, Pair, Public, blake2_256};
 use sp_finality_grandpa::AuthorityId as GrandpaId;
 use sp_runtime::traits::{AccountIdConversion, IdentifyAccount, Verify};
 use std::str::FromStr;
+use sp_core::{Encode, Decode};
 
 // The URL for the telemetry server.
 // const STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
@@ -49,13 +49,37 @@ pub fn treasury_account_id() -> AccountId {
 	TreasuryPalletId::get().into_account()
 }
 
+pub fn multisig_alice_bob_dave() -> AccountId {
+	Multisig::multi_account_id(&[
+		get_account_id_from_seed::<sr25519::Public>("Dave"),
+		get_account_id_from_seed::<sr25519::Public>("Bob"),
+		get_account_id_from_seed::<sr25519::Public>("Alice"),
+	], 2)
+}
+
+/* does not work. can't run outside an externalities provided environment
+pub fn anon_proxy_from_multisig_alice_bob_dave(index: u16) -> AccountId {
+	Proxy::anonymous_account(&multisig_alice_bob_dave(), &ProxyType::Any, index, None)
+}
+*/
+
+// copy-paste from pallet-proxy
+pub fn anonymous_account(
+	who: &AccountId,
+	proxy_type: &ProxyType,
+	index: u16,
+) -> AccountId {
+	let entropy = blake2_256(&(b"modlpy/proxy____", who, BlockNumber::from(0u32), 0u32, proxy_type, index).encode());
+	AccountId::decode(&mut &entropy[..]).unwrap_or_default()
+}
+
 pub fn development_config() -> Result<ChainSpec, String> {
 	let wasm_binary = WASM_BINARY.ok_or_else(|| "Development wasm not available".to_string())?;
 	Ok(ChainSpec::from_genesis(
 		// Name
-		"Development",
+		"Integritee Development",
 		// ID
-		"dev",
+		"integritee-dev",
 		ChainType::Development,
 		move || {
 			genesis_config(
@@ -74,11 +98,9 @@ pub fn development_config() -> Result<ChainSpec, String> {
 					treasury_account_id(),
 					// The address of a multi-signature account is deterministically generated from the signers and threshold of the multisig wallet.
 					// Creating a multi-sig account from Polkadot-JS Apps UI, always sort the accounts according to the keys. Here we do the same
-					Multisig::multi_account_id(&[
-						get_account_id_from_seed::<sr25519::Public>("Dave"),
-						get_account_id_from_seed::<sr25519::Public>("Bob"),
-						get_account_id_from_seed::<sr25519::Public>("Alice"),
-					], 2),
+					multisig_alice_bob_dave(),
+					anonymous_account(&multisig_alice_bob_dave(),&ProxyType::Any, 0),
+					anonymous_account(&multisig_alice_bob_dave(), &ProxyType::Any, 1)
 				],
 				true,
 			)
@@ -88,9 +110,13 @@ pub fn development_config() -> Result<ChainSpec, String> {
 		// Telemetry
 		None,
 		// Protocol ID
-		None,
+		Some("teer"),
 		// Properties
-		None,
+		Some(serde_json::from_str(r#"{
+			"ss58Format": 13,
+			"tokenDecimals": 12,
+			"tokenSymbol": "UNIT"
+		}"#).unwrap()),
 		// Extensions
 		None,
 	))
@@ -391,6 +417,7 @@ fn genesis_config(
 			// Assign network admin rights.
 			key: root_key,
 		},
+		vesting: Default::default(),
 		treasury: Default::default(),
 	}
 }

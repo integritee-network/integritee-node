@@ -65,10 +65,10 @@ pub fn development_config() -> Result<ChainSpec, String> {
 				get_account_id_from_seed::<sr25519::Public>("Alice"),
 				// Pre-funded accounts
 				vec![
-					(get_account_id_from_seed::<sr25519::Public>("Alice"), 1_000_000_000_000),
-					(get_account_id_from_seed::<sr25519::Public>("Bob"), 1_000_000_000_000),
-					(get_account_id_from_seed::<sr25519::Public>("Charlie"), 1_000_000_000_000),
-					(TreasuryPalletId::get().into_account(), 1_000_000_000_000),
+					(get_account_id_from_seed::<sr25519::Public>("Alice"), 1_000 * TEER),
+					(get_account_id_from_seed::<sr25519::Public>("Bob"), 1_000 * TEER),
+					(get_account_id_from_seed::<sr25519::Public>("Charlie"), 1_000 * TEER),
+					(TreasuryPalletId::get().into_account(), 1_000 * TEER),
 					(
 						multisig_account(
 							vec![
@@ -78,7 +78,7 @@ pub fn development_config() -> Result<ChainSpec, String> {
 							],
 							2,
 						),
-						1_000_000_000_000,
+						1_000 * TEER,
 					),
 				],
 				true,
@@ -114,10 +114,10 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 				get_account_id_from_seed::<sr25519::Public>("Alice"),
 				// Pre-funded accounts
 				vec![
-					(get_account_id_from_seed::<sr25519::Public>("Alice"), 1_000_000_000_000),
-					(get_account_id_from_seed::<sr25519::Public>("Bob"), 1_000_000_000_000),
-					(get_account_id_from_seed::<sr25519::Public>("Charlie"), 1_000_000_000_000),
-					(TreasuryPalletId::get().into_account(), 1_000_000_000_000),
+					(get_account_id_from_seed::<sr25519::Public>("Alice"), 1_000 * TEER),
+					(get_account_id_from_seed::<sr25519::Public>("Bob"), 1_000 * TEER),
+					(get_account_id_from_seed::<sr25519::Public>("Charlie"), 1_000 * TEER),
+					(TreasuryPalletId::get().into_account(), 1_000 * TEER),
 					// The address of a multi-signature account is deterministically generated from the signers and threshold of the multisig wallet.
 					// Creating a multi-sig account from Polkadot-JS Apps UI, always sort the accounts according to the keys. Here we do the same
 					(
@@ -129,7 +129,7 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 							],
 							2,
 						),
-						1_000_000_000_000,
+						1_000 * TEER,
 					),
 				],
 				true,
@@ -166,12 +166,12 @@ pub fn integritee_solo_fresh_config() -> Result<ChainSpec, String> {
 	];
 	let multisig_controller_threshold: u16 = 3;
 
-	let mut allocations = vec![(sudo_account.clone(), 5 * TEER)];
+	let mut allocations = vec![(sudo_account.clone(), 100 * TEER)];
 	allocations
-		.append(&mut multisig_controller_accounts.iter().map(|a| (a.clone(), 1 * TEER)).collect());
+		.append(&mut multisig_controller_accounts.iter().map(|a| (a.clone(), 100 * TEER)).collect());
 	allocations.append(&mut vec![(
 		multisig_account(multisig_controller_accounts, multisig_controller_threshold),
-		1 * TEER,
+		500 * TEER,
 	)]);
 
 	Ok(ChainSpec::from_genesis(

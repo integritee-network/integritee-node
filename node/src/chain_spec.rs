@@ -167,8 +167,9 @@ pub fn integritee_solo_fresh_config() -> Result<ChainSpec, String> {
 	let multisig_controller_threshold: u16 = 3;
 
 	let mut allocations = vec![(sudo_account.clone(), 100 * TEER)];
-	allocations
-		.append(&mut multisig_controller_accounts.iter().map(|a| (a.clone(), 100 * TEER)).collect());
+	allocations.append(
+		&mut multisig_controller_accounts.iter().map(|a| (a.clone(), 100 * TEER)).collect(),
+	);
 	allocations.append(&mut vec![(
 		multisig_account(multisig_controller_accounts, multisig_controller_threshold),
 		500 * TEER,

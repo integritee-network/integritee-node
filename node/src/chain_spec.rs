@@ -1,6 +1,6 @@
 use integritee_node_runtime::{
 	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig, Multisig, Signature, SudoConfig,
-	SystemConfig, TreasuryPalletId, WASM_BINARY 
+	SystemConfig, TreasuryPalletId, WASM_BINARY
 };
 use sc_service::ChainType;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
@@ -392,5 +392,6 @@ fn genesis_config(
 			key: root_key,
 		},
 		treasury: Default::default(),
+		vesting: Default::default(),
 	}
 }

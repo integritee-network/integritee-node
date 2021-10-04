@@ -27,7 +27,7 @@ use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_core::{crypto::KeyTypeId, OpaqueMetadata};
 use sp_runtime::{
 	create_runtime_str, generic, impl_opaque_keys,
-	traits::{AccountIdLookup, BlakeTwo256, Block as BlockT, IdentifyAccount, NumberFor, Verify},
+	traits::{AccountIdLookup, BlakeTwo256, Block as BlockT, IdentifyAccount, NumberFor, Verify, ConvertInto},
 	transaction_validity::{TransactionSource, TransactionValidity},
 	ApplyExtrinsicResult, MultiSignature,
 };
@@ -485,6 +485,18 @@ impl pallet_proxy::Config for Runtime {
 	type AnnouncementDepositFactor = AnnouncementDepositFactor;
 }
 
+parameter_types! {
+	pub const MinVestedTransfer: Balance = 1 * TEER;
+}
+
+impl pallet_vesting::Config for Runtime {
+	type Event = Event;
+	type Currency = Balances;
+	type BlockNumberToBalance = ConvertInto;
+	type MinVestedTransfer = MinVestedTransfer;
+	type WeightInfo = ();
+	const MAX_VESTING_SCHEDULES: u32 = 28;
+}
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
 	pub enum Runtime where
@@ -492,20 +504,28 @@ construct_runtime!(
 		NodeBlock = opaque::Block,
 		UncheckedExtrinsic = UncheckedExtrinsic
 	{
-		System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
-		RandomnessCollectiveFlip: pallet_randomness_collective_flip::{Pallet, Storage},
-		Timestamp: pallet_timestamp::{Pallet, Call, Storage, Inherent},
-		Aura: pallet_aura::{Pallet, Config<T>},
-		Grandpa: pallet_grandpa::{Pallet, Call, Storage, Config, Event},
-		Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
-		TransactionPayment: pallet_transaction_payment::{Pallet, Storage},
-		Sudo: pallet_sudo::{Pallet, Call, Config<T>, Storage, Event<T>},
-		// added by Integritee
-		Teerex: pallet_teerex::{Pallet, Call, Storage, Event<T>},
-		Treasury: pallet_treasury::{Pallet, Call, Storage, Config, Event<T>},
-		Multisig: pallet_multisig::{Pallet, Call, Storage, Event<T>},
-		Proxy: pallet_proxy::{Pallet, Call, Storage, Event<T>},
-	}
+		// Basic
+		System: frame_system::{Pallet, Call, Storage, Config, Event<T>} = 0,
+		RandomnessCollectiveFlip: pallet_randomness_collective_flip::{Pallet, Storage} = 2,
+		Timestamp: pallet_timestamp::{Pallet, Call, Storage, Inherent} = 3,
+		Sudo: pallet_sudo::{Pallet, Call, Storage, Config<T>, Event<T>} = 5,
+		Multisig: pallet_multisig::{Pallet, Call, Storage, Event<T>} = 6,
+		Proxy: pallet_proxy::{Pallet, Call, Storage, Event<T>} = 7,
+
+        // funds and fees
+		Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>} = 10,
+		TransactionPayment: pallet_transaction_payment::{Pallet, Storage} = 11,
+		Vesting: pallet_vesting::{Pallet, Call, Storage, Event<T>, Config<T>} = 12,
+
+        // consensus
+		Aura: pallet_aura::{Pallet, Config<T>} = 23,
+		Grandpa: pallet_grandpa::{Pallet, Call, Storage, Config, Event} = 24,
+
+        // governance
+		Treasury: pallet_treasury::{Pallet, Call, Storage, Config, Event<T>} = 30,
+
+        // utility
+		Teerex: pallet_teerex::{Pallet, Call, Storage, Event<T>} = 50,	}
 );
 
 /// The address format for describing accounts.

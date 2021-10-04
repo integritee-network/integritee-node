@@ -2284,6 +2284,7 @@ version = "0.9.1"
 dependencies = [
  "frame-benchmarking",
  "frame-benchmarking-cli",
+ "hex",
  "hex-literal",
  "integritee-node-runtime",
  "jsonrpc-core",

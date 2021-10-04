@@ -2280,7 +2280,7 @@ dependencies = [
 
 [[package]]
 name = "integritee-node"
-version = "0.9.1"
+version = "0.9.2"
 dependencies = [
  "frame-benchmarking",
  "frame-benchmarking-cli",
@@ -2321,7 +2321,7 @@ dependencies = [
 
 [[package]]
 name = "integritee-node-runtime"
-version = "0.9.1"
+version = "0.9.2"
 dependencies = [
  "frame-benchmarking",
  "frame-executive",

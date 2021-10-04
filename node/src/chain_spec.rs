@@ -41,10 +41,6 @@ where
 pub fn authority_keys_from_seed(s: &str) -> (AuraId, GrandpaId) {
 	(get_from_seed::<AuraId>(s), get_from_seed::<GrandpaId>(s))
 }
-///Get the account id for the treasury
-pub fn treasury_account_id() -> AccountId {
-	TreasuryPalletId::get().into_account()
-}
 
 pub fn multisig_account(mut accounts: Vec<AccountId>, threshold: u16) -> AccountId {
 	// sort accounts by public key, as js/apps would do
@@ -72,9 +68,7 @@ pub fn development_config() -> Result<ChainSpec, String> {
 					(get_account_id_from_seed::<sr25519::Public>("Alice"), 1_000_000_000_000),
 					(get_account_id_from_seed::<sr25519::Public>("Bob"), 1_000_000_000_000),
 					(get_account_id_from_seed::<sr25519::Public>("Charlie"), 1_000_000_000_000),
-					(treasury_account_id(), 1_000_000_000_000),
-					// The address of a multi-signature account is deterministically generated from the signers and threshold of the multisig wallet.
-					// Creating a multi-sig account from Polkadot-JS Apps UI, always sort the accounts according to the keys. Here we do the same
+					(TreasuryPalletId::get().into_account(), 1_000_000_000_000),
 					(
 						multisig_account(
 							vec![

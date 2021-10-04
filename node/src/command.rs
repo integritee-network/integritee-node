@@ -26,7 +26,7 @@ use sc_service::PartialComponents;
 
 impl SubstrateCli for Cli {
 	fn impl_name() -> String {
-		"integritee Node".into()
+		"Integritee Node".into()
 	}
 
 	fn impl_version() -> String {
@@ -42,7 +42,7 @@ impl SubstrateCli for Cli {
 	}
 
 	fn support_url() -> String {
-		"support.anonymous.an".into()
+		"https://github.com/integritee-network/integritee-node/issues".into()
 	}
 
 	fn copyright_start_year() -> i32 {
@@ -52,8 +52,8 @@ impl SubstrateCli for Cli {
 	fn load_spec(&self, id: &str) -> Result<Box<dyn sc_service::ChainSpec>, String> {
 		Ok(match id {
 			"dev" => Box::new(chain_spec::development_config()?),
-			"integritee-mainnet-fresh" => Box::new(chain_spec::integritee_mainnet_fresh_config()?),
-			"integritee-mainnet" => Box::new(chain_spec::integritee_mainnet_config()?),
+			"integritee-solo-fresh" => Box::new(chain_spec::integritee_solo_fresh_config()?),
+			"integritee-solo" => Box::new(chain_spec::integritee_solo_config()?),
 			"cranny-fresh" => Box::new(chain_spec::cranny_fresh_config()?),
 			"cranny" => Box::new(chain_spec::cranny_config()?),
 			"" | "local" => Box::new(chain_spec::local_testnet_config()?),

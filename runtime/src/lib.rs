@@ -525,7 +525,7 @@ construct_runtime!(
 		Treasury: pallet_treasury::{Pallet, Call, Storage, Config, Event<T>} = 30,
 
         // utility
-		Teerex: pallet_teerex::{Pallet, Call, Storage, Event<T>} = 50,	}
+		Teerex: pallet_teerex::{Pallet, Call, Config, Storage, Event<T>} = 50,	}
 );
 
 /// The address format for describing accounts.

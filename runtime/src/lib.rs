@@ -1,14 +1,14 @@
 /*
-    Copyright 2021 Integritee AG and Supercomputing Systems AG
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-        http://www.apache.org/licenses/LICENSE-2.0
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+	Copyright 2021 Integritee AG and Supercomputing Systems AG
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+		http://www.apache.org/licenses/LICENSE-2.0
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
 */
 
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -19,6 +19,7 @@
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
+use codec::{Decode, Encode, MaxEncodedLen};
 use pallet_grandpa::{
 	fg_primitives, AuthorityId as GrandpaId, AuthorityList as GrandpaAuthorityList,
 };
@@ -27,7 +28,10 @@ use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_core::{crypto::KeyTypeId, OpaqueMetadata};
 use sp_runtime::{
 	create_runtime_str, generic, impl_opaque_keys,
-	traits::{AccountIdLookup, BlakeTwo256, Block as BlockT, IdentifyAccount, NumberFor, Verify, ConvertInto},
+	traits::{
+		AccountIdLookup, BlakeTwo256, Block as BlockT, ConvertInto, IdentifyAccount, NumberFor,
+		Verify,
+	},
 	transaction_validity::{TransactionSource, TransactionValidity},
 	ApplyExtrinsicResult, MultiSignature,
 };
@@ -35,8 +39,8 @@ use sp_std::prelude::*;
 #[cfg(feature = "std")]
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
-use codec::{Decode, Encode, MaxEncodedLen};
 // A few exports that help ease life for downstream crates.
+use frame_support::traits::{Imbalance, InstanceFilter, OnUnbalanced};
 pub use frame_support::{
 	construct_runtime, parameter_types,
 	traits::{KeyOwnerProofSystem, Randomness, StorageInfo},
@@ -44,19 +48,17 @@ pub use frame_support::{
 		constants::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_PER_SECOND},
 		IdentityFee, Weight,
 	},
-	PalletId, StorageValue, RuntimeDebug,
+	PalletId, RuntimeDebug, StorageValue,
 };
+use frame_system::EnsureRoot;
 pub use pallet_balances::Call as BalancesCall;
+/// added by Integritee
+pub use pallet_teerex;
 pub use pallet_timestamp::Call as TimestampCall;
 use pallet_transaction_payment::CurrencyAdapter;
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
-use frame_system::EnsureRoot;
-/// added by Integritee
-pub use pallet_teerex;
-use frame_support::traits::{OnUnbalanced, Imbalance, InstanceFilter};
-
 
 /// An index to a block.
 pub type BlockNumber = u32;
@@ -176,8 +178,7 @@ pub fn native_version() -> NativeVersion {
 }
 
 pub struct DealWithFees;
-impl OnUnbalanced<pallet_balances::NegativeImbalance<Runtime>> for DealWithFees
-{
+impl OnUnbalanced<pallet_balances::NegativeImbalance<Runtime>> for DealWithFees {
 	fn on_unbalanceds<B>(
 		mut fees_then_tips: impl Iterator<Item = pallet_balances::NegativeImbalance<Runtime>>,
 	) {
@@ -414,10 +415,10 @@ parameter_types! {
 
 /// The type used to represent the kinds of proxying allowed.
 #[derive(
-Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Encode, Decode, RuntimeDebug, MaxEncodedLen,
+	Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Encode, Decode, RuntimeDebug, MaxEncodedLen,
 )]
 pub enum ProxyType {
-	Any, //any transactions
+	Any,         //any transactions
 	NonTransfer, //any type of transaction except balance transfers (including vested transfers)
 	Governance,
 	//Staking = 3,
@@ -449,10 +450,7 @@ impl InstanceFilter<Call> for ProxyType {
 				Call::Multisig(..)
 			),
 			ProxyType::Governance => {
-				matches!(
-				c,
-					Call::Treasury(..)
-			)
+				matches!(c, Call::Treasury(..))
 			},
 			ProxyType::CancelProxy => {
 				matches!(c, Call::Proxy(pallet_proxy::Call::reject_announcement(..)))
@@ -512,19 +510,19 @@ construct_runtime!(
 		Multisig: pallet_multisig::{Pallet, Call, Storage, Event<T>} = 6,
 		Proxy: pallet_proxy::{Pallet, Call, Storage, Event<T>} = 7,
 
-        // funds and fees
+		// funds and fees
 		Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>} = 10,
 		TransactionPayment: pallet_transaction_payment::{Pallet, Storage} = 11,
 		Vesting: pallet_vesting::{Pallet, Call, Storage, Event<T>, Config<T>} = 12,
 
-        // consensus
+		// consensus
 		Aura: pallet_aura::{Pallet, Config<T>} = 23,
 		Grandpa: pallet_grandpa::{Pallet, Call, Storage, Config, Event} = 24,
 
-        // governance
+		// governance
 		Treasury: pallet_treasury::{Pallet, Call, Storage, Config, Event<T>} = 30,
 
-        // utility
+		// utility
 		Teerex: pallet_teerex::{Pallet, Call, Config, Storage, Event<T>} = 50,	}
 );
 

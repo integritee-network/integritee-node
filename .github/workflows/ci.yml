@@ -175,19 +175,19 @@ jobs:
 
       # With rustup's nice new toml format, we just need to run rustup show to install the toolchain
       # https://github.com/actions-rs/toolchain/issues/126#issuecomment-782989659
-      # - name: Setup Rust toolchain
-      #   run: rustup show
+      - name: Setup Rust toolchain
+        run: rustup show
 
-      # - name: Install llvm-10
-      #   run: sudo apt-get install llvm-10 clang-10
+      - name: Install llvm-10
+        run: sudo apt-get install llvm-10 clang-10
 
-      # - uses: Swatinem/rust-cache@v1
-      #   with:
-      #     key: ${{ matrix.rust-target }}-${{ matrix.check }}
+      - uses: Swatinem/rust-cache@v1
+        with:
+          key: ${{ matrix.rust-target }}-${{ matrix.check }}
 
-      # - name: Fmt
-      #   if: ${{ matrix.check == 'fmt' }}
-      #   run: cargo fmt --all -- --check
+      - name: Fmt
+        if: ${{ matrix.check == 'fmt' }}
+        run: cargo fmt --all -- --check
 
       # - name: Clippy
       #   if: ${{ matrix.check == 'clippy' }}

@@ -1,6 +1,6 @@
 use integritee_node_runtime::{
-	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig, Multisig, Signature, SudoConfig,
-	SystemConfig, TreasuryPalletId, WASM_BINARY, TeerexConfig
+	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig, Multisig, Signature,
+	SudoConfig, SystemConfig, TeerexConfig, TreasuryPalletId, WASM_BINARY,
 };
 use sc_service::ChainType;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
@@ -74,11 +74,14 @@ pub fn development_config() -> Result<ChainSpec, String> {
 					treasury_account_id(),
 					// The address of a multi-signature account is deterministically generated from the signers and threshold of the multisig wallet.
 					// Creating a multi-sig account from Polkadot-JS Apps UI, always sort the accounts according to the keys. Here we do the same
-					Multisig::multi_account_id(&[
-						get_account_id_from_seed::<sr25519::Public>("Dave"),
-						get_account_id_from_seed::<sr25519::Public>("Bob"),
-						get_account_id_from_seed::<sr25519::Public>("Alice"),
-					], 2),
+					Multisig::multi_account_id(
+						&[
+							get_account_id_from_seed::<sr25519::Public>("Dave"),
+							get_account_id_from_seed::<sr25519::Public>("Bob"),
+							get_account_id_from_seed::<sr25519::Public>("Alice"),
+						],
+						2,
+					),
 				],
 				true,
 			)
@@ -126,12 +129,15 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 					get_account_id_from_seed::<sr25519::Public>("Eve//stash"),
 					get_account_id_from_seed::<sr25519::Public>("Ferdie//stash"),
 					treasury_account_id(),
-					Multisig::multi_account_id(&[
-						get_account_id_from_seed::<sr25519::Public>("Alice"),
-						get_account_id_from_seed::<sr25519::Public>("Bob"),
-						get_account_id_from_seed::<sr25519::Public>("Charlie"),
-						get_account_id_from_seed::<sr25519::Public>("Dave"),
-					], 3),
+					Multisig::multi_account_id(
+						&[
+							get_account_id_from_seed::<sr25519::Public>("Alice"),
+							get_account_id_from_seed::<sr25519::Public>("Bob"),
+							get_account_id_from_seed::<sr25519::Public>("Charlie"),
+							get_account_id_from_seed::<sr25519::Public>("Dave"),
+						],
+						3,
+					),
 				],
 				true,
 			)
@@ -167,9 +173,7 @@ fn chain_spec<F: Fn() -> GenesisConfig + 'static + Send + Sync>(
 		// protocol id
 		Some("teer"),
 		// properties
-		Some(
-			serde_json::from_str(token_specs).unwrap(),
-		),
+		Some(serde_json::from_str(token_specs).unwrap()),
 		None,
 	)
 }
@@ -391,9 +395,7 @@ fn genesis_config(
 			// Assign network admin rights.
 			key: root_key,
 		},
-		teerex: TeerexConfig {
-			allow_sgx_debug_mode : true,
-		},
+		teerex: TeerexConfig { allow_sgx_debug_mode: true },
 		treasury: Default::default(),
 		vesting: Default::default(),
 	}

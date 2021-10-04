@@ -53,9 +53,9 @@ pub fn development_config() -> Result<ChainSpec, String> {
 	let wasm_binary = WASM_BINARY.ok_or_else(|| "Development wasm not available".to_string())?;
 	Ok(ChainSpec::from_genesis(
 		// Name
-		"Development",
+		"Integritee Development (Solo)",
 		// ID
-		"dev",
+		"integritee-solo-dev",
 		ChainType::Development,
 		move || {
 			genesis_config(
@@ -103,9 +103,9 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 	let wasm_binary = WASM_BINARY.ok_or_else(|| "Development wasm not available".to_string())?;
 	Ok(ChainSpec::from_genesis(
 		// Name
-		"Local Testnet",
+		"Integritee Local Testnet (Solo)",
 		// ID
-		"local_testnet",
+		"integritee-solo-local-testnet",
 		ChainType::Local,
 		move || {
 			genesis_config(
@@ -294,8 +294,8 @@ impl CrannyKeys {
 
 pub fn integritee_mainnet_fresh_config() -> Result<ChainSpec, String> {
 	integritee_chain_spec(
-		"Integritee Mainnet",
-		"integritee-mainnet",
+		"Integritee Network (Solo)",
+		"integritee-solo",
 		GenesisKeys::Integritee,
 		r#"{
 		"ss58Format": 13,
@@ -307,8 +307,8 @@ pub fn integritee_mainnet_fresh_config() -> Result<ChainSpec, String> {
 
 pub fn cranny_fresh_config() -> Result<ChainSpec, String> {
 	integritee_chain_spec(
-		"Cranny",
-		"cranny",
+		"Integritee Testnet Cranny",
+		"integritee-cranny",
 		GenesisKeys::Cranny,
 		r#"{
 		"ss58Format": 42,

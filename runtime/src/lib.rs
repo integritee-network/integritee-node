@@ -107,8 +107,10 @@ pub mod opaque {
 //   https://substrate.dev/docs/en/knowledgebase/runtime/upgrades#runtime-versioning
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("integritee-node-runtime"),
-	impl_name: create_runtime_str!("integritee-node-runtime"),
+	/// used by js/apps to determine spec / type defintions
+	/// name should at least distinguish between solo, parachain, shell
+	spec_name: create_runtime_str!("integritee-solo"),
+	impl_name: create_runtime_str!("integritee-solo"),
 
 	/// `authoring_version` is the version of the authorship interface. An authoring node
 	/// will not attempt to author blocks unless this is equal to its native runtime.

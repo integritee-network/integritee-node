@@ -49,7 +49,6 @@ pub fn treasury_account_id() -> AccountId {
 pub fn multisig_account(mut accounts: Vec<AccountId>, threshold: u16) -> AccountId {
 	// sort accounts by public key, as js/apps would do
 	accounts.sort_by(|a, b| (*a).encode_hex::<String>().cmp(&(*b).encode_hex::<String>()));
-	println!("sorted multisig account members: {:?}", accounts);
 	Multisig::multi_account_id(&accounts, threshold)
 }
 
@@ -155,7 +154,7 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 	))
 }
 
-pub fn integritee_mainnet_fresh_config() -> Result<ChainSpec, String> {
+pub fn integritee_solo_fresh_config() -> Result<ChainSpec, String> {
 	let wasm_binary = WASM_BINARY.ok_or_else(|| "wasm not available".to_string())?;
 
 	let sudo_account: AccountId =
@@ -388,8 +387,8 @@ fn genesis_config(
 
 /// hard-coded configs
 
-pub fn integritee_mainnet_config() -> Result<ChainSpec, String> {
-	ChainSpec::from_json_bytes(&include_bytes!("../res/integritee-mainnet.json")[..])
+pub fn integritee_solo_config() -> Result<ChainSpec, String> {
+	ChainSpec::from_json_bytes(&include_bytes!("../res/integritee-solo.json")[..])
 }
 
 pub fn cranny_config() -> Result<ChainSpec, String> {

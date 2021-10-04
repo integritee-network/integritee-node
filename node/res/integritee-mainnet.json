@@ -3,7 +3,8 @@
   "id": "integritee-mainnet",
   "chainType": "Live",
   "bootNodes": [
-    "/ip4/127.0.0.1/tcp/30333/p2p/12D3KooWGBZrDxTE9hNqRMzUBDGEujGHz1BAecbebXqMxVKFxZqz"
+    "/ip4/142.93.162.173/tcp/30333/p2p/12D3KooWNUBDZuDGcmxRGHHHsBwnyZYAY9v2C3vpXjNngzoxYMf3",
+    "/ip4/142.93.169.101/tcp/30333/p2p/12D3KooWRu78Bb6M4KCPjUJZ3QX13JbniUaW6eXhFJ5jPH1nvF8M"
   ],
   "telemetryEndpoints": null,
   "protocolId": "teer",

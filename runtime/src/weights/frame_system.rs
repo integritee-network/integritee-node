@@ -29,7 +29,7 @@ use sp_std::marker::PhantomData;
 pub struct WeightInfo<T>(PhantomData<T>);
 impl<T: frame_system::Config> frame_system::WeightInfo for WeightInfo<T> {
 	fn remark(b: u32, ) -> Weight {
-		(57_495_000 as Weight)
+		(574_000 as Weight)
 			// Standard Error: 0
 			.saturating_add((1_000 as Weight).saturating_mul(b as Weight))
 	}
@@ -40,35 +40,35 @@ impl<T: frame_system::Config> frame_system::WeightInfo for WeightInfo<T> {
 	}
 	// Storage: unknown [0x3a686561707061676573] (r:0 w:1)
 	fn set_heap_pages() -> Weight {
-		(1_600_000 as Weight)
+		(1_800_000 as Weight)
 			.saturating_add(T::DbWeight::get().writes(1 as Weight))
 	}
 	// Storage: System Digest (r:1 w:1)
 	// Storage: unknown [0x3a6368616e6765735f74726965] (r:0 w:1)
 	fn set_changes_trie_config() -> Weight {
-		(7_400_000 as Weight)
+		(8_000_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(1 as Weight))
 			.saturating_add(T::DbWeight::get().writes(2 as Weight))
 	}
 	// Storage: Skipped Metadata (r:0 w:0)
 	fn set_storage(i: u32, ) -> Weight {
-		(2_969_000 as Weight)
-			// Standard Error: 3_000
-			.saturating_add((893_000 as Weight).saturating_mul(i as Weight))
+		(0 as Weight)
+			// Standard Error: 2_000
+			.saturating_add((887_000 as Weight).saturating_mul(i as Weight))
 			.saturating_add(T::DbWeight::get().writes((1 as Weight).saturating_mul(i as Weight)))
 	}
 	// Storage: Skipped Metadata (r:0 w:0)
 	fn kill_storage(i: u32, ) -> Weight {
-		(443_000 as Weight)
-			// Standard Error: 2_000
-			.saturating_add((602_000 as Weight).saturating_mul(i as Weight))
+		(2_052_000 as Weight)
+			// Standard Error: 1_000
+			.saturating_add((567_000 as Weight).saturating_mul(i as Weight))
 			.saturating_add(T::DbWeight::get().writes((1 as Weight).saturating_mul(i as Weight)))
 	}
 	// Storage: Skipped Metadata (r:0 w:0)
 	fn kill_prefix(p: u32, ) -> Weight {
-		(0 as Weight)
-			// Standard Error: 7_000
-			.saturating_add((876_000 as Weight).saturating_mul(p as Weight))
+		(3_640_000 as Weight)
+			// Standard Error: 2_000
+			.saturating_add((799_000 as Weight).saturating_mul(p as Weight))
 			.saturating_add(T::DbWeight::get().writes((1 as Weight).saturating_mul(p as Weight)))
 	}
 }

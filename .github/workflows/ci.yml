@@ -165,7 +165,8 @@ jobs:
         os: [ubuntu-latest]
         rust: [stable]
         rust-target: [x86_64-unknown-linux-gnu]
-        check: [fmt, clippy]
+#        check: [fmt --all -- --check, clippy -- -D warnings]
+        check: [fmt --all -- --check] # skip clippy for now
     env:
       RUST_BACKTRACE: full
       RUSTV: ${{ matrix.rust }}
@@ -178,20 +179,12 @@ jobs:
       - name: Setup Rust toolchain
         run: rustup show
 
-      - name: Install llvm-10
-        run: sudo apt-get install llvm-10 clang-10
-
       - uses: Swatinem/rust-cache@v1
         with:
           key: ${{ matrix.rust-target }}-${{ matrix.check }}
 
-      - name: Fmt
-        if: ${{ matrix.check == 'fmt' }}
-        run: cargo fmt --all -- --check
-
-      # - name: Clippy
-      #   if: ${{ matrix.check == 'clippy' }}
-      #   run: cargo clippy -- -D warnings
+      - name: ${{ matrix.check }}
+        run: cargo ${{ matrix.check }}
 
   build-runtimes:
     name: Build Runtimes

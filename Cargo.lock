@@ -3876,6 +3876,7 @@ name = "pallet-proxy"
 version = "4.0.0-dev"
 source = "git+https://github.com/paritytech/substrate.git?branch=master#b391b82954ad95a927a921035e3017c4a0aad516"
 dependencies = [
+ "frame-benchmarking",
  "frame-support",
  "frame-system",
  "parity-scale-codec",
@@ -3953,6 +3954,7 @@ dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
+ "hex-literal",
  "ias-verify",
  "log",
  "pallet-balances",
@@ -4047,6 +4049,7 @@ name = "pallet-vesting"
 version = "4.0.0-dev"
 source = "git+https://github.com/paritytech/substrate.git?branch=master#b391b82954ad95a927a921035e3017c4a0aad516"
 dependencies = [
+ "frame-benchmarking",
  "frame-support",
  "frame-system",
  "log",

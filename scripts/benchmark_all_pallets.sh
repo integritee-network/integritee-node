@@ -2,10 +2,16 @@
 
 # Create `WeightInfo` implementations for all the pallets and store it in the weight module of the `runtime`.
 
-RUNTIME_WEIGHT_DIR=runtime/src/weights
-NODE=./target/release/integritee-node
+NODE=${1:-target/release/integritee-node}
+CHAIN_SPEC=${2:-integritee-solo-fresh}
+WEIGHT_OUTPUT_DIR=${3:-runtime/src/weights}
 
-mkdir -p $RUNTIME_WEIGHT_DIR
+echo "Running benchmarks for all pallets:"
+echo "NODE:               ${NODE}"
+echo "CHAIN_SPEC:         ${CHAIN_SPEC}"
+echo "WEIGHT_OUTPUT_DIR:  ${WEIGHT_OUTPUT_DIR}"
+
+mkdir -p "$WEIGHT_OUTPUT_DIR"
 
 pallets=(
   "frame_system" \
@@ -24,7 +30,7 @@ for pallet in ${pallets[*]}; do
 
   $NODE \
   benchmark \
-  --chain=integritee-solo-fresh \
+  --chain="$CHAIN_SPEC" \
   --steps=50 \
   --repeat=20 \
   --pallet="$pallet" \
@@ -32,6 +38,6 @@ for pallet in ${pallets[*]}; do
   --execution=wasm \
   --wasm-execution=compiled \
   --heap-pages=4096 \
-  --output=./$RUNTIME_WEIGHT_DIR/"$pallet".rs \
+  --output="$WEIGHT_OUTPUT_DIR"/"$pallet".rs \
 
 done

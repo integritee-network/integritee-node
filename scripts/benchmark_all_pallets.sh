@@ -24,7 +24,7 @@ for pallet in ${pallets[*]}; do
 
   $NODE \
   benchmark \
-  --chain=integritee-mainnet-fresh \
+  --chain=integritee-solo-fresh \
   --steps=50 \
   --repeat=20 \
   --pallet="$pallet" \

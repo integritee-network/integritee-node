@@ -21,7 +21,7 @@ RUN ldd /usr/local/bin/integritee-node && \
 #RUN rm -rf /usr/lib/python* && \
 #	rm -rf /usr/bin /usr/sbin /usr/share/man
 
-USER integritee
+#USER integritee
 EXPOSE 30333 9933 9944 9615
 VOLUME ["/data"]
 

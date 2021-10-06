@@ -3,8 +3,8 @@
   "id": "integritee-solo",
   "chainType": "Live",
   "bootNodes": [
-    "/ip4/142.93.162.173/tcp/30333/p2p/12D3KooWNUBDZuDGcmxRGHHHsBwnyZYAY9v2C3vpXjNngzoxYMf3",
-    "/ip4/142.93.169.101/tcp/30333/p2p/12D3KooWRu78Bb6M4KCPjUJZ3QX13JbniUaW6eXhFJ5jPH1nvF8M"
+    "/ip4/142.93.162.173/tcp/30333/p2p/12D3KooWSb8pY1Q9LCYyWZ8cax1zdN6bJQeEsgxVrvnut3MtKaun",
+    "/ip4/142.93.169.101/tcp/30333/p2p/12D3KooWMEKWkn5PdBSawLk6yrSPEnEE2qfnyUD6eYQhwaqk42sP"
   ],
   "telemetryEndpoints": null,
   "protocolId": "teer",

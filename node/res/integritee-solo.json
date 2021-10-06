@@ -4,7 +4,7 @@
   "chainType": "Live",
   "bootNodes": [
     "/ip4/142.93.162.173/tcp/30333/p2p/12D3KooWSb8pY1Q9LCYyWZ8cax1zdN6bJQeEsgxVrvnut3MtKaun",
-    "/ip4/142.93.169.101/tcp/30333/p2p/12D3KooWDwdzLaBXmWBSF3bctCUSjDnEr4dhTC5ZP6BWYYQ9ZQGd"
+    "/ip4/142.93.169.101/tcp/30333/p2p/12D3KooWMEKWkn5PdBSawLk6yrSPEnEE2qfnyUD6eYQhwaqk42sP"
   ],
   "telemetryEndpoints": null,
   "protocolId": "teer",

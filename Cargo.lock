@@ -2333,6 +2333,7 @@ dependencies = [
  "pallet-aura",
  "pallet-balances",
  "pallet-grandpa",
+ "pallet-jton_rps",
  "pallet-multisig",
  "pallet-proxy",
  "pallet-randomness-collective-flip",
@@ -3854,6 +3855,19 @@ dependencies = [
  "sp-runtime",
  "sp-session",
  "sp-staking",
+ "sp-std",
+]
+
+[[package]]
+name = "pallet-jton_rps"
+version = "0.1.0"
+source = "git+https://github.com/integritee-network/pallet-jton-rps.git?branch=integritee-demo#f3a3f172db7105c019de313f1a08ebcf3af9ec3e"
+dependencies = [
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "sp-io",
+ "sp-runtime",
  "sp-std",
 ]
 

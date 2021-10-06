@@ -516,6 +516,10 @@ impl pallet_scheduler::Config for Runtime {
 	type WeightInfo = weights::pallet_scheduler::WeightInfo<Runtime>;
 }
 
+impl pallet_rps::Config for Runtime {
+	type Event = Event;
+}
+
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
 	pub enum Runtime where
@@ -546,6 +550,7 @@ construct_runtime!(
 
 		// utility
 		Teerex: pallet_teerex::{Pallet, Call, Config, Storage, Event<T>} = 50,	}
+		Rps: pallet_rps::{Pallet, Call, Storage, Event<T>},
 );
 
 /// The address format for describing accounts.

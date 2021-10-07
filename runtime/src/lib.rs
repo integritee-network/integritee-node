@@ -40,7 +40,7 @@ use sp_std::prelude::*;
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 // A few exports that help ease life for downstream crates.
-use frame_support::traits::{Imbalance, InstanceFilter, OnUnbalanced};
+use frame_support::traits::{Contains, Imbalance, InstanceFilter, OnUnbalanced};
 pub use frame_support::{
 	construct_runtime, parameter_types,
 	traits::{KeyOwnerProofSystem, Randomness, StorageInfo},
@@ -214,11 +214,29 @@ parameter_types! {
 	pub const SS58Prefix: u8 = 13;
 }
 
+pub struct BaseFilter;
+impl Contains<Call> for BaseFilter {
+	//Block send extrinsics for mainnent before official token generation event
+	fn contains(call: &Call) -> bool {
+		!matches!(
+			call,
+			Call::Balances(..) |
+				Call::Treasury(..) |
+				Call::Vesting(_) | Call::Teerex(_) |
+				Call::Proxy(_) | Call::Scheduler(_) |
+				Call::Multisig(_)
+		)
+	}
+}
+
 // Configure FRAME pallets to include in runtime.
 
 impl frame_system::Config for Runtime {
-	/// The basic call filter to use in dispatchable.
+	#[cfg(not(feature = "mainnet-launch"))]
 	type BaseCallFilter = frame_support::traits::Everything;
+	//Block send extrinsics for mainnet before official token generation event
+	#[cfg(feature = "mainnet-launch")]
+	type BaseCallFilter = BaseFilter;
 	/// Block & extrinsics weights: base values and limits.
 	type BlockWeights = BlockWeights;
 	/// The maximum length of a block (in bytes).

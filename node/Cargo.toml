@@ -68,3 +68,6 @@ runtime-benchmarks = [
 ]
 # allow workers to register without remote attestation for dev purposes
 skip-ias-check = ["integritee-node-runtime/skip-ias-check"]
+
+#valid only for standalone mainnet
+mainnet-launch = ["integritee-node-runtime/mainnet-launch"]

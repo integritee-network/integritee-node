@@ -214,11 +214,28 @@ parameter_types! {
 	pub const SS58Prefix: u8 = 13;
 }
 
-//Don't allow any token actions
 pub struct BaseFilter;
 impl Contains<Call> for BaseFilter {
+	//Filter shielding/unshielding calls in teerex, because of open security issues: see https://github.com/integritee-network/pallet-teerex/issues/7
+	#[cfg(not(feature = "mainnet-launch"))]
 	fn contains(call: &Call) -> bool {
-		!matches!(call, Call::Balances(..) | Call::Treasury(..) | Call::Vesting(_))
+		!matches!(
+			call,
+			Call::Teerex(pallet_teerex::Call::shield_funds(..)) |
+				Call::Teerex(pallet_teerex::Call::unshield_funds(..))
+		)
+	}
+	//Block send extrinsics for mainnent before official token generation event
+	#[cfg(feature = "mainnet-launch")]
+	fn contains(call: &Call) -> bool {
+		!matches!(
+			call,
+			Call::Balances(..) |
+				Call::Treasury(..) |
+				Call::Vesting(_) | Call::Teerex(_) |
+				Call::Proxy(_) | Call::Scheduler(_) |
+				Call::Multisig(_)
+		)
 	}
 }
 
@@ -226,9 +243,6 @@ impl Contains<Call> for BaseFilter {
 
 impl frame_system::Config for Runtime {
 	/// The basic call filter to use in dispatchable.
-	#[cfg(not(feature = "mainnet-launch"))]
-	type BaseCallFilter = frame_support::traits::Everything;
-	#[cfg(feature = "mainnet-launch")]
 	type BaseCallFilter = BaseFilter;
 	/// Block & extrinsics weights: base values and limits.
 	type BlockWeights = BlockWeights;

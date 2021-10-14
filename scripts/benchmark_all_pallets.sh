@@ -23,6 +23,7 @@ pallets=(
   "pallet_teerex" \
   "pallet_treasury" \
   "pallet_vesting" \
+  "pallet_utility" \
 )
 
 for pallet in ${pallets[*]}; do

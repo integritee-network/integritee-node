@@ -30,7 +30,7 @@ use sp_std::marker::PhantomData;
 pub struct WeightInfo<T>(PhantomData<T>);
 impl<T: frame_system::Config> frame_system::WeightInfo for WeightInfo<T> {
 	fn remark(b: u32, ) -> Weight {
-		(0 as Weight)
+		(574_000 as Weight)
 			// Standard Error: 0
 			.saturating_add((1_000 as Weight).saturating_mul(b as Weight))
 	}
@@ -60,7 +60,7 @@ impl<T: frame_system::Config> frame_system::WeightInfo for WeightInfo<T> {
 	}
 	// Storage: Skipped Metadata (r:0 w:0)
 	fn kill_storage(i: u32, ) -> Weight {
-		(0 as Weight)
+		(2_052_000 as Weight)
 			// Standard Error: 0
 			.saturating_add((556_000 as Weight).saturating_mul(i as Weight))
 			.saturating_add(T::DbWeight::get().writes((1 as Weight).saturating_mul(i as Weight)))

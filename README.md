@@ -7,3 +7,9 @@ A substrate-based node that maintains a registry of remote attested integritee-s
 ## Build and Run
 Please see our [Integritee Book](https://book.integritee.network/howto_node.html) to learn how to build and run this.
 
+## benchmarking of weights
+
+```
+cargo build --release --features=runtime-benchmarks
+./scripts/benchmark_all_pallets.sh
+```

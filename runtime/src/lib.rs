@@ -42,7 +42,7 @@ use sp_version::RuntimeVersion;
 // A few exports that help ease life for downstream crates.
 use frame_support::traits::{Contains, Imbalance, InstanceFilter, OnUnbalanced};
 pub use frame_support::{
-	construct_runtime, ord_parameter_types, parameter_types,
+	construct_runtime, parameter_types,
 	traits::{KeyOwnerProofSystem, Randomness, StorageInfo},
 	weights::{
 		constants::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_PER_SECOND},
@@ -380,11 +380,7 @@ impl pallet_teerex::Config for Runtime {
 }
 
 parameter_types! {
-	pub Prefix: &'static [u8] = b"Pay TEERs to the TEER account:";
-}
-
-ord_parameter_types! {
-	pub const Six: u64 = 6;
+	pub Prefix: &'static [u8] = b"Pay TEERs to the integriTEE account:";
 }
 
 /// added by Integritee

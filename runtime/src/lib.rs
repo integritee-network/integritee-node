@@ -42,7 +42,7 @@ use sp_version::RuntimeVersion;
 // A few exports that help ease life for downstream crates.
 use frame_support::traits::{Contains, Imbalance, InstanceFilter, OnUnbalanced};
 pub use frame_support::{
-	construct_runtime, parameter_types,
+	construct_runtime, ord_parameter_types, parameter_types,
 	traits::{KeyOwnerProofSystem, Randomness, StorageInfo},
 	weights::{
 		constants::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_PER_SECOND},
@@ -52,6 +52,8 @@ pub use frame_support::{
 };
 use frame_system::EnsureRoot;
 pub use pallet_balances::Call as BalancesCall;
+/// added by Integritee
+pub use pallet_claims;
 /// added by Integritee
 pub use pallet_teerex;
 pub use pallet_timestamp::Call as TimestampCall;
@@ -378,6 +380,23 @@ impl pallet_teerex::Config for Runtime {
 }
 
 parameter_types! {
+	pub Prefix: &'static [u8] = b"Pay TEERs to the TEER account:";
+}
+
+ord_parameter_types! {
+	pub const Six: u64 = 6;
+}
+
+/// added by Integritee
+impl pallet_claims::Config for Runtime {
+	type Event = Event;
+	type VestingSchedule = Vesting;
+	type Prefix = Prefix;
+	type MoveClaimOrigin = frame_system::EnsureRoot<AccountId>;
+	type WeightInfo = pallet_claims::TestWeightInfo;
+}
+
+parameter_types! {
 	pub const ProposalBond: Permill = Permill::from_percent(5);
 	pub const ProposalBondMinimum: Balance = 100 * MILLITEER;
 	pub const SpendPeriod: BlockNumber = 6 * DAYS;
@@ -571,6 +590,7 @@ construct_runtime!(
 
 		// utility
 		Teerex: pallet_teerex::{Pallet, Call, Config, Storage, Event<T>} = 50,
+		Claims: pallet_claims::{Pallet, Call, Storage, Config<T>, Event<T>, ValidateUnsigned} = 51,
 	}
 );
 
@@ -750,6 +770,7 @@ impl_runtime_apis! {
 			list_benchmark!(list, extra, pallet_proxy, Proxy);
 			list_benchmark!(list, extra, pallet_scheduler, Scheduler);
 			list_benchmark!(list, extra, pallet_teerex, Teerex);
+			list_benchmark!(list, extra, pallet_claims, Claims);
 			list_benchmark!(list, extra, pallet_timestamp, Timestamp);
 			list_benchmark!(list, extra, pallet_treasury, Treasury);
 			list_benchmark!(list, extra, pallet_vesting, Vesting);
@@ -792,6 +813,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_proxy, Proxy);
 			add_benchmark!(params, batches, pallet_scheduler, Scheduler);
 			add_benchmark!(params, batches, pallet_teerex, Teerex);
+			add_benchmark!(params, batches, pallet_claims, Claims);
 			add_benchmark!(params, batches, pallet_timestamp, Timestamp);
 			add_benchmark!(params, batches, pallet_treasury, Treasury);
 			add_benchmark!(params, batches, pallet_vesting, Vesting);

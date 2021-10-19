@@ -92,6 +92,7 @@ std = [
 	"sp-transaction-pool/std",
 	"sp-version/std",
 	"pallet-teerex/std",
+	"pallet-claims/std",
 	"pallet-proxy/std",
 	"pallet-utility/std",
 ]
@@ -108,6 +109,7 @@ runtime-benchmarks = [
 	"pallet-proxy/runtime-benchmarks",
 	"pallet-scheduler/runtime-benchmarks",
 	"pallet-teerex/runtime-benchmarks",
+	"pallet-claims/runtime-benchmarks",
 	"pallet-timestamp/runtime-benchmarks",
 	"pallet-treasury/runtime-benchmarks",
 	"pallet-vesting/runtime-benchmarks",

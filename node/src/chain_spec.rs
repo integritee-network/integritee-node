@@ -375,6 +375,7 @@ fn genesis_config(
 			key: root_key,
 		},
 		teerex: TeerexConfig { allow_sgx_debug_mode: true },
+		claims: Default::default(),
 		treasury: Default::default(),
 		vesting: Default::default(),
 	}

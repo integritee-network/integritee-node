@@ -389,7 +389,7 @@ impl pallet_claims::Config for Runtime {
 	type VestingSchedule = Vesting;
 	type Prefix = Prefix;
 	type MoveClaimOrigin = frame_system::EnsureRoot<AccountId>;
-	type WeightInfo = pallet_claims::TestWeightInfo;
+	type WeightInfo = weights::pallet_claims::WeightInfo<Runtime>;
 }
 
 parameter_types! {

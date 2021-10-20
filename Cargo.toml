@@ -7,5 +7,5 @@ members = [
     'runtime',
 ]
 
-[patch."https://github.com/integritee-network/pallets.git"]
-pallet-claims = { path = '../pallets/claims' }
+#[patch."https://github.com/integritee-network/pallets.git"]
+#pallet-claims = { path = '../pallets/claims' }

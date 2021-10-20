@@ -3888,6 +3888,7 @@ dependencies = [
 [[package]]
 name = "pallet-claims"
 version = "0.9.12"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#d885e0f5ae53cc4ff688b21e1843d2312e062def"
 dependencies = [
  "frame-benchmarking",
  "frame-support",

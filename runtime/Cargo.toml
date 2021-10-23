@@ -27,7 +27,7 @@ pallet-vesting = { version = "4.0.0-dev", default-features = false, git = "https
 pallet-scheduler = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
 pallet-utility = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
 # local pallets
-pallet-teerex = { default-features = false, git = "https://github.com/integritee-network/pallet-teerex.git", branch = "master" }
+pallet-teerex = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "master" }
 pallet-claims = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "master" }
 
 sp-api = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }

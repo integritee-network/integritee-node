@@ -10,6 +10,12 @@ version = '0.9.3'
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
 
+# local dependencies
+[dependencies.pallet-market]
+default-features = false
+path = '../../pallets/market'
+package = 'pallet-market'
+
 [dependencies]
 codec = { package = "parity-scale-codec", version = "2.3.1", default-features = false, features = ["derive"] }
 
@@ -95,6 +101,7 @@ std = [
 	"pallet-claims/std",
 	"pallet-proxy/std",
 	"pallet-utility/std",
+	"pallet-market/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking",

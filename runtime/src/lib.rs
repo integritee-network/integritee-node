@@ -55,6 +55,8 @@ pub use pallet_balances::Call as BalancesCall;
 /// added by Integritee
 pub use pallet_claims;
 /// added by Integritee
+pub use pallet_market;
+/// added by Integritee
 pub use pallet_teerex;
 pub use pallet_timestamp::Call as TimestampCall;
 use pallet_transaction_payment::CurrencyAdapter;
@@ -391,6 +393,11 @@ impl pallet_claims::Config for Runtime {
 	type MoveClaimOrigin = frame_system::EnsureRoot<AccountId>;
 	type WeightInfo = weights::pallet_claims::WeightInfo<Runtime>;
 }
+/// added by Integritee
+impl pallet_market::Config for Runtime {
+	type Event = Event;
+	type WeightInfo = ();
+}
 
 parameter_types! {
 	pub const ProposalBond: Permill = Permill::from_percent(5);
@@ -587,6 +594,7 @@ construct_runtime!(
 		// utility
 		Teerex: pallet_teerex::{Pallet, Call, Config, Storage, Event<T>} = 50,
 		Claims: pallet_claims::{Pallet, Call, Storage, Config<T>, Event<T>, ValidateUnsigned} = 51,
+		Market: pallet_market::{Pallet, Call, Storage, Event<T>} = 51,
 	}
 );
 

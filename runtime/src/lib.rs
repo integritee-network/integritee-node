@@ -229,7 +229,7 @@ impl Contains<Call> for BaseFilter {
 		!matches!(
 			call,
 			// filter until we have resolved https://github.com/integritee-network/pallets/issues/17
-			Call::Teeracle(_) 
+			Call::Teeracle(_)
 		)
 	}
 }

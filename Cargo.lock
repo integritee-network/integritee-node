@@ -2148,7 +2148,6 @@ dependencies = [
 [[package]]
 name = "ias-verify"
 version = "0.1.4"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#eb4a5c8347c90814c2e175ab50755b213d636b1f"
 dependencies = [
  "base64 0.11.0",
  "chrono",
@@ -2334,6 +2333,7 @@ dependencies = [
  "pallet-balances",
  "pallet-claims",
  "pallet-grandpa",
+ "pallet-market",
  "pallet-multisig",
  "pallet-proxy",
  "pallet-randomness-collective-flip",
@@ -3927,6 +3927,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "pallet-market"
+version = "0.1.0"
+dependencies = [
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "log",
+ "pallet-balances",
+ "pallet-teerex",
+ "pallet-timestamp",
+ "parity-scale-codec",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+ "substrate-fixed",
+]
+
+[[package]]
 name = "pallet-multisig"
 version = "4.0.0-dev"
 source = "git+https://github.com/paritytech/substrate.git?branch=master#b391b82954ad95a927a921035e3017c4a0aad516"
@@ -4018,7 +4037,6 @@ dependencies = [
 [[package]]
 name = "pallet-teerex"
 version = "0.9.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#eb4a5c8347c90814c2e175ab50755b213d636b1f"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4118,7 +4136,6 @@ name = "pallet-utility"
 version = "4.0.0-dev"
 source = "git+https://github.com/paritytech/substrate.git?branch=master#b391b82954ad95a927a921035e3017c4a0aad516"
 dependencies = [
- "frame-benchmarking",
  "frame-support",
  "frame-system",
  "parity-scale-codec",
@@ -7047,6 +7064,15 @@ version = "3.0.0"
 source = "git+https://github.com/paritytech/substrate.git?branch=master#b391b82954ad95a927a921035e3017c4a0aad516"
 dependencies = [
  "platforms",
+]
+
+[[package]]
+name = "substrate-fixed"
+version = "0.5.6"
+source = "git+https://github.com/encointer/substrate-fixed.git#b33d186888c60f38adafcfc0ec3a21aab263aef1"
+dependencies = [
+ "parity-scale-codec",
+ "typenum",
 ]
 
 [[package]]

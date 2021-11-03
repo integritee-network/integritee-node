@@ -594,7 +594,7 @@ construct_runtime!(
 		// utility
 		Teerex: pallet_teerex::{Pallet, Call, Config, Storage, Event<T>} = 50,
 		Claims: pallet_claims::{Pallet, Call, Storage, Config<T>, Event<T>, ValidateUnsigned} = 51,
-		Market: pallet_market::{Pallet, Call, Storage, Event<T>} = 51,
+		Market: pallet_market::{Pallet, Call, Storage, Event<T>} = 52,
 	}
 );
 

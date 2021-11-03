@@ -120,5 +120,6 @@ runtime-benchmarks = [
 	"pallet-timestamp/runtime-benchmarks",
 	"pallet-treasury/runtime-benchmarks",
 	"pallet-vesting/runtime-benchmarks",
+	"pallet-market/runtime-benchmarks",
 ]
 mainnet-launch = []

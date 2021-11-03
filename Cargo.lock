@@ -3933,6 +3933,7 @@ dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
+ "hex-literal",
  "log",
  "pallet-balances",
  "pallet-teerex",

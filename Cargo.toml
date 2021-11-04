@@ -9,3 +9,5 @@ members = [
 
 #[patch."https://github.com/integritee-network/pallets.git"]
 #pallet-claims = { path = '../pallets/claims' }
+#pallet-teerex = { path = '../pallets/teerex' }
+#pallet-teeracle = { path = '../pallets/teeracle' }

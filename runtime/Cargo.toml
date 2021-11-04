@@ -11,10 +11,6 @@ version = '0.9.3'
 targets = ["x86_64-unknown-linux-gnu"]
 
 # local dependencies
-[dependencies.pallet-market]
-default-features = false
-path = '../../pallets/market'
-package = 'pallet-market'
 
 [dependencies]
 codec = { package = "parity-scale-codec", version = "2.3.1", default-features = false, features = ["derive"] }
@@ -35,6 +31,7 @@ pallet-utility = { version = "4.0.0-dev", default-features = false, git = "https
 # local pallets
 pallet-teerex = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "master" }
 pallet-claims = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "master" }
+pallet-teeracle = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "master" }
 
 sp-api = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
 sp-block-builder = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "master" }
@@ -101,7 +98,7 @@ std = [
 	"pallet-claims/std",
 	"pallet-proxy/std",
 	"pallet-utility/std",
-	"pallet-market/std",
+	"pallet-teeracle/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking",
@@ -121,6 +118,6 @@ runtime-benchmarks = [
 	"pallet-treasury/runtime-benchmarks",
 	"pallet-vesting/runtime-benchmarks",
 	"pallet-utility/runtime-benchmarks",
-	"pallet-market/runtime-benchmarks",
+	#"pallet-teeracle/runtime-benchmarks",
 ]
 mainnet-launch = []

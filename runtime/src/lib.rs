@@ -55,7 +55,7 @@ pub use pallet_balances::Call as BalancesCall;
 /// added by Integritee
 pub use pallet_claims;
 /// added by Integritee
-pub use pallet_market;
+pub use pallet_teeracle;
 /// added by Integritee
 pub use pallet_teerex;
 pub use pallet_timestamp::Call as TimestampCall;
@@ -394,7 +394,7 @@ impl pallet_claims::Config for Runtime {
 	type WeightInfo = weights::pallet_claims::WeightInfo<Runtime>;
 }
 /// added by Integritee
-impl pallet_market::Config for Runtime {
+impl pallet_teeracle::Config for Runtime {
 	type Event = Event;
 	type WeightInfo = ();
 }
@@ -594,7 +594,7 @@ construct_runtime!(
 		// utility
 		Teerex: pallet_teerex::{Pallet, Call, Config, Storage, Event<T>} = 50,
 		Claims: pallet_claims::{Pallet, Call, Storage, Config<T>, Event<T>, ValidateUnsigned} = 51,
-		Market: pallet_market::{Pallet, Call, Storage, Event<T>} = 52,
+		Teeracle: pallet_teeracle::{Pallet, Call, Storage, Event<T>} = 52,
 	}
 );
 
@@ -779,7 +779,7 @@ impl_runtime_apis! {
 			list_benchmark!(list, extra, pallet_treasury, Treasury);
 			list_benchmark!(list, extra, pallet_vesting, Vesting);
 			list_benchmark!(list, extra, pallet_utility, Utility);
-			list_benchmark!(list, extra, pallet_market, Market);
+			list_benchmark!(list, extra, pallet_teeracle, teeracle);
 
 			let storage_info = AllPalletsWithSystem::storage_info();
 
@@ -823,7 +823,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_treasury, Treasury);
 			add_benchmark!(params, batches, pallet_vesting, Vesting);
 			add_benchmark!(params, batches, pallet_utility, Utility);
-			add_benchmark!(params, batches, pallet_market, Market);
+			add_benchmark!(params, batches, pallet_teeracle, teeracle);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)

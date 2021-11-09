@@ -2150,7 +2150,7 @@ dependencies = [
 [[package]]
 name = "ias-verify"
 version = "0.1.4"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#eb54aedc5c1d0cf452975b66501ccc91671f7e0f"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#2dbe761f0bb09fcb731e5ce16b25d6fff1b9e85b"
 dependencies = [
  "base64 0.11.0",
  "chrono",
@@ -3888,7 +3888,7 @@ dependencies = [
 [[package]]
 name = "pallet-claims"
 version = "0.9.12"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#eb54aedc5c1d0cf452975b66501ccc91671f7e0f"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#2dbe761f0bb09fcb731e5ce16b25d6fff1b9e85b"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4018,7 +4018,7 @@ dependencies = [
 [[package]]
 name = "pallet-teeracle"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#eb54aedc5c1d0cf452975b66501ccc91671f7e0f"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#2dbe761f0bb09fcb731e5ce16b25d6fff1b9e85b"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4040,7 +4040,7 @@ dependencies = [
 [[package]]
 name = "pallet-teerex"
 version = "0.9.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#eb54aedc5c1d0cf452975b66501ccc91671f7e0f"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#2dbe761f0bb09fcb731e5ce16b25d6fff1b9e85b"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -7205,7 +7205,7 @@ dependencies = [
 [[package]]
 name = "test-utils"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#eb54aedc5c1d0cf452975b66501ccc91671f7e0f"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#2dbe761f0bb09fcb731e5ce16b25d6fff1b9e85b"
 dependencies = [
  "hex-literal",
  "log",

@@ -1,9 +1,9 @@
 //! The weights used in the runtime
 //!
 //! The current weights have been obtained with the following reference hardware:
-//! * Intel(R) Xeon(R) E-2276G CPU @ 3.80 GHz
-//! * 32GB of RAM
-//! * 1TB SSD Samsung 860 EVO Basic, 2.5"
+//! * GenuineIntel CPU MHz: 2494.144
+//! * 8GB of RAM
+//! * NVMe SSD
 
 // the generated files to not pass clippy
 #![allow(clippy::all)]

@@ -32,7 +32,7 @@ impl<T: frame_system::Config> pallet_teeracle::WeightInfo for WeightInfo<T> {
 	// Storage: Teerex EnclaveIndex (r:1 w:0)
 	// Storage: Teeracle ExchangeRates (r:1 w:1)
 	fn update_exchange_rate() -> Weight {
-		(32_807_000 as Weight)
+		(86_491_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(2 as Weight))
 			.saturating_add(T::DbWeight::get().writes(1 as Weight))
 	}

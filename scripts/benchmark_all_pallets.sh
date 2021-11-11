@@ -19,11 +19,13 @@ pallets=(
   "pallet_multisig" \
   "pallet_proxy" \
   "pallet_scheduler" \
-  "pallet_timestamp" \
   "pallet_teerex" \
+  "pallet_claims" \
+  "pallet_timestamp" \
   "pallet_treasury" \
   "pallet_vesting" \
   "pallet_utility" \
+  "pallet_teeracle" \
 )
 
 for pallet in ${pallets[*]}; do

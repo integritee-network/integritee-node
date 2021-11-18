@@ -2130,11 +2130,13 @@ dependencies = [
 [[package]]
 name = "ias-verify"
 version = "0.1.4"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#8b81b206710e21f98ab44f32058241c92447e6d7"
 dependencies = [
  "base64 0.11.0",
  "chrono",
  "frame-support",
  "parity-scale-codec",
+ "scale-info",
  "serde_json",
  "sp-core",
  "sp-io",
@@ -3872,6 +3874,7 @@ dependencies = [
 [[package]]
 name = "pallet-claims"
 version = "0.9.12"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#8b81b206710e21f98ab44f32058241c92447e6d7"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4008,6 +4011,7 @@ dependencies = [
 [[package]]
 name = "pallet-teeracle"
 version = "0.1.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#8b81b206710e21f98ab44f32058241c92447e6d7"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4018,6 +4022,7 @@ dependencies = [
  "pallet-teerex",
  "pallet-timestamp",
  "parity-scale-codec",
+ "scale-info",
  "sp-core",
  "sp-io",
  "sp-runtime",
@@ -4029,6 +4034,7 @@ dependencies = [
 [[package]]
 name = "pallet-teerex"
 version = "0.9.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#8b81b206710e21f98ab44f32058241c92447e6d7"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4039,6 +4045,7 @@ dependencies = [
  "pallet-balances",
  "pallet-timestamp",
  "parity-scale-codec",
+ "scale-info",
  "serde",
  "sp-core",
  "sp-io",
@@ -7069,7 +7076,7 @@ dependencies = [
 [[package]]
 name = "substrate-fixed"
 version = "0.5.7"
-source = "git+https://github.com/encointer/substrate-fixed.git#2f353acee3c7cf7a386863a89fc6cb805048561f"
+source = "git+https://github.com/encointer/substrate-fixed.git?tag=v0.5.7#2f353acee3c7cf7a386863a89fc6cb805048561f"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -7195,6 +7202,7 @@ dependencies = [
 [[package]]
 name = "test-utils"
 version = "0.1.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#8b81b206710e21f98ab44f32058241c92447e6d7"
 dependencies = [
  "hex-literal",
  "log",

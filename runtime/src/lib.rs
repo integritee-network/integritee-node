@@ -55,6 +55,8 @@ pub use pallet_balances::Call as BalancesCall;
 /// added by Integritee
 pub use pallet_claims;
 /// added by Integritee
+pub use pallet_parentchain;
+/// added by Integritee
 pub use pallet_teeracle;
 /// added by Integritee
 pub use pallet_teerex;
@@ -393,9 +395,15 @@ impl pallet_claims::Config for Runtime {
 	type MoveClaimOrigin = frame_system::EnsureRoot<AccountId>;
 	type WeightInfo = weights::pallet_claims::WeightInfo<Runtime>;
 }
+
 /// added by Integritee
 impl pallet_teeracle::Config for Runtime {
 	type Event = Event;
+	type WeightInfo = ();
+}
+
+/// added by Integritee
+impl pallet_parentchain::Config for Runtime {
 	type WeightInfo = ();
 }
 
@@ -595,6 +603,7 @@ construct_runtime!(
 		Teerex: pallet_teerex::{Pallet, Call, Config, Storage, Event<T>} = 50,
 		Claims: pallet_claims::{Pallet, Call, Storage, Config<T>, Event<T>, ValidateUnsigned} = 51,
 		Teeracle: pallet_teeracle::{Pallet, Call, Storage, Event<T>} = 52,
+		Parentchain: pallet_parentchain::{Pallet, Call, Storage} = 53,
 	}
 );
 

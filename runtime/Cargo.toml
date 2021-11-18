@@ -30,6 +30,7 @@ pallet-utility = { version = "4.0.0-dev", default-features = false, git = "https
 pallet-teerex = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "master" }
 pallet-claims = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "master" }
 pallet-teeracle = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "master" }
+pallet-parentchain = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "teaclave-1.1.3" }
 
 sp-api = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master" }
 sp-block-builder = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "master" }
@@ -97,6 +98,7 @@ std = [
 	"pallet-proxy/std",
 	"pallet-utility/std",
 	"pallet-teeracle/std",
+	"pallet-parentchain/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking",

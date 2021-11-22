@@ -44,8 +44,8 @@ jobs:
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
-  build_primary_binaries:
-    name: Primary build ${{ matrix.binary }} for ${{ matrix.rust-target }} on (${{ matrix.os }})
+  build_live_binaries:
+    name: Live build ${{ matrix.binary }} for ${{ matrix.rust-target }} on (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -99,8 +99,8 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-  build-skip-ais-check:
-    name: Primary build ${{ matrix.binary }} for ${{ matrix.rust-target }} on (${{ matrix.os }})
+  build-dev-binaries:
+    name: Development build ${{ matrix.binary }} for ${{ matrix.rust-target }} on (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -136,7 +136,7 @@ jobs:
         if: ${{ matrix.binary == 'release' }}
         run: |
           cargo clean -p integritee-node
-          cargo build --release --features skip-ias-check
+          cargo build --release --features skip-ias-check,skip-extrinsic-filtering
 
       # Upload artifacts
       - name: Upload integritee-node-dev

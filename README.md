@@ -30,3 +30,13 @@ Every pallet with a `type WeightInfo` parameter in its config must be benchmarke
 3. add the new pallet in the script `./scripts/benchmark_all_pallets.sh` and run it.
 4. [runtime/src/weights] add the new file to the modules
 5. [runtime] replace the placeholder `type WeightInfo = ()` with `type WeightInfo = weights::<new_pallet>::WeightInfo<Runtime>`
+
+## upgrade hard-coded genesis
+
+For easy use of the binary without distributing a json chain spec, we generate a spec and build it into the binary
+```
+./target/release/integritee-node build-spec --chain integritee-solo-fresh --raw > integritee-solo.json
+```
+Then overwrite `./node/res/integritee-solo.json` but keep bootnode definitions and check other meta too.
+
+Build the collator again and push.

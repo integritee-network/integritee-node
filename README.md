@@ -36,7 +36,8 @@ Every pallet with a `type WeightInfo` parameter in its config must be benchmarke
 For easy use of the binary without distributing a json chain spec, we generate a spec and build it into the binary
 ```
 ./target/release/integritee-node build-spec --chain integritee-solo-fresh --raw > integritee-solo.json
+./target/release/integritee-node build-spec --chain cranny-fresh --raw > cranny.json
 ```
-Then overwrite `./node/res/integritee-solo.json` but keep bootnode definitions and check other meta too.
+Then overwrite spec files in `./node/res/*.json` but keep bootnode definitions and check other meta too.
 
 Build the collator again and push.

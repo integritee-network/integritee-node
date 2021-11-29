@@ -401,7 +401,7 @@ impl pallet_claims::Config for Runtime {
 /// added by Integritee
 impl pallet_teeracle::Config for Runtime {
 	type Event = Event;
-	type WeightInfo = ();
+	type WeightInfo = weights::pallet_teeracle::WeightInfo<Runtime>;
 }
 
 parameter_types! {

@@ -17,7 +17,7 @@ on:
 
 env:
   VERBOSE: ${{ github.events.input.verbose }}
-  SUBWASM_VERSION: 0.14.0
+  SUBWASM_VERSION: 0.14.1
   CARGO_TERM_COLOR: always
 
 

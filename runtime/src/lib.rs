@@ -40,7 +40,9 @@ use sp_std::prelude::*;
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 // A few exports that help ease life for downstream crates.
-use frame_support::traits::{Contains, Imbalance, InstanceFilter, OnUnbalanced};
+use frame_support::traits::{
+	Contains, EqualPrivilegeOnly, Imbalance, InstanceFilter, OnUnbalanced,
+};
 pub use frame_support::{
 	construct_runtime, parameter_types,
 	traits::{KeyOwnerProofSystem, Randomness, StorageInfo},
@@ -60,6 +62,7 @@ pub use pallet_teeracle;
 pub use pallet_teerex;
 pub use pallet_timestamp::Call as TimestampCall;
 use pallet_transaction_payment::CurrencyAdapter;
+use scale_info::TypeInfo;
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
@@ -316,6 +319,8 @@ impl pallet_grandpa::Config for Runtime {
 	type HandleEquivocation = ();
 
 	type WeightInfo = ();
+
+	type MaxAuthorities = MaxAuthorities;
 }
 
 parameter_types! {
@@ -337,6 +342,7 @@ parameter_types! {
 	pub const TransactionByteFee: u128 = MICROTEER;
 	pub const MaxLocks: u32 = 50;
 	pub const MaxReserves: u32 = 50;
+	pub const OperationalFeeMultiplier: u8 = 5;
 }
 
 impl pallet_balances::Config for Runtime {
@@ -356,6 +362,7 @@ impl pallet_balances::Config for Runtime {
 impl pallet_transaction_payment::Config for Runtime {
 	type OnChargeTransaction = CurrencyAdapter<Balances, DealWithFees>;
 	type TransactionByteFee = TransactionByteFee;
+	type OperationalFeeMultiplier = OperationalFeeMultiplier;
 	type WeightToFee = IdentityFee<Balance>;
 	type FeeMultiplierUpdate = ();
 }
@@ -394,7 +401,7 @@ impl pallet_claims::Config for Runtime {
 /// added by Integritee
 impl pallet_teeracle::Config for Runtime {
 	type Event = Event;
-	type WeightInfo = ();
+	type WeightInfo = weights::pallet_teeracle::WeightInfo<Runtime>;
 }
 
 parameter_types! {
@@ -456,7 +463,17 @@ parameter_types! {
 
 /// The type used to represent the kinds of proxying allowed.
 #[derive(
-	Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Encode, Decode, RuntimeDebug, MaxEncodedLen,
+	Copy,
+	Clone,
+	Eq,
+	PartialEq,
+	Ord,
+	PartialOrd,
+	Encode,
+	Decode,
+	RuntimeDebug,
+	MaxEncodedLen,
+	TypeInfo,
 )]
 pub enum ProxyType {
 	Any,         //any transactions
@@ -478,23 +495,23 @@ impl InstanceFilter<Call> for ProxyType {
 			ProxyType::Any => true,
 			ProxyType::NonTransfer => matches!(
 				c,
-				Call::System(..) |
-				Call::Timestamp(..) |
+				Call::System {..} |
+				Call::Timestamp {..} |
 				// Specifically omitting Indices `transfer`, `force_transfer`
 				// Specifically omitting the entire Balances pallet
-				Call::Grandpa(..) |
-				Call::Treasury(..) |
-//				Call::Vesting(pallet_vesting::Call::vest(..)) |
-//				Call::Vesting(pallet_vesting::Call::vest_other(..)) |
+				Call::Grandpa {..} |
+				Call::Treasury {..} |
+//				Call::Vesting(pallet_vesting::Call::vest {..}) |
+//				Call::Vesting(pallet_vesting::Call::vest_other {..}) |
 				// Specifically omitting Vesting `vested_transfer`, and `force_vested_transfer`
-				Call::Proxy(..) |
-				Call::Multisig(..)
+				Call::Proxy {..} |
+				Call::Multisig {..}
 			),
 			ProxyType::Governance => {
-				matches!(c, Call::Treasury(..))
+				matches!(c, Call::Treasury { .. })
 			},
 			ProxyType::CancelProxy => {
-				matches!(c, Call::Proxy(pallet_proxy::Call::reject_announcement(..)))
+				matches!(c, Call::Proxy(pallet_proxy::Call::reject_announcement { .. }))
 			},
 		}
 	}
@@ -552,11 +569,13 @@ impl pallet_scheduler::Config for Runtime {
 	type ScheduleOrigin = EnsureRoot<AccountId>;
 	type MaxScheduledPerBlock = MaxScheduledPerBlock;
 	type WeightInfo = weights::pallet_scheduler::WeightInfo<Runtime>;
+	type OriginPrivilegeCmp = EqualPrivilegeOnly;
 }
 
 impl pallet_utility::Config for Runtime {
 	type Event = Event;
 	type Call = Call;
+	type PalletsOrigin = OriginCaller;
 	type WeightInfo = weights::pallet_utility::WeightInfo<Runtime>;
 }
 
@@ -640,7 +659,7 @@ impl_runtime_apis! {
 
 	impl sp_api::Metadata<Block> for Runtime {
 		fn metadata() -> OpaqueMetadata {
-			Runtime::metadata().into()
+			OpaqueMetadata::new(Runtime::metadata().into())
 		}
 	}
 

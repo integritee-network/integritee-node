@@ -398,10 +398,15 @@ impl pallet_claims::Config for Runtime {
 	type MoveClaimOrigin = frame_system::EnsureRoot<AccountId>;
 	type WeightInfo = weights::pallet_claims::WeightInfo<Runtime>;
 }
+parameter_types! {
+	pub const MaxWhitelistedReleases: u32 = 10;
+}
+
 /// added by Integritee
 impl pallet_teeracle::Config for Runtime {
 	type Event = Event;
 	type WeightInfo = weights::pallet_teeracle::WeightInfo<Runtime>;
+	type MaxWhitelistedReleases = MaxWhitelistedReleases;
 }
 
 parameter_types! {

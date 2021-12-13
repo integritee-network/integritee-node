@@ -29,11 +29,24 @@ use sp_std::marker::PhantomData;
 /// Weight functions for pallet_teeracle.
 pub struct WeightInfo<T>(PhantomData<T>);
 impl<T: frame_system::Config> pallet_teeracle::WeightInfo for WeightInfo<T> {
+	// Storage: Teerex Whitelist (r:1 w:1)
+	fn add_to_whitelist() -> Weight {
+		(86_491_000 as Weight)
+			.saturating_add(T::DbWeight::get().reads(1 as Weight))
+			.saturating_add(T::DbWeight::get().writes(1 as Weight))
+	}
+	// Storage: Teerex Whitelist (r:1 w:1)
+	fn remove_from_whitelist() -> Weight {
+		(86_491_000 as Weight)
+			.saturating_add(T::DbWeight::get().reads(1 as Weight))
+			.saturating_add(T::DbWeight::get().writes(1 as Weight))
+	}
 	// Storage: Teerex EnclaveIndex (r:1 w:0)
 	// Storage: Teeracle ExchangeRates (r:1 w:1)
+	// Storage: Teerex Whitelist (r:1 w:0)
 	fn update_exchange_rate() -> Weight {
 		(86_491_000 as Weight)
-			.saturating_add(T::DbWeight::get().reads(2 as Weight))
+			.saturating_add(T::DbWeight::get().reads(3 as Weight))
 			.saturating_add(T::DbWeight::get().writes(1 as Weight))
 	}
 }

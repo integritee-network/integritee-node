@@ -40,9 +40,7 @@ use sp_std::prelude::*;
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 // A few exports that help ease life for downstream crates.
-use frame_support::traits::{
-	Contains, EqualPrivilegeOnly, Imbalance, InstanceFilter, OnUnbalanced,
-};
+use frame_support::traits::{EqualPrivilegeOnly, Imbalance, InstanceFilter, OnUnbalanced};
 pub use frame_support::{
 	construct_runtime, parameter_types,
 	traits::{KeyOwnerProofSystem, Randomness, StorageInfo},
@@ -221,27 +219,10 @@ parameter_types! {
 	pub const SS58Prefix: u8 = 13;
 }
 
-pub struct BaseFilter;
-#[rustfmt::skip]
-impl Contains<Call> for BaseFilter {
-	//Block send extrinsics for mainnent before official token generation event
-	fn contains(call: &Call) -> bool {
-		!matches!(
-			call,
-			// filter until we have resolved https://github.com/integritee-network/pallets/issues/17
-			Call::Teeracle(_) 
-		)
-	}
-}
-
 // Configure FRAME pallets to include in runtime.
 
 impl frame_system::Config for Runtime {
-	#[cfg(feature = "skip-extrinsic-filtering")]
 	type BaseCallFilter = frame_support::traits::Everything;
-	//Block extrinsics for mainnet before official token generation event
-	#[cfg(not(feature = "skip-extrinsic-filtering"))]
-	type BaseCallFilter = BaseFilter;
 	/// Block & extrinsics weights: base values and limits.
 	type BlockWeights = BlockWeights;
 	/// The maximum length of a block (in bytes).
@@ -398,10 +379,15 @@ impl pallet_claims::Config for Runtime {
 	type MoveClaimOrigin = frame_system::EnsureRoot<AccountId>;
 	type WeightInfo = weights::pallet_claims::WeightInfo<Runtime>;
 }
+parameter_types! {
+	pub const MaxWhitelistedReleases: u32 = 10;
+}
+
 /// added by Integritee
 impl pallet_teeracle::Config for Runtime {
 	type Event = Event;
 	type WeightInfo = weights::pallet_teeracle::WeightInfo<Runtime>;
+	type MaxWhitelistedReleases = MaxWhitelistedReleases;
 }
 
 parameter_types! {

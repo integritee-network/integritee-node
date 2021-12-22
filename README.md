@@ -41,3 +41,30 @@ For easy use of the binary without distributing a json chain spec, we generate a
 Then overwrite spec files in `./node/res/*.json` but keep bootnode definitions and check other meta too.
 
 Build the collator again and push.
+
+## prepare and test runtime upgrade for Live chain
+
+1. bump spec version. check if other runtime versions need to be bumped too. bump crate versions accordingly
+2. tag version. this will trigger CI to produce a draft release with all artifacts
+3. download release artifacts `integritee-node` (and postfix with version `-1.0.6`) and `integritee_node_runtime-v6.compact.compressed.wasm`
+4. start a local chain with the previous, latest deployed version (`1.0.5`)
+    ```
+    ./integritee-node-1.0.5 purge-chain --base-path /tmp/alice --chain local
+    ./integritee-node-1.0.5 purge-chain --base-path /tmp/bob --chain local
+    ./integritee-node-1.0.5 --base-path /tmp/alice --chain local --alice --port 30333 --ws-port 9945 --rpc-port 9933 --node-key 0000000000000000000000000000000000000000000000000000000000000001 --telemetry-url "wss://telemetry.polkadot.io/submit/ 0" --validator
+    ```
+
+5. in another terminal
+    ```
+    integritee-node-1.0.5 --base-path /tmp/bob --chain local --bob --port 30334 --ws-port 9946 --rpc-port 9934 --telemetry-url "wss://telemetry.polkadot.io/submit/ 0" --validator --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+    ```
+    you should see blocks produced. 
+6. perform a transfer extrinsic in js/apps to test 
+7. upgrade runtime to `integritee_node_runtime-v6.compact.compressed.wasm`
+8. verify spec version has been upgraded in js/apps
+9. stop one validator and restart it with newer binary version
+10. test by pointing js/apps to the updated validator ws:// and sending a transfer
+11. stop second validator and restart with new binary
+12. test by pointing js/apps to the updated validator ws:// and sending a transfer
+13. check that the node version has increased in js/apps
+14. finally, submit runtime upgrade to live chain

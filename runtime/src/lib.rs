@@ -148,6 +148,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	///
 	/// It need *not* change when a new module is added or when a dispatchable is added.
 	transaction_version: 2,
+	state_version: 0,
 };
 
 /// This determines the average expected block time that we are targeting.
@@ -394,6 +395,7 @@ impl pallet_teeracle::Config for Runtime {
 parameter_types! {
 	pub const ProposalBond: Permill = Permill::from_percent(5);
 	pub const ProposalBondMinimum: Balance = 100 * MILLITEER;
+	pub const ProposalBondMaximum: Balance = 500 * TEER;
 	pub const SpendPeriod: BlockNumber = 6 * DAYS;
 	pub const Burn: Permill = Permill::from_percent(1);
 	pub const TreasuryPalletId: PalletId = PalletId(*b"py/trsry");
@@ -411,6 +413,7 @@ impl pallet_treasury::Config for Runtime {
 	type OnSlash = (); //No proposal
 	type ProposalBond = ProposalBond; //No proposal
 	type ProposalBondMinimum = ProposalBondMinimum; //No proposal
+	type ProposalBondMaximum = ProposalBondMaximum;
 	type SpendPeriod = SpendPeriod; //Cannot be 0: Error: Thread 'tokio-runtime-worker' panicked at 'attempt to calculate the remainder with a divisor of zero
 	type Burn = (); //No burn
 	type BurnDestination = (); //No burn

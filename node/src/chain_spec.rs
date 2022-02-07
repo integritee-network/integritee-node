@@ -90,6 +90,10 @@ pub fn development_config() -> Result<ChainSpec, String> {
 		None,
 		// Protocol ID
 		None,
+		// Arbitrary string. Nodes will only synchronize with other nodes that have the same value
+		// in their `fork_id`. This can be used in order to segregate nodes in cases when multiple
+		// chains have the same genesis hash.
+		None,
 		// Properties
 		None,
 		// Extensions
@@ -140,6 +144,8 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 		// Telemetry
 		None,
 		// Protocol ID
+		None,
+		// Fork ID.
 		None,
 		// Properties
 		None,
@@ -251,6 +257,10 @@ pub fn integritee_solo_fresh_config() -> Result<ChainSpec, String> {
 		None,
 		// Protocol ID
 		Some("teer"),
+		// Arbitrary string. Nodes will only synchronize with other nodes that have the same value
+		// in their `fork_id`. This can be used in order to segregate nodes in cases when multiple
+		// chains have the same genesis hash.
+		None,
 		// Properties
 		Some(
 			serde_json::from_str(
@@ -332,6 +342,10 @@ pub fn cranny_fresh_config() -> Result<ChainSpec, String> {
 		None,
 		// Protocol ID
 		Some("teer"),
+		// Arbitrary string. Nodes will only synchronize with other nodes that have the same value
+		// in their `fork_id`. This can be used in order to segregate nodes in cases when multiple
+		// chains have the same genesis hash.
+		None,
 		// Properties
 		Some(
 			serde_json::from_str(
@@ -371,7 +385,7 @@ fn genesis_config(
 		},
 		sudo: SudoConfig {
 			// Assign network admin rights.
-			key: root_key,
+			key: Some(root_key),
 		},
 		teerex: TeerexConfig { allow_sgx_debug_mode: true },
 		claims: Default::default(),

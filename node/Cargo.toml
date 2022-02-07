@@ -8,7 +8,7 @@ license = 'Apache2'
 name = 'integritee-node'
 repository = 'https://github.com/integritee-network/integritee-node'
 #keep with runtime version
-version = '1.0.6'
+version = '1.0.7'
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

@@ -2297,7 +2297,7 @@ dependencies = [
 
 [[package]]
 name = "integritee-node"
-version = "1.0.6"
+version = "1.0.7"
 dependencies = [
  "clap",
  "frame-benchmarking",
@@ -2338,7 +2338,7 @@ dependencies = [
 
 [[package]]
 name = "integritee-node-runtime"
-version = "1.0.6"
+version = "1.0.7"
 dependencies = [
  "frame-benchmarking",
  "frame-executive",

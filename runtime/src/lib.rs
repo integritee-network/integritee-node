@@ -238,7 +238,8 @@ impl Contains<Call> for BaseFilter {
 			Call::Treasury(..) |
 			Call::Scheduler(_) |
 			Call::Utility(_) |
-			Call::Vesting(_)
+			Call::Vesting(_) |
+			Call::System(frame_system::Call::remark {..})
 		)
 	}
 }

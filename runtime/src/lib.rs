@@ -40,7 +40,9 @@ use sp_std::prelude::*;
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 // A few exports that help ease life for downstream crates.
-use frame_support::traits::{EqualPrivilegeOnly, Imbalance, InstanceFilter, OnUnbalanced};
+use frame_support::traits::{
+	Contains, EqualPrivilegeOnly, Imbalance, InstanceFilter, OnUnbalanced,
+};
 pub use frame_support::{
 	construct_runtime, parameter_types,
 	traits::{KeyOwnerProofSystem, Randomness, StorageInfo},
@@ -126,7 +128,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	/// Version of the runtime specification. A full-node will not attempt to use its native
 	/// runtime in substitute for the on-chain Wasm runtime unless all of `spec_name`,
 	/// `spec_version` and `authoring_version` are the same between Wasm and native.
-	spec_version: 8,
+	spec_version: 9,
 
 	/// Version of the implementation of the specification. Nodes are free to ignore this; it
 	/// serves only as an indication that the code is different; as long as the other two versions
@@ -220,10 +222,32 @@ parameter_types! {
 	pub const SS58Prefix: u8 = 13;
 }
 
+pub struct BaseFilter;
+#[rustfmt::skip]
+impl Contains<Call> for BaseFilter {
+	// Block send extrinsics for mainnent before official token generation event
+	fn contains(call: &Call) -> bool {
+		!matches!(
+			call,
+			Call::Balances(..) |
+			Call::Claims(..) |
+			Call::Multisig(_) |
+			Call::Proxy(_) |
+			Call::Teeracle(_) |
+			Call::Teerex(_) |
+			Call::Treasury(..) |
+			Call::Scheduler(_) |
+			Call::Utility(_) |
+			Call::Vesting(_) |
+			Call::System(_)
+		)
+	}
+}
+
 // Configure FRAME pallets to include in runtime.
 
 impl frame_system::Config for Runtime {
-	type BaseCallFilter = frame_support::traits::Everything;
+	type BaseCallFilter = BaseFilter;
 	/// Block & extrinsics weights: base values and limits.
 	type BlockWeights = BlockWeights;
 	/// The maximum length of a block (in bytes).

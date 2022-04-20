@@ -40,9 +40,6 @@ use sp_std::prelude::*;
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 // A few exports that help ease life for downstream crates.
-use frame_support::traits::{
-	Contains, EqualPrivilegeOnly, Imbalance, InstanceFilter, OnUnbalanced,
-};
 pub use frame_support::{
 	construct_runtime, parameter_types,
 	traits::{KeyOwnerProofSystem, Randomness, StorageInfo},
@@ -51,6 +48,10 @@ pub use frame_support::{
 		IdentityFee, Weight,
 	},
 	PalletId, RuntimeDebug, StorageValue,
+};
+use frame_support::{
+	traits::{Contains, EqualPrivilegeOnly, Imbalance, InstanceFilter, OnUnbalanced},
+	weights::ConstantMultiplier,
 };
 pub use frame_system::Call as SystemCall;
 use frame_system::EnsureRoot;
@@ -248,6 +249,7 @@ impl Contains<Call> for BaseFilter {
 // Configure FRAME pallets to include in runtime.
 
 impl frame_system::Config for Runtime {
+	//type BaseCallFilter = frame_support::traits::Everything;
 	type BaseCallFilter = BaseFilter;
 	/// Block & extrinsics weights: base values and limits.
 	type BlockWeights = BlockWeights;
@@ -372,7 +374,7 @@ impl pallet_transaction_payment::Config for Runtime {
 	//type TransactionByteFee = TransactionByteFee;
 	type OperationalFeeMultiplier = OperationalFeeMultiplier;
 	type WeightToFee = IdentityFee<Balance>;
-	type LengthToFee = IdentityFee<Balance>; //ConstantMultiplier<Balance, TransactionByteFee>;
+	type LengthToFee = ConstantMultiplier<Balance, TransactionByteFee>;
 	type FeeMultiplierUpdate = ();
 }
 

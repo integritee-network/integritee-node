@@ -748,6 +748,7 @@ dependencies = [
 [[package]]
 name = "claims-primitives"
 version = "0.1.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.19#cac00b08a420043bd09197ba6b6356ee9b542e33"
 dependencies = [
  "parity-scale-codec",
  "rustc-hex",
@@ -811,6 +812,7 @@ dependencies = [
 [[package]]
 name = "common-primitives"
 version = "0.1.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.19#cac00b08a420043bd09197ba6b6356ee9b542e33"
 dependencies = [
  "sp-std",
 ]
@@ -2204,6 +2206,7 @@ dependencies = [
 [[package]]
 name = "ias-verify"
 version = "0.1.4"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.19#cac00b08a420043bd09197ba6b6356ee9b542e33"
 dependencies = [
  "base64",
  "chrono",
@@ -3969,6 +3972,7 @@ dependencies = [
 [[package]]
 name = "pallet-claims"
 version = "0.9.12"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.19#cac00b08a420043bd09197ba6b6356ee9b542e33"
 dependencies = [
  "claims-primitives",
  "frame-benchmarking",
@@ -4106,6 +4110,7 @@ dependencies = [
 [[package]]
 name = "pallet-teeracle"
 version = "0.1.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.19#cac00b08a420043bd09197ba6b6356ee9b542e33"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4128,6 +4133,7 @@ dependencies = [
 [[package]]
 name = "pallet-teerex"
 version = "0.9.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.19#cac00b08a420043bd09197ba6b6356ee9b542e33"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -7258,6 +7264,7 @@ checksum = "d7fa7e55043acb85fca6b3c01485a2eeb6b69c5d21002e273c79e465f43b7ac1"
 [[package]]
 name = "teeracle-primitives"
 version = "0.1.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.19#cac00b08a420043bd09197ba6b6356ee9b542e33"
 dependencies = [
  "common-primitives",
  "sp-std",
@@ -7267,6 +7274,7 @@ dependencies = [
 [[package]]
 name = "teerex-primitives"
 version = "0.1.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.19#cac00b08a420043bd09197ba6b6356ee9b542e33"
 dependencies = [
  "ias-verify",
  "parity-scale-codec",
@@ -7301,6 +7309,7 @@ dependencies = [
 [[package]]
 name = "test-utils"
 version = "0.1.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.19#cac00b08a420043bd09197ba6b6356ee9b542e33"
 dependencies = [
  "hex-literal",
  "log",

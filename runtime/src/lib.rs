@@ -249,8 +249,8 @@ impl Contains<Call> for BaseFilter {
 // Configure FRAME pallets to include in runtime.
 
 impl frame_system::Config for Runtime {
-	//type BaseCallFilter = frame_support::traits::Everything;
-	type BaseCallFilter = BaseFilter;
+	type BaseCallFilter = frame_support::traits::Everything;
+	//type BaseCallFilter = BaseFilter;
 	/// Block & extrinsics weights: base values and limits.
 	type BlockWeights = BlockWeights;
 	/// The maximum length of a block (in bytes).

@@ -32,6 +32,7 @@ pallet-utility = { version = "4.0.0-dev", default-features = false, git = "https
 pallet-teerex = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "master" }
 pallet-claims = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "master" }
 pallet-teeracle = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "master" }
+pallet-sidechain = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "master" }
 
 sp-api = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.19" }
 sp-block-builder = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.19" }
@@ -121,4 +122,5 @@ runtime-benchmarks = [
 	"pallet-vesting/runtime-benchmarks",
 	"pallet-utility/runtime-benchmarks",
 	"pallet-teeracle/runtime-benchmarks",
+	"pallet-sidechain/runtime-benchmarks",
 ]

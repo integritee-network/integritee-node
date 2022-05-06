@@ -59,6 +59,8 @@ pub use pallet_balances::Call as BalancesCall;
 /// added by Integritee
 pub use pallet_claims;
 /// added by Integritee
+pub use pallet_sidechain;
+/// added by Integritee
 pub use pallet_teeracle;
 /// added by Integritee
 pub use pallet_teerex;
@@ -422,6 +424,17 @@ impl pallet_teeracle::Config for Runtime {
 }
 
 parameter_types! {
+	pub const EarlyBlockProposalLenience: u64 = 100;
+}
+
+/// added by Integritee
+impl pallet_sidechain::Config for Runtime {
+	type Event = Event;
+	type WeightInfo = weights::pallet_sidechain::WeightInfo<Runtime>;
+	type EarlyBlockProposalLenience = EarlyBlockProposalLenience;
+}
+
+parameter_types! {
 	pub const ProposalBond: Permill = Permill::from_percent(5);
 	pub const ProposalBondMinimum: Balance = 100 * MILLITEER;
 	pub const ProposalBondMaximum: Balance = 500 * TEER;
@@ -633,6 +646,7 @@ construct_runtime!(
 		Teerex: pallet_teerex::{Pallet, Call, Config, Storage, Event<T>} = 50,
 		Claims: pallet_claims::{Pallet, Call, Storage, Config<T>, Event<T>, ValidateUnsigned} = 51,
 		Teeracle: pallet_teeracle::{Pallet, Call, Storage, Event<T>} = 52,
+		Sidechain: pallet_sidechain::{Pallet, Call, Storage, Event<T>} = 53,
 	}
 );
 
@@ -822,6 +836,7 @@ impl_runtime_apis! {
 			list_benchmark!(list, extra, pallet_vesting, Vesting);
 			list_benchmark!(list, extra, pallet_utility, Utility);
 			list_benchmark!(list, extra, pallet_teeracle, Teeracle);
+			list_benchmark!(list, extra, pallet_sidechain, Sidechain);
 
 			let storage_info = AllPalletsWithSystem::storage_info();
 
@@ -866,6 +881,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_vesting, Vesting);
 			add_benchmark!(params, batches, pallet_utility, Utility);
 			add_benchmark!(params, batches, pallet_teeracle, Teeracle);
+			add_benchmark!(params, batches, pallet_sidechain, Sidechain);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)

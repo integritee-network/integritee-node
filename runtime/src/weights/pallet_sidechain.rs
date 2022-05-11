@@ -25,32 +25,15 @@
 use frame_support::{traits::Get, weights::Weight};
 use sp_std::marker::PhantomData;
 
-/// Weight functions for pallet_teerex.
+/// Weight functions for pallet_sidechain.
 pub struct WeightInfo<T>(PhantomData<T>);
-impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
-	// Storage: Timestamp Now (r:1 w:0)
-	// Storage: Teerex AllowSGXDebugMode (r:1 w:0)
+impl<T: frame_system::Config> pallet_sidechain::WeightInfo for WeightInfo<T> {
 	// Storage: Teerex EnclaveIndex (r:1 w:0)
-	// Storage: Teerex EnclaveRegistry (r:0 w:1)
-	fn register_enclave() -> Weight {
-		(2_087_072_000 as Weight)
-			.saturating_add(T::DbWeight::get().reads(3 as Weight))
+	// Storage: Teerex EnclaveRegistry (r:1 w:0)
+	// Storage: Teerex WorkerForShard (r:0 w:1)
+	fn confirm_proposed_sidechain_block() -> Weight {
+		(70_298_000 as Weight)
+			.saturating_add(T::DbWeight::get().reads(2 as Weight))
 			.saturating_add(T::DbWeight::get().writes(1 as Weight))
-	}
-	// Storage: Teerex EnclaveIndex (r:1 w:2)
-	// Storage: Teerex EnclaveCount (r:1 w:1)
-	// Storage: Teerex EnclaveRegistry (r:1 w:2)
-	fn unregister_enclave() -> Weight {
-		(94_173_000 as Weight)
-			.saturating_add(T::DbWeight::get().reads(3 as Weight))
-			.saturating_add(T::DbWeight::get().writes(5 as Weight))
-	}
-	fn call_worker() -> Weight {
-		(54_902_000 as Weight)
-	}
-	// Storage: Teerex EnclaveIndex (r:1 w:0)
-	fn confirm_processed_parentchain_block() -> Weight {
-		(52_350_000 as Weight)
-			.saturating_add(T::DbWeight::get().reads(1 as Weight))
 	}
 }

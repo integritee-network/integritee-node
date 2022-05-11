@@ -21,7 +21,7 @@ use crate::{
 	command_helper::{inherent_benchmark_data, BenchmarkExtrinsicBuilder},
 	service,
 };
-use frame_benchmarking_cli::{BenchmarkCmd};
+use frame_benchmarking_cli::BenchmarkCmd;
 use integritee_node_runtime::Block;
 use sc_cli::{ChainSpec, RuntimeVersion, SubstrateCli};
 use sc_service::PartialComponents;
@@ -161,9 +161,7 @@ pub fn run() -> sc_cli::Result<()> {
 
 						cmd.run(config, client, inherent_benchmark_data()?, Arc::new(ext_builder))
 					},
-					BenchmarkCmd::Machine(cmd) => {
-						cmd.run(&config)
-					}
+					BenchmarkCmd::Machine(cmd) => cmd.run(&config),
 				}
 			})
 		},

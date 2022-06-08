@@ -79,8 +79,7 @@ pub fn create_benchmark_extrinsic(
 		.map(|c| c / 2)
 		.unwrap_or(2) as u64;
 	let extra: runtime::SignedExtra = (
-		// TODO: Integrate upstream-changes after scs/substrate-api-client#211 has been solved.
-		//frame_system::CheckNonZeroSender::<runtime::Runtime>::new(),
+		frame_system::CheckNonZeroSender::<runtime::Runtime>::new(),
 		frame_system::CheckSpecVersion::<runtime::Runtime>::new(),
 		frame_system::CheckTxVersion::<runtime::Runtime>::new(),
 		frame_system::CheckGenesis::<runtime::Runtime>::new(),
@@ -97,8 +96,7 @@ pub fn create_benchmark_extrinsic(
 		call.clone(),
 		extra.clone(),
 		(
-			// TODO: Integrate upstream-changes after scs/substrate-api-client#211 has been solved.
-			// 	(),
+			(),
 			runtime::VERSION.spec_version,
 			runtime::VERSION.transaction_version,
 			genesis_hash,

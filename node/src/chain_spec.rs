@@ -68,7 +68,7 @@ pub fn development_config() -> Result<ChainSpec, String> {
 					(get_account_id_from_seed::<sr25519::Public>("Alice"), 1_000 * TEER),
 					(get_account_id_from_seed::<sr25519::Public>("Bob"), 1_000 * TEER),
 					(get_account_id_from_seed::<sr25519::Public>("Charlie"), 1_000 * TEER),
-					(TreasuryPalletId::get().into_account(), 1_000 * TEER),
+					(TreasuryPalletId::get().into_account_truncating(), 1_000 * TEER),
 					(
 						multisig_account(
 							vec![
@@ -121,7 +121,7 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 					(get_account_id_from_seed::<sr25519::Public>("Alice"), 1_000 * TEER),
 					(get_account_id_from_seed::<sr25519::Public>("Bob"), 1_000 * TEER),
 					(get_account_id_from_seed::<sr25519::Public>("Charlie"), 1_000 * TEER),
-					(TreasuryPalletId::get().into_account(), 1_000 * TEER),
+					(TreasuryPalletId::get().into_account_truncating(), 1_000 * TEER),
 					// The address of a multi-signature account is deterministically generated from the signers and threshold of the multisig wallet.
 					// Creating a multi-sig account from Polkadot-JS Apps UI, always sort the accounts according to the keys. Here we do the same
 					(

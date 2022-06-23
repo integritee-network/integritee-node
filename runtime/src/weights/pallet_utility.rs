@@ -45,4 +45,10 @@ impl<T: frame_system::Config> pallet_utility::WeightInfo for WeightInfo<T> {
 	fn dispatch_as() -> Weight {
 		(14_340_000 as Weight)
 	}
+	/// The range of component `c` is `[0, 1000]`.
+	fn force_batch(c: u32, ) -> Weight {
+		(19_136_000 as Weight)
+			// Standard Error: 2_000
+			.saturating_add((2_697_000 as Weight).saturating_mul(c as Weight))
+	}
 }

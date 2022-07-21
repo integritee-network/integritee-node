@@ -72,6 +72,8 @@ impl<T: frame_system::Config> pallet_treasury::WeightInfo for WeightInfo<T> {
 	}
 
 	fn spend() -> Weight {
-		todo!()
+		(22_063_000 as Weight)
+			.saturating_add(T::DbWeight::get().reads(1 as Weight))
+			.saturating_add(T::DbWeight::get().writes(2 as Weight))
 	}
 }

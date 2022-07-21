@@ -375,6 +375,7 @@ impl pallet_transaction_payment::Config for Runtime {
 	type WeightToFee = IdentityFee<Balance>;
 	type LengthToFee = ConstantMultiplier<Balance, TransactionByteFee>;
 	type FeeMultiplierUpdate = ();
+	type Event = Event;
 }
 
 impl pallet_sudo::Config for Runtime {
@@ -458,6 +459,7 @@ impl pallet_treasury::Config for Runtime {
 	type SpendFunds = (); //No spend, no bounty
 	type MaxApprovals = MaxApprovals; //0:cannot approve any proposal
 	type WeightInfo = weights::pallet_treasury::WeightInfo<Runtime>;
+	type SpendOrigin = frame_support::traits::NeverEnsureOrigin<u128>;
 }
 
 parameter_types! {
@@ -628,7 +630,7 @@ construct_runtime!(
 
 		// funds and fees
 		Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>} = 10,
-		TransactionPayment: pallet_transaction_payment::{Pallet, Storage} = 11,
+		TransactionPayment: pallet_transaction_payment::{Pallet, Storage, Event<T>} = 11,
 		Vesting: pallet_vesting::{Pallet, Call, Storage, Event<T>, Config<T>} = 12,
 
 		// consensus

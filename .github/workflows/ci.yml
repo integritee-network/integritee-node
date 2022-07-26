@@ -2,7 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master, sdk-v0.9.0-polkadot-v0.9.26 ]
+    branches:
+      - master
+      - 'sdk-v[0-9]+.[0-9]+.[0-9]+-*'
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
   pull_request:

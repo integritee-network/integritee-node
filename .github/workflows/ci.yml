@@ -2,12 +2,11 @@ name: CI
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master, sdk-v0.9.0-polkadot-v0.9.26 ]
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
   pull_request:
-    branches: [master]
+    branches: [ master, sdk-v0.9.0-polkadot-v0.9.26 ]
   workflow_dispatch:
     inputs:
       verbose:

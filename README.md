@@ -5,7 +5,13 @@ This repository belongs to the [Integritee project](https://book.integritee.netw
 A substrate-based node that maintains a registry of remote attested integritee-service enclaves. The node also acts as a proxy for encrypted requests which are forwarded to the integritee-service.
 
 ## Build and Run
-Please see our [Integritee Book](https://book.integritee.network/howto_node.html) to learn how to build and run this.
+~~Please see our [Integritee Book](https://book.integritee.network/howto_node.html) to learn how to build and run this.~~
+
+**IMPORTANT** MUST use the correct `--features=skip-ias-check,skip-extrinsic-filtering` else the worker will get an error
+#        `[2022-08-29T15:24:24Z ERROR ws::handler] WS Error <Custom(Extrinsic("extrinsic error code 1010: Invalid Transaction: Inability to pay some fees (e.g. account balance too low)"))>`
+#        or `[2022-08-29T15:24:48Z ERROR ws::handler] WS Error <Custom(Extrinsic("extrinsic error code 1012: Transaction is temporarily banned: "))>`
+
+**WIP** `INTERSTELLAR_URI_ROOT_API_CIRCUITS=http://localhost:3000 INTERSTELLAR_URI_ROOT_API_GARBLE=http://localhost:3001 cargo run --features skip-ias-check,skip-extrinsic-filtering -- --dev --tmp --ws-port 9990 --port 30390 --rpc-port 8990 --enable-offchain-indexing=1`
 
 ## Benchmark the runtimes
 In `./scripts` we have a script for benchmarking the runtimes.
@@ -13,7 +19,7 @@ In `./scripts` we have a script for benchmarking the runtimes.
 ### Current benchmark
 The current weights have been benchmarked with the following reference hardware:
 
-    GenuineIntel CPU MHz: 2494.144
+    GenuineIntel CPU MHz: 2494.14
     8GB of RAM
     NVMe SSD
 
@@ -58,8 +64,8 @@ Build the collator again and push.
     ```
     integritee-node-1.0.5 --base-path /tmp/bob --chain local --bob --port 30334 --ws-port 9946 --rpc-port 9934 --telemetry-url "wss://telemetry.polkadot.io/submit/ 0" --validator --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
     ```
-    you should see blocks produced. 
-6. perform a transfer extrinsic in js/apps to test 
+    you should see blocks produced.
+6. perform a transfer extrinsic in js/apps to test
 7. upgrade runtime to `integritee_node_runtime-v6.compact.compressed.wasm`
 8. verify spec version has been upgraded in js/apps
 9. stop one validator and restart it with newer binary version

@@ -44,7 +44,7 @@ pub fn authority_keys_from_seed(s: &str) -> (AuraId, GrandpaId) {
 
 pub fn multisig_account(mut accounts: Vec<AccountId>, threshold: u16) -> AccountId {
 	// sort accounts by public key, as js/apps would do
-	accounts.sort_by(|a, b| (*a).encode_hex::<String>().cmp(&(*b).encode_hex::<String>()));
+	accounts.sort_by_key(|a| (*a).encode_hex::<String>());
 	Multisig::multi_account_id(&accounts, threshold)
 }
 

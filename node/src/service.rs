@@ -36,6 +36,7 @@ pub(crate) type FullClient =
 type FullBackend = sc_service::TFullBackend<Block>;
 type FullSelectChain = sc_consensus::LongestChain<FullBackend, Block>;
 
+#[allow(clippy::type_complexity)]
 pub fn new_partial(
 	config: &Configuration,
 ) -> Result<
@@ -59,7 +60,7 @@ pub fn new_partial(
 	ServiceError,
 > {
 	if config.keystore_remote.is_some() {
-		return Err(ServiceError::Other(format!("Remote Keystores are not supported.")))
+		return Err(ServiceError::Other("Remote Keystores are not supported.".to_string()))
 	}
 
 	let telemetry = config
@@ -87,6 +88,33 @@ pub fn new_partial(
 			executor,
 		)?;
 	let client = Arc::new(client);
+
+	// FAIL to compile b/c of sp_keystore and/or sp_core
+	// if config.offchain_worker.enabled {
+	// 	// Initialize seed for signing transaction using off-chain workers. This is a convenience
+	// 	// so learners can see the transactions submitted simply running the node.
+	// 	// Typically these keys should be inserted with RPC calls to `author_insertKey`.
+	// 	let keystore = keystore_container.sync_keystore();
+
+	// 	// For pallet-ocw
+	// 	sp_keystore::SyncCryptoStore::sr25519_generate_new(
+	// 		&*keystore,
+	// 		node_template_runtime::pallet_ocw_garble::KEY_TYPE,
+	// 		Some("//Alice"),
+	// 	)
+	// 	.expect("Creating key with account Alice should succeed.");
+
+	// 	// For pallet-example-offchain-worker
+	// 	sp_keystore::SyncCryptoStore::sr25519_generate_new(
+	// 		&*keystore,
+	// 		node_template_runtime::pallet_ocw_circuits::KEY_TYPE,
+	// 		Some("//Alice"),
+	// 	)
+	// 	.expect("Creating key with account Alice should succeed.");
+	// }
+	// ------> ALTERNATIVE use RPCs: [grep "pub const KEY_TYPE: KeyTypeId" to get the correct IDs]
+	// - author_insertKey("garb", "//Alice", 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d)
+	// - author_insertKey("circ", "//Alice", 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d)
 
 	let telemetry = telemetry.map(|(worker, telemetry)| {
 		task_manager.spawn_handle().spawn("telemetry", None, worker.run());
@@ -149,7 +177,7 @@ pub fn new_partial(
 	})
 }
 
-fn remote_keystore(_url: &String) -> Result<Arc<LocalKeystore>, &'static str> {
+fn remote_keystore(_url: &str) -> Result<Arc<LocalKeystore>, &'static str> {
 	// FIXME: here would the concrete keystore be built,
 	//        must return a concrete type (NOT `LocalKeystore`) that
 	//        implements `CryptoStore` and `SyncCryptoStore`

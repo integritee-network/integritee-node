@@ -1,0 +1,3 @@
+[submodule "interstellar-pallets"]
+	path = interstellar-pallets
+	url = git@github.com:Interstellar-Network/pallets.git

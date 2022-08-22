@@ -12,6 +12,7 @@ version = '1.0.9'
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+log = { version = "0.4", default-features = false, features = [] }
 codec = { package = "parity-scale-codec", version = "3.0.0", default-features = false, features = ["derive"] }
 scale-info = { version = "2.1.1", default-features = false, features = ["derive"] }
 
@@ -34,9 +35,14 @@ pallet-claims = { default-features = false, git = "https://github.com/integritee
 pallet-teeracle = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "sdk-v0.10.0-polkadot-v0.9.27" }
 pallet-sidechain = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "sdk-v0.10.0-polkadot-v0.9.27" }
 
+# interstellar
+pallet-ocw-circuits = { default-features = false, path = "../interstellar-pallets/pallets/ocw-circuits" }
+pallet-tx-registry = { default-features = false, path = "../interstellar-pallets/pallets/tx-registry" }
+
 sp-api = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.27" }
 sp-block-builder = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.27" }
 sp-consensus-aura = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.27" }
+# TODO? "full_crypto" needed else "could not find `Pair` in `sr25519", "no `Pair` in `crypto`", etc
 sp-core = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.27" }
 sp-inherents = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.27" }
 sp-offchain = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.27" }
@@ -45,6 +51,11 @@ sp-session = { default-features = false, git = "https://github.com/paritytech/su
 sp-std = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.27" }
 sp-transaction-pool = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.27" }
 sp-version = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.27" }
+# TODO default-features = false, and remove "getrandom"?
+# TODO sp-keystore = { optional = true, default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.27" }
+# FIX and W/A
+# w/a for "error: the wasm32-unknown-unknown target is not supported by default, you may need to enable the "js" feature. For more information see: https://docs.rs/getrandom/#webassembly-support"
+# getrandom = { version = "0.2", features = ["js"] }
 
 # frame
 frame-support = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.27" }
@@ -68,6 +79,7 @@ default = ["std"]
 skip-ias-check = ["pallet-teerex/skip-ias-check"]
 skip-extrinsic-filtering = []
 std = [
+	"log/std",
 	"codec/std",
 	"scale-info/std",
 	"frame-executive/std",
@@ -98,11 +110,15 @@ std = [
 	"sp-std/std",
 	"sp-transaction-pool/std",
 	"sp-version/std",
+	# TODO "sp-keystore/std",
 	"pallet-teerex/std",
 	"pallet-claims/std",
 	"pallet-proxy/std",
 	"pallet-utility/std",
 	"pallet-teeracle/std",
+	# [interstellar]
+	"pallet-ocw-circuits/std",
+	"pallet-tx-registry/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking",

@@ -42,7 +42,7 @@ use sp_version::RuntimeVersion;
 // A few exports that help ease life for downstream crates.
 pub use frame_support::{
 	construct_runtime, parameter_types,
-	traits::{ConstU64, KeyOwnerProofSystem, Randomness, StorageInfo},
+	traits::{ConstU128, ConstU64, KeyOwnerProofSystem, Randomness, StorageInfo},
 	weights::{
 		constants::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_PER_SECOND},
 		IdentityFee, Weight,
@@ -344,9 +344,9 @@ impl pallet_timestamp::Config for Runtime {
 	type MinimumPeriod = ConstU64<{ SLOT_DURATION / 2 }>;
 	type WeightInfo = weights::pallet_timestamp::WeightInfo<Runtime>;
 }
+pub const EXISTENTIAL_DEPOSIT: u128 = MILLITEER;
 
 parameter_types! {
-	pub const ExistentialDeposit: u128 = MILLITEER;
 	pub const TransferFee: u128 = MILLITEER;
 	pub const CreationFee: u128 = MILLITEER;
 	pub const TransactionByteFee: u128 = MICROTEER;
@@ -361,7 +361,7 @@ impl pallet_balances::Config for Runtime {
 	/// The ubiquitous event type.
 	type Event = Event;
 	type DustRemoval = ();
-	type ExistentialDeposit = ExistentialDeposit;
+	type ExistentialDeposit = ConstU128<EXISTENTIAL_DEPOSIT>;
 	type AccountStore = System;
 	type WeightInfo = weights::pallet_balances::WeightInfo<Runtime>;
 	type MaxLocks = MaxLocks;

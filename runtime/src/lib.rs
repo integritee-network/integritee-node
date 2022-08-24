@@ -344,9 +344,9 @@ impl pallet_timestamp::Config for Runtime {
 	type MinimumPeriod = ConstU64<{ SLOT_DURATION / 2 }>;
 	type WeightInfo = weights::pallet_timestamp::WeightInfo<Runtime>;
 }
-pub const EXISTENTIAL_DEPOSIT: u128 = MILLITEER;
 
 parameter_types! {
+	pub const ExistentialDeposit: u128 = MILLITEER;
 	pub const TransferFee: u128 = MILLITEER;
 	pub const CreationFee: u128 = MILLITEER;
 	pub const TransactionByteFee: u128 = MICROTEER;
@@ -361,7 +361,7 @@ impl pallet_balances::Config for Runtime {
 	/// The ubiquitous event type.
 	type Event = Event;
 	type DustRemoval = ();
-	type ExistentialDeposit = ConstU128<EXISTENTIAL_DEPOSIT>;
+	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
 	type WeightInfo = weights::pallet_balances::WeightInfo<Runtime>;
 	type MaxLocks = MaxLocks;

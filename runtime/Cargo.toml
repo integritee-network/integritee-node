@@ -1,8 +1,8 @@
 [package]
-authors = ["Integritee AG"]
+authors = ["Integritee AG <hello@integritee.network>"]
 edition = '2021'
 homepage = 'https://integritee.network/'
-license = 'Apache2'
+license = 'Apache-2.0'
 name = 'integritee-node-runtime'
 repository = 'https://github.com/integritee-network/integritee-node'
 # keep patch revision with spec_version of runtime

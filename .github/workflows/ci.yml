@@ -215,9 +215,7 @@ jobs:
         rust: [stable]
         rust-target: [x86_64-unknown-linux-gnu]
 #        check: [fmt --all -- --check, clippy -- -D warnings]
-        check: [fmt --all -- --check,
-                taplo fmt --check,
-        ] # skip clippy for now
+        check: [fmt --all -- --check] # skip clippy for now
     env:
       RUST_BACKTRACE: full
       RUSTV: ${{ matrix.rust }}
@@ -230,15 +228,24 @@ jobs:
       - name: Setup Rust toolchain
         run: rustup show
 
-      - name: Install taplo
-        run: cargo install taplo-cli --locked
-
       - uses: Swatinem/rust-cache@v1
         with:
           key: ${{ matrix.rust-target }}-${{ matrix.check }}
 
       - name: ${{ matrix.check }}
         run: cargo ${{ matrix.check }}
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install taplo
+        run: cargo install taplo-cli --locked
+      - name: Cargo.toml fmt
+        run: taplo fmt --check
+      - name: Fail-fast; cancel other jobs
+        if: failure()
+        uses: andymckay/cancel-action@0.2
 
   build-runtimes:
     name: Build Runtimes

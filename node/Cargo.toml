@@ -1,10 +1,10 @@
 [package]
-authors = ["Integritee AG"]
+authors = ["Integritee AG <hello@integritee.network>"]
 build = 'build.rs'
 description = 'Integritee Node for Solochain'
 edition = '2021'
 homepage = 'https://integritee.network/'
-license = 'Apache2'
+license = 'Apache-2.0'
 name = 'integritee-node'
 repository = 'https://github.com/integritee-network/integritee-node'
 #keep with runtime version

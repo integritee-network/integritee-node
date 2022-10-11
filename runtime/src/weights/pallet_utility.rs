@@ -31,7 +31,7 @@ impl<T: frame_system::Config> pallet_utility::WeightInfo for WeightInfo<T> {
 	fn batch(c: u32, ) -> Weight {
 		Weight::from_ref_time(63_793_000)
 			// Standard Error: 36_000
-			.saturating_add(Weight::from_ref_time(9_370_000)).saturating_mul(c.into()))
+			.saturating_add(Weight::from_ref_time(9_370_000)).saturating_mul(c.into())
 	}
 	fn as_derivative() -> Weight {
 		Weight::from_ref_time(4_912_000)
@@ -39,7 +39,7 @@ impl<T: frame_system::Config> pallet_utility::WeightInfo for WeightInfo<T> {
 	fn batch_all(c: u32, ) -> Weight {
 		Weight::from_ref_time(58_530_000)
 			// Standard Error: 20_000
-			.saturating_add(Weight::from_ref_time(10_017_000)).saturating_mul(c.into()))
+			.saturating_add(Weight::from_ref_time(10_017_000)).saturating_mul(c.into())
 	}
 	//TODO: update weight value
 	fn dispatch_as() -> Weight {
@@ -49,6 +49,6 @@ impl<T: frame_system::Config> pallet_utility::WeightInfo for WeightInfo<T> {
 	fn force_batch(c: u32, ) -> Weight {
 		Weight::from_ref_time(19_136_000)
 			// Standard Error: 2_000
-			.saturating_add(Weight::from_ref_time(2_697_000)).saturating_mul(c.into()))
+			.saturating_add(Weight::from_ref_time(2_697_000)).saturating_mul(c.into())
 	}
 }

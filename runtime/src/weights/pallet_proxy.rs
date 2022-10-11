@@ -33,7 +33,7 @@ impl<T: frame_system::Config> pallet_proxy::WeightInfo for WeightInfo<T> {
 	fn proxy(p: u32, ) -> Weight {
 		Weight::from_ref_time(49_346_000)
 			// Standard Error: 15_000
-			.saturating_add(Weight::from_ref_time(423_000)).saturating_mul(p.into()))
+			.saturating_add(Weight::from_ref_time(423_000)).saturating_mul(p.into())
 			.saturating_add(T::DbWeight::get().reads(1))
 	}
 	// Storage: Proxy Proxies (r:1 w:0)
@@ -42,9 +42,9 @@ impl<T: frame_system::Config> pallet_proxy::WeightInfo for WeightInfo<T> {
 	fn proxy_announced(a: u32, p: u32, ) -> Weight {
 		Weight::from_ref_time(108_778_000)
 			// Standard Error: 78_000
-			.saturating_add(Weight::from_ref_time(985_000)).saturating_mul(a.into()))
+			.saturating_add(Weight::from_ref_time(985_000)).saturating_mul(a.into())
 			// Standard Error: 81_000
-			.saturating_add(Weight::from_ref_time(472_000)).saturating_mul(p.into()))
+			.saturating_add(Weight::from_ref_time(472_000)).saturating_mul(p.into())
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(2))
 	}
@@ -53,7 +53,7 @@ impl<T: frame_system::Config> pallet_proxy::WeightInfo for WeightInfo<T> {
 	fn remove_announcement(a: u32, _p: u32, ) -> Weight {
 		Weight::from_ref_time(80_354_000)
 			// Standard Error: 21_000
-			.saturating_add(Weight::from_ref_time(1_101_000)).saturating_mul(a.into()))
+			.saturating_add(Weight::from_ref_time(1_101_000)).saturating_mul(a.into())
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(2))
 	}
@@ -62,9 +62,9 @@ impl<T: frame_system::Config> pallet_proxy::WeightInfo for WeightInfo<T> {
 	fn reject_announcement(a: u32, p: u32, ) -> Weight {
 		Weight::from_ref_time(73_831_000)
 			// Standard Error: 53_000
-			.saturating_add(Weight::from_ref_time(1_185_000)).saturating_mul(a.into()))
+			.saturating_add(Weight::from_ref_time(1_185_000)).saturating_mul(a.into())
 			// Standard Error: 55_000
-			.saturating_add(Weight::from_ref_time(162_000)).saturating_mul(p.into()))
+			.saturating_add(Weight::from_ref_time(162_000)).saturating_mul(p.into())
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(2))
 	}
@@ -74,9 +74,9 @@ impl<T: frame_system::Config> pallet_proxy::WeightInfo for WeightInfo<T> {
 	fn announce(a: u32, p: u32, ) -> Weight {
 		Weight::from_ref_time(97_013_000)
 			// Standard Error: 61_000
-			.saturating_add(Weight::from_ref_time(1_224_000)).saturating_mul(a.into()))
+			.saturating_add(Weight::from_ref_time(1_224_000)).saturating_mul(a.into())
 			// Standard Error: 64_000
-			.saturating_add(Weight::from_ref_time(500_000)).saturating_mul(p.into()))
+			.saturating_add(Weight::from_ref_time(500_000)).saturating_mul(p.into())
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(2))
 	}
@@ -84,7 +84,7 @@ impl<T: frame_system::Config> pallet_proxy::WeightInfo for WeightInfo<T> {
 	fn add_proxy(p: u32, ) -> Weight {
 		Weight::from_ref_time(84_020_000)
 			// Standard Error: 55_000
-			.saturating_add(Weight::from_ref_time(591_000)).saturating_mul(p.into()))
+			.saturating_add(Weight::from_ref_time(591_000)).saturating_mul(p.into())
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -92,7 +92,7 @@ impl<T: frame_system::Config> pallet_proxy::WeightInfo for WeightInfo<T> {
 	fn remove_proxy(p: u32, ) -> Weight {
 		Weight::from_ref_time(78_733_000)
 			// Standard Error: 49_000
-			.saturating_add(Weight::from_ref_time(234_000)).saturating_mul(p.into()))
+			.saturating_add(Weight::from_ref_time(234_000)).saturating_mul(p.into())
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -100,7 +100,7 @@ impl<T: frame_system::Config> pallet_proxy::WeightInfo for WeightInfo<T> {
 	fn remove_proxies(p: u32, ) -> Weight {
 		Weight::from_ref_time(70_957_000)
 			// Standard Error: 15_000
-			.saturating_add(Weight::from_ref_time(451_000)).saturating_mul(p.into()))
+			.saturating_add(Weight::from_ref_time(451_000)).saturating_mul(p.into())
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -109,7 +109,7 @@ impl<T: frame_system::Config> pallet_proxy::WeightInfo for WeightInfo<T> {
 	fn anonymous(p: u32, ) -> Weight {
 		Weight::from_ref_time(96_967_000)
 			// Standard Error: 55_000
-			.saturating_add(Weight::from_ref_time(109_000)).saturating_mul(p.into()))
+			.saturating_add(Weight::from_ref_time(109_000)).saturating_mul(p.into())
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -117,7 +117,7 @@ impl<T: frame_system::Config> pallet_proxy::WeightInfo for WeightInfo<T> {
 	fn kill_anonymous(p: u32, ) -> Weight {
 		Weight::from_ref_time(74_013_000)
 			// Standard Error: 8_000
-			.saturating_add(Weight::from_ref_time(439_000)).saturating_mul(p.into()))
+			.saturating_add(Weight::from_ref_time(439_000)).saturating_mul(p.into())
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}

@@ -35,7 +35,7 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 	fn register_enclave() -> Weight {
 		Weight::from_ref_time(2_087_072_000)
 			.saturating_add(T::DbWeight::get().reads(3 as Weight))
-			.saturating_add(T::DbWeight::get().writes(1 as Weight))
+			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: Teerex EnclaveIndex (r:1 w:2)
 	// Storage: Teerex EnclaveCount (r:1 w:1)
@@ -43,7 +43,7 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 	fn unregister_enclave() -> Weight {
 		Weight::from_ref_time(94_173_000)
 			.saturating_add(T::DbWeight::get().reads(3 as Weight))
-			.saturating_add(T::DbWeight::get().writes(5 as Weight))
+			.saturating_add(T::DbWeight::get().writes(5))
 	}
 	fn call_worker() -> Weight {
 		Weight::from_ref_time(54_902_000)

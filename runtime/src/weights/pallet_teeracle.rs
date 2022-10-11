@@ -35,18 +35,18 @@ impl<T: frame_system::Config> pallet_teeracle::WeightInfo for WeightInfo<T> {
 	fn update_exchange_rate() -> Weight {
 		Weight::from_ref_time(77_556_000)
 			.saturating_add(T::DbWeight::get().reads(4 as Weight))
-			.saturating_add(T::DbWeight::get().writes(1 as Weight))
+			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: Teeracle Whitelists (r:1 w:1)
 	fn add_to_whitelist() -> Weight {
 		Weight::from_ref_time(35_065_000)
 			.saturating_add(T::DbWeight::get().reads(1 as Weight))
-			.saturating_add(T::DbWeight::get().writes(1 as Weight))
+			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: Teeracle Whitelists (r:1 w:1)
 	fn remove_from_whitelist() -> Weight {
 		Weight::from_ref_time(37_631_000)
 			.saturating_add(T::DbWeight::get().reads(1 as Weight))
-			.saturating_add(T::DbWeight::get().writes(1 as Weight))
+			.saturating_add(T::DbWeight::get().writes(1))
 	}
 }

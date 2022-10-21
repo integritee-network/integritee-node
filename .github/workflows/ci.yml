@@ -235,6 +235,19 @@ jobs:
       - name: ${{ matrix.check }}
         run: cargo ${{ matrix.check }}
 
+  cargo-toml-fmt:
+    runs-on: ubuntu-latest
+    container: "tamasfe/taplo:0.7.0-alpine"
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Taplo fmt
+        run: taplo fmt --check
+
+      - name: Fail-fast; cancel other jobs
+        if: failure()
+        uses: andymckay/cancel-action@0.2
+
   build-runtimes:
     name: Build Runtimes
     runs-on: ubuntu-latest

@@ -37,7 +37,7 @@ jobs:
       runs: ${{ steps.runs.outputs.runs }}
     steps:
       - id: check
-        run: echo "::set-output name=check::${{ env.ENABLE_CHECK }}"
+        run: echo "{check}=${{ env.ENABLE_CHECK }}" >> $GITHUB_OUTPUT
 
   cancel_previous_runs:
     name: Cancel Previous Runs
@@ -454,7 +454,7 @@ jobs:
           ls
           ls "${{ matrix.runtime }}-runtime-${{ github.sha }}"
           runtime_ver="$(ruby -e 'require "./scripts/github/lib.rb"; puts get_runtime()')"
-          echo "::set-output name=runtime_ver::$runtime_ver"
+          echo "{runtime_ver}={$runtime_ver}" >> $GITHUB_OUTPUT
 
       - name: Upload compact ${{ matrix.runtime }} wasm
         uses: actions/upload-release-asset@v1

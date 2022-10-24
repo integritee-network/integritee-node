@@ -37,7 +37,7 @@ jobs:
       runs: ${{ steps.runs.outputs.runs }}
     steps:
       - id: check
-        run: echo "{check}=${{ env.ENABLE_CHECK }}" >> $GITHUB_OUTPUT
+        run: echo "{check}={${{ env.ENABLE_CHECK }}}" >> $GITHUB_OUTPUT
 
   cancel_previous_runs:
     name: Cancel Previous Runs

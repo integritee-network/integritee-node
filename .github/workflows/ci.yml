@@ -37,7 +37,7 @@ jobs:
       runs: ${{ steps.runs.outputs.runs }}
     steps:
       - id: check
-        run: echo "::set-output name=check::${{ env.ENABLE_CHECK }}"
+        run: echo "{check}=${{ env.ENABLE_CHECK }}" >> $GITHUB_OUTPUT
 
   cancel_previous_runs:
     name: Cancel Previous Runs
@@ -76,7 +76,7 @@ jobs:
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10
 
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.os }}-${{ env.RUST_BIN_DIR }}-${{ matrix.binary }}
 
@@ -131,7 +131,7 @@ jobs:
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10
 
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.os }}-${{ env.RUST_BIN_DIR }}-${{ matrix.binary }}-skip-ias-check
 
@@ -186,7 +186,7 @@ jobs:
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10
 
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.os }}-${{ env.RUST_BIN_DIR }}-${{ matrix.binary }}-skip-ias-check
 
@@ -207,7 +207,6 @@ jobs:
   check:
     name: Rust check ${{ matrix.check }} (${{ matrix.rust-target }})
     needs: config
-    if: ${{ needs.config.outputs.check == 'true' }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -228,7 +227,7 @@ jobs:
       - name: Setup Rust toolchain
         run: rustup show
 
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.rust-target }}-${{ matrix.check }}
 
@@ -467,7 +466,7 @@ jobs:
           ls
           ls "${{ matrix.runtime }}-runtime-${{ github.sha }}"
           runtime_ver="$(ruby -e 'require "./scripts/github/lib.rb"; puts get_runtime()')"
-          echo "::set-output name=runtime_ver::$runtime_ver"
+          echo "{runtime_ver}={$runtime_ver}" >> $GITHUB_OUTPUT
 
       - name: Upload compact ${{ matrix.runtime }} wasm
         uses: actions/upload-release-asset@v1

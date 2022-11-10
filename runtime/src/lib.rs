@@ -420,14 +420,14 @@ impl pallet_teeracle::Config for Runtime {
 	type MaxWhitelistedReleases = MaxWhitelistedReleases;
 }
 parameter_types! {
-    pub const EarlyBlockProposalLenience: u64 = 100;
+	pub const EarlyBlockProposalLenience: u64 = 100;
 }
 
 /// added by Integritee
 impl pallet_sidechain::Config for Runtime {
 	type Event = Event;
 	type WeightInfo = weights::pallet_sidechain::WeightInfo<Runtime>;
-  type EarlyBlockProposalLenience = EarlyBlockProposalLenience;
+	type EarlyBlockProposalLenience = EarlyBlockProposalLenience;
 }
 
 parameter_types! {

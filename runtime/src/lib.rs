@@ -427,7 +427,6 @@ parameter_types! {
 impl pallet_sidechain::Config for Runtime {
 	type Event = Event;
 	type WeightInfo = weights::pallet_sidechain::WeightInfo<Runtime>;
-	type EarlyBlockProposalLenience = EarlyBlockProposalLenience;
 }
 
 parameter_types! {

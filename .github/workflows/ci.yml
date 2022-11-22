@@ -37,13 +37,13 @@ jobs:
       runs: ${{ steps.runs.outputs.runs }}
     steps:
       - id: check
-        run: echo "::set-output name=check::${{ env.ENABLE_CHECK }}"
+        run: echo "{check}=${{ env.ENABLE_CHECK }}" >> $GITHUB_OUTPUT
 
   cancel_previous_runs:
     name: Cancel Previous Runs
     runs-on: ubuntu-20.04
     steps:
-      - uses: styfle/cancel-workflow-action@0.4.1
+      - uses: styfle/cancel-workflow-action@0.11.0
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -62,7 +62,7 @@ jobs:
       RUST_BIN_DIR: target/${{ matrix.rust-target }}/debug
       RELEASE_NAME: debug
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Print env
         run: |
@@ -76,7 +76,7 @@ jobs:
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10
 
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.os }}-${{ env.RUST_BIN_DIR }}-${{ matrix.binary }}
 
@@ -88,7 +88,7 @@ jobs:
 
       # Upload artifacts
       - name: Upload integritee-node
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: integritee-node-${{ github.sha }}
           path: target/release/integritee-node
@@ -117,7 +117,7 @@ jobs:
       RUST_BIN_DIR: target/${{ matrix.rust-target }}/debug
       RELEASE_NAME: debug
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Print env
         run: |
@@ -131,7 +131,7 @@ jobs:
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10
 
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.os }}-${{ env.RUST_BIN_DIR }}-${{ matrix.binary }}-skip-ias-check
 
@@ -143,7 +143,7 @@ jobs:
 
       # Upload artifacts
       - name: Upload integritee-node-dev
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: integritee-node-dev-${{ github.sha }}
           path: target/release/integritee-node
@@ -172,7 +172,7 @@ jobs:
       RUST_BIN_DIR: target/${{ matrix.rust-target }}/debug
       RELEASE_NAME: debug
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Print env
         run: |
@@ -186,7 +186,7 @@ jobs:
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10
 
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.os }}-${{ env.RUST_BIN_DIR }}-${{ matrix.binary }}-skip-ias-check
 
@@ -198,7 +198,7 @@ jobs:
 
       # Upload artifacts
       - name: Upload integritee-node-benchmarks
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: integritee-node-benchmarks-${{ github.sha }}
           path: target/release/integritee-node
@@ -207,7 +207,6 @@ jobs:
   check:
     name: Rust check ${{ matrix.check }} (${{ matrix.rust-target }})
     needs: config
-    if: ${{ needs.config.outputs.check == 'true' }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -221,14 +220,14 @@ jobs:
       RUSTV: ${{ matrix.rust }}
       TARGET: ${{ matrix.rust-target }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # With rustup's nice new toml format, we just need to run rustup show to install the toolchain
       # https://github.com/actions-rs/toolchain/issues/126#issuecomment-782989659
       - name: Setup Rust toolchain
         run: rustup show
 
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.rust-target }}-${{ matrix.check }}
 
@@ -277,10 +276,10 @@ jobs:
       matrix:
         runtime: ["integritee-node"]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cache target dir
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: "${{ github.workspace }}/runtime/target"
           key: srtool-target-${{ matrix.runtime }}-${{ github.sha }}
@@ -290,7 +289,7 @@ jobs:
 
       - name: Srtool build
         id: srtool_build
-        uses: chevdor/srtool-actions@v0.3.0
+        uses: chevdor/srtool-actions@v0.6.0
         with:
           chain: ${{ matrix.runtime }}
           runtime_dir: runtime
@@ -331,7 +330,7 @@ jobs:
 #          cat ${{ matrix.chain }}-diff.txt
 
       - name: Upload ${{ matrix.runtime }} srtool json
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.runtime }}-srtool-json-${{ github.sha }}
           path: |
@@ -343,7 +342,7 @@ jobs:
 
 
       - name: Upload ${{ matrix.runtime }} runtime
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.runtime }}-runtime-${{ github.sha }}
           path: |
@@ -371,9 +370,9 @@ jobs:
         config: [kusama]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      # - uses: actions/download-artifact@v2
+      # - uses: actions/download-artifact@v3
       #   with:
       #     name: integritee-node-${{ github.sha }}
 
@@ -393,7 +392,7 @@ jobs:
       #     sha256sum ${{ env.CHAIN_SPEC }}.json >> checksums.txt
 
       # - name: Upload ${{ env.CHAIN_SPEC }} Files
-      #   uses: actions/upload-artifact@v2
+      #   uses: actions/upload-artifact@v3
       #   with:
       #     name: ${{ env.CHAIN_SPEC }}-${{ github.sha }}
       #     path: |
@@ -419,16 +418,16 @@ jobs:
       release_url: ${{ steps.create-release.outputs.html_url }}
       asset_upload_url: ${{ steps.create-release.outputs.upload_url }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Download Integritee Collator
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: integritee-node-dev-${{ github.sha }}
           path: integritee-node-dev-tmp
 
       - name: Download Integritee Collator
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: integritee-node-${{ github.sha }}
 
@@ -476,8 +475,8 @@ jobs:
       matrix:
         runtime: ["integritee-node"]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
       - name: Set up Ruby 2.7
         uses: actions/setup-ruby@v1
         with:
@@ -489,7 +488,7 @@ jobs:
           ls
           ls "${{ matrix.runtime }}-runtime-${{ github.sha }}"
           runtime_ver="$(ruby -e 'require "./scripts/github/lib.rb"; puts get_runtime()')"
-          echo "::set-output name=runtime_ver::$runtime_ver"
+          echo "{runtime_ver}={$runtime_ver}" >> $GITHUB_OUTPUT
 
       - name: Upload compact ${{ matrix.runtime }} wasm
         uses: actions/upload-release-asset@v1

@@ -12,11 +12,11 @@ jobs:
       matrix:
         binary: ["integritee-node", "integritee-node-dev"]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set output
         id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+        run: echo "{tag}={${GITHUB_REF#refs/*/}}" >> $GITHUB_OUTPUT
 
       - name: Check output
         env:

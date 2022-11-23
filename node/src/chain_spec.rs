@@ -338,7 +338,7 @@ pub fn cranny_fresh_config() -> Result<ChainSpec, String> {
 		// chains have the same genesis hash.
 		None,
 		// Properties
-		Some(teer_properties()),
+		Some(cranny_properties()),
 		// Extensions
 		None,
 	))
@@ -392,6 +392,17 @@ fn teer_properties() -> sc_service::Properties {
 				"ss58Format": 13,
 				"tokenDecimals": 12,
 				"tokenSymbol": "TEER"
+			}"#,
+	)
+	.unwrap()
+}
+
+fn cranny_properties() -> sc_service::Properties {
+	serde_json::from_str(
+		r#"{
+			  	"ss58Format": 42,
+				"tokenDecimals": 12,
+				"tokenSymbol": "CRA"
 			}"#,
 	)
 	.unwrap()

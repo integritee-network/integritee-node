@@ -411,6 +411,7 @@ impl pallet_claims::Config for Runtime {
 }
 parameter_types! {
 	pub const MaxWhitelistedReleases: u32 = 10;
+	pub const MaxOracleBlobLen: u32 = 4096;
 }
 
 /// added by Integritee
@@ -418,6 +419,7 @@ impl pallet_teeracle::Config for Runtime {
 	type Event = Event;
 	type WeightInfo = weights::pallet_teeracle::WeightInfo<Runtime>;
 	type MaxWhitelistedReleases = MaxWhitelistedReleases;
+	type MaxOracleBlobLen = MaxOracleBlobLen;
 }
 parameter_types! {
 	pub const EarlyBlockProposalLenience: u64 = 100;

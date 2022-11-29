@@ -150,11 +150,11 @@ checksum = "e22d1f4b888c298a027c99dc9048015fac177587de20fc30232a057dfbe24a21"
 
 [[package]]
 name = "async-channel"
-version = "1.7.1"
+version = "1.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e14485364214912d3b19cc3435dde4df66065127f05fa0d75c712f36f12c2f28"
+checksum = "cf46fee83e5ccffc220104713af3292ff9bc7c64c7de289f66dae8e38d826833"
 dependencies = [
- "concurrent-queue 1.2.4",
+ "concurrent-queue",
  "event-listener",
  "futures-core",
 ]
@@ -167,7 +167,7 @@ checksum = "17adb73da160dfb475c183343c8cccd80721ea5a605d3eb57125f0a7b7a92d0b"
 dependencies = [
  "async-lock",
  "async-task",
- "concurrent-queue 2.0.0",
+ "concurrent-queue",
  "fastrand",
  "futures-lite",
  "slab",
@@ -196,7 +196,7 @@ checksum = "8c374dda1ed3e7d8f0d9ba58715f924862c63eae6849c92d3a18e7fbde9e2794"
 dependencies = [
  "async-lock",
  "autocfg",
- "concurrent-queue 2.0.0",
+ "concurrent-queue",
  "futures-lite",
  "libc",
  "log",
@@ -286,9 +286,9 @@ checksum = "7a40729d2133846d9ed0ea60a8b9541bccddab49cd30f0715a1da672fe9a2524"
 
 [[package]]
 name = "async-trait"
-version = "0.1.58"
+version = "0.1.59"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1e805d94e6b5001b651426cf4cd446b1ab5f319d27bab5c644f61de0a804360c"
+checksum = "31e6e93155431f3931513b243d371981bb2770112b370c82745a1d19d2f99364"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -604,12 +604,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cache-padded"
-version = "1.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c1db59621ec70f09c5e9b597b220c7a2b43611f4710dc03ceb8748637775692c"
-
-[[package]]
 name = "camino"
 version = "1.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -748,7 +742,7 @@ dependencies = [
 [[package]]
 name = "claims-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=coax1d-support-arbitrary-oracle-68#9a3911f48e9c9e7032736a67ff51f36818f4de06"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#ed263bc42b92fca7eb00014d9356a0d9dc96641f"
 dependencies = [
  "parity-scale-codec",
  "rustc-hex",
@@ -842,18 +836,9 @@ dependencies = [
 [[package]]
 name = "common-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=coax1d-support-arbitrary-oracle-68#9a3911f48e9c9e7032736a67ff51f36818f4de06"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#ed263bc42b92fca7eb00014d9356a0d9dc96641f"
 dependencies = [
  "sp-std",
-]
-
-[[package]]
-name = "concurrent-queue"
-version = "1.2.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "af4780a44ab5696ea9e28294517f1fffb421a83a25af521333c838635509db9c"
-dependencies = [
- "cache-padded",
 ]
 
 [[package]]
@@ -2149,9 +2134,9 @@ dependencies = [
 
 [[package]]
 name = "gloo-timers"
-version = "0.2.4"
+version = "0.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5fb7d06c1c8cc2a29bee7ec961009a0b2caa0793ee4900c2ffb348734ba1c8f9"
+checksum = "98c4a8d6391675c6b2ee1a6c8d06e8e2d03605c44cec1270675985a4c2a5500b"
 dependencies = [
  "futures-channel",
  "futures-core",
@@ -2417,7 +2402,7 @@ dependencies = [
 [[package]]
 name = "ias-verify"
 version = "0.1.4"
-source = "git+https://github.com/integritee-network/pallets.git?branch=coax1d-support-arbitrary-oracle-68#9a3911f48e9c9e7032736a67ff51f36818f4de06"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#ed263bc42b92fca7eb00014d9356a0d9dc96641f"
 dependencies = [
  "base64",
  "chrono",
@@ -4179,7 +4164,7 @@ dependencies = [
 [[package]]
 name = "pallet-claims"
 version = "0.9.12"
-source = "git+https://github.com/integritee-network/pallets.git?branch=coax1d-support-arbitrary-oracle-68#9a3911f48e9c9e7032736a67ff51f36818f4de06"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#ed263bc42b92fca7eb00014d9356a0d9dc96641f"
 dependencies = [
  "claims-primitives",
  "frame-benchmarking",
@@ -4303,7 +4288,7 @@ dependencies = [
 [[package]]
 name = "pallet-sidechain"
 version = "0.9.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=coax1d-support-arbitrary-oracle-68#9a3911f48e9c9e7032736a67ff51f36818f4de06"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#ed263bc42b92fca7eb00014d9356a0d9dc96641f"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4342,7 +4327,7 @@ dependencies = [
 [[package]]
 name = "pallet-teeracle"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=coax1d-support-arbitrary-oracle-68#9a3911f48e9c9e7032736a67ff51f36818f4de06"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#ed263bc42b92fca7eb00014d9356a0d9dc96641f"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4365,7 +4350,7 @@ dependencies = [
 [[package]]
 name = "pallet-teerex"
 version = "0.9.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=coax1d-support-arbitrary-oracle-68#9a3911f48e9c9e7032736a67ff51f36818f4de06"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#ed263bc42b92fca7eb00014d9356a0d9dc96641f"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4612,7 +4597,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3742b2c103b9f06bc9fff0a37ff4912935851bee6d36f3c02bcc755bcfec228f"
 dependencies = [
  "lock_api",
- "parking_lot_core 0.9.4",
+ "parking_lot_core 0.9.5",
 ]
 
 [[package]]
@@ -4631,9 +4616,9 @@ dependencies = [
 
 [[package]]
 name = "parking_lot_core"
-version = "0.9.4"
+version = "0.9.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4dc9e0dc2adc1c69d09143aff38d3d30c5c3f0df0dad82e6d25547af174ebec0"
+checksum = "7ff9f3fef3968a3ec5945535ed654cb38ff72d7495a25619e2247fb15a2ed9ba"
 dependencies = [
  "cfg-if",
  "libc",
@@ -4784,9 +4769,9 @@ checksum = "e8d0eef3571242013a0d5dc84861c3ae4a652e56e12adf8bdc26ff5f8cb34c94"
 
 [[package]]
 name = "polling"
-version = "2.5.0"
+version = "2.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9f7d73f1eaed1ca1fb37b54dcc9b38e3b17d6c7b8ecb7abfffcac8d0351f17d4"
+checksum = "166ca89eb77fd403230b9c156612965a81e094ec6ec3aa13663d4c8b113fa748"
 dependencies = [
  "autocfg",
  "cfg-if",
@@ -6666,7 +6651,7 @@ checksum = "43b2853a4d09f215c24cc5489c992ce46052d359b5109343cbafbf26bc62f8a3"
 [[package]]
 name = "sidechain-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=coax1d-support-arbitrary-oracle-68#9a3911f48e9c9e7032736a67ff51f36818f4de06"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#ed263bc42b92fca7eb00014d9356a0d9dc96641f"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -7648,7 +7633,7 @@ checksum = "9410d0f6853b1d94f0e519fb95df60f29d2c1eff2d921ffdf01a4c8a3b54f12d"
 [[package]]
 name = "teeracle-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=coax1d-support-arbitrary-oracle-68#9a3911f48e9c9e7032736a67ff51f36818f4de06"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#ed263bc42b92fca7eb00014d9356a0d9dc96641f"
 dependencies = [
  "common-primitives",
  "sp-std",
@@ -7658,7 +7643,7 @@ dependencies = [
 [[package]]
 name = "teerex-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=coax1d-support-arbitrary-oracle-68#9a3911f48e9c9e7032736a67ff51f36818f4de06"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#ed263bc42b92fca7eb00014d9356a0d9dc96641f"
 dependencies = [
  "ias-verify",
  "parity-scale-codec",
@@ -7695,7 +7680,7 @@ dependencies = [
 [[package]]
 name = "test-utils"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=coax1d-support-arbitrary-oracle-68#9a3911f48e9c9e7032736a67ff51f36818f4de06"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#ed263bc42b92fca7eb00014d9356a0d9dc96641f"
 dependencies = [
  "hex-literal",
  "log",

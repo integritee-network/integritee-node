@@ -7,6 +7,13 @@ A substrate-based node that maintains a registry of remote attested integritee-s
 ## Build and Run
 Please see our [Integritee Book](https://book.integritee.network/howto_node.html) to learn how to build and run this.
 
+### Note
+There are some cargo features that are highly relevant for developers:
+
+* `skip-ias-check`: allow registering enclaves without attestation report.
+* `skip-extrinsic-filtering`: We have a defensive filter for transfer extrinsics as we have an old solo-node running for archive purposes, which mustn't allow transfers. The filter can be deactivated with this feature.
+
+
 ## Benchmark the runtimes
 In `./scripts` we have a script for benchmarking the runtimes.
 

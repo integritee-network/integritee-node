@@ -89,13 +89,13 @@ pub fn development_config() -> Result<ChainSpec, String> {
 		// Telemetry
 		None,
 		// Protocol ID
-		None,
+		Some("teer"),
 		// Arbitrary string. Nodes will only synchronize with other nodes that have the same value
 		// in their `fork_id`. This can be used in order to segregate nodes in cases when multiple
 		// chains have the same genesis hash.
 		None,
 		// Properties
-		None,
+		Some(teer_properties()),
 		// Extensions
 		None,
 	))
@@ -144,11 +144,11 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 		// Telemetry
 		None,
 		// Protocol ID
-		None,
+		Some("teer"),
 		// Fork ID.
 		None,
 		// Properties
-		None,
+		Some(teer_properties()),
 		// Extensions
 		None,
 	))
@@ -262,16 +262,7 @@ pub fn integritee_solo_fresh_config() -> Result<ChainSpec, String> {
 		// chains have the same genesis hash.
 		None,
 		// Properties
-		Some(
-			serde_json::from_str(
-				r#"{
-				"ss58Format": 13,
-				"tokenDecimals": 12,
-				"tokenSymbol": "TEER"
-			}"#,
-			)
-			.unwrap(),
-		),
+		Some(teer_properties()),
 		// Extensions
 		None,
 	))
@@ -347,16 +338,7 @@ pub fn cranny_fresh_config() -> Result<ChainSpec, String> {
 		// chains have the same genesis hash.
 		None,
 		// Properties
-		Some(
-			serde_json::from_str(
-				r#"{
-				"ss58Format": 42,
-				"tokenDecimals": 12,
-				"tokenSymbol": "CRA"
-			}"#,
-			)
-			.unwrap(),
-		),
+		Some(cranny_properties()),
 		// Extensions
 		None,
 	))
@@ -402,4 +384,26 @@ pub fn integritee_solo_config() -> Result<ChainSpec, String> {
 
 pub fn cranny_config() -> Result<ChainSpec, String> {
 	ChainSpec::from_json_bytes(&include_bytes!("../res/cranny.json")[..])
+}
+
+fn teer_properties() -> sc_service::Properties {
+	serde_json::from_str(
+		r#"{
+				"ss58Format": 13,
+				"tokenDecimals": 12,
+				"tokenSymbol": "TEER"
+			}"#,
+	)
+	.unwrap()
+}
+
+fn cranny_properties() -> sc_service::Properties {
+	serde_json::from_str(
+		r#"{
+			  	"ss58Format": 42,
+				"tokenDecimals": 12,
+				"tokenSymbol": "CRA"
+			}"#,
+	)
+	.unwrap()
 }

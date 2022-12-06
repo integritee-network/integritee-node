@@ -13,6 +13,15 @@ There are some cargo features that are highly relevant for developers:
 * `skip-ias-check`: allow registering enclaves without attestation report.
 * `skip-extrinsic-filtering`: We have a defensive filter for transfer extrinsics as we have an old solo-node running for archive purposes, which mustn't allow transfers. The filter can be deactivated with this feature.
 
+## Versioning
+There are two important version parameters in the `RuntimeVersion` that change behaviour, see [RustDocs](https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html).
+* `spec_version` always needs to be updated when the runtime logic changes.
+* `transaction_version`, see desctription in [RustDocs](https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html).
+
+Convention:
+1. The runtime's and node's crate patch version must be aligned with the `spec_version`.
+2. The crate version must be the same as the tag that is created for the release.
+
 
 ## Benchmark the runtimes
 In `./scripts` we have a script for benchmarking the runtimes.

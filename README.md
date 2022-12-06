@@ -14,14 +14,9 @@ There are some cargo features that are highly relevant for developers:
 * `skip-extrinsic-filtering`: We have a defensive filter for transfer extrinsics as we have an old solo-node running for archive purposes, which mustn't allow transfers. The filter can be deactivated with this feature.
 
 ## Versioning
-There are two important version parameters in the runtime that change behaviour.
+There are two important version parameters in the `RuntimeVersion` that change behaviour, see [RustDocs](https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html).
 * `spec_version` always needs to be updated when the runtime logic changes.
-* `transaction_version` always needs to updated when:
-  * extrinsics are removed
-  * extrinsics are changed
-  * extrinsics are added somewhere in between
-Extrinsics being added to the end are fine as they don't interfere with the existing call enum that the runtime macro
-generates.
+* `transaction_version`, see desctription in [RustDocs](https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html).
 
 Convention:
 1. The runtime's and node's crate patch version must be aligned with the `spec_version`.

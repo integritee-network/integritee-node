@@ -474,8 +474,8 @@ jobs:
 
       - name: Set up Ruby 3
         uses: ruby/setup-ruby@v1
-          with:
-            ruby-version: '3.0'
+        with:
+          ruby-version: '3.0'
 
       - name: Get runtime version
         id: get-runtime-ver

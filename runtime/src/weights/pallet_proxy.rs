@@ -106,19 +106,40 @@ impl<T: frame_system::Config> pallet_proxy::WeightInfo for WeightInfo<T> {
 	}
 	// Storage: unknown [0x3a65787472696e7369635f696e646578] (r:1 w:0)
 	// Storage: Proxy Proxies (r:1 w:1)
-	fn anonymous(p: u32, ) -> Weight {
-		Weight::from_ref_time(96_967_000)
-			// Standard Error: 55_000
-			.saturating_add(Weight::from_ref_time(109_000)).saturating_mul(p.into())
-			.saturating_add(T::DbWeight::get().reads(2))
-			.saturating_add(T::DbWeight::get().writes(1))
+	/// The range of component `p` is `[1, 31]`.
+	fn create_pure(p: u32, ) -> Weight {
+		// Minimum execution time: 48_409 nanoseconds.
+		Weight::from_ref_time(55_098_467 as u64)
+			// Standard Error: 31_462
+			.saturating_add(Weight::from_ref_time(38_634 as u64).saturating_mul(p as u64))
+			.saturating_add(T::DbWeight::get().reads(2 as u64))
+			.saturating_add(T::DbWeight::get().writes(1 as u64))
 	}
 	// Storage: Proxy Proxies (r:1 w:1)
-	fn kill_anonymous(p: u32, ) -> Weight {
-		Weight::from_ref_time(74_013_000)
-			// Standard Error: 8_000
-			.saturating_add(Weight::from_ref_time(439_000)).saturating_mul(p.into())
-			.saturating_add(T::DbWeight::get().reads(1))
-			.saturating_add(T::DbWeight::get().writes(1))
+	/// The range of component `p` is `[0, 30]`.
+	fn kill_pure(p: u32, ) -> Weight {
+		// Minimum execution time: 40_317 nanoseconds.
+		Weight::from_ref_time(41_597_802 as u64)
+			// Standard Error: 15_439
+			.saturating_add(Weight::from_ref_time(210_246 as u64).saturating_mul(p as u64))
+			.saturating_add(T::DbWeight::get().reads(1 as u64))
+			.saturating_add(T::DbWeight::get().writes(1 as u64))
 	}
+	// // Storage: unknown [0x3a65787472696e7369635f696e646578] (r:1 w:0)
+	// // Storage: Proxy Proxies (r:1 w:1)
+	// fn anonymous(p: u32, ) -> Weight {
+	// 	Weight::from_ref_time(96_967_000)
+	// 		// Standard Error: 55_000
+	// 		.saturating_add(Weight::from_ref_time(109_000)).saturating_mul(p.into())
+	// 		.saturating_add(T::DbWeight::get().reads(2))
+	// 		.saturating_add(T::DbWeight::get().writes(1))
+	// }
+	// // Storage: Proxy Proxies (r:1 w:1)
+	// fn kill_anonymous(p: u32, ) -> Weight {
+	// 	Weight::from_ref_time(74_013_000)
+	// 		// Standard Error: 8_000
+	// 		.saturating_add(Weight::from_ref_time(439_000)).saturating_mul(p.into())
+	// 		.saturating_add(T::DbWeight::get().reads(1))
+	// 		.saturating_add(T::DbWeight::get().writes(1))
+	// }
 }

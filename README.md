@@ -1,11 +1,20 @@
 # integritee-node
 
-This repository belongs to the [Integritee project](https://book.integritee.network).
+This repository belongs to the [Integritee project](https://integritee.network).
 
 A substrate-based node that maintains a registry of remote attested integritee-service enclaves. The node also acts as a proxy for encrypted requests which are forwarded to the integritee-service.
 
 ## Build and Run
-Please see our [Integritee Book](https://book.integritee.network/howto_node.html) to learn how to build and run this.
+1. See the substrate install docs to install the preliminaries: [https://docs.substrate.io/install](https://docs.substrate.io/install).
+2. Build the node:
+    - If you can perform Remote Attestation:
+        ```
+        cargo build --release --features "skip-extrinsic-filtering" 
+        ```
+    - If you can **NOT** perform Remote Attestation:
+	   ```
+        cargo build --release --features "skip-extrinsic-filtering skip-ias-check"
+        ```
 
 ### Note
 There are some cargo features that are highly relevant for developers:

@@ -19,6 +19,10 @@
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
+#[cfg(feature = "runtime-benchmarks")]
+#[macro_use]
+extern crate frame_benchmarking;
+
 use codec::{Decode, Encode, MaxEncodedLen};
 use pallet_grandpa::{
 	fg_primitives, AuthorityId as GrandpaId, AuthorityList as GrandpaAuthorityList,
@@ -707,6 +711,26 @@ pub type Executive = frame_executive::Executive<
 	AllPalletsWithSystem,
 >;
 
+#[cfg(feature = "runtime-benchmarks")]
+mod benches {
+	define_benchmarks!(
+		[frame_system, SystemBench::<Runtime>]
+		[pallet_balances, Balances]
+		[pallet_multisig, Multisig]
+		[pallet_preimage, Preimage]
+		[pallet_proxy, Proxy]
+		[pallet_scheduler, Scheduler]
+		[pallet_teerex, Teerex]
+		[pallet_claims, Claims]
+		[pallet_timestamp, Timestamp]
+		[pallet_treasury, Treasury]
+		[pallet_vesting, Vesting]
+		[pallet_utility, Utility]
+		[pallet_teeracle, Teeracle]
+		[pallet_sidechain, Sidechain]
+	);
+}
+
 impl_runtime_apis! {
 	impl sp_api::Core<Block> for Runtime {
 		fn version() -> RuntimeVersion {
@@ -861,25 +885,12 @@ impl_runtime_apis! {
 			Vec<frame_benchmarking::BenchmarkList>,
 			Vec<frame_support::traits::StorageInfo>,
 		) {
-			use frame_benchmarking::{list_benchmark, Benchmarking, BenchmarkList};
+			use frame_benchmarking::{Benchmarking, BenchmarkList};
 			use frame_support::traits::StorageInfoTrait;
 			use frame_system_benchmarking::Pallet as SystemBench;
 
 			let mut list = Vec::<BenchmarkList>::new();
-
-			list_benchmark!(list, extra, frame_system, SystemBench::<Runtime>);
-			list_benchmark!(list, extra, pallet_balances, Balances);
-			list_benchmark!(list, extra, pallet_multisig, Multisig);
-			list_benchmark!(list, extra, pallet_proxy, Proxy);
-			list_benchmark!(list, extra, pallet_scheduler, Scheduler);
-			list_benchmark!(list, extra, pallet_teerex, Teerex);
-			list_benchmark!(list, extra, pallet_claims, Claims);
-			list_benchmark!(list, extra, pallet_timestamp, Timestamp);
-			list_benchmark!(list, extra, pallet_treasury, Treasury);
-			list_benchmark!(list, extra, pallet_vesting, Vesting);
-			list_benchmark!(list, extra, pallet_utility, Utility);
-			list_benchmark!(list, extra, pallet_teeracle, Teeracle);
-			list_benchmark!(list, extra, pallet_sidechain, Sidechain);
+			list_benchmarks!(list, extra);
 
 			let storage_info = AllPalletsWithSystem::storage_info();
 
@@ -911,20 +922,7 @@ impl_runtime_apis! {
 
 			let mut batches = Vec::<BenchmarkBatch>::new();
 			let params = (&config, &whitelist);
-
-			add_benchmark!(params, batches, frame_system, SystemBench::<Runtime>);
-			add_benchmark!(params, batches, pallet_balances, Balances);
-			add_benchmark!(params, batches, pallet_multisig, Multisig);
-			add_benchmark!(params, batches, pallet_proxy, Proxy);
-			add_benchmark!(params, batches, pallet_scheduler, Scheduler);
-			add_benchmark!(params, batches, pallet_teerex, Teerex);
-			add_benchmark!(params, batches, pallet_claims, Claims);
-			add_benchmark!(params, batches, pallet_timestamp, Timestamp);
-			add_benchmark!(params, batches, pallet_treasury, Treasury);
-			add_benchmark!(params, batches, pallet_vesting, Vesting);
-			add_benchmark!(params, batches, pallet_utility, Utility);
-			add_benchmark!(params, batches, pallet_teeracle, Teeracle);
-			add_benchmark!(params, batches, pallet_sidechain, Sidechain);
+			add_benchmarks!(params, batches);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)

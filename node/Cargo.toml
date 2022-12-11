@@ -69,6 +69,7 @@ substrate-build-script-utils = { git = "https://github.com/paritytech/substrate.
 default = []
 runtime-benchmarks = [
     "integritee-node-runtime/runtime-benchmarks",
+    "sc-service/runtime-benchmarks",
 ]
 # allow workers to register without remote attestation for dev purposes
 skip-ias-check = ["integritee-node-runtime/skip-ias-check"]

@@ -73,6 +73,11 @@ jobs:
       - name: Setup Rust toolchain
         run: rustup show
 
+      - name: Install dependencies
+        run: |
+          sudo apt update && \
+          sudo apt install --assume-yes protobuf-compiler
+
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10
 
@@ -125,6 +130,11 @@ jobs:
       # https://github.com/actions-rs/toolchain/issues/126#issuecomment-782989659
       - name: Setup Rust toolchain
         run: rustup show
+
+      - name: Install dependencies
+        run: |
+          sudo apt update && \
+          sudo apt install --assume-yes protobuf-compiler
 
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10
@@ -179,6 +189,11 @@ jobs:
       - name: Setup Rust toolchain
         run: rustup show
 
+      - name: Install dependencies
+        run: |
+          sudo apt update && \
+          sudo apt install --assume-yes protobuf-compiler
+
       - name: Install llvm-10
         run: sudo apt-get install llvm-10 clang-10
 
@@ -220,6 +235,11 @@ jobs:
       # https://github.com/actions-rs/toolchain/issues/126#issuecomment-782989659
       - name: Setup Rust toolchain
         run: rustup show
+
+      - name: Install dependencies
+        run: |
+          sudo apt update && \
+          sudo apt install --assume-yes protobuf-compiler
 
       - uses: Swatinem/rust-cache@v2
         with:

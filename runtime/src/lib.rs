@@ -191,19 +191,6 @@ pub const fn deposit(items: u32, bytes: u32) -> Balance {
 /// A timestamp: milliseconds since the unix epoch.
 pub type Moment = u64;
 
-pub mod currency {
-	pub type Balance = u128;
-
-	pub const UNIT: Balance = 1_000_000_000_000;
-	pub const DOLLARS: Balance = UNIT; // 1_000_000_000_000
-	pub const CENTS: Balance = DOLLARS / 100; // 10_000_000_000
-	pub const MILLICENTS: Balance = CENTS / 1_000; // 10_000_000
-
-	/// The existential deposit.
-	pub const EXISTENTIAL_DEPOSIT: Balance = 10 * CENTS;
-}
-use crate::currency::DOLLARS;
-
 /// The version information used to identify this runtime when compiled natively.
 #[cfg(feature = "std")]
 pub fn native_version() -> NativeVersion {
@@ -630,7 +617,7 @@ impl pallet_utility::Config for Runtime {
 }
 
 parameter_types! {
-	pub const PreimageBaseDeposit: Balance = 1 * DOLLARS;
+	pub const PreimageBaseDeposit: Balance = 1 * TEER;
 	pub const PreimageByteDeposit: Balance = deposit(0, 1);
 }
 

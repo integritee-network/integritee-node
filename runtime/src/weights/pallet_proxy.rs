@@ -125,21 +125,4 @@ impl<T: frame_system::Config> pallet_proxy::WeightInfo for WeightInfo<T> {
 			.saturating_add(T::DbWeight::get().reads(1 as u64))
 			.saturating_add(T::DbWeight::get().writes(1 as u64))
 	}
-	// // Storage: unknown [0x3a65787472696e7369635f696e646578] (r:1 w:0)
-	// // Storage: Proxy Proxies (r:1 w:1)
-	// fn anonymous(p: u32, ) -> Weight {
-	// 	Weight::from_ref_time(96_967_000)
-	// 		// Standard Error: 55_000
-	// 		.saturating_add(Weight::from_ref_time(109_000)).saturating_mul(p.into())
-	// 		.saturating_add(T::DbWeight::get().reads(2))
-	// 		.saturating_add(T::DbWeight::get().writes(1))
-	// }
-	// // Storage: Proxy Proxies (r:1 w:1)
-	// fn kill_anonymous(p: u32, ) -> Weight {
-	// 	Weight::from_ref_time(74_013_000)
-	// 		// Standard Error: 8_000
-	// 		.saturating_add(Weight::from_ref_time(439_000)).saturating_mul(p.into())
-	// 		.saturating_add(T::DbWeight::get().reads(1))
-	// 		.saturating_add(T::DbWeight::get().writes(1))
-	// }
 }

@@ -7,8 +7,8 @@ homepage = 'https://integritee.network/'
 license = 'Apache-2.0'
 name = 'integritee-node'
 repository = 'https://github.com/integritee-network/integritee-node'
-#keep with runtime version
-version = '1.0.26'
+# Align major.minor revision with the runtimes, bump patch revision ad lib. Make this the github release tag.
+version = '1.0.27'
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

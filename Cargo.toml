@@ -5,8 +5,6 @@ panic = 'unwind'
 members = [
     'node',
     'runtime',
-    'interstellar-pallets/ocw-common',
-    'interstellar-pallets/pallets/ocw-circuits',
 ]
 
 #[patch."https://github.com/integritee-network/pallets.git"]

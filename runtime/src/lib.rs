@@ -620,7 +620,7 @@ parameter_types! {
 /// [interstellar]
 impl pallet_ocw_circuits::Config for Runtime {
 	type AuthorityId = pallet_ocw_circuits::crypto::TestAuthId;
-	type Call = Call;
+	type RuntimeCall = Call;
 	type Event = Event;
 	// TODO interstellar
 	// type GracePeriod = GracePeriod;

@@ -17,6 +17,7 @@ pallets=(
   "frame_system" \
   "pallet_balances" \
   "pallet_multisig" \
+  "pallet_preimage" \
   "pallet_proxy" \
   "pallet_scheduler" \
   "pallet_teerex" \

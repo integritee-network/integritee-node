@@ -13,7 +13,7 @@ jobs:
       # - name: Install dependencies
       #   run: sudo apt-get update && sudo apt-get install -y libboost-dev
 
-      - uses: Interstellar-Network/gh-actions/prepare@rust-next
+      - uses: Interstellar-Network/gh-actions/prepare@v2
         with:
           ssh_key_input: ${{ secrets.SSH_KEY_MACHINE_USER_INTERSTELLAR_CI }}
           install_cmake_and_ninja: false
@@ -24,12 +24,12 @@ jobs:
       # - name: Install llvm-10
       #   run: sudo apt-get install llvm-10 clang-10
 
-      - uses: Interstellar-Network/gh-actions/prepare_rust@rust-next
+      - uses: Interstellar-Network/gh-actions/prepare_rust@v2
         with:
           skip_action_toolchain: "true"
 
       # TODO pass "--features skip-ias-check,skip-extrinsic-filtering"; to cargo check? and/or cargo test?
 
-      - uses: Interstellar-Network/gh-actions/rust-build-and-test@rust-next
+      - uses: Interstellar-Network/gh-actions/rust-build-and-test@v2
 
-      - uses: Interstellar-Network/gh-actions/rust-lint@rust-next
+      - uses: Interstellar-Network/gh-actions/rust-lint@v2

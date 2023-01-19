@@ -14,7 +14,9 @@ members = [
 
 ################################################################################
 # [patch."https://github.com/Interstellar-Network/pallets.git"]
-# ocw-common = { path = "../pallets/ocw-common/" }
 # pallet-ocw-circuits = { path = "../pallets/pallets/ocw-circuits/" }
 # pallet-tx-registry = { path = "../pallets/pallets/tx-registry/" }
+
+# [patch."https://github.com/Interstellar-Network/rs-common.git"]
+# http-grpc-client = { path = "../rs-common/http-grpc-client/" }
 ################################################################################

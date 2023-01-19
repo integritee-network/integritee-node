@@ -8,11 +8,21 @@ A substrate-based node that maintains a registry of remote attested integritee-s
 
 ### INTERSTELLAR
 
+#### Prereq
+
+- install IPFS go: https://github.com/ipfs/kubo#install
+- run an IPFS server(adjust IPFS_PATH if you want):
+  - `IPFS_PATH=/tmp/ipfs ipfs init -p test`
+  - `IPFS_PATH=/tmp/ipfs ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001`
+  - `IPFS_PATH=/tmp/ipfs IPFS_PROFILE=test ipfs daemon --enable-pubsub-experiment`
+
+#### Build and Run
+
 **IMPORTANT** MUST use the correct `--features=skip-ias-check,skip-extrinsic-filtering` else the **worker** will get an error
 #        `[2022-08-29T15:24:24Z ERROR ws::handler] WS Error <Custom(Extrinsic("extrinsic error code 1010: Invalid Transaction: Inability to pay some fees (e.g. account balance too low)"))>`
 #        or `[2022-08-29T15:24:48Z ERROR ws::handler] WS Error <Custom(Extrinsic("extrinsic error code 1012: Transaction is temporarily banned: "))>`
 
-**WIP** `INTERSTELLAR_URI_ROOT_API_CIRCUITS=http://localhost:3000 cargo run --features skip-ias-check,skip-extrinsic-filtering -- --dev --tmp --ws-port 9990 --port 30390 --rpc-port 8990 --enable-offchain-indexing=true`
+**WIP** `INTERSTELLAR_URI_ROOT_API_CIRCUITS=http://localhost:3000 cargo run --features skip-ias-check,skip-extrinsic-filtering -- --dev --tmp --ws-port 9990 --port 30390 --rpc-port 8990 --enable-offchain-indexing=true --rpc-methods=unsafe`
 
 ### SUBSTRATE REFERENCE
 

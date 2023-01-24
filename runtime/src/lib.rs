@@ -580,7 +580,7 @@ impl pallet_proxy::Config for Runtime {
 }
 
 parameter_types! {
-	pub const MinVestedTransfer: Balance = 1 * TEER;
+	pub const MinVestedTransfer: Balance = TEER;
 	pub UnvestedFundsAllowedWithdrawReasons: WithdrawReasons =
 			WithdrawReasons::except(WithdrawReasons::TRANSFER | WithdrawReasons::RESERVE);
 }
@@ -708,7 +708,7 @@ where
 ////////////////////////////////////////////////////////////////////////////////
 
 parameter_types! {
-	pub const PreimageBaseDeposit: Balance = 1 * TEER;
+	pub const PreimageBaseDeposit: Balance = TEER;
 	pub const PreimageByteDeposit: Balance = deposit(0, 1);
 }
 

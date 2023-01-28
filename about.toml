@@ -10,6 +10,8 @@ accepted = [
     "OpenSSL",
     "Unicode-DFS-2016",
     "GPL-3.0 WITH Classpath-exception-2.0",
+    # Our own DCAP-verification requires this.
+    "GPL-3.0",
     # This is suddendly needed for webpki v0.22.0
     # because it can't identify the licence. See #153.
     "NOASSERTION"

@@ -644,6 +644,7 @@ dependencies = [
  "js-sys",
  "num-integer",
  "num-traits",
+ "serde",
  "time",
  "wasm-bindgen",
  "winapi",
@@ -674,7 +675,7 @@ dependencies = [
 [[package]]
 name = "claims-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#1cdcfaa358f74971a1c6e5cdedb0e203c6c8f71c"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
 dependencies = [
  "parity-scale-codec",
  "rustc-hex",
@@ -757,7 +758,7 @@ dependencies = [
 [[package]]
 name = "common-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#1cdcfaa358f74971a1c6e5cdedb0e203c6c8f71c"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
 dependencies = [
  "sp-std",
 ]
@@ -1156,7 +1157,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f1a467a65c5e759bce6e65eaf91cc29f466cdc57cb65777bd646872a8a1fd4de"
 dependencies = [
  "const-oid",
+ "der_derive",
+ "flagset",
  "zeroize",
+]
+
+[[package]]
+name = "der_derive"
+version = "0.6.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8ef71ddb5b3a1f53dee24817c8f70dfa1cb29e804c18d88c228d4bc9c86ee3b9"
+dependencies = [
+ "proc-macro-error",
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -1443,15 +1458,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "failure"
-version = "0.1.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d32e9bd16cc02eae7db7ef620b392808b89f6a5e16bb3497d159c6b92a0f4f86"
-dependencies = [
- "backtrace",
-]
-
-[[package]]
 name = "fake-simd"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1552,6 +1558,12 @@ name = "fixedbitset"
 version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0ce7134b9999ecaf8bcd65542e436736ef32ddca1b3e06094cb6ec5755203b80"
+
+[[package]]
+name = "flagset"
+version = "0.4.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cda653ca797810c02f7ca4b804b40b8b95ae046eb989d356bce17919a8c25499"
 
 [[package]]
 name = "flate2"
@@ -2329,23 +2341,6 @@ checksum = "0703ae284fc167426161c2e3f1da3ea71d94b21bedbcc9494e92b28e334e3dca"
 dependencies = [
  "cxx",
  "cxx-build",
-]
-
-[[package]]
-name = "ias-verify"
-version = "0.1.4"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#1cdcfaa358f74971a1c6e5cdedb0e203c6c8f71c"
-dependencies = [
- "base64",
- "chrono",
- "frame-support",
- "parity-scale-codec",
- "scale-info",
- "serde_json",
- "sp-core",
- "sp-io",
- "sp-std",
- "webpki 0.21.0",
 ]
 
 [[package]]
@@ -3723,6 +3718,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "num-derive"
+version = "0.3.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "876a53fff98e03a936a674b29568b0e605f06b29372c2489ff4de23f1949743d"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "num-format"
 version = "0.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3884,7 +3890,7 @@ dependencies = [
 [[package]]
 name = "pallet-claims"
 version = "0.9.12"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#1cdcfaa358f74971a1c6e5cdedb0e203c6c8f71c"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
 dependencies = [
  "claims-primitives",
  "frame-benchmarking",
@@ -4026,7 +4032,7 @@ dependencies = [
 [[package]]
 name = "pallet-sidechain"
 version = "0.9.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#1cdcfaa358f74971a1c6e5cdedb0e203c6c8f71c"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4065,7 +4071,7 @@ dependencies = [
 [[package]]
 name = "pallet-teeracle"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#1cdcfaa358f74971a1c6e5cdedb0e203c6c8f71c"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4088,19 +4094,19 @@ dependencies = [
 [[package]]
 name = "pallet-teerex"
 version = "0.9.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#1cdcfaa358f74971a1c6e5cdedb0e203c6c8f71c"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "hex-literal",
- "ias-verify",
  "log",
  "pallet-balances",
  "pallet-timestamp",
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "sgx-verify",
  "sp-core",
  "sp-io",
  "sp-runtime",
@@ -4693,7 +4699,7 @@ dependencies = [
  "regex",
  "syn",
  "tempfile",
- "which 4.3.0",
+ "which",
 ]
 
 [[package]]
@@ -4739,6 +4745,26 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5787f7cda34e3033a72192c018bc5883100330f362ef279a8cbccfce8bb4e874"
 dependencies = [
  "cc",
+]
+
+[[package]]
+name = "ptr_meta"
+version = "0.1.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0738ccf7ea06b608c10564b31debd4f5bc5e197fc8bfe088f68ae5ce81e7a4f1"
+dependencies = [
+ "ptr_meta_derive",
+]
+
+[[package]]
+name = "ptr_meta_derive"
+version = "0.1.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "16b845dbfca988fa33db069c0e230574d15a3088f147a87b64c7589eb662c9ac"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -5011,19 +5037,6 @@ dependencies = [
 
 [[package]]
 name = "ring"
-version = "0.16.9"
-source = "git+https://github.com/scs/webpki-nostd.git#935d31c36fa9b6d55a3226572eaf2b3ded7cf437"
-dependencies = [
- "cc",
- "libc",
- "spin",
- "untrusted",
- "which 3.1.1",
- "winapi",
-]
-
-[[package]]
-name = "ring"
 version = "0.16.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3053cf52e236a3ed746dfc745aa9cacf1b791d846bdaf412f60a8d7d6e17c8fc"
@@ -5035,6 +5048,46 @@ dependencies = [
  "untrusted",
  "web-sys",
  "winapi",
+]
+
+[[package]]
+name = "ring"
+version = "0.16.20"
+source = "git+https://github.com/Niederb/ring-xous.git?branch=0.16.20-cleanup#8b2f60a7d4a063e2170cd47bc5591c39f49ca825"
+dependencies = [
+ "cc",
+ "libc",
+ "log",
+ "once_cell",
+ "rkyv",
+ "spin",
+ "untrusted",
+ "winapi",
+ "xous",
+ "xous-api-names",
+ "xous-ipc",
+]
+
+[[package]]
+name = "rkyv"
+version = "0.4.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "70de01b38fe7baba4ecdd33b777096d2b326993d8ea99bc5b6ede691883d3010"
+dependencies = [
+ "memoffset 0.6.5",
+ "ptr_meta",
+ "rkyv_derive",
+]
+
+[[package]]
+name = "rkyv_derive"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "95a169f6bc5a81033e86ed39d0f4150e2608160b73d2b93c6e8e6a3efa873f14"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -5154,7 +5207,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "539a2bfe908f471bfa933876bd1eb6a19cf2176d375f82ef7f99530a40e48c2c"
 dependencies = [
  "log",
- "ring 0.16.20",
+ "ring 0.16.20 (registry+https://github.com/rust-lang/crates.io-index)",
  "sct",
  "webpki 0.22.0",
 ]
@@ -6218,7 +6271,7 @@ version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d53dcdb7c9f8158937a7981b48accfd39a43af418591a5d008c7b22b5e1b7ca4"
 dependencies = [
- "ring 0.16.20",
+ "ring 0.16.20 (registry+https://github.com/rust-lang/crates.io-index)",
  "untrusted",
 ]
 
@@ -6360,6 +6413,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "sgx-verify"
+version = "0.1.4"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
+dependencies = [
+ "base64",
+ "chrono",
+ "der",
+ "frame-support",
+ "hex",
+ "parity-scale-codec",
+ "ring 0.16.20 (git+https://github.com/Niederb/ring-xous.git?branch=0.16.20-cleanup)",
+ "scale-info",
+ "serde",
+ "serde_json",
+ "sp-core",
+ "sp-io",
+ "sp-std",
+ "teerex-primitives",
+ "webpki 0.21.0",
+ "x509-cert",
+]
+
+[[package]]
 name = "sha-1"
 version = "0.9.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6447,7 +6523,7 @@ checksum = "43b2853a4d09f215c24cc5489c992ce46052d359b5109343cbafbf26bc62f8a3"
 [[package]]
 name = "sidechain-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#1cdcfaa358f74971a1c6e5cdedb0e203c6c8f71c"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -6527,7 +6603,7 @@ dependencies = [
  "chacha20poly1305",
  "curve25519-dalek 4.0.0-pre.5",
  "rand_core 0.6.4",
- "ring 0.16.20",
+ "ring 0.16.20 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc_version 0.4.0",
  "sha2 0.10.6",
  "subtle",
@@ -7448,7 +7524,7 @@ checksum = "9410d0f6853b1d94f0e519fb95df60f29d2c1eff2d921ffdf01a4c8a3b54f12d"
 [[package]]
 name = "teeracle-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#1cdcfaa358f74971a1c6e5cdedb0e203c6c8f71c"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
 dependencies = [
  "common-primitives",
  "sp-std",
@@ -7458,9 +7534,9 @@ dependencies = [
 [[package]]
 name = "teerex-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#1cdcfaa358f74971a1c6e5cdedb0e203c6c8f71c"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
 dependencies = [
- "ias-verify",
+ "common-primitives",
  "parity-scale-codec",
  "scale-info",
  "serde",
@@ -7501,7 +7577,7 @@ checksum = "95059e91184749cb66be6dc994f67f182b6d897cb3df74a5bf66b5e709295fd8"
 [[package]]
 name = "test-utils"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#1cdcfaa358f74971a1c6e5cdedb0e203c6c8f71c"
+source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
 dependencies = [
  "hex-literal",
  "log",
@@ -8435,10 +8511,10 @@ dependencies = [
 [[package]]
 name = "webpki"
 version = "0.21.0"
-source = "git+https://github.com/scs/webpki-nostd.git#935d31c36fa9b6d55a3226572eaf2b3ded7cf437"
+source = "git+https://github.com/scs/webpki-nostd.git?branch=master#22d1772c39ed9081c2815aadb30e7973f3c4e93f"
 dependencies = [
- "ring 0.16.20",
- "ring 0.16.9",
+ "ring 0.16.20 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ring 0.16.20 (git+https://github.com/Niederb/ring-xous.git?branch=0.16.20-cleanup)",
  "untrusted",
 ]
 
@@ -8448,7 +8524,7 @@ version = "0.22.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f095d78192e208183081cc07bc5515ef55216397af48b873e5edcd72637fa1bd"
 dependencies = [
- "ring 0.16.20",
+ "ring 0.16.20 (registry+https://github.com/rust-lang/crates.io-index)",
  "untrusted",
 ]
 
@@ -8468,16 +8544,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d743fdedc5c64377b5fc2bc036b01c7fd642205a0d96356034ae3404d49eb7fb"
 dependencies = [
  "cc",
-]
-
-[[package]]
-name = "which"
-version = "3.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d011071ae14a2f6671d0b74080ae0cd8ebf3a6f8c9589a2cd45f23126fe29724"
-dependencies = [
- "failure",
- "libc",
 ]
 
 [[package]]
@@ -8698,6 +8764,66 @@ dependencies = [
  "curve25519-dalek 3.2.0",
  "rand_core 0.5.1",
  "zeroize",
+]
+
+[[package]]
+name = "x509-cert"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "99d224a125dec5adda27d0346b9cae9794830279c4f9c27e4ab0b6c408d54012"
+dependencies = [
+ "const-oid",
+ "der",
+ "flagset",
+ "spki",
+]
+
+[[package]]
+name = "xous"
+version = "0.9.31"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f5f26d14d4b22ce45d8b86a3c0316230504182e330950e8ad8f8347cee89a7e5"
+dependencies = [
+ "lazy_static",
+]
+
+[[package]]
+name = "xous-api-log"
+version = "0.1.26"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3127cffd847bb58a39bd37aadcf90afd149fad46b8e9d39205df9488b6f68082"
+dependencies = [
+ "log",
+ "num-derive",
+ "num-traits",
+ "xous",
+ "xous-ipc",
+]
+
+[[package]]
+name = "xous-api-names"
+version = "0.9.28"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "590127bfe2cf923cbea1e9baf00881f872b081a895d4b0e83d53bd7af879a8d9"
+dependencies = [
+ "log",
+ "num-derive",
+ "num-traits",
+ "rkyv",
+ "xous",
+ "xous-api-log",
+ "xous-ipc",
+]
+
+[[package]]
+name = "xous-ipc"
+version = "0.9.31"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e1a5057f60cc309d1c4357211cbcc3a110c6c3362962cd3c2ccac9b95bf94f9a"
+dependencies = [
+ "bitflags",
+ "rkyv",
+ "xous",
 ]
 
 [[package]]

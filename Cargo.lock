@@ -2260,7 +2260,7 @@ dependencies = [
 [[package]]
 name = "http-grpc-client"
 version = "0.3.0"
-source = "git+https://github.com/Interstellar-Network/rs-common.git?branch=interstellar-M5#6d23263f5ba9582eb39f7d76d1c3b3f3f8e01742"
+source = "git+https://github.com/Interstellar-Network/rs-common.git?branch=interstellar-M5#73396c7a32b26889da8469843ee4650584e94c6d"
 dependencies = [
  "base64 0.21.0",
  "bytes",
@@ -3990,7 +3990,7 @@ dependencies = [
 [[package]]
 name = "pallet-ocw-circuits"
 version = "4.0.0-dev"
-source = "git+https://github.com/Interstellar-Network/pallets?branch=interstellar-M5#3791ce1dfab14ee15c0cb80e81d75c7f63495f74"
+source = "git+https://github.com/Interstellar-Network/pallets?branch=interstellar-M5#75c05d92935fe4e709726582cac3063d35d2a49b"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4261,7 +4261,7 @@ dependencies = [
 [[package]]
 name = "pallet-tx-registry"
 version = "4.0.0-dev"
-source = "git+https://github.com/Interstellar-Network/pallets?branch=interstellar-M5#3791ce1dfab14ee15c0cb80e81d75c7f63495f74"
+source = "git+https://github.com/Interstellar-Network/pallets?branch=interstellar-M5#75c05d92935fe4e709726582cac3063d35d2a49b"
 dependencies = [
  "frame-benchmarking",
  "frame-support",

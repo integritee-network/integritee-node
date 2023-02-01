@@ -10,6 +10,9 @@ RUN mv /usr/share/ca* /tmp && \
 	chown -R integritee:integritee /integritee/.local && \
 	ln -s /integritee/.local/share/integritee-node /data
 
+# install netcat for healthcheck
+RUN apt-get update && apt-get install -yq netcat
+
 COPY integritee-node /usr/local/bin
 RUN chmod +x /usr/local/bin/integritee-node
 

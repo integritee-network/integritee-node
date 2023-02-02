@@ -2724,7 +2724,7 @@ dependencies = [
 
 [[package]]
 name = "integritee-node"
-version = "1.0.31"
+version = "1.0.32"
 dependencies = [
  "clap",
  "frame-benchmarking",

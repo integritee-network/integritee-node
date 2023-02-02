@@ -644,7 +644,6 @@ dependencies = [
  "js-sys",
  "num-integer",
  "num-traits",
- "serde",
  "time",
  "wasm-bindgen",
  "winapi",
@@ -675,7 +674,7 @@ dependencies = [
 [[package]]
 name = "claims-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.36#ef51a5548178896d11deaccc2f8b29702c190863"
 dependencies = [
  "parity-scale-codec",
  "rustc-hex",
@@ -758,7 +757,7 @@ dependencies = [
 [[package]]
 name = "common-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.36#ef51a5548178896d11deaccc2f8b29702c190863"
 dependencies = [
  "sp-std",
 ]
@@ -1157,21 +1156,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f1a467a65c5e759bce6e65eaf91cc29f466cdc57cb65777bd646872a8a1fd4de"
 dependencies = [
  "const-oid",
- "der_derive",
- "flagset",
  "zeroize",
-]
-
-[[package]]
-name = "der_derive"
-version = "0.6.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8ef71ddb5b3a1f53dee24817c8f70dfa1cb29e804c18d88c228d4bc9c86ee3b9"
-dependencies = [
- "proc-macro-error",
- "proc-macro2",
- "quote",
- "syn",
 ]
 
 [[package]]
@@ -1558,12 +1543,6 @@ name = "fixedbitset"
 version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0ce7134b9999ecaf8bcd65542e436736ef32ddca1b3e06094cb6ec5755203b80"
-
-[[package]]
-name = "flagset"
-version = "0.4.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cda653ca797810c02f7ca4b804b40b8b95ae046eb989d356bce17919a8c25499"
 
 [[package]]
 name = "flate2"
@@ -2341,6 +2320,23 @@ checksum = "0703ae284fc167426161c2e3f1da3ea71d94b21bedbcc9494e92b28e334e3dca"
 dependencies = [
  "cxx",
  "cxx-build",
+]
+
+[[package]]
+name = "ias-verify"
+version = "0.1.4"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.36#ef51a5548178896d11deaccc2f8b29702c190863"
+dependencies = [
+ "base64",
+ "chrono",
+ "frame-support",
+ "parity-scale-codec",
+ "scale-info",
+ "serde_json",
+ "sp-core",
+ "sp-io",
+ "sp-std",
+ "webpki 0.21.0",
 ]
 
 [[package]]
@@ -3890,7 +3886,7 @@ dependencies = [
 [[package]]
 name = "pallet-claims"
 version = "0.9.12"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.36#ef51a5548178896d11deaccc2f8b29702c190863"
 dependencies = [
  "claims-primitives",
  "frame-benchmarking",
@@ -4032,7 +4028,7 @@ dependencies = [
 [[package]]
 name = "pallet-sidechain"
 version = "0.9.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.36#ef51a5548178896d11deaccc2f8b29702c190863"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4071,7 +4067,7 @@ dependencies = [
 [[package]]
 name = "pallet-teeracle"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.36#ef51a5548178896d11deaccc2f8b29702c190863"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4094,19 +4090,19 @@ dependencies = [
 [[package]]
 name = "pallet-teerex"
 version = "0.9.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.36#ef51a5548178896d11deaccc2f8b29702c190863"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "hex-literal",
+ "ias-verify",
  "log",
  "pallet-balances",
  "pallet-timestamp",
  "parity-scale-codec",
  "scale-info",
  "serde",
- "sgx-verify",
  "sp-core",
  "sp-io",
  "sp-runtime",
@@ -6413,29 +6409,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sgx-verify"
-version = "0.1.4"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
-dependencies = [
- "base64",
- "chrono",
- "der",
- "frame-support",
- "hex",
- "parity-scale-codec",
- "ring 0.16.20 (git+https://github.com/Niederb/ring-xous.git?branch=0.16.20-cleanup)",
- "scale-info",
- "serde",
- "serde_json",
- "sp-core",
- "sp-io",
- "sp-std",
- "teerex-primitives",
- "webpki 0.21.0",
- "x509-cert",
-]
-
-[[package]]
 name = "sha-1"
 version = "0.9.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6523,7 +6496,7 @@ checksum = "43b2853a4d09f215c24cc5489c992ce46052d359b5109343cbafbf26bc62f8a3"
 [[package]]
 name = "sidechain-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.36#ef51a5548178896d11deaccc2f8b29702c190863"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -7524,7 +7497,7 @@ checksum = "9410d0f6853b1d94f0e519fb95df60f29d2c1eff2d921ffdf01a4c8a3b54f12d"
 [[package]]
 name = "teeracle-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.36#ef51a5548178896d11deaccc2f8b29702c190863"
 dependencies = [
  "common-primitives",
  "sp-std",
@@ -7534,9 +7507,9 @@ dependencies = [
 [[package]]
 name = "teerex-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.36#ef51a5548178896d11deaccc2f8b29702c190863"
 dependencies = [
- "common-primitives",
+ "ias-verify",
  "parity-scale-codec",
  "scale-info",
  "serde",
@@ -7577,7 +7550,7 @@ checksum = "95059e91184749cb66be6dc994f67f182b6d897cb3df74a5bf66b5e709295fd8"
 [[package]]
 name = "test-utils"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=master#47b8c34beee9d20fce44c1b665ea72548d511198"
+source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.36#ef51a5548178896d11deaccc2f8b29702c190863"
 dependencies = [
  "hex-literal",
  "log",
@@ -8511,7 +8484,7 @@ dependencies = [
 [[package]]
 name = "webpki"
 version = "0.21.0"
-source = "git+https://github.com/scs/webpki-nostd.git?branch=master#22d1772c39ed9081c2815aadb30e7973f3c4e93f"
+source = "git+https://github.com/scs/webpki-nostd.git#22d1772c39ed9081c2815aadb30e7973f3c4e93f"
 dependencies = [
  "ring 0.16.20 (registry+https://github.com/rust-lang/crates.io-index)",
  "ring 0.16.20 (git+https://github.com/Niederb/ring-xous.git?branch=0.16.20-cleanup)",
@@ -8764,18 +8737,6 @@ dependencies = [
  "curve25519-dalek 3.2.0",
  "rand_core 0.5.1",
  "zeroize",
-]
-
-[[package]]
-name = "x509-cert"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "99d224a125dec5adda27d0346b9cae9794830279c4f9c27e4ab0b6c408d54012"
-dependencies = [
- "const-oid",
- "der",
- "flagset",
- "spki",
 ]
 
 [[package]]

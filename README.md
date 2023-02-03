@@ -1,17 +1,57 @@
 # integritee-node
 
-This repository belongs to the [Integritee project](https://book.integritee.network).
+This repository belongs to the [Integritee project](https://integritee.network).
 
 A substrate-based node that maintains a registry of remote attested integritee-service enclaves. The node also acts as a proxy for encrypted requests which are forwarded to the integritee-service.
 
 ## Build and Run
-~~Please see our [Integritee Book](https://book.integritee.network/howto_node.html) to learn how to build and run this.~~
 
-**IMPORTANT** MUST use the correct `--features=skip-ias-check,skip-extrinsic-filtering` else the worker will get an error
+### INTERSTELLAR
+
+#### Prereq
+
+- install IPFS go: https://github.com/ipfs/kubo#install
+- run an IPFS server(adjust IPFS_PATH if you want):
+  - `IPFS_PATH=/tmp/ipfs ipfs init -p test`
+  - `IPFS_PATH=/tmp/ipfs ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001`
+  - `IPFS_PATH=/tmp/ipfs IPFS_PROFILE=test ipfs daemon --enable-pubsub-experiment`
+
+#### Build and Run
+
+**IMPORTANT** MUST use the correct `--features=skip-ias-check,skip-extrinsic-filtering` else the **worker** will get an error
 #        `[2022-08-29T15:24:24Z ERROR ws::handler] WS Error <Custom(Extrinsic("extrinsic error code 1010: Invalid Transaction: Inability to pay some fees (e.g. account balance too low)"))>`
 #        or `[2022-08-29T15:24:48Z ERROR ws::handler] WS Error <Custom(Extrinsic("extrinsic error code 1012: Transaction is temporarily banned: "))>`
 
-**WIP** `INTERSTELLAR_URI_ROOT_API_CIRCUITS=http://localhost:3000 INTERSTELLAR_URI_ROOT_API_GARBLE=http://localhost:3001 cargo run --features skip-ias-check,skip-extrinsic-filtering -- --dev --tmp --ws-port 9990 --port 30390 --rpc-port 8990 --enable-offchain-indexing=1`
+**WIP** `INTERSTELLAR_URI_ROOT_API_CIRCUITS=http://localhost:3000 cargo run --features skip-ias-check,skip-extrinsic-filtering -- --dev --tmp --ws-port 9990 --port 30390 --rpc-port 8990 --enable-offchain-indexing=true --rpc-methods=unsafe`
+
+### SUBSTRATE REFERENCE
+
+1. See the substrate install docs to install the preliminaries: [https://docs.substrate.io/install](https://docs.substrate.io/install).
+2. Build the node:
+    - If you can perform Remote Attestation:
+        ```
+        cargo build --release --features "skip-extrinsic-filtering"
+        ```
+    - If you can **NOT** perform Remote Attestation:
+	   ```
+        cargo build --release --features "skip-extrinsic-filtering skip-ias-check"
+        ```
+
+### Note
+There are some cargo features that are highly relevant for developers:
+
+* `skip-ias-check`: allow registering enclaves without attestation report.
+* `skip-extrinsic-filtering`: We have a defensive filter for transfer extrinsics as we have an old solo-node running for archive purposes, which mustn't allow transfers. The filter can be deactivated with this feature.
+
+## Versioning
+There are two important version parameters in the `RuntimeVersion` that change behaviour, see [RustDocs](https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html).
+* `spec_version` always needs to be updated when the runtime logic changes.
+* `transaction_version`, see desctription in [RustDocs](https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html).
+
+Convention:
+1. The runtime's and node's crate patch version must be aligned with the `spec_version`.
+2. The crate version must be the same as the tag that is created for the release.
+
 
 ## Benchmark the runtimes
 In `./scripts` we have a script for benchmarking the runtimes.

@@ -5,31 +5,27 @@ on:
 
 jobs:
   # TODO split test and lint; but that REQUIRE caching else recompile from scratch in between
-  rust:
+  rust_test:
     runs-on: ubuntu-latest
     steps:
-      # # install build dependencies
-      # # MUST match the same step in Dockerfile
-      # - name: Install dependencies
-      #   run: sudo apt-get update && sudo apt-get install -y libboost-dev
-
-      - uses: Interstellar-Network/gh-actions/prepare@rust-next
+      - uses: Interstellar-Network/gh-actions/prepare@v3-dev
         with:
           ssh_key_input: ${{ secrets.SSH_KEY_MACHINE_USER_INTERSTELLAR_CI }}
           install_cmake_and_ninja: false
           install_ccache: true
           install_conan: false
 
-      # TODO? llvm? or is gcc enough(already installed by Interstellar-Network/gh-actions/prepare)
-      # - name: Install llvm-10
-      #   run: sudo apt-get install llvm-10 clang-10
-
-      - uses: Interstellar-Network/gh-actions/prepare_rust@rust-next
+      - uses: Interstellar-Network/gh-actions/prepare_rust@v3-dev
         with:
-          skip_action_toolchain: "true"
+          use_toolchain_toml: "true"
+          toolchain_components: "rustfmt,clippy"
+
+      - uses: Interstellar-Network/gh-actions/install-protoc@v3-dev
+
+      ##########################################################################
 
       # TODO pass "--features skip-ias-check,skip-extrinsic-filtering"; to cargo check? and/or cargo test?
 
-      - uses: Interstellar-Network/gh-actions/rust-build-and-test@rust-next
+      - uses: Interstellar-Network/gh-actions/rust-build-and-test@v3-dev
 
-      - uses: Interstellar-Network/gh-actions/rust-lint@rust-next
+      - uses: Interstellar-Network/gh-actions/rust-lint@v3-dev

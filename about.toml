@@ -1,0 +1,21 @@
+accepted = [
+    "Apache-2.0",
+    "MIT",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "CC0-1.0",
+    "BSD-3-Clause",
+    "MPL-2.0",
+    "ISC",
+    "OpenSSL",
+    "Unicode-DFS-2016",
+    "GPL-3.0 WITH Classpath-exception-2.0",
+    # This is suddendly needed for webpki v0.22.0
+    # because it can't identify the licence. See #153.
+    "NOASSERTION"
+]
+ignore-dev-dependencies = true
+ignore-build-dependencies = true
+workarounds = [
+    "ring",
+]

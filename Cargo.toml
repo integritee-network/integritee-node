@@ -5,11 +5,18 @@ panic = 'unwind'
 members = [
     'node',
     'runtime',
-    'interstellar-pallets/ocw-common',
-    'interstellar-pallets/pallets/ocw-circuits',
 ]
 
 #[patch."https://github.com/integritee-network/pallets.git"]
 #pallet-claims = { path = '../pallets/claims' }
 #pallet-teerex = { path = '../pallets/teerex' }
 #pallet-teeracle = { path = '../pallets/teeracle' }
+
+################################################################################
+# [patch."https://github.com/Interstellar-Network/pallets.git"]
+# pallet-ocw-circuits = { path = "../pallets/pallets/ocw-circuits/" }
+# pallet-tx-registry = { path = "../pallets/pallets/tx-registry/" }
+
+# [patch."https://github.com/Interstellar-Network/rs-common.git"]
+# http-grpc-client = { path = "../rs-common/http-grpc-client/" }
+################################################################################

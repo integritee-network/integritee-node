@@ -2,11 +2,13 @@
 
 # podman build -f interstellar.Dockerfile -t ghcr.io/interstellar-network/integritee_node:dev --volume ~/.cargo:/root/.cargo:rw --volume $(pwd)/target/release:/usr/src/app/target/release:rw .
 # NOTE: it CAN work with Docker but it less than ideal b/c it can not reuse the host's cache
+# CHECK: podman run --rm -it ghcr.io/interstellar-network/integritee_node:dev
+#
 # to publish:
 # podman tag ghcr.io/interstellar-network/integritee_node:dev ghcr.io/interstellar-network/integritee_node:vXXX
 # podman push ghcr.io/interstellar-network/integritee_node:vXXX
 
-FROM ghcr.io/interstellar-network/ci-images/ci-base-rust:v2 as builder
+FROM ghcr.io/interstellar-network/ci-images/base-rust:v3 as builder
 
 WORKDIR /usr/src/app
 
@@ -35,6 +37,15 @@ RUN wget https://apt.llvm.org/llvm.sh && \
     sudo ./llvm.sh 11 && \
     rm ./llvm.sh && \
     rm -rf /var/lib/apt/lists/*
+
+# install protoc
+RUN export MY_PROTOC_URL=https://github.com/protocolbuffers/protobuf/releases/download/v21.12/protoc-21.12-linux-x86_64.zip && \
+    mkdir -p /home/runner/protoc && \
+    cd /home/runner/protoc && \
+    wget $MY_PROTOC_URL -O prebuilt.zip && \
+    unzip prebuilt.zip && \
+    rm prebuilt.zip
+ENV PROTOC /home/runner/protoc/bin/protoc
 
 COPY . .
 # MUST use "--locked" else Cargo.lock is ignored
@@ -82,4 +93,4 @@ RUN ldd /usr/local/bin/$APP_NAME && \
 ENTRYPOINT ["/usr/local/bin/integritee-node"]
 # cf README: "IMPORTANT: you **MUST** use `--enable-offchain-indexing=1`"
 # --ws-external, needed else can not connect from host, cf https://github.com/substrate-developer-hub/substrate-node-template/blob/main/docker-compose.yml
-CMD ["--ws-external", "--dev", "--tmp", "--ws-port", "9990", "--port", "30390", "--rpc-port", "8990", "--enable-offchain-indexing=1"]
+CMD ["--ws-external", "--dev", "--tmp", "--ws-port", "9990", "--port", "30390", "--rpc-port", "8990", "--enable-offchain-indexing=true"]

@@ -2251,7 +2251,7 @@ dependencies = [
 [[package]]
 name = "http-grpc-client"
 version = "0.3.0"
-source = "git+https://github.com/Interstellar-Network/rs-common.git?branch=interstellar-M5#73396c7a32b26889da8469843ee4650584e94c6d"
+source = "git+https://github.com/Interstellar-Network/rs-common.git?branch=main#e31c5ec5192fe5fade777e0fefbc586108d607bb"
 dependencies = [
  "base64 0.21.0",
  "bytes",
@@ -3992,7 +3992,7 @@ dependencies = [
 [[package]]
 name = "pallet-ocw-circuits"
 version = "4.0.0-dev"
-source = "git+https://github.com/Interstellar-Network/pallets?branch=interstellar-M5#2fd082c992b39ea707fdaf2b4a66195bdaad5c67"
+source = "git+https://github.com/Interstellar-Network/pallets?branch=interstellar-M5#1043ba3af22e8f2057581f75475191faaee6e4c0"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4263,7 +4263,7 @@ dependencies = [
 [[package]]
 name = "pallet-tx-registry"
 version = "4.0.0-dev"
-source = "git+https://github.com/Interstellar-Network/pallets?branch=interstellar-M5#2fd082c992b39ea707fdaf2b4a66195bdaad5c67"
+source = "git+https://github.com/Interstellar-Network/pallets?branch=interstellar-M5#1043ba3af22e8f2057581f75475191faaee6e4c0"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -7769,9 +7769,9 @@ dependencies = [
 
 [[package]]
 name = "tinyvec_macros"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cda74da7e1a664f795bb1f8a87ec406fb89a02522cf6e50620d016add6dbbf5c"
+checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "tokio"

@@ -73,8 +73,8 @@ frame-system-benchmarking = { default-features = false, optional = true, git = "
 hex-literal = { version = "0.3.1", optional = true }
 
 # interstellar
-pallet-ocw-circuits = { default-features = false, git = "https://github.com/Interstellar-Network/pallets", branch = "interstellar-M5" }
-pallet-tx-registry = { default-features = false, git = "https://github.com/Interstellar-Network/pallets", branch = "interstellar-M5" }
+pallet-ocw-circuits = { default-features = false, git = "https://github.com/Interstellar-Network/pallets", branch = "main" }
+pallet-tx-registry = { default-features = false, git = "https://github.com/Interstellar-Network/pallets", branch = "main" }
 
 [build-dependencies]
 substrate-wasm-builder = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.36" }

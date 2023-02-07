@@ -67,4 +67,10 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		Weight::from_ref_time(52_350_000)
 			.saturating_add(T::DbWeight::get().reads(1))
 	}
+
+	fn publish_hash() -> Weight {
+		Weight::from_ref_time(1_969_500_000)
+			.saturating_add(T::DbWeight::get().reads(2))
+			.saturating_add(T::DbWeight::get().writes(1))
+	}
 }

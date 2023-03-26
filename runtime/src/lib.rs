@@ -313,7 +313,7 @@ impl frame_system::Config for Runtime {
 	type MaxConsumers = frame_support::traits::ConstU32<16>;
 }
 
-impl pallet_randomness_collective_flip::Config for Runtime {}
+impl pallet_insecure_randomness_collective_flip::Config for Runtime {}
 
 parameter_types! {
 	pub const MaxAuthorities: u32 = 32;
@@ -323,6 +323,12 @@ impl pallet_aura::Config for Runtime {
 	type AuthorityId = AuraId;
 	type DisabledValidators = ();
 	type MaxAuthorities = MaxAuthorities;
+}
+
+parameter_types! {
+	pub const SessionsPerEra: sp_staking::SessionIndex = 6;
+	pub const BondingDuration: sp_staking::EraIndex = 24 * 28;
+	pub const MaxSetIdSessionEntries: u32 = BondingDuration::get() * SessionsPerEra::get();
 }
 
 impl pallet_grandpa::Config for Runtime {
@@ -343,6 +349,8 @@ impl pallet_grandpa::Config for Runtime {
 	type WeightInfo = ();
 
 	type MaxAuthorities = MaxAuthorities;
+
+	type MaxSetIdSessionEntries = MaxSetIdSessionEntries;
 }
 
 impl pallet_timestamp::Config for Runtime {
@@ -645,7 +653,7 @@ construct_runtime!(
 		// Basic
 		System: frame_system::{Pallet, Call, Storage, Config, Event<T>} = 0,
 		Preimage: pallet_preimage = 1,
-		RandomnessCollectiveFlip: pallet_randomness_collective_flip::{Pallet, Storage} = 2,
+		RandomnessCollectiveFlip: pallet_insecure_randomness_collective_flip::{Pallet, Storage} = 2,
 		Timestamp: pallet_timestamp::{Pallet, Call, Storage, Inherent} = 3,
 		Sudo: pallet_sudo::{Pallet, Call, Storage, Config<T>, Event<T>} = 5,
 		Multisig: pallet_multisig::{Pallet, Call, Storage, Event<T>} = 6,
@@ -853,6 +861,12 @@ impl_runtime_apis! {
 		) -> pallet_transaction_payment::FeeDetails<Balance> {
 			TransactionPayment::query_fee_details(uxt, len)
 		}
+		fn query_weight_to_fee(weight: Weight) -> Balance {
+			TransactionPayment::weight_to_fee(weight)
+		}
+		fn query_length_to_fee(length: u32) -> Balance {
+			TransactionPayment::length_to_fee(length)
+		}
 	}
 
 	impl pallet_transaction_payment_rpc_runtime_api::TransactionPaymentCallApi<Block, Balance, RuntimeCall>
@@ -869,6 +883,12 @@ impl_runtime_apis! {
 			len: u32,
 		) -> pallet_transaction_payment::FeeDetails<Balance> {
 			TransactionPayment::query_call_fee_details(call, len)
+		}
+		fn query_weight_to_fee(weight: Weight) -> Balance {
+			TransactionPayment::weight_to_fee(weight)
+		}
+		fn query_length_to_fee(length: u32) -> Balance {
+			TransactionPayment::length_to_fee(length)
 		}
 	}
 

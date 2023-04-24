@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        binary: ["integritee-node", "integritee-node-dev"]
+        binary: ["integritee-node", "integritee-node-dev", "integritee-node-dev-ias"]
     steps:
       - uses: actions/checkout@v3
 

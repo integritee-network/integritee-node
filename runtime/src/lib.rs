@@ -356,6 +356,11 @@ impl pallet_grandpa::Config for Runtime {
 impl pallet_timestamp::Config for Runtime {
 	/// A timestamp: milliseconds since the unix epoch.
 	type Moment = Moment;
+
+	// Aura doesn't like when we mess with the timestamps in the benchmarks.
+	#[cfg(feature = "runtime-benchmarks")]
+	type OnTimestampSet = Teerex;
+	#[cfg(not(feature = "runtime-benchmarks"))]
 	type OnTimestampSet = (Aura, Teerex);
 	type MinimumPeriod = ConstU64<{ SLOT_DURATION / 2 }>;
 	type WeightInfo = weights::pallet_timestamp::WeightInfo<Runtime>;

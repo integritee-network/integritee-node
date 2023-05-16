@@ -848,7 +848,7 @@ dependencies = [
 [[package]]
 name = "claims-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=cl/add-dcap-benchmarks#503d2e54c9a32148e2a6db0b46fe2d1afe557b23"
+source = "git+https://github.com/integritee-network/pallets.git?branch=cl/update-test-weights#89be421daacb703927a7335e97fd42954bc61f04"
 dependencies = [
  "parity-scale-codec",
  "rustc-hex",
@@ -930,14 +930,7 @@ dependencies = [
 [[package]]
 name = "common-primitives"
 version = "0.1.0"
-dependencies = [
- "sp-std",
-]
-
-[[package]]
-name = "common-primitives"
-version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=cl/add-dcap-benchmarks#503d2e54c9a32148e2a6db0b46fe2d1afe557b23"
+source = "git+https://github.com/integritee-network/pallets.git?branch=cl/update-test-weights#89be421daacb703927a7335e97fd42954bc61f04"
 dependencies = [
  "sp-std",
 ]
@@ -4486,7 +4479,7 @@ dependencies = [
 [[package]]
 name = "pallet-claims"
 version = "0.9.12"
-source = "git+https://github.com/integritee-network/pallets.git?branch=cl/add-dcap-benchmarks#503d2e54c9a32148e2a6db0b46fe2d1afe557b23"
+source = "git+https://github.com/integritee-network/pallets.git?branch=cl/update-test-weights#89be421daacb703927a7335e97fd42954bc61f04"
 dependencies = [
  "claims-primitives",
  "frame-benchmarking",
@@ -4628,6 +4621,7 @@ dependencies = [
 [[package]]
 name = "pallet-sidechain"
 version = "0.9.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=cl/update-test-weights#89be421daacb703927a7335e97fd42954bc61f04"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4645,8 +4639,8 @@ dependencies = [
  "sp-io",
  "sp-runtime",
  "sp-std",
- "teerex-primitives 0.1.0",
- "test-utils 0.1.0",
+ "teerex-primitives",
+ "test-utils",
 ]
 
 [[package]]
@@ -4666,7 +4660,7 @@ dependencies = [
 [[package]]
 name = "pallet-teeracle"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=cl/add-dcap-benchmarks#503d2e54c9a32148e2a6db0b46fe2d1afe557b23"
+source = "git+https://github.com/integritee-network/pallets.git?branch=cl/update-test-weights#89be421daacb703927a7335e97fd42954bc61f04"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4683,12 +4677,13 @@ dependencies = [
  "sp-std",
  "substrate-fixed",
  "teeracle-primitives",
- "test-utils 0.1.0 (git+https://github.com/integritee-network/pallets.git?branch=cl/add-dcap-benchmarks)",
+ "test-utils",
 ]
 
 [[package]]
 name = "pallet-teerex"
 version = "0.9.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=cl/update-test-weights#89be421daacb703927a7335e97fd42954bc61f04"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4705,8 +4700,8 @@ dependencies = [
  "sp-io",
  "sp-runtime",
  "sp-std",
- "teerex-primitives 0.1.0",
- "test-utils 0.1.0",
+ "teerex-primitives",
+ "test-utils",
 ]
 
 [[package]]
@@ -7160,6 +7155,7 @@ dependencies = [
 [[package]]
 name = "sgx-verify"
 version = "0.1.4"
+source = "git+https://github.com/integritee-network/pallets.git?branch=cl/update-test-weights#89be421daacb703927a7335e97fd42954bc61f04"
 dependencies = [
  "base64 0.13.1",
  "chrono",
@@ -7175,7 +7171,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-std",
- "teerex-primitives 0.1.0",
+ "teerex-primitives",
  "webpki 0.21.0",
  "x509-cert",
 ]
@@ -7268,6 +7264,7 @@ checksum = "43b2853a4d09f215c24cc5489c992ce46052d359b5109343cbafbf26bc62f8a3"
 [[package]]
 name = "sidechain-primitives"
 version = "0.1.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=cl/update-test-weights#89be421daacb703927a7335e97fd42954bc61f04"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -8276,9 +8273,9 @@ checksum = "8ae9980cab1db3fceee2f6c6f643d5d8de2997c58ee8d25fb0cc8a9e9e7348e5"
 [[package]]
 name = "teeracle-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=cl/add-dcap-benchmarks#503d2e54c9a32148e2a6db0b46fe2d1afe557b23"
+source = "git+https://github.com/integritee-network/pallets.git?branch=cl/update-test-weights#89be421daacb703927a7335e97fd42954bc61f04"
 dependencies = [
- "common-primitives 0.1.0 (git+https://github.com/integritee-network/pallets.git?branch=cl/add-dcap-benchmarks)",
+ "common-primitives",
  "sp-std",
  "substrate-fixed",
 ]
@@ -8286,22 +8283,9 @@ dependencies = [
 [[package]]
 name = "teerex-primitives"
 version = "0.1.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=cl/update-test-weights#89be421daacb703927a7335e97fd42954bc61f04"
 dependencies = [
- "common-primitives 0.1.0",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "sp-core",
- "sp-io",
- "sp-std",
-]
-
-[[package]]
-name = "teerex-primitives"
-version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=cl/add-dcap-benchmarks#503d2e54c9a32148e2a6db0b46fe2d1afe557b23"
-dependencies = [
- "common-primitives 0.1.0 (git+https://github.com/integritee-network/pallets.git?branch=cl/add-dcap-benchmarks)",
+ "common-primitives",
  "parity-scale-codec",
  "scale-info",
  "serde",
@@ -8341,20 +8325,11 @@ checksum = "3369f5ac52d5eb6ab48c6b4ffdc8efbcad6b89c765749064ba298f2c68a16a76"
 [[package]]
 name = "test-utils"
 version = "0.1.0"
+source = "git+https://github.com/integritee-network/pallets.git?branch=cl/update-test-weights#89be421daacb703927a7335e97fd42954bc61f04"
 dependencies = [
  "log",
  "sgx-verify",
- "teerex-primitives 0.1.0",
-]
-
-[[package]]
-name = "test-utils"
-version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=cl/add-dcap-benchmarks#503d2e54c9a32148e2a6db0b46fe2d1afe557b23"
-dependencies = [
- "log",
- "sgx-verify",
- "teerex-primitives 0.1.0 (git+https://github.com/integritee-network/pallets.git?branch=cl/add-dcap-benchmarks)",
+ "teerex-primitives",
 ]
 
 [[package]]

@@ -33,7 +33,7 @@ for pallet in ${pallets[*]}; do
   echo benchmarking "$pallet"...
 
   $NODE \
-  benchmark \
+  benchmark pallet \
   --chain="$CHAIN_SPEC" \
   --steps=50 \
   --repeat=20 \

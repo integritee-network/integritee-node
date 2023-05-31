@@ -81,9 +81,9 @@ impl<T: frame_system::Config> pallet_scheduler::WeightInfo for WeightInfo<T> {
 	}
 	// Storage: Scheduler Agenda (r:1 w:1)
 	fn schedule(s: u32, ) -> Weight {
-		Weight::from_ref_time(54_318_000)
+		Weight::from_parts(54_318_000, 0u64)
 			// Standard Error: 7_000
-			.saturating_add(Weight::from_ref_time(180_000))
+			.saturating_add(Weight::from_parts(180_000, 0u64))
 			.saturating_mul(s.into())
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
@@ -91,9 +91,9 @@ impl<T: frame_system::Config> pallet_scheduler::WeightInfo for WeightInfo<T> {
 	// Storage: Scheduler Agenda (r:1 w:1)
 	// Storage: Scheduler Lookup (r:0 w:1)
 	fn cancel(s: u32, ) -> Weight {
-		Weight::from_ref_time(50_614_000)
+		Weight::from_parts(50_614_000, 0u64)
 			// Standard Error: 19_000
-			.saturating_add(Weight::from_ref_time(1_809_000))
+			.saturating_add(Weight::from_parts(1_809_000, 0u64))
 			.saturating_mul(s.into())
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(2))
@@ -101,9 +101,9 @@ impl<T: frame_system::Config> pallet_scheduler::WeightInfo for WeightInfo<T> {
 	// Storage: Scheduler Lookup (r:1 w:1)
 	// Storage: Scheduler Agenda (r:1 w:1)
 	fn schedule_named(s: u32, ) -> Weight {
-		Weight::from_ref_time(70_748_000)
+		Weight::from_parts(70_748_000, 0u64)
 			// Standard Error: 6_000
-			.saturating_add(Weight::from_ref_time(245_000))
+			.saturating_add(Weight::from_parts(245_000, 0u64))
 			.saturating_mul(s.into())
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(2))
@@ -111,9 +111,9 @@ impl<T: frame_system::Config> pallet_scheduler::WeightInfo for WeightInfo<T> {
 	// Storage: Scheduler Lookup (r:1 w:1)
 	// Storage: Scheduler Agenda (r:1 w:1)
 	fn cancel_named(s: u32, ) -> Weight {
-		Weight::from_ref_time(62_401_000)
+		Weight::from_parts(62_401_000, 0u64)
 			// Standard Error: 23_000
-			.saturating_add(Weight::from_ref_time(1_887_000))
+			.saturating_add(Weight::from_parts(1_887_000, 0u64))
 			.saturating_mul(s.into())
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(2))

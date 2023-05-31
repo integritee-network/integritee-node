@@ -30,26 +30,26 @@ use sp_std::marker::PhantomData;
 pub struct WeightInfo<T>(PhantomData<T>);
 impl<T: frame_system::Config> pallet_multisig::WeightInfo for WeightInfo<T> {
 	fn as_multi_threshold_1(z: u32, ) -> Weight {
-		Weight::from_ref_time(9_050_000)
+		Weight::from_parts(9_050_000, 0u64)
 			// Standard Error: 0
-			.saturating_add(Weight::from_ref_time(3_000)).saturating_mul(z.into())
+			.saturating_add(Weight::from_parts(3_000, 0u64)).saturating_mul(z.into())
 	}
 	// Storage: Multisig Multisigs (r:1 w:1)
 	// Storage: unknown [0x3a65787472696e7369635f696e646578] (r:1 w:0)
 	fn as_multi_create(s: u32, z: u32, ) -> Weight {
-		Weight::from_ref_time(99_228_000)
+		Weight::from_parts(99_228_000, 0u64)
 			// Standard Error: 87_000
-			.saturating_add(Weight::from_ref_time(793_000)).saturating_mul(s.into())
+			.saturating_add(Weight::from_parts(793_000, 0u64)).saturating_mul(s.into())
 			// Standard Error: 0
-			.saturating_add(Weight::from_ref_time(3_000)).saturating_mul(z.into())
+			.saturating_add(Weight::from_parts(3_000, 0u64)).saturating_mul(z.into())
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: Multisig Multisigs (r:1 w:1)
 	fn as_multi_approve(_s: u32, z: u32, ) -> Weight {
-		Weight::from_ref_time(70_439_000)
+		Weight::from_parts(70_439_000, 0u64)
 			// Standard Error: 0
-			.saturating_add(Weight::from_ref_time(3_000)).saturating_mul(z.into())
+			.saturating_add(Weight::from_parts(3_000, 0u64)).saturating_mul(z.into())
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -57,34 +57,34 @@ impl<T: frame_system::Config> pallet_multisig::WeightInfo for WeightInfo<T> {
 	// Storage: Multisig Calls (r:1 w:1)
 	// Storage: System Account (r:1 w:1)
 	fn as_multi_complete(s: u32, z: u32, ) -> Weight {
-		Weight::from_ref_time(139_018_000)
+		Weight::from_parts(139_018_000, 0u64)
 			// Standard Error: 317_000
-			.saturating_add(Weight::from_ref_time(629_000)).saturating_mul(s.into())
+			.saturating_add(Weight::from_parts(629_000, 0u64)).saturating_mul(s.into())
 			// Standard Error: 0
-			.saturating_add(Weight::from_ref_time(9_000)).saturating_mul(z.into())
+			.saturating_add(Weight::from_parts(9_000, 0u64)).saturating_mul(z.into())
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(3))
 	}
 	// Storage: Multisig Multisigs (r:1 w:1)
 	// Storage: unknown [0x3a65787472696e7369635f696e646578] (r:1 w:0)
 	fn approve_as_multi_create(s: u32, ) -> Weight {
-		Weight::from_ref_time(93_678_000)
+		Weight::from_parts(93_678_000, 0u64)
 			// Standard Error: 75_000
-			.saturating_add(Weight::from_ref_time(1_063_000)).saturating_mul(s.into())
+			.saturating_add(Weight::from_parts(1_063_000, 0u64)).saturating_mul(s.into())
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: Multisig Multisigs (r:1 w:1)
 	// Storage: Multisig Calls (r:1 w:0)
 	fn approve_as_multi_approve(_s: u32, ) -> Weight {
-		Weight::from_ref_time(81_581_000)
+		Weight::from_parts(81_581_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: Multisig Multisigs (r:1 w:1)
 	// Storage: Multisig Calls (r:1 w:1)
 	fn cancel_as_multi(_s: u32, ) -> Weight {
-		Weight::from_ref_time(194_725_000)
+		Weight::from_parts(194_725_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(2))
 	}

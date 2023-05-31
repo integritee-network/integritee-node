@@ -33,11 +33,11 @@ impl<T: frame_system::Config> pallet_timestamp::WeightInfo for WeightInfo<T> {
 	// Storage: Aura CurrentSlot (r:1 w:0)
 	// Storage: Teerex EnclaveRegistry (r:1 w:0)
 	fn set() -> Weight {
-		Weight::from_ref_time(51_125_000)
+		Weight::from_parts(51_125_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	fn on_finalize() -> Weight {
-		Weight::from_ref_time(9_723_000)
+		Weight::from_parts(9_723_000, 0u64)
 	}
 }

@@ -44,8 +44,8 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		//  Measured:  `299`
 		//  Estimated: `4370`
 		// Minimum execution time: 1_512_300 nanoseconds.
-		Weight::from_ref_time(2_591_400_000)
-			.saturating_add(Weight::from_proof_size(4370))
+		Weight::from_parts(2_591_400_000, 0u64)
+			.saturating_add(Weight::from_parts(0u64, 4370))
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -58,8 +58,8 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		//  Measured:  `57`
 		//  Estimated: `560`
 		// Minimum execution time: 1_562_200 nanoseconds.
-		Weight::from_ref_time(1_847_900_000)
-			.saturating_add(Weight::from_proof_size(560))
+		Weight::from_parts(1_847_900_000, 0u64)
+			.saturating_add(Weight::from_parts(0u64, 560))
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -72,8 +72,8 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		//  Measured:  `57`
 		//  Estimated: `560`
 		// Minimum execution time: 1_816_099 nanoseconds.
-		Weight::from_ref_time(3_147_800_000)
-			.saturating_add(Weight::from_proof_size(560))
+		Weight::from_parts(3_147_800_000, 0u64)
+			.saturating_add(Weight::from_parts(0u64, 560))
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -96,8 +96,8 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		//  Measured:  `420`
 		//  Estimated: `9458`
 		// Minimum execution time: 3_071_800 nanoseconds.
-		Weight::from_ref_time(4_260_200_000)
-			.saturating_add(Weight::from_proof_size(9458))
+		Weight::from_parts(4_260_200_000, 0u64)
+			.saturating_add(Weight::from_parts(0u64, 9458))
 			.saturating_add(T::DbWeight::get().reads(6))
 			.saturating_add(T::DbWeight::get().writes(3))
 	}
@@ -112,8 +112,8 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		//  Measured:  `504`
 		//  Estimated: `6957`
 		// Minimum execution time: 50_600 nanoseconds.
-		Weight::from_ref_time(51_200_000)
-			.saturating_add(Weight::from_proof_size(6957))
+		Weight::from_parts(51_200_000, 0u64)
+			.saturating_add(Weight::from_parts(0u64, 6957))
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(5))
 	}
@@ -122,8 +122,8 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		//  Measured:  `0`
 		//  Estimated: `0`
 		// Minimum execution time: 21_800 nanoseconds.
-		Weight::from_ref_time(26_600_000)
-			.saturating_add(Weight::from_proof_size(0))
+		Weight::from_parts(26_600_000, 0u64)
+			.saturating_add(Weight::from_parts(0u64, 0))
 	}
 	/// Storage: Teerex EnclaveIndex (r:1 w:0)
 	/// Proof Skipped: Teerex EnclaveIndex (max_values: None, max_size: None, mode: Measured)
@@ -132,8 +132,8 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		//  Measured:  `242`
 		//  Estimated: `2717`
 		// Minimum execution time: 27_800 nanoseconds.
-		Weight::from_ref_time(28_700_000)
-			.saturating_add(Weight::from_proof_size(2717))
+		Weight::from_parts(28_700_000, 0u64)
+			.saturating_add(Weight::from_parts(0u64, 2717))
 			.saturating_add(T::DbWeight::get().reads(1))
 	}
 	/// Storage: Teerex EnclaveIndex (r:1 w:0)
@@ -149,16 +149,16 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		//  Measured:  `362`
 		//  Estimated: `8511 + t * (2475 ±0)`
 		// Minimum execution time: 41_400 nanoseconds.
-		Weight::from_ref_time(28_179_644)
-			.saturating_add(Weight::from_proof_size(8511))
+		Weight::from_parts(28_179_644, 0u64)
+			.saturating_add(Weight::from_parts(0u64, 8511))
 			// Standard Error: 21_336
-			.saturating_add(Weight::from_ref_time(318_271).saturating_mul(l.into()))
+			.saturating_add(Weight::from_parts(318_271, 0u64).saturating_mul(l.into()))
 			// Standard Error: 467_546
-			.saturating_add(Weight::from_ref_time(7_329_090).saturating_mul(t.into()))
+			.saturating_add(Weight::from_parts(7_329_090, 0u64).saturating_mul(t.into()))
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().reads((1_u64).saturating_mul(t.into())))
 			.saturating_add(T::DbWeight::get().writes(1))
 			.saturating_add(T::DbWeight::get().writes((1_u64).saturating_mul(t.into())))
-			.saturating_add(Weight::from_proof_size(2475).saturating_mul(t.into()))
+			.saturating_add(Weight::from_parts(0u64, 2475).saturating_mul(t.into()))
 	}
 }

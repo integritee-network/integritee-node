@@ -2,6 +2,9 @@ FROM phusion/baseimage:focal-1.0.0
 LABEL maintainer="zoltan@integritee.network"
 LABEL description="This is the 2nd stage: a very small image where we copy the Substrate binary."
 
+# install netcat for healthcheck
+RUN apt-get update && apt-get install -yq netcat && cp /usr/bin/nc /usr/local/bin/
+
 RUN mv /usr/share/ca* /tmp && \
 	rm -rf /usr/share/*  && \
 	mv /tmp/ca-certificates /usr/share/ && \

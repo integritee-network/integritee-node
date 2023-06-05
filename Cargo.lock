@@ -2906,7 +2906,7 @@ dependencies = [
 
 [[package]]
 name = "integritee-node"
-version = "1.0.28"
+version = "1.0.34"
 dependencies = [
  "clap",
  "frame-benchmarking",
@@ -2951,7 +2951,7 @@ dependencies = [
 
 [[package]]
 name = "integritee-node-runtime"
-version = "1.0.28"
+version = "1.0.32"
 dependencies = [
  "frame-benchmarking",
  "frame-executive",
@@ -2992,6 +2992,7 @@ dependencies = [
  "sp-offchain",
  "sp-runtime",
  "sp-session",
+ "sp-staking",
  "sp-std",
  "sp-transaction-pool",
  "sp-version",
@@ -5780,9 +5781,9 @@ dependencies = [
 
 [[package]]
 name = "regex"
-version = "1.8.3"
+version = "1.8.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "81ca098a9821bd52d6b24fd8b10bd081f47d39c22778cafaa75a2857a62c6390"
+checksum = "d0ab3ca65655bb1e41f2a8c8cd662eb4fb035e67c3f78da1d61dffe89d07300f"
 dependencies = [
  "aho-corasick 1.0.2",
  "memchr",

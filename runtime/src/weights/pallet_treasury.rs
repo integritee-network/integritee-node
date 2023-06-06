@@ -32,23 +32,23 @@ impl<T: frame_system::Config> pallet_treasury::WeightInfo for WeightInfo<T> {
 	// Storage: Treasury ProposalCount (r:1 w:1)
 	// Storage: Treasury Proposals (r:0 w:1)
 	fn propose_spend() -> Weight {
-		Weight::from_ref_time(76_542_000)
+		Weight::from_parts(76_542_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(2))
 	}
 	// Storage: Treasury Proposals (r:1 w:1)
 	// Storage: System Account (r:1 w:1)
 	fn reject_proposal() -> Weight {
-		Weight::from_ref_time(77_597_000)
+		Weight::from_parts(77_597_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(2))
 	}
 	// Storage: Treasury Proposals (r:1 w:0)
 	// Storage: Treasury Approvals (r:1 w:1)
 	fn approve_proposal(p: u32, ) -> Weight {
-		Weight::from_ref_time(22_285_000)
+		Weight::from_parts(22_285_000, 0u64)
 			// Standard Error: 47_000
-			.saturating_add(Weight::from_ref_time(502_000)).saturating_mul(p.into())
+			.saturating_add(Weight::from_parts(502_000, 0u64)).saturating_mul(p.into())
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -56,9 +56,9 @@ impl<T: frame_system::Config> pallet_treasury::WeightInfo for WeightInfo<T> {
 	// Storage: Treasury Proposals (r:1 w:1)
 	// Storage: System Account (r:2 w:2)
 	fn on_initialize_proposals(p: u32, ) -> Weight {
-		Weight::from_ref_time(82_560_000)
+		Weight::from_parts(82_560_000, 0u64)
 			// Standard Error: 648_000
-			.saturating_add(Weight::from_ref_time(103_284_000)).saturating_mul(p.into())
+			.saturating_add(Weight::from_parts(103_284_000, 0u64)).saturating_mul(p.into())
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().reads(3)).saturating_mul(p.into())
 			.saturating_add(T::DbWeight::get().writes(1))
@@ -66,13 +66,13 @@ impl<T: frame_system::Config> pallet_treasury::WeightInfo for WeightInfo<T> {
 	}
 	// Storage: Treasury Approvals (r:1 w:1)
 	fn remove_approval() -> Weight {
-		Weight::from_ref_time(3_827_000)
+		Weight::from_parts(3_827_000, 0u64)
 			.saturating_add(RocksDbWeight::get().reads(1))
 			.saturating_add(RocksDbWeight::get().writes(1))
 	}
 
 	fn spend() -> Weight {
-		Weight::from_ref_time(22_063_000)
+		Weight::from_parts(22_063_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(2))
 	}

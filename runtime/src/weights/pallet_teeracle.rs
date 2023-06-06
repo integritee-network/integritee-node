@@ -33,19 +33,19 @@ impl<T: frame_system::Config> pallet_teeracle::WeightInfo for WeightInfo<T> {
 	// Storage: Teeracle Whitelists (r:1 w:0)
 	// Storage: Teeracle ExchangeRates (r:1 w:1)
 	fn update_exchange_rate() -> Weight {
-		Weight::from_ref_time(77_556_000)
+		Weight::from_parts(77_556_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(4))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: Teeracle Whitelists (r:1 w:1)
 	fn add_to_whitelist() -> Weight {
-		Weight::from_ref_time(35_065_000)
+		Weight::from_parts(35_065_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: Teeracle Whitelists (r:1 w:1)
 	fn remove_from_whitelist() -> Weight {
-		Weight::from_ref_time(37_631_000)
+		Weight::from_parts(37_631_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -54,7 +54,7 @@ impl<T: frame_system::Config> pallet_teeracle::WeightInfo for WeightInfo<T> {
 	// Storage: Teeracle Whitelists (r:1 w:0)
 	// Storage: Teeracle OracleData (r:0 w:1)
 	fn update_oracle() -> Weight {
-		Weight::from_ref_time(77_556_000)
+		Weight::from_parts(77_556_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}

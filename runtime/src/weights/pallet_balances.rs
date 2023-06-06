@@ -29,44 +29,50 @@ use sp_std::marker::PhantomData;
 pub struct WeightInfo<T>(PhantomData<T>);
 impl<T: frame_system::Config> pallet_balances::WeightInfo for WeightInfo<T> {
 	// Storage: System Account (r:1 w:1)
-	fn transfer() -> Weight {
-		Weight::from_ref_time(134_486_000)
+	fn transfer_allow_death() -> Weight {
+		Weight::from_parts(134_486_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: System Account (r:1 w:1)
 	fn transfer_keep_alive() -> Weight {
-		Weight::from_ref_time(103_768_000)
+		Weight::from_parts(103_768_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: System Account (r:1 w:1)
-	fn set_balance_creating() -> Weight {
-		Weight::from_ref_time(70_179_000)
+	fn force_set_balance_creating() -> Weight {
+		Weight::from_parts(70_179_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: System Account (r:1 w:1)
-	fn set_balance_killing() -> Weight {
-		Weight::from_ref_time(77_886_000)
+	fn force_set_balance_killing() -> Weight {
+		Weight::from_parts(77_886_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: System Account (r:2 w:2)
 	fn force_transfer() -> Weight {
-		Weight::from_ref_time(135_123_000)
+		Weight::from_parts(135_123_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(2))
 	}
 	// Storage: System Account (r:1 w:1)
 	fn transfer_all() -> Weight {
-		Weight::from_ref_time(120_544_000)
+		Weight::from_parts(120_544_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	// Storage: System Account (r:1 w:1)
 	fn force_unreserve() -> Weight {
-		Weight::from_ref_time(27_766_000)
+		Weight::from_parts(27_766_000, 0u64)
+			.saturating_add(T::DbWeight::get().reads(1))
+			.saturating_add(T::DbWeight::get().writes(1))
+	}
+	fn upgrade_accounts(_val: u32) -> Weight {
+		// Minimum execution time: 63_500 nanoseconds.
+		Weight::from_parts(64_700_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}

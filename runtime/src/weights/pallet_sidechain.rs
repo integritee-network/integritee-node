@@ -32,7 +32,7 @@ impl<T: frame_system::Config> pallet_sidechain::WeightInfo for WeightInfo<T> {
 	// Storage: Teerex EnclaveRegistry (r:1 w:0)
 	// Storage: Teerex WorkerForShard (r:0 w:1)
 	fn confirm_imported_sidechain_block() -> Weight {
-		Weight::from_ref_time(70_298_000)
+		Weight::from_parts(70_298_000, 0u64)
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}

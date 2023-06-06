@@ -5,8 +5,8 @@ use integritee_node_runtime::{
 };
 use sc_service::ChainType;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
+use sp_consensus_grandpa::AuthorityId as GrandpaId;
 use sp_core::{crypto::Ss58Codec, ed25519, sr25519, Pair, Public};
-use sp_finality_grandpa::AuthorityId as GrandpaId;
 use sp_runtime::traits::{AccountIdConversion, IdentifyAccount, Verify};
 use std::str::FromStr;
 

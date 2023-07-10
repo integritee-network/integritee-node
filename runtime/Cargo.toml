@@ -61,7 +61,7 @@ pallet-transaction-payment-rpc-runtime-api = { default-features = false, git = "
 # Used for runtime benchmarking
 frame-benchmarking = { default-features = false, optional = true, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.39" }
 frame-system-benchmarking = { default-features = false, optional = true, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.39" }
-hex-literal = { version = "0.3.1", optional = true }
+hex-literal = { version = "0.4.1", optional = true }
 
 # interstellar
 pallet-ocw-circuits = { default-features = false, git = "https://github.com/Interstellar-Network/pallets", branch = "main" }

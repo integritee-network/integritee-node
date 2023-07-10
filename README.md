@@ -15,6 +15,7 @@ A substrate-based node that maintains a registry of remote attested integritee-s
   - `IPFS_PATH=/tmp/ipfs ipfs init -p test`
   - `IPFS_PATH=/tmp/ipfs ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001`
   - `IPFS_PATH=/tmp/ipfs IPFS_PROFILE=test ipfs daemon --enable-pubsub-experiment`
+- NOTE: it WILL NOT build with the latest compiler; e.g. use `export CC=gcc-11 CXX=g++-11`
 
 #### Build and Run
 

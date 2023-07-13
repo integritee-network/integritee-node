@@ -21,6 +21,8 @@ pallets=(
   "pallet_proxy" \
   "pallet_scheduler" \
   "pallet_teerex" \
+  "pallet_sidechain" \
+  "pallet_enclave_bridge" \
   "pallet_claims" \
   "pallet_timestamp" \
   "pallet_treasury" \

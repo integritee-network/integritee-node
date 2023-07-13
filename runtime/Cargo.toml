@@ -31,6 +31,7 @@ pallet-utility = { default-features = false, git = "https://github.com/paritytec
 pallet-vesting = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.42" }
 
 pallet-claims = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "polkadot-v0.9.42" }
+pallet-enclave-bridge = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "polkadot-v0.9.42" }
 pallet-sidechain = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "polkadot-v0.9.42" }
 pallet-teeracle = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "polkadot-v0.9.42" }
 pallet-teerex = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "polkadot-v0.9.42" }
@@ -67,7 +68,6 @@ substrate-wasm-builder = { git = "https://github.com/paritytech/substrate.git", 
 
 [features]
 default = ["std"]
-skip-ias-check = ["pallet-teerex/skip-ias-check"]
 skip-extrinsic-filtering = []
 std = [
     "codec/std",
@@ -102,6 +102,7 @@ std = [
     "sp-version/std",
     "pallet-teerex/std",
     "pallet-claims/std",
+    "pallet-enclave-bridge/std",
     "pallet-proxy/std",
     "pallet-utility/std",
     "pallet-teeracle/std",
@@ -122,6 +123,7 @@ runtime-benchmarks = [
     "pallet-scheduler/runtime-benchmarks",
     "pallet-teerex/runtime-benchmarks",
     "pallet-claims/runtime-benchmarks",
+    "pallet-enclave-bridge/runtime-benchmarks",
     "pallet-timestamp/runtime-benchmarks",
     "pallet-treasury/runtime-benchmarks",
     "pallet-vesting/runtime-benchmarks",

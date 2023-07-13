@@ -859,7 +859,6 @@ dependencies = [
 [[package]]
 name = "claims-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.42#be26e6b85f14896860ef919488e6bb4cf4b7aa29"
 dependencies = [
  "parity-scale-codec",
  "rustc-hex",
@@ -941,8 +940,12 @@ dependencies = [
 [[package]]
 name = "common-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.42#be26e6b85f14896860ef919488e6bb4cf4b7aa29"
 dependencies = [
+ "derive_more",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-core",
+ "sp-runtime",
  "sp-std",
 ]
 
@@ -966,6 +969,12 @@ name = "constant_time_eq"
 version = "0.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "13418e745008f7349ec7e449155f419a61b92b58a99cc3616942b926825ec76b"
+
+[[package]]
+name = "convert_case"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6245d59a3e82a7fc217c5828a6692dbc6dfb63a0c8c90495621f7b9d79704a0e"
 
 [[package]]
 name = "core-foundation"
@@ -1511,8 +1520,10 @@ version = "0.99.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4fb810d30a7c1953f91334de7244731fc3f3c10d7fe163338a35b9f640960321"
 dependencies = [
+ "convert_case",
  "proc-macro2",
  "quote",
+ "rustc_version 0.4.0",
  "syn 1.0.109",
 ]
 
@@ -1757,6 +1768,20 @@ dependencies = [
  "sec1 0.7.1",
  "subtle",
  "zeroize",
+]
+
+[[package]]
+name = "enclave-bridge-primitives"
+version = "0.1.0"
+dependencies = [
+ "common-primitives",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -2983,6 +3008,7 @@ dependencies = [
  "pallet-aura",
  "pallet-balances",
  "pallet-claims",
+ "pallet-enclave-bridge",
  "pallet-grandpa",
  "pallet-insecure-randomness-collective-flip",
  "pallet-multisig",
@@ -4589,7 +4615,6 @@ dependencies = [
 [[package]]
 name = "pallet-claims"
 version = "0.9.12"
-source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.42#be26e6b85f14896860ef919488e6bb4cf4b7aa29"
 dependencies = [
  "claims-primitives",
  "frame-benchmarking",
@@ -4604,6 +4629,30 @@ dependencies = [
  "sp-io",
  "sp-runtime",
  "sp-std",
+]
+
+[[package]]
+name = "pallet-enclave-bridge"
+version = "0.9.0"
+dependencies = [
+ "enclave-bridge-primitives",
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "hex-literal",
+ "log",
+ "pallet-balances",
+ "pallet-teerex",
+ "pallet-timestamp",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+ "teerex-primitives",
+ "test-utils",
 ]
 
 [[package]]
@@ -4731,14 +4780,15 @@ dependencies = [
 [[package]]
 name = "pallet-sidechain"
 version = "0.9.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.42#be26e6b85f14896860ef919488e6bb4cf4b7aa29"
 dependencies = [
+ "enclave-bridge-primitives",
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "hex-literal",
  "log",
  "pallet-balances",
+ "pallet-enclave-bridge",
  "pallet-teerex",
  "pallet-timestamp",
  "parity-scale-codec",
@@ -4770,7 +4820,6 @@ dependencies = [
 [[package]]
 name = "pallet-teeracle"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.42#be26e6b85f14896860ef919488e6bb4cf4b7aa29"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4787,13 +4836,13 @@ dependencies = [
  "sp-std",
  "substrate-fixed",
  "teeracle-primitives",
+ "teerex-primitives",
  "test-utils",
 ]
 
 [[package]]
 name = "pallet-teerex"
 version = "0.9.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.42#be26e6b85f14896860ef919488e6bb4cf4b7aa29"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -7349,7 +7398,6 @@ dependencies = [
 [[package]]
 name = "sgx-verify"
 version = "0.1.4"
-source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.42#be26e6b85f14896860ef919488e6bb4cf4b7aa29"
 dependencies = [
  "base64 0.13.1",
  "chrono",
@@ -7458,7 +7506,6 @@ checksum = "43b2853a4d09f215c24cc5489c992ce46052d359b5109343cbafbf26bc62f8a3"
 [[package]]
 name = "sidechain-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.42#be26e6b85f14896860ef919488e6bb4cf4b7aa29"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -8499,7 +8546,6 @@ checksum = "8ae9980cab1db3fceee2f6c6f643d5d8de2997c58ee8d25fb0cc8a9e9e7348e5"
 [[package]]
 name = "teeracle-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.42#be26e6b85f14896860ef919488e6bb4cf4b7aa29"
 dependencies = [
  "common-primitives",
  "sp-std",
@@ -8509,14 +8555,14 @@ dependencies = [
 [[package]]
 name = "teerex-primitives"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.42#be26e6b85f14896860ef919488e6bb4cf4b7aa29"
 dependencies = [
  "common-primitives",
+ "derive_more",
  "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-core",
- "sp-io",
+ "sp-runtime",
  "sp-std",
 ]
 
@@ -8551,7 +8597,6 @@ checksum = "3369f5ac52d5eb6ab48c6b4ffdc8efbcad6b89c765749064ba298f2c68a16a76"
 [[package]]
 name = "test-utils"
 version = "0.1.0"
-source = "git+https://github.com/integritee-network/pallets.git?branch=polkadot-v0.9.42#be26e6b85f14896860ef919488e6bb4cf4b7aa29"
 dependencies = [
  "log",
  "sgx-verify",

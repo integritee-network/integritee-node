@@ -71,7 +71,5 @@ runtime-benchmarks = [
     "integritee-node-runtime/runtime-benchmarks",
     "sc-service/runtime-benchmarks",
 ]
-# allow workers to register without remote attestation for dev purposes
-skip-ias-check = ["integritee-node-runtime/skip-ias-check"]
 # lift filters for development binaries
 skip-extrinsic-filtering = ["integritee-node-runtime/skip-extrinsic-filtering"]

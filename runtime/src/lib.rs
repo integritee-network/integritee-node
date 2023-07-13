@@ -70,6 +70,9 @@ pub use pallet_sidechain;
 pub use pallet_teeracle;
 /// added by Integritee
 pub use pallet_teerex;
+/// added by Integritee
+pub use pallet_enclave_bridge;;
+
 pub use pallet_timestamp::Call as TimestampCall;
 use pallet_transaction_payment::CurrencyAdapter;
 use scale_info::TypeInfo;
@@ -248,6 +251,7 @@ impl Contains<RuntimeCall> for BaseFilter {
 			RuntimeCall::Proxy(_) |
 			RuntimeCall::Teeracle(_) |
 			RuntimeCall::Teerex(_) |
+			RuntimeCall::EnclaveBridge(_) |
 			RuntimeCall::Treasury(..) |
 			RuntimeCall::Scheduler(_) |
 			RuntimeCall::Utility(_) |
@@ -351,9 +355,9 @@ impl pallet_timestamp::Config for Runtime {
 
 	// Aura doesn't like when we mess with the timestamps in the benchmarks.
 	#[cfg(feature = "runtime-benchmarks")]
-	type OnTimestampSet = Teerex;
+	type OnTimestampSet = ();
 	#[cfg(not(feature = "runtime-benchmarks"))]
-	type OnTimestampSet = (Aura, Teerex);
+	type OnTimestampSet = Aura;
 	type MinimumPeriod = ConstU64<{ SLOT_DURATION / 2 }>;
 	type WeightInfo = weights::pallet_timestamp::WeightInfo<Runtime>;
 }
@@ -402,16 +406,21 @@ impl pallet_sudo::Config for Runtime {
 
 parameter_types! {
 	pub const MomentsPerDay: Moment = 86_400_000; // [ms/d]
-	pub const MaxSilenceTime: Moment =172_800_000; // 48h
+	pub const MaxAttestationRenewalPeriod: Moment =172_800_000; // 48h
 }
 
 /// added by Integritee
 impl pallet_teerex::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
-	type Currency = pallet_balances::Pallet<Runtime>;
+	type MaxAttestationRenewalPeriod = MaxAttestationRenewalPeriod;
 	type MomentsPerDay = MomentsPerDay;
-	type MaxSilenceTime = MaxSilenceTime;
 	type WeightInfo = weights::pallet_teerex::WeightInfo<Runtime>;
+}
+
+impl pallet_enclave_bridge::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type Currency = pallet_balances::Pallet<Runtime>;
+	type WeightInfo = weights::pallet_enclave_bridge::WeightInfo<Runtime>;
 }
 
 parameter_types! {
@@ -679,6 +688,7 @@ construct_runtime!(
 		Claims: pallet_claims::{Pallet, Call, Storage, Config<T>, Event<T>, ValidateUnsigned} = 51,
 		Teeracle: pallet_teeracle::{Pallet, Call, Storage, Event<T>} = 52,
 		Sidechain: pallet_sidechain::{Pallet, Call, Storage, Event<T>} = 53,
+		EnclaveBridge: pallet_enclave_bridge::{Pallet, Call, Storage, Event<T>} = 54,
 	}
 );
 
@@ -723,6 +733,7 @@ mod benches {
 		[pallet_proxy, Proxy]
 		[pallet_scheduler, Scheduler]
 		[pallet_teerex, Teerex]
+		[pallet_enclave_bridge, EnclaveBridge]
 		[pallet_claims, Claims]
 		[pallet_timestamp, Timestamp]
 		[pallet_treasury, Treasury]

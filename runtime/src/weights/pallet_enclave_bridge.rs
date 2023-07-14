@@ -36,8 +36,8 @@ impl<T: frame_system::Config> pallet_enclave_bridge::WeightInfo for WeightInfo<T
 		// Proof Size summary in bytes:
 		//  Measured:  `0`
 		//  Estimated: `0`
-		// Minimum execution time: 8_391_000 picoseconds.
-		Weight::from_parts(8_820_000, 0)
+		// Minimum execution time: 7_991_000 picoseconds.
+		Weight::from_parts(8_577_000, 0)
 			.saturating_add(Weight::from_parts(0, 0))
 	}
 	/// Storage: Teerex SovereignEnclaves (r:1 w:0)
@@ -50,8 +50,8 @@ impl<T: frame_system::Config> pallet_enclave_bridge::WeightInfo for WeightInfo<T
 		// Proof Size summary in bytes:
 		//  Measured:  `350`
 		//  Estimated: `3815`
-		// Minimum execution time: 17_954_000 picoseconds.
-		Weight::from_parts(18_537_000, 0)
+		// Minimum execution time: 17_900_000 picoseconds.
+		Weight::from_parts(18_510_000, 0)
 			.saturating_add(Weight::from_parts(0, 3815))
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(1))
@@ -62,8 +62,8 @@ impl<T: frame_system::Config> pallet_enclave_bridge::WeightInfo for WeightInfo<T
 		// Proof Size summary in bytes:
 		//  Measured:  `52`
 		//  Estimated: `3593`
-		// Minimum execution time: 48_906_000 picoseconds.
-		Weight::from_parts(49_849_000, 0)
+		// Minimum execution time: 48_927_000 picoseconds.
+		Weight::from_parts(49_346_000, 0)
 			.saturating_add(Weight::from_parts(0, 3593))
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
@@ -82,8 +82,8 @@ impl<T: frame_system::Config> pallet_enclave_bridge::WeightInfo for WeightInfo<T
 		// Proof Size summary in bytes:
 		//  Measured:  `490`
 		//  Estimated: `6196`
-		// Minimum execution time: 67_669_000 picoseconds.
-		Weight::from_parts(69_449_000, 0)
+		// Minimum execution time: 79_834_000 picoseconds.
+		Weight::from_parts(81_535_000, 0)
 			.saturating_add(Weight::from_parts(0, 6196))
 			.saturating_add(T::DbWeight::get().reads(6))
 			.saturating_add(T::DbWeight::get().writes(4))
@@ -96,17 +96,15 @@ impl<T: frame_system::Config> pallet_enclave_bridge::WeightInfo for WeightInfo<T
 	/// Proof Skipped: System EventTopics (max_values: None, max_size: None, mode: Measured)
 	/// The range of component `l` is `[0, 100]`.
 	/// The range of component `t` is `[1, 5]`.
-	fn publish_hash(l: u32, t: u32, ) -> Weight {
+	fn publish_hash(_l: u32, t: u32, ) -> Weight {
 		// Proof Size summary in bytes:
 		//  Measured:  `350`
 		//  Estimated: `3815 + t * (2475 ±0)`
-		// Minimum execution time: 21_784_000 picoseconds.
-		Weight::from_parts(21_789_195, 0)
+		// Minimum execution time: 21_138_000 picoseconds.
+		Weight::from_parts(22_148_005, 0)
 			.saturating_add(Weight::from_parts(0, 3815))
-			// Standard Error: 2_421
-			.saturating_add(Weight::from_parts(1_204, 0).saturating_mul(l.into()))
-			// Standard Error: 53_055
-			.saturating_add(Weight::from_parts(2_222_024, 0).saturating_mul(t.into()))
+			// Standard Error: 68_089
+			.saturating_add(Weight::from_parts(2_376_164, 0).saturating_mul(t.into()))
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().reads((1_u64).saturating_mul(t.into())))
 			.saturating_add(T::DbWeight::get().writes(2))
@@ -123,8 +121,8 @@ impl<T: frame_system::Config> pallet_enclave_bridge::WeightInfo for WeightInfo<T
 		// Proof Size summary in bytes:
 		//  Measured:  `463`
 		//  Estimated: `3928`
-		// Minimum execution time: 31_486_000 picoseconds.
-		Weight::from_parts(32_448_000, 0)
+		// Minimum execution time: 29_961_000 picoseconds.
+		Weight::from_parts(31_830_000, 0)
 			.saturating_add(Weight::from_parts(0, 3928))
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(2))

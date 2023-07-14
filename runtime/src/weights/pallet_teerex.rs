@@ -46,8 +46,8 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		// Proof Size summary in bytes:
 		//  Measured:  `394`
 		//  Estimated: `3859`
-		// Minimum execution time: 2_019_853_000 picoseconds.
-		Weight::from_parts(2_050_980_000, 0)
+		// Minimum execution time: 2_029_665_000 picoseconds.
+		Weight::from_parts(2_086_710_000, 0)
 			.saturating_add(Weight::from_parts(0, 3859))
 			.saturating_add(T::DbWeight::get().reads(4))
 			.saturating_add(T::DbWeight::get().writes(1))
@@ -60,8 +60,8 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		// Proof Size summary in bytes:
 		//  Measured:  `95`
 		//  Estimated: `1493`
-		// Minimum execution time: 1_015_582_000 picoseconds.
-		Weight::from_parts(1_030_890_000, 0)
+		// Minimum execution time: 1_017_809_000 picoseconds.
+		Weight::from_parts(1_039_959_000, 0)
 			.saturating_add(Weight::from_parts(0, 1493))
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
@@ -74,8 +74,8 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		// Proof Size summary in bytes:
 		//  Measured:  `95`
 		//  Estimated: `1493`
-		// Minimum execution time: 1_120_530_000 picoseconds.
-		Weight::from_parts(1_143_588_000, 0)
+		// Minimum execution time: 1_139_721_000 picoseconds.
+		Weight::from_parts(1_173_562_000, 0)
 			.saturating_add(Weight::from_parts(0, 1493))
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
@@ -88,8 +88,8 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		// Proof Size summary in bytes:
 		//  Measured:  `473`
 		//  Estimated: `3938`
-		// Minimum execution time: 17_253_000 picoseconds.
-		Weight::from_parts(18_152_000, 0)
+		// Minimum execution time: 15_587_000 picoseconds.
+		Weight::from_parts(16_474_000, 0)
 			.saturating_add(Weight::from_parts(0, 3938))
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(1))
@@ -102,8 +102,8 @@ impl<T: frame_system::Config> pallet_teerex::WeightInfo for WeightInfo<T> {
 		// Proof Size summary in bytes:
 		//  Measured:  `575`
 		//  Estimated: `4040`
-		// Minimum execution time: 20_520_000 picoseconds.
-		Weight::from_parts(24_049_000, 0)
+		// Minimum execution time: 20_507_000 picoseconds.
+		Weight::from_parts(21_706_000, 0)
 			.saturating_add(Weight::from_parts(0, 4040))
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(1))

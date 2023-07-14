@@ -36,8 +36,8 @@ impl<T: frame_system::Config> pallet_enclave_bridge::WeightInfo for WeightInfo<T
 		// Proof Size summary in bytes:
 		//  Measured:  `0`
 		//  Estimated: `0`
-		// Minimum execution time: 7_844_000 picoseconds.
-		Weight::from_parts(8_416_000, 0)
+		// Minimum execution time: 8_391_000 picoseconds.
+		Weight::from_parts(8_820_000, 0)
 			.saturating_add(Weight::from_parts(0, 0))
 	}
 	/// Storage: Teerex SovereignEnclaves (r:1 w:0)
@@ -50,11 +50,43 @@ impl<T: frame_system::Config> pallet_enclave_bridge::WeightInfo for WeightInfo<T
 		// Proof Size summary in bytes:
 		//  Measured:  `350`
 		//  Estimated: `3815`
-		// Minimum execution time: 18_077_000 picoseconds.
-		Weight::from_parts(23_090_000, 0)
+		// Minimum execution time: 17_954_000 picoseconds.
+		Weight::from_parts(18_537_000, 0)
 			.saturating_add(Weight::from_parts(0, 3815))
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(1))
+	}
+	/// Storage: System Account (r:1 w:1)
+	/// Proof: System Account (max_values: None, max_size: Some(128), added: 2603, mode: MaxEncodedLen)
+	fn shield_funds() -> Weight {
+		// Proof Size summary in bytes:
+		//  Measured:  `52`
+		//  Estimated: `3593`
+		// Minimum execution time: 48_906_000 picoseconds.
+		Weight::from_parts(49_849_000, 0)
+			.saturating_add(Weight::from_parts(0, 3593))
+			.saturating_add(T::DbWeight::get().reads(1))
+			.saturating_add(T::DbWeight::get().writes(1))
+	}
+	/// Storage: Teerex SovereignEnclaves (r:1 w:0)
+	/// Proof Skipped: Teerex SovereignEnclaves (max_values: None, max_size: None, mode: Measured)
+	/// Storage: EnclaveBridge ShardConfigRegistry (r:1 w:0)
+	/// Proof Skipped: EnclaveBridge ShardConfigRegistry (max_values: None, max_size: None, mode: Measured)
+	/// Storage: EnclaveBridge ShardStatus (r:1 w:1)
+	/// Proof Skipped: EnclaveBridge ShardStatus (max_values: None, max_size: None, mode: Measured)
+	/// Storage: EnclaveBridge ExecutedUnshieldCalls (r:1 w:1)
+	/// Proof Skipped: EnclaveBridge ExecutedUnshieldCalls (max_values: None, max_size: None, mode: Measured)
+	/// Storage: System Account (r:2 w:2)
+	/// Proof: System Account (max_values: None, max_size: Some(128), added: 2603, mode: MaxEncodedLen)
+	fn unshield_funds() -> Weight {
+		// Proof Size summary in bytes:
+		//  Measured:  `490`
+		//  Estimated: `6196`
+		// Minimum execution time: 67_669_000 picoseconds.
+		Weight::from_parts(69_449_000, 0)
+			.saturating_add(Weight::from_parts(0, 6196))
+			.saturating_add(T::DbWeight::get().reads(6))
+			.saturating_add(T::DbWeight::get().writes(4))
 	}
 	/// Storage: Teerex SovereignEnclaves (r:1 w:0)
 	/// Proof Skipped: Teerex SovereignEnclaves (max_values: None, max_size: None, mode: Measured)
@@ -64,15 +96,17 @@ impl<T: frame_system::Config> pallet_enclave_bridge::WeightInfo for WeightInfo<T
 	/// Proof Skipped: System EventTopics (max_values: None, max_size: None, mode: Measured)
 	/// The range of component `l` is `[0, 100]`.
 	/// The range of component `t` is `[1, 5]`.
-	fn publish_hash(_l: u32, t: u32, ) -> Weight {
+	fn publish_hash(l: u32, t: u32, ) -> Weight {
 		// Proof Size summary in bytes:
 		//  Measured:  `350`
 		//  Estimated: `3815 + t * (2475 ±0)`
-		// Minimum execution time: 21_361_000 picoseconds.
-		Weight::from_parts(20_885_148, 0)
+		// Minimum execution time: 21_784_000 picoseconds.
+		Weight::from_parts(21_789_195, 0)
 			.saturating_add(Weight::from_parts(0, 3815))
-			// Standard Error: 25_914
-			.saturating_add(Weight::from_parts(2_076_429, 0).saturating_mul(t.into()))
+			// Standard Error: 2_421
+			.saturating_add(Weight::from_parts(1_204, 0).saturating_mul(l.into()))
+			// Standard Error: 53_055
+			.saturating_add(Weight::from_parts(2_222_024, 0).saturating_mul(t.into()))
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().reads((1_u64).saturating_mul(t.into())))
 			.saturating_add(T::DbWeight::get().writes(2))
@@ -89,8 +123,8 @@ impl<T: frame_system::Config> pallet_enclave_bridge::WeightInfo for WeightInfo<T
 		// Proof Size summary in bytes:
 		//  Measured:  `463`
 		//  Estimated: `3928`
-		// Minimum execution time: 25_484_000 picoseconds.
-		Weight::from_parts(25_906_000, 0)
+		// Minimum execution time: 31_486_000 picoseconds.
+		Weight::from_parts(32_448_000, 0)
 			.saturating_add(Weight::from_parts(0, 3928))
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(2))

@@ -65,13 +65,13 @@ pub use pallet_balances::Call as BalancesCall;
 /// added by Integritee
 pub use pallet_claims;
 /// added by Integritee
+pub use pallet_enclave_bridge;
+/// added by Integritee
 pub use pallet_sidechain;
 /// added by Integritee
 pub use pallet_teeracle;
 /// added by Integritee
 pub use pallet_teerex;
-/// added by Integritee
-pub use pallet_enclave_bridge;
 
 pub use pallet_timestamp::Call as TimestampCall;
 use pallet_transaction_payment::CurrencyAdapter;

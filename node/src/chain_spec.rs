@@ -369,7 +369,7 @@ fn genesis_config(
 			// Assign network admin rights.
 			key: Some(root_key),
 		},
-		teerex: TeerexConfig { allow_sgx_debug_mode: true },
+		teerex: TeerexConfig { allow_sgx_debug_mode: true , allow_skipping_attestation: true},
 		claims: Default::default(),
 		treasury: Default::default(),
 		vesting: Default::default(),

@@ -141,11 +141,11 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
         with:
-          key: ${{ matrix.os }}-${{ env.RUST_BIN_DIR }}-${{ matrix.binary }}-skip-ias-check
+          key: ${{ matrix.os }}-${{ env.RUST_BIN_DIR }}-${{ matrix.binary }}-with-ias
 
       - name: Release
         if: ${{ matrix.binary == 'release' }}
-        run: cargo build --release --locked --features skip-ias-check,skip-extrinsic-filtering
+        run: cargo build --release --locked --features skip-extrinsic-filtering
 
       # Upload artifacts
       - name: Upload integritee-node-dev
@@ -257,7 +257,7 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
         with:
-          key: ${{ matrix.os }}-${{ env.RUST_BIN_DIR }}-${{ matrix.binary }}-skip-ias-check
+          key: ${{ matrix.os }}-${{ env.RUST_BIN_DIR }}-${{ matrix.binary }}-with-ias
 
       - name: Build benchmarking binary
         if: ${{ matrix.binary == 'release' }}

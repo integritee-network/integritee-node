@@ -14,18 +14,20 @@ echo "WEIGHT_OUTPUT_DIR:  ${WEIGHT_OUTPUT_DIR}"
 mkdir -p "$WEIGHT_OUTPUT_DIR"
 
 pallets=(
-  "frame_system" \
-  "pallet_balances" \
-  "pallet_multisig" \
-  "pallet_preimage" \
-  "pallet_proxy" \
-  "pallet_scheduler" \
+  #"frame_system" \
+  #"pallet_balances" \
+  #"pallet_multisig" \
+  #"pallet_preimage" \
+  #"pallet_proxy" \
+  #"pallet_scheduler" \
   "pallet_teerex" \
-  "pallet_claims" \
-  "pallet_timestamp" \
-  "pallet_treasury" \
-  "pallet_vesting" \
-  "pallet_utility" \
+  "pallet_sidechain" \
+  "pallet_enclave_bridge" \
+  #"pallet_claims" \
+  #"pallet_timestamp" \
+  #"pallet_treasury" \
+  #"pallet_vesting" \
+  #"pallet_utility" \
   "pallet_teeracle" \
 )
 

@@ -65,11 +65,14 @@ pub use pallet_balances::Call as BalancesCall;
 /// added by Integritee
 pub use pallet_claims;
 /// added by Integritee
+pub use pallet_enclave_bridge;
+/// added by Integritee
 pub use pallet_sidechain;
 /// added by Integritee
 pub use pallet_teeracle;
 /// added by Integritee
 pub use pallet_teerex;
+
 pub use pallet_timestamp::Call as TimestampCall;
 use pallet_transaction_payment::CurrencyAdapter;
 use scale_info::TypeInfo;
@@ -138,7 +141,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	/// Version of the runtime specification. A full-node will not attempt to use its native
 	/// runtime in substitute for the on-chain Wasm runtime unless all of `spec_name`,
 	/// `spec_version` and `authoring_version` are the same between Wasm and native.
-	spec_version: 33,
+	spec_version: 34,
 
 	/// Version of the implementation of the specification. Nodes are free to ignore this; it
 	/// serves only as an indication that the code is different; as long as the other two versions
@@ -159,7 +162,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	/// index.
 	///
 	/// It need *not* change when a new module is added or when a dispatchable is added.
-	transaction_version: 5,
+	transaction_version: 6,
 	state_version: 0,
 };
 
@@ -248,6 +251,7 @@ impl Contains<RuntimeCall> for BaseFilter {
 			RuntimeCall::Proxy(_) |
 			RuntimeCall::Teeracle(_) |
 			RuntimeCall::Teerex(_) |
+			RuntimeCall::EnclaveBridge(_) |
 			RuntimeCall::Treasury(..) |
 			RuntimeCall::Scheduler(_) |
 			RuntimeCall::Utility(_) |
@@ -351,9 +355,9 @@ impl pallet_timestamp::Config for Runtime {
 
 	// Aura doesn't like when we mess with the timestamps in the benchmarks.
 	#[cfg(feature = "runtime-benchmarks")]
-	type OnTimestampSet = Teerex;
+	type OnTimestampSet = ();
 	#[cfg(not(feature = "runtime-benchmarks"))]
-	type OnTimestampSet = (Aura, Teerex);
+	type OnTimestampSet = Aura;
 	type MinimumPeriod = ConstU64<{ SLOT_DURATION / 2 }>;
 	type WeightInfo = weights::pallet_timestamp::WeightInfo<Runtime>;
 }
@@ -402,16 +406,21 @@ impl pallet_sudo::Config for Runtime {
 
 parameter_types! {
 	pub const MomentsPerDay: Moment = 86_400_000; // [ms/d]
-	pub const MaxSilenceTime: Moment =172_800_000; // 48h
+	pub const MaxAttestationRenewalPeriod: Moment =172_800_000; // 48h
 }
 
 /// added by Integritee
 impl pallet_teerex::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
-	type Currency = pallet_balances::Pallet<Runtime>;
+	type MaxAttestationRenewalPeriod = MaxAttestationRenewalPeriod;
 	type MomentsPerDay = MomentsPerDay;
-	type MaxSilenceTime = MaxSilenceTime;
 	type WeightInfo = weights::pallet_teerex::WeightInfo<Runtime>;
+}
+
+impl pallet_enclave_bridge::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type Currency = pallet_balances::Pallet<Runtime>;
+	type WeightInfo = weights::pallet_enclave_bridge::WeightInfo<Runtime>;
 }
 
 parameter_types! {
@@ -679,6 +688,7 @@ construct_runtime!(
 		Claims: pallet_claims::{Pallet, Call, Storage, Config<T>, Event<T>, ValidateUnsigned} = 51,
 		Teeracle: pallet_teeracle::{Pallet, Call, Storage, Event<T>} = 52,
 		Sidechain: pallet_sidechain::{Pallet, Call, Storage, Event<T>} = 53,
+		EnclaveBridge: pallet_enclave_bridge::{Pallet, Call, Storage, Event<T>} = 54,
 	}
 );
 
@@ -723,6 +733,7 @@ mod benches {
 		[pallet_proxy, Proxy]
 		[pallet_scheduler, Scheduler]
 		[pallet_teerex, Teerex]
+		[pallet_enclave_bridge, EnclaveBridge]
 		[pallet_claims, Claims]
 		[pallet_timestamp, Timestamp]
 		[pallet_treasury, Treasury]

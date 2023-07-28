@@ -7,19 +7,13 @@ A substrate-based node that maintains a registry of remote attested integritee-s
 ## Build and Run
 1. See the substrate install docs to install the preliminaries: [https://docs.substrate.io/install](https://docs.substrate.io/install).
 2. Build the node:
-    - If you can perform Remote Attestation:
-        ```
-        cargo build --release --features "skip-extrinsic-filtering" 
-        ```
-    - If you can **NOT** perform Remote Attestation:
-	   ```
-        cargo build --release --features "skip-extrinsic-filtering skip-ias-check"
-        ```
+     ```
+     cargo build --release --features "skip-extrinsic-filtering" 
+     ```
 
 ### Note
 There are some cargo features that are highly relevant for developers:
 
-* `skip-ias-check`: allow registering enclaves without attestation report.
 * `skip-extrinsic-filtering`: We have a defensive filter for transfer extrinsics as we have an old solo-node running for archive purposes, which mustn't allow transfers. The filter can be deactivated with this feature.
 
 ## Versioning

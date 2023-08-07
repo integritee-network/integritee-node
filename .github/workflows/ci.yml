@@ -504,7 +504,8 @@ jobs:
           ls
           ls "${{ matrix.runtime }}-runtime-${{ github.sha }}"
           runtime_ver="$(ruby -e 'require "./scripts/github/lib.rb"; puts get_runtime()')"
-          echo "{runtime_ver}={$runtime_ver}" >> $GITHUB_OUTPUT
+          echo "Found version: >$runtime_ver<"
+          echo "runtime_ver={$runtime_ver}" >> $GITHUB_OUTPUT
 
       - name: Upload compact ${{ matrix.runtime }} wasm
         uses: actions/upload-release-asset@v1

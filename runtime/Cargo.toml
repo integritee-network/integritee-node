@@ -64,8 +64,8 @@ frame-system-benchmarking = { default-features = false, optional = true, git = "
 hex-literal = { version = "0.4.1", optional = true }
 
 # interstellar
-pallet-ocw-circuits = { default-features = false, git = "https://github.com/Interstellar-Network/pallets", branch = "main" }
-pallet-tx-registry = { default-features = false, git = "https://github.com/Interstellar-Network/pallets", branch = "main" }
+pallet-ocw-circuits = { default-features = false, git = "https://github.com/Interstellar-Network/pallets", branch = "remove-api_circuits" }
+pallet-tx-registry = { default-features = false, git = "https://github.com/Interstellar-Network/pallets", branch = "remove-api_circuits" }
 
 [build-dependencies]
 # TEMP https://github.com/paritytech/substrate/pull/13574/files
@@ -113,9 +113,8 @@ std = [
     "pallet-proxy/std",
     "pallet-utility/std",
     "pallet-teeracle/std",
-	# [interstellar]
-	"pallet-ocw-circuits/std",
-	"pallet-tx-registry/std",
+    # [interstellar]    "pallet-ocw-circuits/std",
+    "pallet-tx-registry/std",
 ]
 runtime-benchmarks = [
     "frame-benchmarking/runtime-benchmarks",

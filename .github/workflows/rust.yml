@@ -21,8 +21,6 @@ jobs:
           use_toolchain_toml: "true"
           toolchain_components: "rustfmt,clippy"
 
-      - uses: Interstellar-Network/gh-actions/install-protoc@v3-dev
-
       ##########################################################################
 
       # TODO pass "--features skip-ias-check,skip-extrinsic-filtering"; to cargo check? and/or cargo test?
@@ -45,8 +43,6 @@ jobs:
         with:
           use_toolchain_toml: "true"
           toolchain_components: "rustfmt,clippy"
-
-      - uses: Interstellar-Network/gh-actions/install-protoc@v3-dev
 
       ##########################################################################
 

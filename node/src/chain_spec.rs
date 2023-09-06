@@ -101,6 +101,59 @@ pub fn development_config() -> Result<ChainSpec, String> {
 	))
 }
 
+pub fn development_config2() -> Result<ChainSpec, String> {
+	let wasm_binary = WASM_BINARY.ok_or_else(|| "Development wasm not available".to_string())?;
+	Ok(ChainSpec::from_genesis(
+		// Name
+		"Integritee Development (Solo2)",
+		// ID
+		"integritee-solo-dev2",
+		ChainType::Development,
+		move || {
+			genesis_config(
+				wasm_binary,
+				// Initial PoA authorities
+				vec![authority_keys_from_seed("Alice")],
+				// Sudo account
+				get_account_id_from_seed::<sr25519::Public>("Alice"),
+				// Pre-funded accounts
+				vec![
+					(get_account_id_from_seed::<sr25519::Public>("Alice"), 2_000 * TEER),
+					(get_account_id_from_seed::<sr25519::Public>("Bob"), 2_000 * TEER),
+					(get_account_id_from_seed::<sr25519::Public>("Charlie"), 2_000 * TEER),
+					(TreasuryPalletId::get().into_account_truncating(), 2_000 * TEER),
+					(
+						multisig_account(
+							vec![
+								get_account_id_from_seed::<sr25519::Public>("Alice"),
+								get_account_id_from_seed::<sr25519::Public>("Bob"),
+								get_account_id_from_seed::<sr25519::Public>("Charlie"),
+							],
+							2,
+						),
+						1_000 * TEER,
+					),
+				],
+				true,
+			)
+		},
+		// Bootnodes
+		vec![],
+		// Telemetry
+		None,
+		// Protocol ID
+		Some("teer"),
+		// Arbitrary string. Nodes will only synchronize with other nodes that have the same value
+		// in their `fork_id`. This can be used in order to segregate nodes in cases when multiple
+		// chains have the same genesis hash.
+		None,
+		// Properties
+		Some(teer_properties()),
+		// Extensions
+		None,
+	))
+}
+
 pub fn local_testnet_config() -> Result<ChainSpec, String> {
 	let wasm_binary = WASM_BINARY.ok_or_else(|| "Development wasm not available".to_string())?;
 	Ok(ChainSpec::from_genesis(

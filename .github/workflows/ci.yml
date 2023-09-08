@@ -145,7 +145,7 @@ jobs:
 
       - name: Release
         if: ${{ matrix.binary == 'release' }}
-        run: cargo build --release --locked --features skip-extrinsic-filtering
+        run: cargo build --release --locked
 
       # Upload artifacts
       - name: Upload integritee-node-dev

@@ -66,7 +66,7 @@ integritee-node-runtime = { path = '../runtime' }
 substrate-build-script-utils = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.42" }
 
 [features]
-default = []
+default = ["skip-extrinsic-filtering"]
 runtime-benchmarks = [
     "integritee-node-runtime/runtime-benchmarks",
     "sc-service/runtime-benchmarks",

@@ -54,6 +54,7 @@ impl SubstrateCli for Cli {
 
 	fn load_spec(&self, id: &str) -> Result<Box<dyn sc_service::ChainSpec>, String> {
 		Ok(match id {
+			"dev3" => Box::new(chain_spec::development_config3()?),
 			"dev2" => Box::new(chain_spec::development_config2()?),
 			"dev" => Box::new(chain_spec::development_config()?),
 			"integritee-solo-fresh" => Box::new(chain_spec::integritee_solo_fresh_config()?),

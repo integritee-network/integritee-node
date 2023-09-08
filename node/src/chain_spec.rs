@@ -158,9 +158,9 @@ pub fn development_config3() -> Result<ChainSpec, String> {
 	let wasm_binary = WASM_BINARY.ok_or_else(|| "Development wasm not available".to_string())?;
 	Ok(ChainSpec::from_genesis(
 		// Name
-		"Integritee Development (Solo2)",
+		"Integritee Development (Solo3)",
 		// ID
-		"integritee-solo-dev2",
+		"integritee-solo-dev3",
 		ChainType::Development,
 		move || {
 			genesis_config(

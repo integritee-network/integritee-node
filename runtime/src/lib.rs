@@ -264,9 +264,9 @@ impl Contains<RuntimeCall> for BaseFilter {
 // Configure FRAME pallets to include in runtime.
 
 impl frame_system::Config for Runtime {
-	#[cfg(feature = "skip-extrinsic-filtering")]
+	#[cfg(not(feature = "extrinsic-filtering"))]
 	type BaseCallFilter = frame_support::traits::Everything;
-	#[cfg(not(feature = "skip-extrinsic-filtering"))]
+	#[cfg(feature = "extrinsic-filtering")]
 	type BaseCallFilter = BaseFilter;
 	/// Block & extrinsics weights: base values and limits.
 	type BlockWeights = BlockWeights;

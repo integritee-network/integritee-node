@@ -68,7 +68,7 @@ substrate-wasm-builder = { git = "https://github.com/paritytech/substrate.git", 
 
 [features]
 default = ["std"]
-skip-extrinsic-filtering = []
+extrinsic-filtering = []
 std = [
     "codec/std",
     "scale-info/std",

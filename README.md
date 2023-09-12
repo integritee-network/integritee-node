@@ -8,13 +8,8 @@ A substrate-based node that maintains a registry of remote attested integritee-s
 1. See the substrate install docs to install the preliminaries: [https://docs.substrate.io/install](https://docs.substrate.io/install).
 2. Build the node:
      ```
-     cargo build --release --features "skip-extrinsic-filtering" 
+     cargo build --release 
      ```
-
-### Note
-There are some cargo features that are highly relevant for developers:
-
-* `skip-extrinsic-filtering`: We have a defensive filter for transfer extrinsics as we have an old solo-node running for archive purposes, which mustn't allow transfers. The filter can be deactivated with this feature.
 
 ## Versioning
 There are two important version parameters in the `RuntimeVersion` that change behaviour, see [RustDocs](https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html).

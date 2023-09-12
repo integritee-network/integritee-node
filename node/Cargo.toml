@@ -71,5 +71,5 @@ runtime-benchmarks = [
     "integritee-node-runtime/runtime-benchmarks",
     "sc-service/runtime-benchmarks",
 ]
-# lift filters for development binaries
-skip-extrinsic-filtering = ["integritee-node-runtime/skip-extrinsic-filtering"]
+# for secure launch of a live solo network, do enable extrinsic filtering
+extrinsic-filtering = ["integritee-node-runtime/extrinsic-filtering"]

@@ -141,7 +141,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	/// Version of the runtime specification. A full-node will not attempt to use its native
 	/// runtime in substitute for the on-chain Wasm runtime unless all of `spec_name`,
 	/// `spec_version` and `authoring_version` are the same between Wasm and native.
-	spec_version: 35,
+	spec_version: 36,
 
 	/// Version of the implementation of the specification. Nodes are free to ignore this; it
 	/// serves only as an indication that the code is different; as long as the other two versions
@@ -172,7 +172,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 /// up by `pallet_aura` to implement `fn slot_duration()`.
 ///
 /// Change this to adjust the block time.
-pub const MILLISECS_PER_BLOCK: u64 = 12000;
+pub const MILLISECS_PER_BLOCK: u64 = 6000;
 
 // NOTE: Currently it is not possible to change the slot duration after the chain has started.
 //       Attempting to do so will brick block production.

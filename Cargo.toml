@@ -20,3 +20,6 @@ members = [
 #teerex-primitives = { path = '../pallets/primitives/teerex' }
 #teeracle-primitives = { path = '../pallets/primitives/teeracle' }
 #common-primitives = { path = '../pallets/primitives/common' }
+
+[patch.crates-io]
+ring = { git = "https://github.com/betrusted-io/ring-xous", branch = "0.16.20-cleanup" }

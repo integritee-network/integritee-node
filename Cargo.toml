@@ -7,16 +7,19 @@ members = [
     'runtime',
 ]
 
-#[patch."https://github.com/integritee-network/pallets.git"]
-#pallet-claims = { path = '../pallets/claims' }
-#pallet-enclave-bridge = { path = '../pallets/enclave-bridge' }
-#pallet-teerex = { path = '../pallets/teerex' }
-#pallet-sidechain = { path = '../pallets/sidechain' }
-#sgx-verify = { path = '../pallets/teerex/sgx-verify' }
-#pallet-teeracle = { path = '../pallets/teeracle' }
-#test-utils = { path = '../pallets/test-utils' }
-#claims-primitives = { path = '../pallets/primitives/claims' }
-#enclave-bridge-primitives = { path = '../pallets/primitives/enclave-bridge' }
-#teerex-primitives = { path = '../pallets/primitives/teerex' }
-#teeracle-primitives = { path = '../pallets/primitives/teeracle' }
-#common-primitives = { path = '../pallets/primitives/common' }
+[patch."https://github.com/integritee-network/pallets.git"]
+pallet-claims = { path = '../pallets/claims' }
+pallet-enclave-bridge = { path = '../pallets/enclave-bridge' }
+pallet-teerex = { path = '../pallets/teerex' }
+pallet-sidechain = { path = '../pallets/sidechain' }
+sgx-verify = { path = '../pallets/teerex/sgx-verify' }
+pallet-teeracle = { path = '../pallets/teeracle' }
+test-utils = { path = '../pallets/test-utils' }
+claims-primitives = { path = '../pallets/primitives/claims' }
+enclave-bridge-primitives = { path = '../pallets/primitives/enclave-bridge' }
+teerex-primitives = { path = '../pallets/primitives/teerex' }
+teeracle-primitives = { path = '../pallets/primitives/teeracle' }
+common-primitives = { path = '../pallets/primitives/common' }
+
+[patch.crates-io]
+ring = { git = "https://github.com/betrusted-io/ring-xous", branch = "0.16.20-cleanup" }

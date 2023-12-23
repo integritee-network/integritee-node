@@ -127,4 +127,10 @@ impl<T: frame_system::Config> pallet_enclave_bridge::WeightInfo for WeightInfo<T
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(2))
 	}
+
+	fn purge_enclave_from_shard_status() -> Weight {
+		Weight::from_parts(10_000_000, 0)
+			.saturating_add(T::DbWeight::get().reads(1))
+			.saturating_add(T::DbWeight::get().writes(1))
+	}
 }

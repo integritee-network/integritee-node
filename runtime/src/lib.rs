@@ -189,7 +189,7 @@ pub const MICROTEER: Balance = 1_000_000;
 
 //Logic from polkaodt/kusuma
 pub const fn deposit(items: u32, bytes: u32) -> Balance {
-	items as Balance * 20 * TEER + (bytes as Balance) * 1_000 * MICROTEER
+	items as Balance * 2 * TEER + (bytes as Balance) * 100 * MICROTEER
 }
 
 /// added by Integritee

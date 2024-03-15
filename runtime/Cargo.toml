@@ -6,7 +6,7 @@ license = 'Apache-2.0'
 name = 'integritee-node-runtime'
 repository = 'https://github.com/integritee-network/integritee-node'
 # keep patch revision with spec_version of runtime
-version = '1.1.37'
+version = '1.1.38'
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
@@ -30,11 +30,11 @@ pallet-treasury = { default-features = false, git = "https://github.com/parityte
 pallet-utility = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.42" }
 pallet-vesting = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.42" }
 
-pallet-claims = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "sdk-v0.12.9-polkadot-v0.9.42" }
-pallet-enclave-bridge = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "sdk-v0.12.9-polkadot-v0.9.42" }
-pallet-sidechain = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "sdk-v0.12.9-polkadot-v0.9.42" }
-pallet-teeracle = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "sdk-v0.12.9-polkadot-v0.9.42" }
-pallet-teerex = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "sdk-v0.12.9-polkadot-v0.9.42" }
+pallet-claims = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "sdk-v0.12.12-polkadot-v0.9.42" }
+pallet-enclave-bridge = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "sdk-v0.12.12-polkadot-v0.9.42" }
+pallet-sidechain = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "sdk-v0.12.12-polkadot-v0.9.42" }
+pallet-teeracle = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "sdk-v0.12.12-polkadot-v0.9.42" }
+pallet-teerex = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "sdk-v0.12.12-polkadot-v0.9.42" }
 
 sp-api = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.42" }
 sp-block-builder = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.42" }

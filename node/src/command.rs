@@ -22,8 +22,8 @@ use crate::{
 	service,
 };
 use frame_benchmarking_cli::{BenchmarkCmd, ExtrinsicFactory, SUBSTRATE_REFERENCE_HARDWARE};
-use integritee_node_runtime::{Block, ExistentialDeposit};
-use sc_cli::{ChainSpec, RuntimeVersion, SubstrateCli};
+use integritee_node_runtime::{Block, EXISTENTIAL_DEPOSIT};
+use sc_cli::SubstrateCli;
 use sc_service::PartialComponents;
 use sp_keyring::Sr25519Keyring;
 
@@ -54,21 +54,15 @@ impl SubstrateCli for Cli {
 
 	fn load_spec(&self, id: &str) -> Result<Box<dyn sc_service::ChainSpec>, String> {
 		Ok(match id {
-			"dev3" => Box::new(chain_spec::development_config3()?),
-			"dev2" => Box::new(chain_spec::development_config2()?),
-			"dev" => Box::new(chain_spec::development_config()?),
-			"integritee-solo-fresh" => Box::new(chain_spec::integritee_solo_fresh_config()?),
+			"dev" => Box::new(chain_spec::development_config()),
+			"integritee-solo-fresh" => Box::new(chain_spec::integritee_solo_fresh_config()),
 			"integritee-solo" => Box::new(chain_spec::integritee_solo_config()?),
-			"cranny-fresh" => Box::new(chain_spec::cranny_fresh_config()?),
+			"cranny-fresh" => Box::new(chain_spec::cranny_fresh_config()),
 			"cranny" => Box::new(chain_spec::cranny_config()?),
-			"" | "local" => Box::new(chain_spec::local_testnet_config()?),
+			"" | "local" => Box::new(chain_spec::local_testnet_config()),
 			path =>
 				Box::new(chain_spec::ChainSpec::from_json_file(std::path::PathBuf::from(path))?),
 		})
-	}
-
-	fn native_runtime_version(_: &Box<dyn ChainSpec>) -> &'static RuntimeVersion {
-		&integritee_node_runtime::VERSION
 	}
 }
 
@@ -121,7 +115,7 @@ pub fn run() -> sc_cli::Result<()> {
 			runner.async_run(|config| {
 				let PartialComponents { client, task_manager, backend, .. } =
 					service::new_partial(&config)?;
-				let aux_revert = Box::new(move |client, _, blocks| {
+				let aux_revert = Box::new(|client, _, blocks| {
 					sc_consensus_grandpa::revert(client, blocks)?;
 					Ok(())
 				});
@@ -141,29 +135,29 @@ pub fn run() -> sc_cli::Result<()> {
 								"Runtime benchmarking wasn't enabled when building the node. \
 							You can enable it with `--features runtime-benchmarks`."
 									.into(),
-							)
+							);
 						}
 
-						cmd.run::<Block, service::ExecutorDispatch>(config)
+						cmd.run_with_spec::<sp_runtime::traits::HashingFor<Block>, ()>(Some(
+							config.chain_spec,
+						))
 					},
 					BenchmarkCmd::Block(cmd) => {
 						let PartialComponents { client, .. } = service::new_partial(&config)?;
 						cmd.run(client)
 					},
 					#[cfg(not(feature = "runtime-benchmarks"))]
-					BenchmarkCmd::Storage(_) =>
-						return Err(sc_cli::Error::Input(
-							"Compile with --features=runtime-benchmarks \
-							to enable storage benchmarks."
-								.into(),
-						)
-						.into()),
+					BenchmarkCmd::Storage(_) => Err(
+						"Storage benchmarking can be enabled with `--features runtime-benchmarks`."
+							.into(),
+					),
 					#[cfg(feature = "runtime-benchmarks")]
 					BenchmarkCmd::Storage(cmd) => {
 						let PartialComponents { client, backend, .. } =
 							service::new_partial(&config)?;
 						let db = backend.expose_db();
 						let storage = backend.expose_storage();
+
 						cmd.run(config, client, db, storage)
 					},
 					BenchmarkCmd::Overhead(cmd) => {
@@ -186,7 +180,7 @@ pub fn run() -> sc_cli::Result<()> {
 							Box::new(TransferKeepAliveBuilder::new(
 								client.clone(),
 								Sr25519Keyring::Alice.to_account_id(),
-								ExistentialDeposit::get(),
+								EXISTENTIAL_DEPOSIT,
 							)),
 						]);
 
@@ -197,23 +191,6 @@ pub fn run() -> sc_cli::Result<()> {
 				}
 			})
 		},
-		#[cfg(feature = "try-runtime")]
-		Some(Subcommand::TryRuntime(cmd)) => {
-			let runner = cli.create_runner(cmd)?;
-			runner.async_run(|config| {
-				// we don't need any of the components of new_partial, just a runtime, or a task
-				// manager to do `async_run`.
-				let registry = config.prometheus_config.as_ref().map(|cfg| &cfg.registry);
-				let task_manager =
-					sc_service::TaskManager::new(config.tokio_handle.clone(), registry)
-						.map_err(|e| sc_cli::Error::Service(sc_service::Error::Prometheus(e)))?;
-				Ok((cmd.run::<Block, service::ExecutorDispatch>(config), task_manager))
-			})
-		},
-		#[cfg(not(feature = "try-runtime"))]
-		Some(Subcommand::TryRuntime) => Err("TryRuntime wasn't enabled when building the node. \
-				You can enable it with `--features try-runtime`."
-			.into()),
 		Some(Subcommand::ChainInfo(cmd)) => {
 			let runner = cli.create_runner(cmd)?;
 			runner.sync_run(|config| cmd.run::<Block>(&config))
@@ -221,7 +198,18 @@ pub fn run() -> sc_cli::Result<()> {
 		None => {
 			let runner = cli.create_runner(&cli.run)?;
 			runner.run_node_until_exit(|config| async move {
-				service::new_full(config).map_err(sc_cli::Error::Service)
+				match config.network.network_backend {
+					sc_network::config::NetworkBackendType::Libp2p => service::new_full::<
+						sc_network::NetworkWorker<
+							integritee_node_runtime::opaque::Block,
+							<integritee_node_runtime::opaque::Block as sp_runtime::traits::Block>::Hash,
+						>,
+					>(config)
+						.map_err(sc_cli::Error::Service),
+					sc_network::config::NetworkBackendType::Litep2p =>
+						service::new_full::<sc_network::Litep2pNetworkBackend>(config)
+							.map_err(sc_cli::Error::Service),
+				}
 			})
 		},
 	}

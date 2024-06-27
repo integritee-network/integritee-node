@@ -1,63 +1,42 @@
 //! Service and ServiceFactory implementation. Specialized wrapper over substrate service.
 
+use futures::FutureExt;
 use integritee_node_runtime::{self, opaque::Block, RuntimeApi};
-use sc_client_api::BlockBackend;
+use sc_client_api::{Backend, BlockBackend};
 use sc_consensus_aura::{ImportQueueParams, SlotProportion, StartAuraParams};
 use sc_consensus_grandpa::SharedVoterState;
-pub use sc_executor::NativeElseWasmExecutor;
-use sc_executor::{HeapAllocStrategy, DEFAULT_HEAP_ALLOC_STRATEGY};
-use sc_service::{error::Error as ServiceError, Configuration, TaskManager};
+use sc_service::{error::Error as ServiceError, Configuration, TaskManager, WarpSyncParams};
 use sc_telemetry::{Telemetry, TelemetryWorker};
+use sc_transaction_pool_api::OffchainTransactionPoolFactory;
 use sp_consensus_aura::sr25519::AuthorityPair as AuraPair;
 use std::{sync::Arc, time::Duration};
 
-// Our native executor instance.
-pub struct ExecutorDispatch;
-
-impl sc_executor::NativeExecutionDispatch for ExecutorDispatch {
-	/// Only enable the benchmarking host functions when we actually want to benchmark.
-	#[cfg(feature = "runtime-benchmarks")]
-	type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
-	/// Otherwise we only use the default Substrate host functions.
-	#[cfg(not(feature = "runtime-benchmarks"))]
-	type ExtendHostFunctions = ();
-
-	fn dispatch(method: &str, data: &[u8]) -> Option<Vec<u8>> {
-		integritee_node_runtime::api::dispatch(method, data)
-	}
-
-	fn native_version() -> sc_executor::NativeVersion {
-		integritee_node_runtime::native_version()
-	}
-}
-
-pub(crate) type FullClient =
-	sc_service::TFullClient<Block, RuntimeApi, NativeElseWasmExecutor<ExecutorDispatch>>;
+pub(crate) type FullClient = sc_service::TFullClient<
+	Block,
+	RuntimeApi,
+	sc_executor::WasmExecutor<sp_io::SubstrateHostFunctions>,
+>;
 type FullBackend = sc_service::TFullBackend<Block>;
 type FullSelectChain = sc_consensus::LongestChain<FullBackend, Block>;
 
-pub fn new_partial(
-	config: &Configuration,
-) -> Result<
-	sc_service::PartialComponents<
-		FullClient,
-		FullBackend,
-		FullSelectChain,
-		sc_consensus::DefaultImportQueue<Block, FullClient>,
-		sc_transaction_pool::FullPool<Block, FullClient>,
-		(
-			sc_consensus_grandpa::GrandpaBlockImport<
-				FullBackend,
-				Block,
-				FullClient,
-				FullSelectChain,
-			>,
-			sc_consensus_grandpa::LinkHalf<Block, FullClient, FullSelectChain>,
-			Option<Telemetry>,
-		),
-	>,
-	ServiceError,
-> {
+/// The minimum period of blocks on which justifications will be
+/// imported and generated.
+const GRANDPA_JUSTIFICATION_PERIOD: u32 = 512;
+
+pub type Service = sc_service::PartialComponents<
+	FullClient,
+	FullBackend,
+	FullSelectChain,
+	sc_consensus::DefaultImportQueue<Block>,
+	sc_transaction_pool::FullPool<Block, FullClient>,
+	(
+		sc_consensus_grandpa::GrandpaBlockImport<FullBackend, Block, FullClient, FullSelectChain>,
+		sc_consensus_grandpa::LinkHalf<Block, FullClient, FullSelectChain>,
+		Option<Telemetry>,
+	),
+>;
+
+pub fn new_partial(config: &Configuration) -> Result<Service, ServiceError> {
 	let telemetry = config
 		.telemetry_endpoints
 		.clone()
@@ -69,19 +48,7 @@ pub fn new_partial(
 		})
 		.transpose()?;
 
-	let heap_pages = config
-		.default_heap_pages
-		.map_or(DEFAULT_HEAP_ALLOC_STRATEGY, |h| HeapAllocStrategy::Static { extra_pages: h as _ });
-
-	let executor = sc_executor::WasmExecutor::builder()
-		.with_execution_method(config.wasm_method)
-		.with_max_runtime_instances(config.max_runtime_instances)
-		.with_runtime_cache_size(config.runtime_cache_size)
-		.with_onchain_heap_alloc_strategy(heap_pages)
-		.with_offchain_heap_alloc_strategy(heap_pages)
-		.build();
-	let executor = NativeElseWasmExecutor::<ExecutorDispatch>::new_with_wasm_executor(executor);
-
+	let executor = sc_service::new_wasm_executor::<sp_io::SubstrateHostFunctions>(config);
 	let (client, backend, keystore_container, task_manager) =
 		sc_service::new_full_parts::<Block, RuntimeApi, _>(
 			config,
@@ -107,28 +74,35 @@ pub fn new_partial(
 
 	let (grandpa_block_import, grandpa_link) = sc_consensus_grandpa::block_import(
 		client.clone(),
-		&(client.clone() as Arc<_>),
+		GRANDPA_JUSTIFICATION_PERIOD,
+		&client,
 		select_chain.clone(),
 		telemetry.as_ref().map(|x| x.handle()),
 	)?;
 
-	let slot_duration = sc_consensus_aura::slot_duration(&*client)?;
-
+	let cidp_client = client.clone();
 	let import_queue =
 		sc_consensus_aura::import_queue::<AuraPair, _, _, _, _, _>(ImportQueueParams {
 			block_import: grandpa_block_import.clone(),
 			justification_import: Some(Box::new(grandpa_block_import.clone())),
 			client: client.clone(),
-			create_inherent_data_providers: move |_, ()| async move {
-				let timestamp = sp_timestamp::InherentDataProvider::from_system_time();
+			create_inherent_data_providers: move |parent_hash, _| {
+				let cidp_client = cidp_client.clone();
+				async move {
+					let slot_duration = sc_consensus_aura::standalone::slot_duration_at(
+						&*cidp_client,
+						parent_hash,
+					)?;
+					let timestamp = sp_timestamp::InherentDataProvider::from_system_time();
 
-				let slot =
-					sp_consensus_aura::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
-						*timestamp,
-						slot_duration,
-					);
+					let slot =
+						sp_consensus_aura::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
+							*timestamp,
+							slot_duration,
+						);
 
-				Ok((slot, timestamp))
+					Ok((slot, timestamp))
+				}
 			},
 			spawner: &task_manager.spawn_essential_handle(),
 			registry: config.prometheus_registry(),
@@ -150,7 +124,11 @@ pub fn new_partial(
 }
 
 /// Builds a new service for a full client.
-pub fn new_full(mut config: Configuration) -> Result<TaskManager, ServiceError> {
+pub fn new_full<
+	N: sc_network::NetworkBackend<Block, <Block as sp_runtime::traits::Block>::Hash>,
+>(
+	config: Configuration,
+) -> Result<TaskManager, ServiceError> {
 	let sc_service::PartialComponents {
 		client,
 		backend,
@@ -162,15 +140,26 @@ pub fn new_full(mut config: Configuration) -> Result<TaskManager, ServiceError> 
 		other: (block_import, grandpa_link, mut telemetry),
 	} = new_partial(&config)?;
 
+	let mut net_config = sc_network::config::FullNetworkConfiguration::<
+		Block,
+		<Block as sp_runtime::traits::Block>::Hash,
+		N,
+	>::new(&config.network);
+	let metrics = N::register_notification_metrics(config.prometheus_registry());
+
+	let peer_store_handle = net_config.peer_store_handle();
 	let grandpa_protocol_name = sc_consensus_grandpa::protocol_standard_name(
 		&client.block_hash(0).ok().flatten().expect("Genesis block exists; qed"),
 		&config.chain_spec,
 	);
+	let (grandpa_protocol_config, grandpa_notification_service) =
+		sc_consensus_grandpa::grandpa_peers_set_config::<_, N>(
+			grandpa_protocol_name.clone(),
+			metrics.clone(),
+			peer_store_handle,
+		);
+	net_config.add_notification_protocol(grandpa_protocol_config);
 
-	config
-		.network
-		.extra_sets
-		.push(sc_consensus_grandpa::grandpa_peers_set_config(grandpa_protocol_name.clone()));
 	let warp_sync = Arc::new(sc_consensus_grandpa::warp_proof::NetworkProvider::new(
 		backend.clone(),
 		grandpa_link.shared_authority_set().clone(),
@@ -180,20 +169,35 @@ pub fn new_full(mut config: Configuration) -> Result<TaskManager, ServiceError> 
 	let (network, system_rpc_tx, tx_handler_controller, network_starter, sync_service) =
 		sc_service::build_network(sc_service::BuildNetworkParams {
 			config: &config,
+			net_config,
 			client: client.clone(),
 			transaction_pool: transaction_pool.clone(),
 			spawn_handle: task_manager.spawn_handle(),
 			import_queue,
 			block_announce_validator_builder: None,
-			warp_sync_params: Some(sc_service::WarpSyncParams::WithProvider(warp_sync)),
+			warp_sync_params: Some(WarpSyncParams::WithProvider(warp_sync)),
+			block_relay: None,
+			metrics,
 		})?;
 
 	if config.offchain_worker.enabled {
-		sc_service::build_offchain_workers(
-			&config,
-			task_manager.spawn_handle(),
-			client.clone(),
-			network.clone(),
+		task_manager.spawn_handle().spawn(
+			"offchain-workers-runner",
+			"offchain-worker",
+			sc_offchain::OffchainWorkers::new(sc_offchain::OffchainWorkerOptions {
+				runtime_api_provider: client.clone(),
+				is_validator: config.role.is_authority(),
+				keystore: Some(keystore_container.keystore()),
+				offchain_db: backend.offchain_storage(),
+				transaction_pool: Some(OffchainTransactionPoolFactory::new(
+					transaction_pool.clone(),
+				)),
+				network_provider: Arc::new(network.clone()),
+				enable_http_requests: true,
+				custom_extensions: |_| vec![],
+			})
+			.run(client.clone(), task_manager.spawn_handle())
+			.boxed(),
 		);
 	}
 
@@ -211,23 +215,22 @@ pub fn new_full(mut config: Configuration) -> Result<TaskManager, ServiceError> 
 		Box::new(move |deny_unsafe, _| {
 			let deps =
 				crate::rpc::FullDeps { client: client.clone(), pool: pool.clone(), deny_unsafe };
-
 			crate::rpc::create_full(deps).map_err(Into::into)
 		})
 	};
 
 	let _rpc_handlers = sc_service::spawn_tasks(sc_service::SpawnTasksParams {
-		rpc_builder: rpc_extensions_builder,
+		network: Arc::new(network.clone()),
 		client: client.clone(),
-		transaction_pool: transaction_pool.clone(),
-		task_manager: &mut task_manager,
-		config,
 		keystore: keystore_container.keystore(),
+		task_manager: &mut task_manager,
+		transaction_pool: transaction_pool.clone(),
+		rpc_builder: rpc_extensions_builder,
 		backend,
-		network: network.clone(),
-		sync_service: sync_service.clone(),
 		system_rpc_tx,
 		tx_handler_controller,
+		sync_service: sync_service.clone(),
+		config,
 		telemetry: telemetry.as_mut(),
 	})?;
 
@@ -235,7 +238,7 @@ pub fn new_full(mut config: Configuration) -> Result<TaskManager, ServiceError> 
 		let proposer_factory = sc_basic_authorship::ProposerFactory::new(
 			task_manager.spawn_handle(),
 			client.clone(),
-			transaction_pool,
+			transaction_pool.clone(),
 			prometheus_registry.as_ref(),
 			telemetry.as_ref().map(|x| x.handle()),
 		);
@@ -274,7 +277,9 @@ pub fn new_full(mut config: Configuration) -> Result<TaskManager, ServiceError> 
 
 		// the AURA authoring task is considered essential, i.e. if it
 		// fails we take down the service with it.
-		task_manager.spawn_essential_handle().spawn_blocking("aura", None, aura);
+		task_manager
+			.spawn_essential_handle()
+			.spawn_blocking("aura", Some("block-authoring"), aura);
 	}
 
 	if enable_grandpa {
@@ -285,7 +290,7 @@ pub fn new_full(mut config: Configuration) -> Result<TaskManager, ServiceError> 
 		let grandpa_config = sc_consensus_grandpa::Config {
 			// FIXME #1578 make this available through chainspec
 			gossip_duration: Duration::from_millis(333),
-			justification_period: 512,
+			justification_generation_period: GRANDPA_JUSTIFICATION_PERIOD,
 			name: Some(name),
 			observer_enabled: false,
 			keystore,
@@ -304,11 +309,13 @@ pub fn new_full(mut config: Configuration) -> Result<TaskManager, ServiceError> 
 			config: grandpa_config,
 			link: grandpa_link,
 			network,
+			sync: Arc::new(sync_service),
+			notification_service: grandpa_notification_service,
 			voting_rule: sc_consensus_grandpa::VotingRulesBuilder::default().build(),
 			prometheus_registry,
 			shared_voter_state: SharedVoterState::empty(),
 			telemetry: telemetry.as_ref().map(|x| x.handle()),
-			sync: sync_service.clone(),
+			offchain_tx_pool_factory: OffchainTransactionPoolFactory::new(transaction_pool),
 		};
 
 		// the GRANDPA voter task is considered infallible, i.e.

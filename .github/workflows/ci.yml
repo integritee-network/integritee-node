@@ -243,7 +243,6 @@ jobs:
           image: paritytech/srtool
           chain: ${{ matrix.runtime }}
           runtime_dir: runtime
-          profile: "production"
 
       - name: Summary
         run: |

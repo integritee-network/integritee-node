@@ -19,8 +19,8 @@ name = 'integritee-node'
 clap = { workspace = true }
 futures = { workspace = true }
 hex = { workspace = true }
-serde_json = { workspace = true }
 hex-literal = { workspace = true }
+serde_json = { workspace = true }
 
 frame-system = { workspace = true, features = ["std"] }
 pallet-transaction-payment = { workspace = true, features = ["std"] }

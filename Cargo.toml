@@ -24,11 +24,11 @@ serde_json = "1.0.114"
 tokio = { version = "1.33", features = ["rt-multi-thread", "macros", "time"] }
 
 # integritee deps
-pallet-claims = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "cl/polkadot-v1.13.0" }
-pallet-enclave-bridge = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "cl/polkadot-v1.13.0" }
-pallet-sidechain = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "cl/polkadot-v1.13.0" }
-pallet-teeracle = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "cl/polkadot-v1.13.0" }
-pallet-teerex = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "cl/polkadot-v1.13.0" }
+pallet-claims = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "polkadot-v1.13.0" }
+pallet-enclave-bridge = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "polkadot-v1.13.0" }
+pallet-sidechain = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "polkadot-v1.13.0" }
+pallet-teeracle = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "polkadot-v1.13.0" }
+pallet-teerex = { default-features = false, git = "https://github.com/integritee-network/pallets.git", branch = "polkadot-v1.13.0" }
 
 # substrate deps
 frame-benchmarking = { version = "35.0.0", default-features = false }

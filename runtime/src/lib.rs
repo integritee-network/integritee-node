@@ -3,7 +3,21 @@
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
+use frame_support::{
+	construct_runtime, derive_impl,
+	genesis_builder_helper::{build_state, get_preset},
+	parameter_types,
+	traits::{
+		fungible::HoldConsideration,
+		tokens::{ConversionFromAssetBalance, PayFromAccount},
+		ConstBool, ConstU128, ConstU32, ConstU64, Contains, EqualPrivilegeOnly, Imbalance,
+		InstanceFilter, LinearStoragePrice, OnUnbalanced, WithdrawReasons,
+	},
+	weights::ConstantMultiplier,
+};
+use frame_system::{EnsureRoot, EnsureWithSuccess};
 use pallet_grandpa::AuthorityId as GrandpaId;
+use pallet_transaction_payment::{CurrencyAdapter, Multiplier};
 use parity_scale_codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use sp_api::impl_runtime_apis;
@@ -11,39 +25,16 @@ use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_core::{crypto::KeyTypeId, OpaqueMetadata, RuntimeDebug};
 use sp_runtime::{
 	create_runtime_str, generic, impl_opaque_keys,
-	traits::{BlakeTwo256, Block as BlockT, ConvertInto, IdentifyAccount, NumberFor, One, Verify},
+	traits::{
+		BlakeTwo256, Block as BlockT, ConvertInto, IdentifyAccount, IdentityLookup, NumberFor, One,
+		Verify,
+	},
 	transaction_validity::{TransactionSource, TransactionValidity},
 	ApplyExtrinsicResult, MultiSignature,
 };
 use sp_std::prelude::*;
-#[cfg(feature = "std")]
-use sp_version::NativeVersion;
-use sp_version::RuntimeVersion;
-// A few exports that help ease life for downstream crates.
-use frame_support::traits::tokens::{ConversionFromAssetBalance, PayFromAccount};
-pub use frame_support::{
-	construct_runtime, derive_impl, parameter_types,
-	traits::{
-		fungible::HoldConsideration, ConstBool, ConstU128, ConstU32, ConstU64, ConstU8,
-		KeyOwnerProofSystem, Randomness, StorageInfo, WithdrawReasons,
-	},
-	weights::{
-		constants::{
-			BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_REF_TIME_PER_SECOND,
-		},
-		IdentityFee, Weight,
-	},
-	PalletId, StorageValue,
-};
-use frame_support::{
-	genesis_builder_helper::{build_state, get_preset},
-	traits::LinearStoragePrice,
-	traits::VariantCountOf,
-	traits::{Contains, EqualPrivilegeOnly, Imbalance, InstanceFilter, OnUnbalanced},
-	weights::ConstantMultiplier,
-};
+
 pub use frame_system::Call as SystemCall;
-use frame_system::{EnsureRoot, EnsureWithSuccess};
 pub use pallet_balances::Call as BalancesCall;
 /// added by Integritee
 pub use pallet_claims;
@@ -55,10 +46,21 @@ pub use pallet_sidechain;
 pub use pallet_teeracle;
 /// added by Integritee
 pub use pallet_teerex;
+#[cfg(feature = "std")]
+use sp_version::NativeVersion;
+use sp_version::RuntimeVersion;
+
+pub use frame_support::{
+	weights::{
+		constants::{
+			BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_REF_TIME_PER_SECOND,
+		},
+		IdentityFee, Weight,
+	},
+	PalletId, StorageValue,
+};
 
 pub use pallet_timestamp::Call as TimestampCall;
-use pallet_transaction_payment::{ConstFeeMultiplier, CurrencyAdapter, Multiplier};
-use sp_runtime::traits::IdentityLookup;
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};

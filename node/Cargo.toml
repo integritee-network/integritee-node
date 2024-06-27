@@ -22,6 +22,7 @@ hex = { workspace = true }
 hex-literal = { workspace = true }
 serde_json = { workspace = true }
 
+frame-metadata-hash-extension = { workspace = true, features = ["std"] }
 frame-system = { workspace = true, features = ["std"] }
 pallet-transaction-payment = { workspace = true, features = ["std"] }
 sc-cli = { workspace = true }

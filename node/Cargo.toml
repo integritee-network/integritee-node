@@ -22,8 +22,8 @@ hex = { workspace = true }
 serde_json = { workspace = true }
 hex-literal = { workspace = true }
 
-frame-system = { workspace = true }
-pallet-transaction-payment = { default-features = false, workspace = true }
+frame-system = { workspace = true, features = ["std"] }
+pallet-transaction-payment = { workspace = true, features = ["std"] }
 sc-cli = { workspace = true }
 sc-client-api = { workspace = true }
 sc-consensus = { workspace = true }
@@ -31,32 +31,35 @@ sc-consensus-aura = { workspace = true }
 sc-consensus-grandpa = { workspace = true }
 sc-executor = { workspace = true }
 sc-keystore = { workspace = true }
+sc-network = { workspace = true }
+sc-offchain = { workspace = true }
 sc-service = { workspace = true }
 sc-telemetry = { workspace = true }
 sc-transaction-pool = { workspace = true }
 sc-transaction-pool-api = { workspace = true }
 sp-consensus = { workspace = true }
 sp-consensus-aura = { workspace = true }
-sp-consensus-grandpa = { workspace = true }
-sp-core = { workspace = true }
-sp-inherents = { workspace = true }
+sp-consensus-grandpa = { workspace = true, features = ["std"] }
+sp-core = { workspace = true, features = ["std"] }
+sp-inherents = { workspace = true, features = ["std"] }
+sp-io = { workspace = true, features = ["std"] }
 sp-keyring = { workspace = true }
-sp-runtime = { workspace = true }
-sp-timestamp = { workspace = true }
+sp-runtime = { workspace = true, features = ["std"] }
+sp-timestamp = { workspace = true, features = ["std"] }
 
-# These dependencies are used for the node template's RPCs
+# These dependencies are used for the node's RPCs
 jsonrpsee = { workspace = true }
 pallet-transaction-payment-rpc = { workspace = true }
 sc-basic-authorship = { workspace = true }
 sc-rpc = { workspace = true }
 sc-rpc-api = { workspace = true }
-sp-api = { workspace = true }
-sp-block-builder = { workspace = true }
+sp-api = { workspace = true, features = ["std"] }
+sp-block-builder = { workspace = true, features = ["std"] }
 sp-blockchain = { workspace = true }
 substrate-frame-rpc-system = { workspace = true }
 
 # These dependencies are used for runtime benchmarking
-frame-benchmarking = { workspace = true }
+frame-benchmarking = { workspace = true, features = ["std"] }
 frame-benchmarking-cli = { workspace = true }
 
 # local dependencies
@@ -70,6 +73,8 @@ default = []
 runtime-benchmarks = [
     "integritee-node-runtime/runtime-benchmarks",
     "sc-service/runtime-benchmarks",
+    "frame-benchmarking/runtime-benchmarks",
+    "frame-benchmarking-cli/runtime-benchmarks",
 ]
 # for secure launch of a live solo network, do enable extrinsic filtering
 extrinsic-filtering = ["integritee-node-runtime/extrinsic-filtering"]

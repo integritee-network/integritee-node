@@ -82,7 +82,7 @@ sp-block-builder = { version = "33.0.0", default-features = false }
 sp-blockchain = "35.0.0"
 sp-consensus = { version = "0.39.0" }
 sp-consensus-aura = { version = "0.39.0", default-features = false }
-sp-consensus-grandpa = { version = "20.0.0" }
+sp-consensus-grandpa = { version = "20.0.0", default-features = false }
 sp-core = { version = "34.0.0", default-features = false }
 sp-genesis-builder = { version = "0.14.0", default-features = false }
 sp-inherents = { version = "33.0.0", default-features = false }

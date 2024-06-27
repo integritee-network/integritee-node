@@ -289,7 +289,7 @@ fn genesis_config(
 			// Assign network admin rights.
 			"key": Some(root_key),
 		},
-		"teerex": { "allow_sgx_debug_mode": true, "allow_skipping_attestation": true },
+		"teerex": { "allowSgxDebugMode": true, "allowSkippingAttestation": true },
 	})
 }
 

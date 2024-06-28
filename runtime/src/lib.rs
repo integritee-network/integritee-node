@@ -117,10 +117,10 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("integritee-solo"),
 	impl_name: create_runtime_str!("integritee-solo"),
 	authoring_version: 1,
-	spec_version: 38,
+	spec_version: 390,
 	impl_version: 1,
 	apis: RUNTIME_API_VERSIONS,
-	transaction_version: 7,
+	transaction_version: 8,
 	state_version: 0,
 };
 

@@ -141,6 +141,11 @@ pub const MINUTES: BlockNumber = 60_000 / (MILLISECS_PER_BLOCK as BlockNumber);
 pub const HOURS: BlockNumber = MINUTES * 60;
 pub const DAYS: BlockNumber = HOURS * 24;
 
+// Time helpers in milliseconds.
+pub const MS_PER_MINUTE: Moment = 60_000;
+pub const MS_PER_HOUR: Moment = crate::MS_PER_MINUTE * 60;
+pub const MS_PER_DAY: Moment = crate::MS_PER_HOUR * 24;
+
 pub const TEER: Balance = 1_000_000_000_000;
 pub const MILLITEER: Balance = 1_000_000_000;
 pub const MICROTEER: Balance = 1_000_000;
@@ -390,6 +395,18 @@ parameter_types! {
 impl pallet_sidechain::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type WeightInfo = weights::pallet_sidechain::WeightInfo<Runtime>;
+}
+
+// added by Integritee
+parameter_types! {
+	pub const UnlockPeriod: Moment = 10 * MS_PER_MINUTE;
+}
+impl pallet_teerdays::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = weights::pallet_teerdays::WeightInfo<Runtime>;
+	type Currency = Balances;
+	type CurrencyBalance = Balance;
+	type UnlockPeriod = UnlockPeriod;
 }
 
 parameter_types! {
@@ -649,6 +666,7 @@ construct_runtime!(
 		Teeracle: pallet_teeracle = 52,
 		Sidechain: pallet_sidechain = 53,
 		EnclaveBridge: pallet_enclave_bridge = 54,
+		TeerDays: pallet_teerdays = 55,
 	}
 );
 
@@ -708,6 +726,7 @@ mod benches {
 		[pallet_vesting, Vesting]
 		[pallet_utility, Utility]
 		[pallet_teeracle, Teeracle]
+		[pallet_teerdays, TeerDays]
 		[pallet_sidechain, Sidechain]
 	);
 }

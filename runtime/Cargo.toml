@@ -34,6 +34,7 @@ pallet-claims = { workspace = true }
 pallet-enclave-bridge = { workspace = true }
 pallet-sidechain = { workspace = true }
 pallet-teeracle = { workspace = true }
+pallet-teerdays = { workspace = true }
 pallet-teerex = { workspace = true }
 
 sp-api = { workspace = true }
@@ -115,6 +116,11 @@ std = [
     "pallet-proxy/std",
     "pallet-utility/std",
     "pallet-teeracle/std",
+    "pallet-teerdays/std",
+    "frame-benchmarking?/std",
+    "frame-system-benchmarking?/std",
+    "pallet-preimage/std",
+    "sp-staking/std",
 ]
 runtime-benchmarks = [
     "frame-benchmarking/runtime-benchmarks",
@@ -122,7 +128,6 @@ runtime-benchmarks = [
     "frame-system-benchmarking/runtime-benchmarks",
     "hex-literal",
     "sp-runtime/runtime-benchmarks",
-    # actual pallets to be benchmarked
     "frame-system/runtime-benchmarks",
     "pallet-balances/runtime-benchmarks",
     "pallet-grandpa/frame-benchmarking",
@@ -139,4 +144,8 @@ runtime-benchmarks = [
     "pallet-utility/runtime-benchmarks",
     "pallet-teeracle/runtime-benchmarks",
     "pallet-sidechain/runtime-benchmarks",
+    "pallet-teerdays/runtime-benchmarks",
+    "pallet-grandpa/runtime-benchmarks",
+    "pallet-sudo/runtime-benchmarks",
+    "sp-staking/runtime-benchmarks",
 ]

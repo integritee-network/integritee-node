@@ -46,8 +46,8 @@ impl<T: frame_system::Config> pallet_teerdays::WeightInfo for WeightInfo<T> {
 		// Proof Size summary in bytes:
 		//  Measured:  `240`
 		//  Estimated: `4764`
-		// Minimum execution time: 34_582_000 picoseconds.
-		Weight::from_parts(35_278_000, 0)
+		// Minimum execution time: 82_957_000 picoseconds.
+		Weight::from_parts(86_401_000, 0)
 			.saturating_add(Weight::from_parts(0, 4764))
 			.saturating_add(T::DbWeight::get().reads(5))
 			.saturating_add(T::DbWeight::get().writes(3))
@@ -62,8 +62,8 @@ impl<T: frame_system::Config> pallet_teerdays::WeightInfo for WeightInfo<T> {
 		// Proof Size summary in bytes:
 		//  Measured:  `253`
 		//  Estimated: `3718`
-		// Minimum execution time: 21_895_000 picoseconds.
-		Weight::from_parts(23_063_000, 0)
+		// Minimum execution time: 53_559_000 picoseconds.
+		Weight::from_parts(56_711_000, 0)
 			.saturating_add(Weight::from_parts(0, 3718))
 			.saturating_add(T::DbWeight::get().reads(3))
 			.saturating_add(T::DbWeight::get().writes(2))
@@ -76,8 +76,8 @@ impl<T: frame_system::Config> pallet_teerdays::WeightInfo for WeightInfo<T> {
 		// Proof Size summary in bytes:
 		//  Measured:  `253`
 		//  Estimated: `3718`
-		// Minimum execution time: 15_154_000 picoseconds.
-		Weight::from_parts(15_720_000, 0)
+		// Minimum execution time: 34_156_000 picoseconds.
+		Weight::from_parts(37_183_000, 0)
 			.saturating_add(Weight::from_parts(0, 3718))
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(1))
@@ -96,8 +96,8 @@ impl<T: frame_system::Config> pallet_teerdays::WeightInfo for WeightInfo<T> {
 		// Proof Size summary in bytes:
 		//  Measured:  `400`
 		//  Estimated: `4764`
-		// Minimum execution time: 35_437_000 picoseconds.
-		Weight::from_parts(38_316_000, 0)
+		// Minimum execution time: 80_293_000 picoseconds.
+		Weight::from_parts(82_512_000, 0)
 			.saturating_add(Weight::from_parts(0, 4764))
 			.saturating_add(T::DbWeight::get().reads(5))
 			.saturating_add(T::DbWeight::get().writes(3))

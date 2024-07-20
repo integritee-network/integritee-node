@@ -8,7 +8,7 @@ license = 'Apache-2.0'
 name = 'integritee-node'
 repository = 'https://github.com/integritee-network/integritee-node'
 # Align major.minor revision with polkadot sdk, bump patch revision ad lib. Make this the github release tag.
-version = '1.13.0'
+version = '1.13.1'
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
 
@@ -76,6 +76,8 @@ runtime-benchmarks = [
     "sc-service/runtime-benchmarks",
     "frame-benchmarking/runtime-benchmarks",
     "frame-benchmarking-cli/runtime-benchmarks",
+    "frame-system/runtime-benchmarks",
+    "sp-runtime/runtime-benchmarks",
 ]
 # for secure launch of a live solo network, do enable extrinsic filtering
 extrinsic-filtering = ["integritee-node-runtime/extrinsic-filtering"]

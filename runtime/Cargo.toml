@@ -149,3 +149,5 @@ runtime-benchmarks = [
     "pallet-sudo/runtime-benchmarks",
     "sp-staking/runtime-benchmarks",
 ]
+# Todo: use zepter to populate the features
+try-runtime = []

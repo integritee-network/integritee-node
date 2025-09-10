@@ -122,4 +122,4 @@ substrate-build-script-utils = "11.0.0"
 #test-utils = { path = '../pallets/test-utils' }
 
 [patch.crates-io]
-ring = { git = "https://github.com/betrusted-io/ring-xous", branch = "0.16.20-cleanup" }
+ring = { git = "https://github.com/integritee-network/ring-xous", branch = "0.16.20-hack1.84.1" }

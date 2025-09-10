@@ -7994,7 +7994,7 @@ dependencies = [
 [[package]]
 name = "ring"
 version = "0.16.20"
-source = "git+https://github.com/betrusted-io/ring-xous?branch=0.16.20-cleanup#4296c2e7904898766cf7d8d589759a129794783b"
+source = "git+https://github.com/integritee-network/ring-xous?branch=0.16.20-hack1.84.1#de8af1fad0ad8932b1b9cfb0398b20ec59af2bc9"
 dependencies = [
  "cc",
  "libc",

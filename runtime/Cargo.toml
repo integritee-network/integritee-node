@@ -148,7 +148,7 @@ runtime-benchmarks = [
     "pallet-grandpa/runtime-benchmarks",
     "pallet-sudo/runtime-benchmarks",
     "sp-staking/runtime-benchmarks",
-    "pallet-transaction-payment/runtime-benchmarks"
+    "pallet-transaction-payment/runtime-benchmarks",
 ]
 try-runtime = [
     "frame-executive/try-runtime",
@@ -174,5 +174,5 @@ try-runtime = [
     "pallet-treasury/try-runtime",
     "pallet-utility/try-runtime",
     "pallet-vesting/try-runtime",
-    "sp-runtime/try-runtime"
+    "sp-runtime/try-runtime",
 ]

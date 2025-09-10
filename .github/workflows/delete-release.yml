@@ -2,7 +2,7 @@ name: Delete-Release
 
 on:
   release:
-    types: [deleted] # should be deleted
+    types: [ deleted ] # should be deleted
 
 jobs:
   purge-image:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        binary: ["integritee-node"]
+        binary: [ "integritee-node" ]
     steps:
       - uses: actions/checkout@v3
 
@@ -28,7 +28,7 @@ jobs:
 
       - name: Login to DockerHub
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}

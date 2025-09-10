@@ -1,4 +1,4 @@
-FROM phusion/baseimage:focal-1.0.0
+FROM phusion/baseimage:jammy-1.0.1
 LABEL maintainer="zoltan@integritee.network"
 LABEL description="This is the 2nd stage: a very small image where we copy the Substrate binary."
 

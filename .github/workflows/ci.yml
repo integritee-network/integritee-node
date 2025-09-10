@@ -41,7 +41,7 @@ jobs:
 
   cancel_previous_runs:
     name: Cancel Previous Runs
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: styfle/cancel-workflow-action@0.11.0
         with:
@@ -52,7 +52,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04 ]
+        os: [ ubuntu-22.04 ]
         rust: [ stable ]
         binary: [ release ]
     env:
@@ -110,7 +110,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04 ]
+        os: [ ubuntu-22.04 ]
         rust: [ stable ]
         binary: [ release ]
     env:
@@ -332,7 +332,7 @@ jobs:
 
   create_artifacts:
     needs: [ build_binaries, build-runtimes ]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       CHAIN_SPEC: ${{ matrix.chain }}-${{ matrix.config }}
     strategy:

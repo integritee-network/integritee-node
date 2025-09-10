@@ -3,6 +3,8 @@
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
+extern crate alloc;
+
 use frame_support::{
 	construct_runtime, derive_impl,
 	genesis_builder_helper::{build_state, get_preset},
@@ -17,20 +19,20 @@ use frame_support::{
 };
 use frame_system::{EnsureRoot, EnsureWithSuccess};
 use pallet_grandpa::AuthorityId as GrandpaId;
-use pallet_transaction_payment::{CurrencyAdapter, Multiplier};
-use parity_scale_codec::{Decode, Encode, MaxEncodedLen};
+use pallet_transaction_payment::Multiplier;
+use parity_scale_codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use sp_api::impl_runtime_apis;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_core::{crypto::KeyTypeId, OpaqueMetadata, RuntimeDebug};
 use sp_runtime::{
-	create_runtime_str, generic, impl_opaque_keys,
+	generic, impl_opaque_keys,
 	traits::{
 		BlakeTwo256, Block as BlockT, ConvertInto, IdentifyAccount, IdentityLookup, NumberFor, One,
 		Verify,
 	},
 	transaction_validity::{TransactionSource, TransactionValidity},
-	ApplyExtrinsicResult, MultiSignature,
+	ApplyExtrinsicResult, Cow, MultiSignature,
 };
 use sp_std::prelude::*;
 
@@ -50,6 +52,7 @@ pub use pallet_teerex;
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 
+use frame_support::traits::{fungible::Credit, tokens::imbalance::ResolveTo};
 pub use frame_support::{
 	weights::{
 		constants::{
@@ -59,8 +62,8 @@ pub use frame_support::{
 	},
 	PalletId, StorageValue,
 };
-
 pub use pallet_timestamp::Call as TimestampCall;
+use pallet_treasury::TreasuryAccountId;
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
@@ -114,14 +117,14 @@ pub mod opaque {
 // https://docs.substrate.io/main-docs/build/upgrade#runtime-versioning
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("integritee-solo"),
-	impl_name: create_runtime_str!("integritee-solo"),
+	spec_name: Cow::Borrowed("integritee-solo"),
+	impl_name: Cow::Borrowed("integritee-solo"),
 	authoring_version: 1,
 	spec_version: 400,
 	impl_version: 1,
 	apis: RUNTIME_API_VERSIONS,
 	transaction_version: 8,
-	state_version: 0,
+	system_version: 0,
 };
 
 /// This determines the average expected block time that we are targeting.
@@ -165,10 +168,16 @@ pub fn native_version() -> NativeVersion {
 	NativeVersion { runtime_version: VERSION, can_author_with: Default::default() }
 }
 
-pub struct DealWithFees;
-impl OnUnbalanced<pallet_balances::NegativeImbalance<Runtime>> for DealWithFees {
-	fn on_unbalanceds<B>(
-		mut fees_then_tips: impl Iterator<Item = pallet_balances::NegativeImbalance<Runtime>>,
+pub struct DealWithFees<R>(sp_std::marker::PhantomData<R>);
+
+impl<R> OnUnbalanced<Credit<R::AccountId, pallet_balances::Pallet<R>>> for DealWithFees<R>
+where
+	R: pallet_balances::Config + pallet_treasury::Config,
+	<R as frame_system::Config>::AccountId: From<AccountId>,
+	<R as frame_system::Config>::AccountId: Into<AccountId>,
+{
+	fn on_unbalanceds(
+		mut fees_then_tips: impl Iterator<Item = Credit<R::AccountId, pallet_balances::Pallet<R>>>,
 	) {
 		if let Some(fees) = fees_then_tips.next() {
 			// for fees, 1% to treasury, 99% burned
@@ -179,7 +188,7 @@ impl OnUnbalanced<pallet_balances::NegativeImbalance<Runtime>> for DealWithFees 
 			if let Some(tips) = fees_then_tips.next() {
 				tips.merge_into(&mut split.0);
 			}
-			Treasury::on_unbalanced(split.0);
+			ResolveTo::<TreasuryAccountId<R>, pallet_balances::Pallet<R>>::on_unbalanced(split.0);
 			// burn remainder by not assigning imbalance to someone
 		}
 	}
@@ -323,6 +332,7 @@ impl pallet_balances::Config for Runtime {
 	type RuntimeFreezeReason = ();
 	type FreezeIdentifier = ();
 	type MaxFreezes = ();
+	type DoneSlashHandler = ();
 }
 
 parameter_types! {
@@ -330,12 +340,14 @@ parameter_types! {
 }
 
 impl pallet_transaction_payment::Config for Runtime {
-	type OnChargeTransaction = CurrencyAdapter<Balances, DealWithFees>;
+	type OnChargeTransaction =
+		pallet_transaction_payment::FungibleAdapter<Balances, DealWithFees<Runtime>>;
 	type OperationalFeeMultiplier = OperationalFeeMultiplier;
 	type WeightToFee = IdentityFee<Balance>;
 	type LengthToFee = ConstantMultiplier<Balance, TransactionByteFee>;
 	type FeeMultiplierUpdate = ();
 	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = ();
 }
 
 impl pallet_sudo::Config for Runtime {
@@ -438,13 +450,8 @@ impl ConversionFromAssetBalance<u128, (), u128> for NoConversion {
 impl pallet_treasury::Config for Runtime {
 	type PalletId = TreasuryPalletId;
 	type Currency = pallet_balances::Pallet<Runtime>;
-	type ApproveOrigin = RootOrigin;
 	type RejectOrigin = RootOrigin;
 	type RuntimeEvent = RuntimeEvent;
-	type OnSlash = (); // No Proposal
-	type ProposalBond = ProposalBond;
-	type ProposalBondMinimum = ProposalBondMinimum;
-	type ProposalBondMaximum = ProposalBondMaximum;
 	type SpendPeriod = SpendPeriod; //Cannot be 0: Error: Thread 'tokio-runtime-worker' panicked at 'attempt to calculate the remainder with a divisor of zero
 	type Burn = (); //No burn
 	type BurnDestination = (); //No burn
@@ -460,6 +467,7 @@ impl pallet_treasury::Config for Runtime {
 	type PayoutPeriod = PayoutSpendPeriod;
 	#[cfg(feature = "runtime-benchmarks")]
 	type BenchmarkHelper = ();
+	type BlockNumberProvider = System;
 }
 parameter_types! {
 	// One storage item; key size is 32; value is size 4+4+16+32 bytes = 56 bytes.
@@ -477,6 +485,7 @@ impl pallet_multisig::Config for Runtime {
 	type DepositFactor = DepositFactor;
 	type MaxSignatories = MaxSignatories;
 	type WeightInfo = weights::pallet_multisig::WeightInfo<Runtime>;
+	type BlockNumberProvider = System;
 }
 
 parameter_types! {
@@ -500,6 +509,7 @@ parameter_types! {
 	PartialOrd,
 	Encode,
 	Decode,
+	DecodeWithMemTracking,
 	RuntimeDebug,
 	MaxEncodedLen,
 	TypeInfo,
@@ -568,6 +578,7 @@ impl pallet_proxy::Config for Runtime {
 	type CallHasher = BlakeTwo256;
 	type AnnouncementDepositBase = AnnouncementDepositBase;
 	type AnnouncementDepositFactor = AnnouncementDepositFactor;
+	type BlockNumberProvider = System;
 }
 
 parameter_types! {
@@ -604,6 +615,7 @@ impl pallet_scheduler::Config for Runtime {
 	type WeightInfo = weights::pallet_scheduler::WeightInfo<Runtime>;
 	type OriginPrivilegeCmp = EqualPrivilegeOnly;
 	type Preimages = Preimage;
+	type BlockNumberProvider = System;
 }
 
 impl pallet_utility::Config for Runtime {
@@ -711,8 +723,11 @@ pub type Executive = frame_executive::Executive<
 
 #[cfg(feature = "runtime-benchmarks")]
 mod benches {
+	use super::*;
+
 	frame_benchmarking::define_benchmarks!(
 		[frame_system, SystemBench::<Runtime>]
+		[frame_system_extensions, SystemExtensionsBench::<Runtime>]
 		[pallet_balances, Balances]
 		[pallet_multisig, Multisig]
 		[pallet_preimage, Preimage]
@@ -729,7 +744,24 @@ mod benches {
 		[pallet_teerdays, TeerDays]
 		[pallet_sidechain, Sidechain]
 	);
+
+	impl frame_system_benchmarking::Config for Runtime {
+		fn setup_set_code_requirements(_: &Vec<u8>) -> Result<(), BenchmarkError> {
+			Ok(())
+		}
+
+		fn verify_set_code() {}
+	}
+
+	pub use frame_benchmarking::{BenchmarkBatch, BenchmarkError, BenchmarkList};
+	pub use frame_support::traits::{StorageInfoTrait, TrackedStorageKey, WhitelistedStorageKeys};
+	pub use frame_system_benchmarking::{
+		extensions::Pallet as SystemExtensionsBench, Pallet as SystemBench,
+	};
 }
+
+#[cfg(feature = "runtime-benchmarks")]
+use benches::*;
 
 impl_runtime_apis! {
 	impl sp_api::Core<Block> for Runtime {
@@ -905,47 +937,21 @@ impl_runtime_apis! {
 			Vec<frame_benchmarking::BenchmarkList>,
 			Vec<frame_support::traits::StorageInfo>,
 		) {
-			use frame_benchmarking::{Benchmarking, BenchmarkList};
-			use frame_support::traits::StorageInfoTrait;
-			use frame_system_benchmarking::Pallet as SystemBench;
-
 			let mut list = Vec::<BenchmarkList>::new();
 			list_benchmarks!(list, extra);
 
 			let storage_info = AllPalletsWithSystem::storage_info();
-
 			(list, storage_info)
 		}
 
 		fn dispatch_benchmark(
 			config: frame_benchmarking::BenchmarkConfig
-		) -> Result<Vec<frame_benchmarking::BenchmarkBatch>, sp_runtime::RuntimeString> {
-			use frame_benchmarking::{Benchmarking, BenchmarkBatch};
-			use sp_storage::TrackedStorageKey;
-
-			use frame_system_benchmarking::Pallet as SystemBench;
-			impl frame_system_benchmarking::Config for Runtime {}
-
-			let whitelist: Vec<TrackedStorageKey> = vec![
-				// Block Number
-				hex_literal::hex!("26aa394eea5630e07c48ae0c9558cef702a5c1b19ab7a04f536c519aca4983ac").to_vec().into(),
-				// Total Issuance
-				hex_literal::hex!("c2261276cc9d1f8598ea4b6a74b15c2f57c875e4cff74148e4628f264b974c80").to_vec().into(),
-				// Execution Phase
-				hex_literal::hex!("26aa394eea5630e07c48ae0c9558cef7ff553b5a9862a516939d82b3d3d8661a").to_vec().into(),
-				// Event Count
-				hex_literal::hex!("26aa394eea5630e07c48ae0c9558cef70a98fdbe9ce6c55837576c60c7af3850").to_vec().into(),
-				// System Events
-				hex_literal::hex!("26aa394eea5630e07c48ae0c9558cef780d41e5e16056765bc8461851072c9d7").to_vec().into(),
-				// Treasury Account
-				hex_literal::hex!("26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da95ecffd7b6c0f78751baa9d281e0bfa3a6d6f646c70792f74727372790000000000000000000000000000000000000000").to_vec().into(),
-			];
-
+		) -> Result<Vec<frame_benchmarking::BenchmarkBatch>, alloc::string::String> {
+			let whitelist: Vec<TrackedStorageKey> = AllPalletsWithSystem::whitelisted_storage_keys();
 			let mut batches = Vec::<BenchmarkBatch>::new();
 			let params = (&config, &whitelist);
 			add_benchmarks!(params, batches);
 
-			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)
 		}
 	}

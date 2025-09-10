@@ -78,6 +78,7 @@ runtime-benchmarks = [
     "frame-benchmarking-cli/runtime-benchmarks",
     "frame-system/runtime-benchmarks",
     "sp-runtime/runtime-benchmarks",
+    "pallet-transaction-payment/runtime-benchmarks",
 ]
 # for secure launch of a live solo network, do enable extrinsic filtering
 extrinsic-filtering = ["integritee-node-runtime/extrinsic-filtering"]

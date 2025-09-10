@@ -41,7 +41,7 @@ jobs:
 
   cancel_previous_runs:
     name: Cancel Previous Runs
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: styfle/cancel-workflow-action@0.11.0
         with:
@@ -52,7 +52,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04 ]
+        os: [ ubuntu-22.04 ]
         rust: [ stable ]
         binary: [ release ]
     env:
@@ -77,9 +77,6 @@ jobs:
         run: |
           sudo apt update && \
           sudo apt install --assume-yes protobuf-compiler
-
-      - name: Install llvm-10
-        run: sudo apt-get install llvm-10 clang-10
 
       - uses: Swatinem/rust-cache@v2
         with:
@@ -110,7 +107,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04 ]
+        os: [ ubuntu-22.04 ]
         rust: [ stable ]
         binary: [ release ]
     env:
@@ -135,9 +132,6 @@ jobs:
         run: |
           sudo apt update && \
           sudo apt install --assume-yes protobuf-compiler
-
-      - name: Install llvm-10
-        run: sudo apt-get install llvm-10 clang-10
 
       - uses: Swatinem/rust-cache@v2
         with:
@@ -214,7 +208,7 @@ jobs:
         uses: baptiste0928/cargo-install@v2
         with:
           crate: cargo-about
-          version: "0.6.1"
+          version: "0.6.6"
 
       - name: Run license check
         # Explicitly use stable because otherwise cargo will trigger a download of
@@ -260,7 +254,7 @@ jobs:
 
       - name: Srtool build
         id: srtool_build
-        uses: chevdor/srtool-actions@v0.9.2
+        uses: chevdor/srtool-actions@v0.8.0
         with:
           image: paritytech/srtool
           chain: ${{ matrix.runtime }}
@@ -332,7 +326,7 @@ jobs:
 
   create_artifacts:
     needs: [ build_binaries, build-runtimes ]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       CHAIN_SPEC: ${{ matrix.chain }}-${{ matrix.config }}
     strategy:

@@ -17,20 +17,20 @@ use frame_support::{
 };
 use frame_system::{EnsureRoot, EnsureWithSuccess};
 use pallet_grandpa::AuthorityId as GrandpaId;
-use pallet_transaction_payment::{CurrencyAdapter, Multiplier};
-use parity_scale_codec::{Decode, Encode, MaxEncodedLen};
+use pallet_transaction_payment::Multiplier;
+use parity_scale_codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use sp_api::impl_runtime_apis;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_core::{crypto::KeyTypeId, OpaqueMetadata, RuntimeDebug};
 use sp_runtime::{
-	create_runtime_str, generic, impl_opaque_keys,
+	generic, impl_opaque_keys,
 	traits::{
 		BlakeTwo256, Block as BlockT, ConvertInto, IdentifyAccount, IdentityLookup, NumberFor, One,
 		Verify,
 	},
 	transaction_validity::{TransactionSource, TransactionValidity},
-	ApplyExtrinsicResult, MultiSignature,
+	ApplyExtrinsicResult, Cow, MultiSignature,
 };
 use sp_std::prelude::*;
 
@@ -50,6 +50,7 @@ pub use pallet_teerex;
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 
+use frame_support::traits::{fungible::Credit, tokens::imbalance::ResolveTo};
 pub use frame_support::{
 	weights::{
 		constants::{
@@ -59,8 +60,8 @@ pub use frame_support::{
 	},
 	PalletId, StorageValue,
 };
-
 pub use pallet_timestamp::Call as TimestampCall;
+use pallet_treasury::TreasuryAccountId;
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
@@ -114,14 +115,14 @@ pub mod opaque {
 // https://docs.substrate.io/main-docs/build/upgrade#runtime-versioning
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("integritee-solo"),
-	impl_name: create_runtime_str!("integritee-solo"),
+	spec_name: Cow::Borrowed("integritee-solo"),
+	impl_name: Cow::Borrowed("integritee-solo"),
 	authoring_version: 1,
 	spec_version: 400,
 	impl_version: 1,
 	apis: RUNTIME_API_VERSIONS,
 	transaction_version: 8,
-	state_version: 0,
+	system_version: 0,
 };
 
 /// This determines the average expected block time that we are targeting.
@@ -165,10 +166,16 @@ pub fn native_version() -> NativeVersion {
 	NativeVersion { runtime_version: VERSION, can_author_with: Default::default() }
 }
 
-pub struct DealWithFees;
-impl OnUnbalanced<pallet_balances::NegativeImbalance<Runtime>> for DealWithFees {
-	fn on_unbalanceds<B>(
-		mut fees_then_tips: impl Iterator<Item = pallet_balances::NegativeImbalance<Runtime>>,
+pub struct DealWithFees<R>(sp_std::marker::PhantomData<R>);
+
+impl<R> OnUnbalanced<Credit<R::AccountId, pallet_balances::Pallet<R>>> for DealWithFees<R>
+where
+	R: pallet_balances::Config + pallet_treasury::Config,
+	<R as frame_system::Config>::AccountId: From<AccountId>,
+	<R as frame_system::Config>::AccountId: Into<AccountId>,
+{
+	fn on_unbalanceds(
+		mut fees_then_tips: impl Iterator<Item = Credit<R::AccountId, pallet_balances::Pallet<R>>>,
 	) {
 		if let Some(fees) = fees_then_tips.next() {
 			// for fees, 1% to treasury, 99% burned
@@ -179,7 +186,7 @@ impl OnUnbalanced<pallet_balances::NegativeImbalance<Runtime>> for DealWithFees 
 			if let Some(tips) = fees_then_tips.next() {
 				tips.merge_into(&mut split.0);
 			}
-			Treasury::on_unbalanced(split.0);
+			ResolveTo::<TreasuryAccountId<R>, pallet_balances::Pallet<R>>::on_unbalanced(split.0);
 			// burn remainder by not assigning imbalance to someone
 		}
 	}
@@ -323,6 +330,7 @@ impl pallet_balances::Config for Runtime {
 	type RuntimeFreezeReason = ();
 	type FreezeIdentifier = ();
 	type MaxFreezes = ();
+	type DoneSlashHandler = ();
 }
 
 parameter_types! {
@@ -330,12 +338,14 @@ parameter_types! {
 }
 
 impl pallet_transaction_payment::Config for Runtime {
-	type OnChargeTransaction = CurrencyAdapter<Balances, DealWithFees>;
+	type OnChargeTransaction =
+		pallet_transaction_payment::FungibleAdapter<Balances, DealWithFees<Runtime>>;
 	type OperationalFeeMultiplier = OperationalFeeMultiplier;
 	type WeightToFee = IdentityFee<Balance>;
 	type LengthToFee = ConstantMultiplier<Balance, TransactionByteFee>;
 	type FeeMultiplierUpdate = ();
 	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = ();
 }
 
 impl pallet_sudo::Config for Runtime {
@@ -438,13 +448,8 @@ impl ConversionFromAssetBalance<u128, (), u128> for NoConversion {
 impl pallet_treasury::Config for Runtime {
 	type PalletId = TreasuryPalletId;
 	type Currency = pallet_balances::Pallet<Runtime>;
-	type ApproveOrigin = RootOrigin;
 	type RejectOrigin = RootOrigin;
 	type RuntimeEvent = RuntimeEvent;
-	type OnSlash = (); // No Proposal
-	type ProposalBond = ProposalBond;
-	type ProposalBondMinimum = ProposalBondMinimum;
-	type ProposalBondMaximum = ProposalBondMaximum;
 	type SpendPeriod = SpendPeriod; //Cannot be 0: Error: Thread 'tokio-runtime-worker' panicked at 'attempt to calculate the remainder with a divisor of zero
 	type Burn = (); //No burn
 	type BurnDestination = (); //No burn
@@ -460,6 +465,7 @@ impl pallet_treasury::Config for Runtime {
 	type PayoutPeriod = PayoutSpendPeriod;
 	#[cfg(feature = "runtime-benchmarks")]
 	type BenchmarkHelper = ();
+	type BlockNumberProvider = System;
 }
 parameter_types! {
 	// One storage item; key size is 32; value is size 4+4+16+32 bytes = 56 bytes.
@@ -477,6 +483,7 @@ impl pallet_multisig::Config for Runtime {
 	type DepositFactor = DepositFactor;
 	type MaxSignatories = MaxSignatories;
 	type WeightInfo = weights::pallet_multisig::WeightInfo<Runtime>;
+	type BlockNumberProvider = System;
 }
 
 parameter_types! {
@@ -500,6 +507,7 @@ parameter_types! {
 	PartialOrd,
 	Encode,
 	Decode,
+	DecodeWithMemTracking,
 	RuntimeDebug,
 	MaxEncodedLen,
 	TypeInfo,
@@ -568,6 +576,7 @@ impl pallet_proxy::Config for Runtime {
 	type CallHasher = BlakeTwo256;
 	type AnnouncementDepositBase = AnnouncementDepositBase;
 	type AnnouncementDepositFactor = AnnouncementDepositFactor;
+	type BlockNumberProvider = System;
 }
 
 parameter_types! {
@@ -604,6 +613,7 @@ impl pallet_scheduler::Config for Runtime {
 	type WeightInfo = weights::pallet_scheduler::WeightInfo<Runtime>;
 	type OriginPrivilegeCmp = EqualPrivilegeOnly;
 	type Preimages = Preimage;
+	type BlockNumberProvider = System;
 }
 
 impl pallet_utility::Config for Runtime {
